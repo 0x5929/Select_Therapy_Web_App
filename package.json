@@ -1,0 +1,13 @@
+{
+	"name": "Select_Therapy_Institute_Website",
+	"description": "STI web app",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"express": "4.x",
+		"async": "2.x",
+		"mongojs": "2.x",
+		"body-parser": "1.15.x",
+		"angular-ui-bootstrap" : "2.1.x"
+	}
+}
