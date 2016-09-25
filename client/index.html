@@ -1,0 +1,84 @@
+<!-- Index HTML -->
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Loading BootStrap Stylesheets -->
+	<link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" />
+    <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+	<title>Select Therapy Institute</title>
+</head>
+<!-- Inititalizing Angular -->
+<body ng-app="myApp">
+<!--Header Container -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 style="font-family: cursive">Select Therapy Institute</h1>
+			</div>
+		</div>
+<!--Top Nav for English or Chinese -->
+		<div class="row">
+			<div class="col-xs-10">
+				<ul class="nav nav-pills">
+					<li role ="presentation" class="active"><a href="#">English</a></li>
+					<li role ="presentation"><a href="#">Chinese</a></li>
+				</ul>
+			</div>
+<!-- Menu Button (this can be connected to routing for ui -view directive for html templates to be rendered) -->
+<!-- This Menu Button should also be a seperate view template html with its controller in the dropDownMenu directory -->
+			<div class="col-xs-2" ng-controller="DropdownCtrl">
+			    <div class="btn-group" uib-dropdown is-open="status.isopen">
+			      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+			      	<span class="glyphicon glyphicon-align-justify"></span>
+			      </button>
+			      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+			        <li role="menuitem"><a href="#">Home</a></li>
+			        <li role="menuitem"><a href="#">Programs</a></li>
+			        <li role="menuitem"><a href="#">Class Schedule</a></li>
+			        <li role="menuitem"><a href="#">About Us</a></li>
+			        <li role="menuitem"><a href="#">Contact Us</a></li>
+			        <li class="divider"></li>
+			        <li role="menuitem"><a href="#">Sign In</a></li>
+			        <li role="menuitem"><a href="#">Sign Up</a></li>
+			      </ul>
+			    </div>
+			</div>
+		</div>
+	</div>
+<!-- middle container (must be replaced by ui-view, and seperated in a seperate template) -->
+	<div class="container-fluid">
+		<div class="row">
+			<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-8">
+				<h2 class="text-center">Current Offer</h2>
+				<p> CNA day class is enrolling now and will start on September 27th. For more information, please call 626-572-7231,9am-5pm on Monday-Thursday and 9am-4pm on Friday. We welcome all prospective students to come and check out our upcoming class, and the services we offer. CNA Classes are only 8 weeks long. Free job placement after passing State Exam. Not many seats left! Sign up as soon as possible.
+				</p>
+				<h2 class="text-center">Student Reviews</h2>
+ 				<p>
+				For student reviews, please visit http://www.chineseinla.com/company/task_view/id_20345.html
+ 				</p>
+ 				<h2 class="text-center">Financial Assistance</h2>
+ 				<p>
+				Please call (626)572-7231 for more information.
+				Students aged between 18-24 might be eligible for financial assistance. Please contact the admissions office.
+				</p>
+			</div>
+			<div class="col-md-2">
+			</div>
+		</div>
+	</div>
+<!-- Loading Library Scripts -->
+<script src="script/angular/angular.js"></script>
+<script src="script/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+<!-- Loading App Scripts-->
+<script src="app/app.js"></script>
+<!-- Loading Services below -->
+<!-- Loading Controller Scripts -->
+<script src="app/dropDownMenu/dropDownMenu.js"></script>
+</body>
+</html>
