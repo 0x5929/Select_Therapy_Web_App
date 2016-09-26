@@ -1,5 +1,6 @@
 (function(){
 	"use strict"
-var app = angular.module('myApp', ['ui.bootstrap']);
+	
+var app = angular.module('myApp', ['looksIntegrationByUIB.services']);
 
 }());
