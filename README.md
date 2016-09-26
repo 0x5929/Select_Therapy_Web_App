@@ -1,6 +1,6 @@
 SELECT THERAPY INSTITUTE
 =========================
-ReadMe:
+
 This is an attempt to better the current website 
 used by Select Therapy Institute. Doing so I will add 
 important functionalities such as log in authentication
