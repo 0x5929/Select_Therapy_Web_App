@@ -4,9 +4,7 @@
 	controller('DropdownCtrl', ['$scope', DropdownCtrl]);
 	
 	function DropdownCtrl($scope) {
-		$scope.status = {
-			isopen: false
-		}
+		
 	}
 
 
