@@ -1,6 +1,6 @@
-(function(){
-	"use strict"
+(function() {	
+	'use strict';
 	
-var app = angular.module('myApp', ['looksIntegrationByUIB.services']);
-
+	angular.module('myApp', ['myApp.dropDownMenu',
+		'services.looksIntegrationByUIB']);
 }());
