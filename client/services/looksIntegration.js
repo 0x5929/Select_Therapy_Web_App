@@ -1,5 +1,5 @@
 (function(){
-	"use strict";
+	'use strict';
 	/* 
 	For further encapsulation, I seperated
 	UI bootstrap into its own module as a service
@@ -12,5 +12,5 @@
 	injecting it into our main app module.
 	-------------------------------------------------------------*/
 	
-	angular.module('looksIntegrationByUIB.services', ['ui.bootstrap']);
+	angular.module('services.looksIntegrationByUIB', ['ui.bootstrap']);
 }());
