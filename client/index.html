@@ -17,22 +17,24 @@
 				<h1 style="font-family: cursive">Select Therapy Institute</h1>
 			</div>
 		</div>
-	<!--Top Nav for English or Chinese -->
+	<!--Main Top Navigation -->
 		<div class="row">
 			<div class="col-xs-10">
 				<ul class="nav nav-pills">
-					<li role ="presentation" class="active"><a href="#">English</a></li>
-					<li role ="presentation"><a href="#">Chinese</a></li>
+					<li role ="presentation" class="active"><a ui-sref="Home">Home</a></li>
+					<li role ="presentation"><a ui-sref="Programs">Programs</a></li>
+					<li role ="presentation"><a ui-sref="Class_Schedule">Class Schedule</a></li>
+					<li role ="presentation"><a href="#">About Us</a></li>
+					<li role ="presentation"><a href="#">Sign In</a></li>
+					<li role ="presentation"><a href="#">Sign Up</a></li>
 				</ul>
 			</div>
-	<!-- Menu Button (this can be connected to routing for ui -view directive for html templates to be rendered) -->
-	<!-- This Menu Button should also be a seperate view template html with its controller in the dropDownMenu directory -->
 			<div class="col-xs-2" ng-controller="DropdownCtrl">
 			    <div class="btn-group" uib-dropdown>
 			      <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-			      	<span class="glyphicon glyphicon-align-justify"></span>
+			      	Language
 			      </button>
-			      <ul class="dropdown-menu" uib-dropdown-menu template-url="app/dropDownMenu/dropDownMenuView.html" aria-labelledby="button-template-url">
+			      <ul class="dropdown-menu" uib-dropdown-menu template-url="app/languageDropdown/languageDropdown.html" aria-labelledby="button-template-url">
 			      </ul>
 			    </div>
 			</div>
@@ -46,31 +48,20 @@
 		<div class="row">
 			<div class="col-md-2">
 			</div>
-			<div class="col-md-8">
-				<h2 class="text-center">Current Offer</h2>
-				<p> CNA day class is enrolling now and will start on September 27th. For more information, please call 626-572-7231,9am-5pm on Monday-Thursday and 9am-4pm on Friday. We welcome all prospective students to come and check out our upcoming class, and the services we offer. CNA Classes are only 8 weeks long. Free job placement after passing State Exam. Not many seats left! Sign up as soon as possible.
-				</p>
-				<h2 class="text-center">Student Reviews</h2>
- 				<p>
-				For student reviews, please visit http://www.chineseinla.com/company/task_view/id_20345.html
- 				</p>
- 				<h2 class="text-center">Financial Assistance</h2>
- 				<p>
-				Please call (626)572-7231 for more information.
-				Students aged between 18-24 might be eligible for financial assistance. Please contact the admissions office.
-				</p>
-			</div>
+			<ui-view>
+			</ui-view>
 			<div class="col-md-2">
 			</div>
 		</div>
 	</div>
 <!-- Loading Library Scripts -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="script/angular/angular.js"></script>
+<script src="script/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="script/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 <!-- Loading Services -->
 <script src="services/looksIntegration.js"></script>
 <!-- Loading Controller Scripts -->
-<script src="app/dropDownMenu/dropDownMenu.js"></script>
+<script src="app/languageDropdown/languageDropdown.js"></script>
 <!-- Loading Application Scripts-->
 <script src="app/app.js"></script>
 

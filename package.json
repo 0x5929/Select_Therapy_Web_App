@@ -1,13 +1,15 @@
 {
-	"name": "Select_Therapy_Institute_Website",
-	"description": "STI web app",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"express": "4.x",
-		"async": "2.x",
-		"mongojs": "2.x",
-		"body-parser": "1.15.x",
-		"angular-ui-bootstrap" : "2.1.x"
-	}
+  "name": "Select_Therapy_Institute_Website",
+  "description": "STI web app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-bootstrap": "^2.1.4",
+    "angular-ui-router": "^0.3.1",
+    "async": "^2.0.1",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongojs": "^2.4.0"
+  }
 }

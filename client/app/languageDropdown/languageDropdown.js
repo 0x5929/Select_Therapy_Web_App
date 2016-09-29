@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.dropDownMenu', [])
+	angular.module('myApp.languageDropdown', [])
 
 		.controller('DropdownCtrl', ['$scope', DropdownCtrl]);
 	
