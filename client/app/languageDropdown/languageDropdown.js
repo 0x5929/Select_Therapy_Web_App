@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.languageDropdown', [])
+	angular.module('myApp.LanguageDropdown', [])
 
-		.controller('DropdownCtrl', ['$scope', DropdownCtrl]);
+		.controller('LanguageDropdownCtrl', ['$scope', DropdownCtrl]);
 	
 	function DropdownCtrl($scope) {
 		

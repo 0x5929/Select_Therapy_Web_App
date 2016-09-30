@@ -3,7 +3,7 @@
 <html>
 <head>
 <!-- Loading BootStrap Stylesheets -->
-	<link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link data-require="bootstrap@3.3.5"data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" />
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 	<title>Select Therapy Institute</title>
@@ -19,21 +19,28 @@
 		</div>
 	<!--Main Top Navigation -->
 		<div class="row">
-			<div class="col-xs-10">
+			<!-- Initiated programDropdown Controller -->
+			<div class="col-xs-10" ng-controller="ProgramsDropdownCtrl">
 				<ul class="nav nav-pills">
-					<li role ="presentation" class="active"><a ui-sref="Home">Home</a></li>
-					<li role ="presentation"><a ui-sref="Programs">Programs</a></li>
+					<li role ="presentation" class="active"><a ui-sref="Home" href="#Home">Home</a></li>
 					<li role ="presentation"><a ui-sref="Class_Schedule">Class Schedule</a></li>
+						<!-- Programs Dropdown Menu -->
+					<li role ="presentation" class="btn-group" uib-dropdown><a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">Programs</a>
+						<ul class="dropdown-menu" uib-dropdown-menu template-url="app/Programs/ProgramsDropdown.html" aria-labelledby="button-template-url">
+						</ul>
+					</li>
 					<li role ="presentation"><a href="#">About Us</a></li>
 					<li role ="presentation"><a href="#">Sign In</a></li>
 					<li role ="presentation"><a href="#">Sign Up</a></li>
 				</ul>
 			</div>
-			<div class="col-xs-2" ng-controller="DropdownCtrl">
+			<!-- Initiated LanguageDropdown Controller -->
+			<div class="col-xs-2" ng-controller="LanguageDropdownCtrl">
 			    <div class="btn-group" uib-dropdown>
 			      <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
 			      	Language
 			      </button>
+			      <!-- Language Dropdown Menu -->
 			      <ul class="dropdown-menu" uib-dropdown-menu template-url="app/languageDropdown/languageDropdown.html" aria-labelledby="button-template-url">
 			      </ul>
 			    </div>
@@ -61,9 +68,9 @@
 <!-- Loading Services -->
 <script src="services/looksIntegration.js"></script>
 <!-- Loading Controller Scripts -->
+<script src="app/Programs/ProgramsDropdown.js"></script>
 <script src="app/languageDropdown/languageDropdown.js"></script>
 <!-- Loading Application Scripts-->
 <script src="app/app.js"></script>
-
 </body>
 </html>
