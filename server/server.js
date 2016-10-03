@@ -23,7 +23,5 @@ app.get('/About/:id', function(req, res) {
 	});
 });
 //listen (starting our application with node server.js)
-app.listen(port);
-console.log("magic happens on port: " + port);
-
+app.listen(port, console.log('magic happens on port: ', port));
 }());
