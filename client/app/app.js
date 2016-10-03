@@ -48,10 +48,6 @@
 				.state('Acupuncture_CEU_Program', {
 					url: '/Acupuncture_CEU_Program',
 					templateUrl: 'app/Programs/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
-				})
-				.state('School_Catalog', {
-					url: '/School_Catalog',
-					templateUrl: 'app/About/School_Catalog.pdf'
 				});
 		});
 }());
