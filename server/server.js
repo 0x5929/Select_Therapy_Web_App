@@ -9,6 +9,8 @@ app.use(express.static("../client")); //setting up the static file location
 app.get('/About/:id', function(req, res) {
 	var id = req.params.id; //grabbing the ID, ie: School_Catalog
 	console.log(id);//Terminal: School_Catalog
+	//now just got to fetch the PDF based on the ID
+	//and send it back to client
 });
 //listen (starting our application with node server.js)
 app.listen(port);
