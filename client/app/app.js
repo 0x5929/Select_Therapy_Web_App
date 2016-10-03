@@ -1,8 +1,10 @@
 (function() {	
 	'use strict';
 	
-	angular.module('myApp', ['myApp.LanguageDropdown',
+	angular.module('myApp', [
+		'myApp.LanguageDropdown',
 		'myApp.ProgramsDropdown',
+		'myApp.About',
 		'services.looksIntegrationByUIB',
 		'ui.router'])
 
@@ -17,6 +19,11 @@
 				.state('Class_Schedule', {
 					url: '/Class_Schedule',
 					templateUrl: 'app/Class_Schedule/Class_Schedule.html'
+				})
+				.state('About', {
+					url: '/About',
+					templateUrl: 'app/About/About.html',
+					controller: 'AboutCtrl'
 				})
 				.state('Nurse_Assistant_Training_Program', {
 					url: '/Nurse_Assistant_Training_Program',
@@ -41,6 +48,10 @@
 				.state('Acupuncture_CEU_Program', {
 					url: '/Acupuncture_CEU_Program',
 					templateUrl: 'app/Programs/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
+				})
+				.state('School_Catalog', {
+					url: '/School_Catalog',
+					templateUrl: 'app/About/School_Catalog.pdf'
 				});
 		});
 }());

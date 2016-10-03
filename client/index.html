@@ -1,6 +1,6 @@
 <!-- Index HTML -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <!-- Loading BootStrap Stylesheets -->
 	<link data-require="bootstrap@3.3.5"data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -26,10 +26,11 @@
 					<li role ="presentation"><a ui-sref="Class_Schedule">Class Schedule</a></li>
 						<!-- Programs Dropdown Menu -->
 					<li role ="presentation" class="btn-group" uib-dropdown><a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">Programs</a>
+					<!-- we can try using ui-sref for the template, see if you can direct it through the routing that way adding controller to config -->
 						<ul class="dropdown-menu" uib-dropdown-menu template-url="app/Programs/ProgramsDropdown.html" aria-labelledby="button-template-url">
 						</ul>
 					</li>
-					<li role ="presentation"><a href="#">About Us</a></li>
+					<li role ="presentation"><a ui-ref="About" href="#About">About Us</a></li>
 					<li role ="presentation"><a href="#">Contact Us</a></li>
 					<li role ="presentation"><a href="#">Sign In</a></li>
 					<li role ="presentation"><a href="#">Sign Up</a></li>
@@ -71,6 +72,7 @@
 <!-- Loading Controller Scripts -->
 <script src="app/Programs/ProgramsDropdown.js"></script>
 <script src="app/languageDropdown/languageDropdown.js"></script>
+<script src="app/About/AboutCtrl.js"></script>
 <!-- Loading Application Scripts-->
 <script src="app/app.js"></script>
 </body>

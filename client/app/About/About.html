@@ -1,0 +1,19 @@
+<div class="col-md-8" ng-controller="AboutCtrl">
+	<h1 class="text-center" style="color: Orange"><strong>About us</strong></h1>
+	<img class="img-responsive" style="margin:0px auto;display:block" src="http://www.st-inst.com/images/logo.jpg">
+		<h2 class="text-center" style="color: Gray">Our school is licensed by:</h2>
+			<h4 class="text-center"><a href="http://www.bppe.ca.gov/">Bureau for Private Postsecondary Education</a></h4>
+			<h4 class="text-center"><a href="https://app.dca.ca.gov/bppe/view-school.asp?schlcode=27091740">BPPE Approved Programs</a></h4>		
+		<h2 class="text-center" style="color: Gray">Approved by:</h2>
+			<h4 class="text-center"><a href="http://www.cdph.ca.gov/Pages/DEFAULT.aspx">California Department of Public Health</a></h4>
+			<h4 class="text-center"><a href="http://www.heart.org/HEARTORG/">American Heart Association</a></h4>
+			<h4 class="text-center"><a href="http://www.dca.ca.gov/">California Department of Consumer Affairs</a></h4>
+			<h4 class="text-center"><a href="https://wioa.i-train.org/">Listed as a training provider under the I-train</a></h4>
+		<h2 class="text-center" style="color: Gray">Annual Report 2013, School Catalog and Performance Fact Sheet</h2>
+			<button type="button" ng-click="openPDF('/School_Catalog/')">Click here to download the School Catalog</button>
+			<h4 class="text-center"><a href="http://www.heart.org/HEARTORG/">Click here to download the Nurse Assistant Program Performance Fact Sheet</a></h4>
+			<h4 class="text-center"><a ui-sref="School_Catalog" href="/School_Catalog">Click here to download the Home Health Aide Program Performance Fact Sheet</a></h4>
+			<h4 class="text-center"><a href="https://wioa.i-train.org/">Click here to download the English For Speakers Of Other Languages Program Performance Fact Sheet</a></h4>
+			<h4 class="text-center"><a href="https://wioa.i-train.org/">Click here to download the Annual Report 2014</a></h4>
+			<a ng-href="{{app/About/School_Catalog.pdf}}" target="_self">Test link</a>
+</div>
