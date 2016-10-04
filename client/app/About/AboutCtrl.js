@@ -6,8 +6,10 @@
 		
 		function AboutCtrl($scope, $http) {
 		$scope.openPDF = function(PDFID) {
-			$http.get('/About' + PDFID).then(function(data) {
-				window.open(data);
+			$http.get('/About' + PDFID, {responseType: 'arraybuffer'}).success(function(data) {
+				var file = new Blob([data], {type: 'application/pdf'});
+				var fileURL = URL.createObjectURL(file);
+				window.open(fileURL);
 			});
 	};
 	}
