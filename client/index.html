@@ -26,7 +26,7 @@
 					<li role ="presentation"><a ui-sref="Class_Schedule">Class Schedule</a></li>
 						<!-- Programs Dropdown Menu -->
 					<li role ="presentation" class="btn-group" uib-dropdown><a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">Programs</a>
-					<!-- we can try using ui-sref for the template, see if you can direct it through the routing that way adding controller to config -->
+					<!-- This is the drop down menu, points to the template url, for further encapsulation -->
 						<ul class="dropdown-menu" uib-dropdown-menu template-url="app/Programs/ProgramsDropdown.html" aria-labelledby="button-template-url">
 						</ul>
 					</li>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-<!-- middle container this view is for home (must be replaced by ui-view, and seperated in a seperate template) -->
+<!--Middle Container -->
 	<div class="container-fluid">
 		<div class="row">
 			<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
@@ -57,6 +57,7 @@
 		<div class="row">
 			<div class="col-md-2">
 			</div>
+			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
 			<ui-view>
 			</ui-view>
 			<div class="col-md-2">

@@ -10,16 +10,25 @@ var port = process.env.PORT || 8080; //set the port
 //Configuration
 app.use(express.static("../client")); //setting up the static file location
 //GET REQUESTS FOR PDF FILES
+//listens for signal GET repquests for paths start with /about/PdfID/
 app.get('/About/:id', function(req, res) {
 	var id = req.params.id; //grabbing the ID, ie: School_Catalog
 	console.log(id);//Terminal logs: School_Catalog
-	console.log(req.url);
+	console.log(req.url);//Terminal logs: /About/Annual_Report
+	//creates the file name
 	var filename = __dirname + '/../client/app/About/' + id + '/' + id + '.pdf';
+	//create a read stream for the file
 	var PDFReadstream = fs.createReadStream(filename);
+	//settting the header, content disposition, and open new tab option with inline, or download option with attachment
 	res.setHeader('Content-disposition', 'inline; filename="' + filename + '"');
+	//setting the content type to header
 	res.setHeader('Content-type', 'application/pdf');
+	//use the read stream created by fs and pipe it through the write stream object in response,
+	// which sends(writes) the actually data to client to be rendered. 
 	PDFReadstream.pipe(res);
-	/*fs.readFile(__dirname + '../client/app/About/School_Catalog/School_Catalog.pdf', function(err, data) {
+	/*
+	//another way? but above works so this is commented out
+	fs.readFile(__dirname + '../client/app/About/School_Catalog/School_Catalog.pdf', function(err, data) {
 		if (err)
 			res.json({'status':'error', msg:err});
 		else{
