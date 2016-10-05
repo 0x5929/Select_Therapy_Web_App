@@ -25,6 +25,10 @@
 					templateUrl: 'app/About/About.html',
 					controller: 'AboutCtrl'
 				})
+				.state('Contact_Us', {
+					url: '/Contact_Us',
+					templateUrl: 'app/Contact_Us/Contact_Us.html'
+				})
 				.state('Nurse_Assistant_Training_Program', {
 					url: '/Nurse_Assistant_Training_Program',
 					templateUrl: 'app/Programs/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'

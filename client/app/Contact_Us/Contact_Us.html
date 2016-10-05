@@ -1,0 +1,16 @@
+<div class="col-md-8" ng-controller="ContactUsCtrl">
+	<h1 class="text-center" style="color: Orange"><strong>Contact Us</strong></h1>
+		<h2 class="text-center" style="color: Gray">STI</h2>
+			<h4 class="text-center">2209 N. San Gabriel Blvd. Suite C</h4>
+			<h4 class="text-center">Rosemead, CA 91770 </h4>
+			<h4 class="text-center" style="color: Red">Tel: 626-572-7231   Fax: 626-572-7377</h4>
+			<h4 class="text-center">Email: selecttherapyinstitute@gmail.com</h4><br>
+			<p class="text-center"><a href="https://www.google.com/maps/place/2209+San+Gabriel+Blvd,+Rosemead,+CA+91770/@34.054739,-118.090539,16z/data=!4m5!3m4!1s0x80c2d0129bb02603:0x4fc57c4f4604caf8!8m2!3d34.0542246!4d-118.0908227?hl=en">Click here for directions</a></p>
+		<form class="text-center">
+			Full Name: <input type="text" name="fullName" ng-model="fullName"><br>
+			E-Mail Address: <input type="text" name="emailAddress" ng-model="emailAddress"><br>
+			Message: <br>
+			<textarea rows="15" cols="100" ng-model="message"></textarea><br>
+			<button class="btn" ng-click="sendMessage()">Submit</button>
+		</form>
+</div>
