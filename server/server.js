@@ -7,7 +7,6 @@ var express = require('express'); //requiring the express module
 var bodyParser = require('body-parser');//fetching body parser
 var path = require('path'); //requiring the path module for pdf path resolving
 var nodemailer = require('nodemailer'); //fetching nodemailer
-var transporter = nodemailer.createTransport();//initializes the transport
 var app = express(); //creating our application with express
 var port = process.env.PORT || 8080; //set the port
 //Configuration
@@ -42,16 +41,31 @@ app.get('/About/:id', function(req, res) {
 	});*/
 });
 app.post('/sendMessage', function(req, res) {
+	var smtpConfig = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+        user: 'work.kevin.ren@gmail.com',
+        pass: 'jordan45'
+    	}
+	};
+	var transporter = nodemailer.createTransport(smtpConfig);//initializes the transport
 	var requestData = req.body;
-	console.log(req.body);
 	var mailData = {
-		from: 'work.kevin.ren@gmail.com',
+		from: '"Select Thearpy Institute Message Inquiry" <work.kevin.ren@gmail.com>',
 		to: 'selecttherapyinstitute@gmail.com',
-		subject: 'Message from ' + requestData.fullName + ' with return address of: ' + requestData.emailAddress,
+		subject: 'Message from ' + requestData.name + ' with return address of: ' + requestData.email,
 		text: requestData.message
-};
-	transporter.sendMail(mailData);
+	};
+	transporter.sendMail(mailData, function(err, info) {
+		if(err)
+			return console.log(err);
+		console.log(info.response);
+
+	});
 	res.json(requestData);
+	res.end();
 	
 });
 //listen (starting our application with node server.js)
