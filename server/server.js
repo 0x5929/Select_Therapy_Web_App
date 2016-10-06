@@ -4,11 +4,15 @@
 // need to read more about express and its functions. 10/01/2016
 var fs = require('fs'); //requiring fileSystem
 var express = require('express'); //requiring the express module
+var bodyParser = require('body-parser');//fetching body parser
 var path = require('path'); //requiring the path module for pdf path resolving
+var nodemailer = require('nodemailer'); //fetching nodemailer
+var transporter = nodemailer.createTransport();//initializes the transport
 var app = express(); //creating our application with express
 var port = process.env.PORT || 8080; //set the port
 //Configuration
 app.use(express.static("../client")); //setting up the static file location
+app.use(bodyParser.json());//configuring body parser to parse incoming application/json files
 //GET REQUESTS FOR PDF FILES
 //listens for signal GET repquests for paths start with /about/PdfID/
 app.get('/About/:id', function(req, res) {
@@ -38,6 +42,16 @@ app.get('/About/:id', function(req, res) {
 	});*/
 });
 app.post('/sendMessage', function(req, res) {
+	var requestData = req.body;
+	console.log(req.body);
+	var mailData = {
+		from: 'work.kevin.ren@gmail.com',
+		to: 'selecttherapyinstitute@gmail.com',
+		subject: 'Message from ' + requestData.fullName + ' with return address of: ' + requestData.emailAddress,
+		text: requestData.message
+};
+	transporter.sendMail(mailData);
+	res.json(requestData);
 	
 });
 //listen (starting our application with node server.js)

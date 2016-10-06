@@ -4,13 +4,14 @@
 		. controller('ContactUsCtrl', ['$scope', '$http', ContactUsCtrl]);
 
 		function ContactUsCtrl($scope, $http) {
-			$scope.SendMessage = function() {
+			this.sendMessage = function() {
 				var messageContent = {
-					name: $scope.fullName,
-					email: $scope.emailAddress,
-					message: $cope.message
+					name: this.fullName,
+					email: this.emailAddress,
+					message: this.message
 				};
-				$http.post('/sendMessage', messageContent).success(function(){
+				console.log('botton works!');
+				$http.post('/sendMessage/', messageContent).success(function(response){
 					console.log('once success, console log successfully sent message');
 				});
 			};

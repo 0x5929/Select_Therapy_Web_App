@@ -5,6 +5,7 @@
 		'myApp.LanguageDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
+		'myApp.ContactUs',
 		'services.looksIntegrationByUIB',
 		'ui.router'])
 
