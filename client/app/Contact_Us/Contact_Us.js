@@ -11,12 +11,16 @@
 					email: this.emailAddress,
 					message: this.message
 				};
-				console.log('botton works!');
+			// clears the input text boxes for refresh purposes
+			this.refresh = function() {
+				this.fullName = '';
+				this.emailAddress = '';
+				this.message = '';
+			};
+				console.log('button works!');	//button test
 				$http.post('/sendMessage/', messageContent).success(function(response){
-					console.log('once success, console log successfully sent message');
-					self.fullName = '';
-					self.emailAddress = '';
-					self.message = '';
+					console.log('once success, console log successfully sent message');	//signal test
+					self.refresh();	//refreshes the message text area box
 				});
 			};
 		}

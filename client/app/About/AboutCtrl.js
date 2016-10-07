@@ -11,18 +11,18 @@
 			Now we set the responseType to arraybuffer becuase now it will buffer 
 			the sets of data or data in an array <-- i think lol 
 			*/
-			//THIS SERVICE COULD BE MORE ENCAPSULATED WITH A FACTORY?
-			//$http.get method's first parameter sends the signal to server for what path, and the PdfID is passed in from about.html
+			//THIS SERVICE COULD BE MORE ENCAPSULATED WITH A FACTORY? <-- which will do the service a controller needs!!
+			//$http.get method's first parameter sends the get signal to server for what path, and the PdfID is passed in from about.html
 			$http.get('/About' + PDFID, {responseType: 'arraybuffer'}).success(function(data) {
 				//lets create a blob object with the response data from server, and indicate the type
 				var file = new Blob([data], {type: 'application/pdf'});
 				//now lets create a random URL for that var file of blob object of our pdf file
 				var fileURL = URL.createObjectURL(file);
-				//now lets open this file's url in another tab; using window.open
-				//this will be blocked by Ad blockers, so must think of a smooth solution
-				//where it can work around it. such as alert before or after to user to add
-				//webstite to their good list.
+				//now lets open this file's url in another tab; using window.open(url Path);
 				window.open(fileURL);
+					/*this will be blocked by Ad blockers, so must think of a smooth solution
+				where it can work around it. such as alert before or after to user to add
+				webstite to their good list.*/
 			});
 	};
 	}

@@ -1,6 +1,7 @@
 (function() {	
 	'use strict';
-	
+	//main app module
+	//loading all custom and google dependency modules
 	angular.module('myApp', [
 		'myApp.LanguageDropdown',
 		'myApp.ProgramsDropdown',
@@ -8,7 +9,8 @@
 		'myApp.ContactUs',
 		'services.looksIntegrationByUIB',
 		'ui.router'])
-
+//configuring how the application is routed, basically directly maps the webpage, 
+//which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(function($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('Home');
