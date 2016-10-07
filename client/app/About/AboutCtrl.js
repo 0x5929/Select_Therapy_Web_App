@@ -3,7 +3,8 @@
 
 	angular.module('myApp.About', [])
 		.controller('AboutCtrl', ['$scope', '$http', AboutCtrl]);
-		
+
+		//we should use controller as syntax for all controllers, fix it when have time
 		function AboutCtrl($scope, $http) {
 		$scope.openPDF = function(PDFID) {
 			/*The response type needs to be set here because default is json
