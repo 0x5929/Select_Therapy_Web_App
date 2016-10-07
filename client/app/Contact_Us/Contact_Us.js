@@ -13,9 +13,10 @@
 				};
 			// clears the input text boxes for refresh purposes
 			this.refresh = function() {
-				this.fullName = '';
+				//below can be used in a modal servce as well! 
 				this.emailAddress = '';
-				this.message = '';
+				this.message = 'Thank you ' + this.fullName + ', you rock! Your message will be evaluated and responded to shortly!';
+				this.fullName = '';
 			};
 				console.log('button works!');	//button test
 				$http.post('/sendMessage/', messageContent).success(function(response){

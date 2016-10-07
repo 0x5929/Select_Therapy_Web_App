@@ -10,6 +10,7 @@
 </head>
 <!-- Inititalizing Angular -->
 <body ng-app="myApp">
+<!-- all of the Header container needs to be routed inside another ui-view controlled by the language nav bar -->
 <!--Header Container -->
 	<div class="container-fluid">
 		<div class="row">
@@ -17,7 +18,8 @@
 				<h1 style="font-family: cursive">Select Therapy Institute</h1>
 			</div>
 		</div>
-	<!--Main Top Navigation -->
+	<!-- Main Top Navigation -->
+	<!-- and all of the nav elements needs to have a ui-sref of English.Home, or Chinese.About etc.. -->
 		<div class="row">
 			<!-- Initiated programDropdown Controller -->
 			<div class="col-xs-10" ng-controller="ProgramsDropdownCtrl">
@@ -57,6 +59,7 @@
 		<div class="row">
 			<div class="col-md-2">
 			</div>
+			<!-- this will just be one more step further nested within either english or chinese.MenuNavBarItems -->
 			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
 			<ui-view>
 			</ui-view>
