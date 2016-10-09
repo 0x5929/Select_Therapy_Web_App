@@ -29,10 +29,30 @@
 						}
 					}
 				})
+				.state('chinese', {
+					views: {
+						'header': {
+							templateUrl: 'app/headerNavFooter/view/chinese/header/header.html'
+						},
+						'mainNav': {
+							templateUrl: 'app/headerNavFooter/view/chinese/main_nav/main_nav.html'
+						},
+						'content': {
+							templateUrl: 'app/Home/view/chinese/Home.html'
+						}
+					}
+				})
 				.state('english.Home', {
 					views: {
 						'content@': {	//needed a '@' b/c this is a view within the english view, and the ui-view content is in html, needs to be referenced properly
 							templateUrl: 'app/Home/view/english/Home.html'
+						}
+					}
+				})
+				.state('chinese.Home', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Home/view/chinese/Home.html'
 						}
 					}
 				})
@@ -43,11 +63,26 @@
 						}	
 					}
 				})
+				.state('chinese.Class_Schedule', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Class_Schedule/view/chinese/Class_Schedule.html'
+						}
+					}
+				})
 				.state('english.About', {
 					views: {
 						'content@': {
 							templateUrl: 'app/About/view/english/About.html'
 						}	
+					},
+					controller: 'AboutCtrl'
+				})
+				.state('chinese.About', {
+					views: {
+						'content@': {
+							templateUrl: 'app/About/view/chinese/About.html'
+						}
 					},
 					controller: 'AboutCtrl'
 				})
@@ -60,11 +95,27 @@
 					controller: 'ContactUsCtrl',
 					controllerAs: 'contactControl'
 				})
+				.state('chinese.Contact_Us', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Contact_Us/view/chinese/Contact_Us.html'
+						}
+					},
+					controller: 'ContactUsCtrl',
+					controllerAs: 'contactControl'
+				})
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
 						'content@': {
 							templateUrl: 'app/Programs/view/english/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
 						}	
+					}
+				})
+				.state('chinese.Nurse_Assistant_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
+						}
 					}
 				})
 				.state('english.Home_Health_Aid_Training_Program', {
@@ -74,11 +125,25 @@
 						}	
 					}
 				})
+				.state('chinese.Home_Health_Aid_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/HHA_Program/Home_Health_Aid_Training_Program.html'
+						}
+					}
+				})
 				.state('english.Security_Guard_Training_Program', {
 					views: {
 						'content@': {
 							templateUrl: 'app/Programs/view/english/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
 						}	
+					}
+				})
+				.state('chinese.Security_Guard_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
+						}
 					}
 				})
 				.state('english.CPR_BLS_HSFA_Program', {
@@ -88,6 +153,13 @@
 						}	
 					}
 				})
+				.state('chinese.CPR_BLS_HSFA_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/CPR_BLS_HSFA_Program/CPR_BLS_HSFA_Program.html'
+						}
+					}
+				})
 				.state('english.English_Program', {
 					views: {
 						'content@': {
@@ -95,11 +167,25 @@
 						}	
 					}
 				})
+				.state('chinese.English_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/English_Program/English_Program.html'
+						}
+					}
+				})
 				.state('english.Acupuncture_CEU_Program', {
 					views: {
 						'content@': {
 							templateUrl: 'app/Programs/view/english/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
 						}	
+					}
+				})
+				.state('chinese.Acupuncture_CEU_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/chinese/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
+						}
 					}
 				});
 		});
