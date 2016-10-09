@@ -6,6 +6,6 @@
 		.controller('ProgramsDropdownCtrl', ['$scope', DropdownCtrl]);
 	
 	function DropdownCtrl($scope) {
-		
+		//empty controller, but needed for the dropdown action
 	}
 }());

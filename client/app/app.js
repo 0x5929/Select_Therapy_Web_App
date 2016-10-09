@@ -3,7 +3,7 @@
 	//main app module
 	//loading all custom and google dependency modules
 	angular.module('myApp', [
-		'myApp.LanguageDropdown',
+		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
 		'myApp.ContactUs',
@@ -13,48 +13,94 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(function($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
-			$urlRouterProvider.otherwise('Home');
+			$urlRouterProvider.otherwise('/english');
 			$stateProvider
-				.state('Home', {
-					url: '/Home',
-					templateUrl: 'app/Home/Home.html'
+				.state('english', {
+					url: '/english',
+					views: {
+						'header': {
+							templateUrl: 'app/headerNavFooter/view/english/header/header.html'
+						},
+						'mainNav': {
+							templateUrl: 'app/headerNavFooter/view/english/main_nav/main_nav.html'
+						},
+						'content': {
+							templateUrl: 'app/Home/view/english/Home.html'
+						}
+					}
 				})
-				.state('Class_Schedule', {
-					url: '/Class_Schedule',
-					templateUrl: 'app/Class_Schedule/Class_Schedule.html'
+				.state('english.Home', {
+					views: {
+						'content@': {	//needed a '@' b/c this is a view within the english view, and the ui-view content is in html, needs to be referenced properly
+							templateUrl: 'app/Home/view/english/Home.html'
+						}
+					}
 				})
-				.state('About', {
-					url: '/About',
-					templateUrl: 'app/About/About.html',
+				.state('english.Class_Schedule', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Class_Schedule/view/english/Class_Schedule.html'
+						}	
+					}
+				})
+				.state('english.About', {
+					views: {
+						'content@': {
+							templateUrl: 'app/About/view/english/About.html'
+						}	
+					},
 					controller: 'AboutCtrl'
 				})
-				.state('Contact_Us', {
-					url: '/Contact_Us',
-					templateUrl: 'app/Contact_Us/Contact_Us.html'
+				.state('english.Contact_Us', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Contact_Us/view/english/Contact_Us.html'
+						}	
+					},
+					controller: 'ContactUsCtrl',
+					controllerAs: 'contactControl'
 				})
-				.state('Nurse_Assistant_Training_Program', {
-					url: '/Nurse_Assistant_Training_Program',
-					templateUrl: 'app/Programs/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
+				.state('english.Nurse_Assistant_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
+						}	
+					}
 				})
-				.state('Home_Health_Aid_Training_Program', {
-					url: '/Home_Health_Aid_Training_Program',
-					templateUrl: 'app/Programs/HHA_Program/Home_Health_Aid_Training_Program.html'
+				.state('english.Home_Health_Aid_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/HHA_Program/Home_Health_Aid_Training_Program.html'
+						}	
+					}
 				})
-				.state('Security_Guard_Training_Program', {
-					url: '/Security_Guard_Training_Program',
-					templateUrl: 'app/Programs/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
+				.state('english.Security_Guard_Training_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
+						}	
+					}
 				})
-				.state('CPR_BLS_HSFA_Program', {
-					url: '/CPR_BLS_HSFA_Program',
-					templateUrl: 'app/Programs/CPR_BLS_HSFA_Program/CPR_BLS_HSFA_Program.html'
+				.state('english.CPR_BLS_HSFA_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/CPR_BLS_HSFA_Program/CPR_BLS_HSFA_Program.html'
+						}	
+					}
 				})
-				.state('English_Program', {
-					url: '/English_Program',
-					templateUrl: 'app/Programs/English_Program/English_Program.html'
+				.state('english.English_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/English_Program/English_Program.html'
+						}	
+					}
 				})
-				.state('Acupuncture_CEU_Program', {
-					url: '/Acupuncture_CEU_Program',
-					templateUrl: 'app/Programs/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
+				.state('english.Acupuncture_CEU_Program', {
+					views: {
+						'content@': {
+							templateUrl: 'app/Programs/view/english/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
+						}	
+					}
 				});
 		});
 }());

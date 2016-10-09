@@ -14,41 +14,14 @@
 <!--Header Container -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<h1 style="font-family: cursive">Select Therapy Institute</h1>
+			<div class="col-xs-10" ui-view="header"></div>
+			<div class="col-xs-2">
+			<h3><button class="btn btn-link" ui-sref="english" href="#english">English</button><button class="btn btn-link" ui-sref="chinese">Chinese</button></h3>
 			</div>
 		</div>
 	<!-- Main Top Navigation -->
 	<!-- and all of the nav elements needs to have a ui-sref of English.Home, or Chinese.About etc.. -->
-		<div class="row">
-			<!-- Initiated programDropdown Controller -->
-			<div class="col-xs-10" ng-controller="ProgramsDropdownCtrl">
-				<ul class="nav nav-pills">
-					<li role ="presentation" class="active"><a ui-sref="Home" href="#Home">Home</a></li>
-					<li role ="presentation"><a ui-sref="Class_Schedule">Class Schedule</a></li>
-						<!-- Programs Dropdown Menu -->
-					<li role ="presentation" class="btn-group" uib-dropdown><a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">Programs</a>
-					<!-- This is the drop down menu, points to the template url, for further encapsulation -->
-						<ul class="dropdown-menu" uib-dropdown-menu template-url="app/Programs/ProgramsDropdown.html" aria-labelledby="button-template-url">
-						</ul>
-					</li>
-					<li role ="presentation"><a ui-sref="About">About Us</a></li>
-					<li role ="presentation"><a ui-sref="Contact_Us">Contact Us</a></li>
-					<li role ="presentation"><a href="#">Sign In</a></li>
-					<li role ="presentation"><a href="#">Sign Up</a></li>
-				</ul>
-			</div>
-			<!-- Initiated LanguageDropdown Controller -->
-			<div class="col-xs-2" ng-controller="LanguageDropdownCtrl">
-			    <div class="btn-group" uib-dropdown>
-			      <button id="button-template-url" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-			      	Language
-			      </button>
-			      <!-- Language Dropdown Menu -->
-			      <ul class="dropdown-menu" uib-dropdown-menu template-url="app/languageDropdown/languageDropdown.html" aria-labelledby="button-template-url">
-			      </ul>
-			    </div>
-			</div>
+		<div class="row" ui-view="mainNav">	
 		</div>
 	</div>
 <!--Middle Container -->
@@ -61,8 +34,7 @@
 			</div>
 			<!-- this will just be one more step further nested within either english or chinese.MenuNavBarItems -->
 			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
-			<ui-view>
-			</ui-view>
+			<div ui-view="content"></div>
 			<div class="col-md-2">
 			</div>
 		</div>
@@ -75,7 +47,7 @@
 <script src="services/looksIntegration.js"></script>
 <!-- Loading Controller Scripts -->
 <script src="app/Programs/ProgramsDropdown.js"></script>
-<script src="app/languageDropdown/languageDropdown.js"></script>
+<script src="app/userDropdown/userDropdown.js"></script>
 <script src="app/About/AboutCtrl.js"></script>
 <script src="app/Contact_Us/Contact_Us.js"></script>
 <!-- Loading Application Scripts-->
