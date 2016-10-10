@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.ProgramsDropdown', [])
+	angular.module('myApp.ProgramsDropdown', ['services.looksIntegrationByUIB'])
 
 		.controller('ProgramsDropdownCtrl', ['$scope', DropdownCtrl]);
 	

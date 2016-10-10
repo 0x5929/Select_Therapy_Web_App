@@ -3,11 +3,11 @@
 	//main app module
 	//loading all custom and google dependency modules
 	angular.module('myApp', [
+		'services.looksIntegrationByUIB',
 		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
 		'myApp.ContactUs',
-		'services.looksIntegrationByUIB',
 		'ui.router'])
 //configuring how the application is routed, basically directly maps the webpage, 
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
