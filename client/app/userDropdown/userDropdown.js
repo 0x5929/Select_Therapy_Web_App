@@ -13,7 +13,7 @@
 				function dropdownCtrl($scope) {
 				
 				}
-	//controller function for signInModalInstanceController
+				//controller function for signInModalInstanceController
 				function signInModalInstanceController($scope, $uibModalInstance) {
 					var signInModalInstanceCtrl = this;
 					signInModalInstanceCtrl.ok = function () {
@@ -23,7 +23,7 @@
 		    			$uibModalInstance.dismiss('cancel');
 		  			};
 				}
-	//controller function for signUpModalInstanceController
+				//controller function for signUpModalInstanceController
 				function signUpModalInstanceController($scope, $uibModalInstance) {
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.ok = function () {
@@ -33,7 +33,7 @@
 		    			$uibModalInstance.dismiss('cancel');
 		  			};
 				}
-	//function for signInModalControl
+				//function for signInModalControl
 				function signInModalControl($scope, $uibModal, $log) {
 					var self = this;
 					this.animationsEnabled = true;
