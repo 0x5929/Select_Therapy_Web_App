@@ -15,7 +15,7 @@
 				function ModalInstanceController($scope, $uibModalInstance) {
 					var ModalInstanceCtrl = this;
 					ModalInstanceCtrl.ok = function () {
-					    $uibModalInstance.close(ModalInstanceCtrl.selected.item);
+					    $uibModalInstance.close('hello');
 					};
 					ModalInstanceCtrl.cancel = function () {
 		    			$uibModalInstance.dismiss('cancel');
@@ -34,17 +34,18 @@
 		      controller: 	'ModalInstanceController',
 		      controllerAs: 'ModalInstanceCtrl',
 		      size: size,
-		      resolve: {
+		      resolve: {//maybe resolve user data from cookies?
 		        user: function () {
 		          return;
 		        }
 		      }
 		    });
 
-		    modalInstance.result.then(function (selectedItem) {
-		      this.selected = selectedItem;
-		    }, function () {
-		      $log.info('Modal dismissed at: ' + new Date());
+		    modalInstance.result.then(function () {	//when modal is closed 
+		      //do something when the modal is closed
+		      console.log('hello world from modalInstance result promise');//logs it onto the client
+		    }, function () {	//when the modal is dismissed by cancel
+		      $log.info('Modal dismissed at: ' + new Date());	//logs the modal dimiss time info on client side
 		   });
 		};
 	}
