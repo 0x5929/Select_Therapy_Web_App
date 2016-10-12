@@ -13,6 +13,7 @@ var port = process.env.PORT || 8080; 	//set the port
 //Configuration
 app.use(express.static("../client")); 	//setting up the static file location
 app.use(bodyParser.json());	//configuring body parser to parse incoming application/json files
+//definitely good to seperate all the routes in their own specific files, or requests into their own routeFiles/
 //GET REQUESTS FOR PDF FILES
 //listens for signal GET repquests for paths start with /about/PdfID/
 app.get('/About/:id', function(req, res) {
