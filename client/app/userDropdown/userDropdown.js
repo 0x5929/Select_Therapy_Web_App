@@ -16,7 +16,7 @@
 				//controller function for signInModalInstanceController
 				function signInModalInstanceController($scope, $uibModalInstance) {
 					var signInModalInstanceCtrl = this;
-					signInModalInstanceCtrl.ok = function () {
+					signInModalInstanceCtrl.ok = function () {//these couple of functions names could be changed
 					    $uibModalInstance.close('hello');
 					};
 					signInModalInstanceCtrl.cancel = function () {
@@ -24,7 +24,7 @@
 		  			};
 				}
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $uibModalInstance) {
+				function signUpModalInstanceController($scope, $uibModalInstance) {//these couple of functions names could be changed
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.ok = function () {
 					    $uibModalInstance.close('hello');

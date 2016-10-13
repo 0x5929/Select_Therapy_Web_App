@@ -18,47 +18,44 @@
     We need to include those tags in order to complete the register form-->
         <form class="form-horizontal">
 	          	<div class="modal-header">
-	            	<div id="legend">
-	              		<legend class="modal-title" id="modal-title">New User Registration</legend>
-	            	</div>
+	              		<h3 class="modal-title" id="modal-title">New User Registration</h3>
+	            </div>
 	            <div class="modal-body" id="modal-body">
-	            	<div class="control-group">
+	            	<div class="form-group">
 	              		<label class="control-label col-sm-2" for="username">Username:</label>
 	              		<div class="col-sm-10">
-	                		<input type="text" id="username" name="username" placeholder="Username can contain any letters or numbers, no spaces" class="form-control">
+	                		<input type="text"  class="form-control" id="username" name="username" placeholder="Username can contain any letters or numbers, no spaces">
 	              		</div>
 	            	</div>
-	         
-		            <div class="control-group">
+
+		            <div class="form-group">
 		              	<label class="control-label col-sm-2" for="email">E-mail:</label>
 		              	<div class="col-sm-10">
-		                	<input type="email" id="email" name="email" placeholder="Please provide your E-mail" class="form-control">
+		                	<input type="email" class="form-control" id="email" name="email" placeholder="Please provide your E-mail">
 		              	</div>
 		            </div>
-	         
-		            <div class="control-group">
+
+		            <div class="form-group">
 		              	<label class="control-label col-sm-2" for="password">Password:</label>
 		              	<div class="col-sm-10">
-		                	<input type="password" id="password" name="password" placeholder="Password should be at least 6 characters" 
-		                	class="form-control">
+		                	<input type="password" class="form-control" id="password" name="password" placeholder="Password should be at least 6 characters">
 		              	</div>
 		            </div>
-	         
-		            <div class="control-group">
+
+		            <div class="form-group">
 		              	<label class="control-label col-sm-2" for="password_confirm">Password (Confirm):</label>
 		              	<div class="col-sm-10">
-		                	<input type="password" id="password_confirm" name="password_confirm" placeholder="Please confirm password" 
-		                	class="form-control">
+		                	<input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Please confirm password">
 		              	</div>
 		            </div>
 	         	</div>
 	        <div class="modal-footer">
-		            <div class="control-group">
-		              <!-- Button -->
-		              	<div class="col-sm-offset-2 col-sm-10">
-		                	<button class="btn btn-default" ng-click="signUpModalInstanceCtrl.ok()">Register</button>
-		              	</div>
-		            </div>
+		        <div class="form-group">
+		        <!-- Button -->
+		       		<div class="col-sm-offset-2 col-sm-10">
+		            	<button class="btn btn-default" ng-click="signUpModalInstanceCtrl.ok()">Register</button>
+		        	</div>
+		        </div>
 		    </div>
         </form>
     
