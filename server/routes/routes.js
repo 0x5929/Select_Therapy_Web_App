@@ -2,7 +2,7 @@
 
 	'use strict';
 
-module.exports = function(app, fs, bodyParser, nodemailer) {	//exposing this file to server, all necessary objs passed in
+module.exports = function(app, fs, bodyParser, nodemailer, passport) {	//exposing this file to server, all necessary objs passed in
 
 app.get('/About/:id', function(req, res) {	//listens for signal GET repquests for paths start with /about/PdfID/
 	var id = req.params.id; 	//grabbing the ID parameter
@@ -47,5 +47,17 @@ app.post('/sendMessage', function(req, res) {	//port listening to POST signal fr
 	res.end();	//ends the signal
 	
 });
+
+app.post('/signup', passport.authenticate('local-signup', {
+	successRedirect: '/english',	//redirects back to home page in english, should be something like a /profile page, needs to be created
+	failureRedirect: '/signup',	//redirects to sign up page if error
+	failureFlash: true	//allow flash messages
+}));
+
+app.post('/signin', passport.authenticate('local-signin', {
+	successRedirect: '/english',	//redirects back to home page in english, should be something like a /profile page, needs to be created
+	failureRedirect: '/signin',	//redirects to sign up page if error
+	failureFlash: true	//allow flash messages
+}));
 };
 }());

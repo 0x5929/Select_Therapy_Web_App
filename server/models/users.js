@@ -17,7 +17,7 @@ db.once('open', function() {	//once connection is open, runs the async function
 	});
 	//created a method to generate hash for pw property in schema
 	userSchema.methods.generateHash = function(password) {	//note that these functions are synchronized, maybe think about async ones?
-		return bcrypt.hashSync(password, bcrypt.genSalt(10));	//created a hashed salt for the password passed in. 
+		return bcrypt.hashSync(password, bcrypt.genSalt(10));	//created a hashed salt for the password passed in, 10 means 10 rounds of encryption, which is standard, vs 8 is the minimum 
 	};
 	userSchema.methods.validPassword = function(password) {
 		return bcrypt.compareSync(password, this.local.password);
