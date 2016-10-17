@@ -36,7 +36,7 @@ app.use(passport.session());
 app.use(flash());
 
 //routes, passing in all the necessary module objs
-require('./routes/routes.js')(app, fs, bodyParser, nodemailer, passport);
+require('./routes/routes.js')(express, app, fs, bodyParser, nodemailer, passport);
 
 //firing this baby up
 app.listen(port, console.log('magic happens on port: ', port));

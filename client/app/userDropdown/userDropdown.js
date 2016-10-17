@@ -8,7 +8,7 @@
 		.controller('signInModalControl', ['$scope', '$uibModal', '$log', signInModalControl])
 		.controller('signUpModalControl', ['$scope', '$uibModal', '$log', signUpModalControl])
 		.controller('signInModalInstanceController', ['$scope', '$uibModalInstance', signInModalInstanceController])
-		.controller('signUpModalInstanceController', ['$scope', '$uibModalInstance', signUpModalInstanceController]);
+		.controller('signUpModalInstanceController', ['$scope', '$uibModalInstance', '$http', signUpModalInstanceController]);
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
 				
@@ -24,14 +24,22 @@
 		  			};
 				}
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $uibModalInstance) {//these couple of functions names could be changed
+				function signUpModalInstanceController($scope, $uibModalInstance, $http) {//these couple of functions names could be changed
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.ok = function () {
-					    $uibModalInstance.close('hello');
+						var postData = {
+							email: signUpModalInstanceCtrl.email,
+							password: signUpModalInstanceCtrl.password,
+							confirmPassword: signUpModalInstanceCtrl.confirmPassword
+						};
+						$http.post('/signUp', postData).then(function(successResponse) {
+
+						}, function(failureResponse) {
+							
+						});
 					};
-					signUpModalInstanceCtrl.cancel = function () {
-		    			$uibModalInstance.dismiss('cancel');
-		  			};
+
+					
 				}
 				//function for signInModalControl
 				function signInModalControl($scope, $uibModal, $log) {
@@ -54,6 +62,7 @@
 					    });
 
 					    modalInstance.result.then(function () {	//when modal is closed 
+
 					      //do something when the modal is closed
 					      console.log('hello world from signInmodalInstance result promise');//logs it onto the client
 					    }, function () {	//when the modal is dismissed by cancel
@@ -82,6 +91,7 @@
 					    });
 					    modalInstance.result.then(function () {	//when modal is closed 
 					      //do something when the modal is closed
+
 					      console.log('hello world from signUpmodalInstance result promise');//logs it onto the client
 					    }, function () {	//when the modal is dismissed by cancel
 					      $log.info('Modal dismissed at: ' + new Date());	//logs the modal dimiss time info on client side

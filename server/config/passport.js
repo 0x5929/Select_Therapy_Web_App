@@ -32,14 +32,21 @@
 							return done(err);
 						if (user){
 							return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-						} else {
-							var newUser = new User();
-							newUser.save(function(err) {
-								if (err) 
-									throw err;
-								return done(null, newUser);
-							});
+						} else if (req.body.password === req.body.confirmPassword) {
+								//create new user
+								var newUser = new User();
+								//set new user credentials
+								newUser.local.email = email;
+								newUser.local.password = newUser.generateHash(password);
+								//save new user
+								newUser.save(function(err) {
+									if (err) 
+										throw err;
+									return done(null, newUser);
+								});		
 						}
+						else 
+							return done(null, false, req.flash('signupMessage', 'Passwords do not match!'));
 					});
 				});	
 			}
