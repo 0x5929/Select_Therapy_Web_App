@@ -24,7 +24,7 @@ var fs = require('fs'),
 
 configDB.databaseConnectionConfig();
 mongoose.connect(configDB.url);
-require('./config/passport.js')(passport, configDB.databaseConnection);
+require('./config/passport.js')(passport);
 
 
 //Setting up express application

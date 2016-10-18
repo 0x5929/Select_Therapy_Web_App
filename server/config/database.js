@@ -11,14 +11,13 @@
   		// Create your schemas and models here.
   		//defining schema for our user model: for mongoose
 		var Users = require('../models/users.js');	//loading all models
-		return db;
+		return Users;
 		});
 	};
+	
 	return {
-		url: url,
-		databaseConnectionConfig: databaseConnectionConfig,
-		databaseConnection: databaseConnectionConfig(),
-
+		url : url,
+		databaseConnectionConfig : databaseConnectionConfig
 		};
 
 	};

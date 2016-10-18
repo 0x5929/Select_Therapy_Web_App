@@ -4,13 +4,7 @@
 	var LocalStrategy = require('passport-local').Strategy,
 		User = require('../models/users.js');
 //exposing the passport configuration back to the server
-	module.exports = function(passport, db) {
-
-		db.on('error', console.error.bind(console, 'connection error: '));
-
-		db.once('open', function() {
- 
-		
+	module.exports = function(passport) {
 			//passport session set up
 			//used for persistent log in sessions
 			passport.serializeUser(function(user, done) {
@@ -31,32 +25,41 @@
 			}, 
 				function(req, email, password, done) {
 				//async usage of process.nextTick, think about why we need it? 
-				console.log(req.body);
+					console.log(req.body);
 					process.nextTick(function() {
 						User.findOne({'local.email': email}, function(err, user) {
-							if (err)	//server error
-								return done(err);
+							if (err){
+								console.log('hello world from server error');
+								return done(err);	//server error
+							}
 							if (user){
+								console.log('hello world from already taken user');
 								return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-							} else if (password === req.body.confirmPassword) {
+							}else if (password === req.body.confirmPassword) {
+									console.log('hello world from new user');
 									//create new user
 									var newUser = new User();
 									//set new user credentials
+									console.log('hello world from new user created');
 									newUser.local.email = email;
+									console.log(newUser.local.email);
 									newUser.local.password = newUser.generateHash(password);
+									console.log(newUser.local.password);
 									//save new user
 									newUser.save(function(err) {
 										if (err) 
 											handleError(err);
 										return done(null, newUser);
 									});		
-							}
-							else 
+							}else {
+								console.log('hello world from mismatch password');
 								return done(null, false, req.flash('signupMessage', 'Passwords do not match!'));
+							}
 						});
-					});	
-				}
-			));
+					});
+				}));
+					
+		
 
 			//local sign in configuration
 			passport.use('local-signin', new LocalStrategy({
@@ -74,8 +77,7 @@
 							return done(null, false, req.flash('loginMessage', 'Invalid Password!'));
 						return done(null, user);
 					});
-				}
-			));
-		});
+				}));
+	
 	};
 }());
