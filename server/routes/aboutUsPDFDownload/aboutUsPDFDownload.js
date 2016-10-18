@@ -2,8 +2,9 @@
 	'use strict';
 
 	module.exports = function(express, fs) {
-
+		//initialize router
 		var aboutUsPDFRoute = express.Router();
+		//config routes for router
 		aboutUsPDFRoute.get('/:id', function(req, res) {
 			var id = req.params.id; 	//grabbing the ID parameter
 			console.log(id);	//signal test Terminal logs: School_Catalog
@@ -15,7 +16,7 @@
 			// which sends(writes) the actually data to client to be rendered. 
 			PDFReadstream.pipe(res);
 		});
-
+		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return aboutUsPDFRoute;
 	};
 }());

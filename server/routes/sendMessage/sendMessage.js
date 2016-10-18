@@ -2,11 +2,12 @@
 	'use strict';
 	
 	module.exports = function(express, app, bodyParser, nodemailer) {
-
+		//initialize router
 		var sendMessageRoute = express.Router();
+		//set up all needed tools
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: true }));
-
+		//config routes for router
 		sendMessageRoute.post('/', function(req, res) {
 			// the smtp configuration used for the nodemailer's transport to create transporter object 
 			var smtpConfig = {
@@ -38,8 +39,8 @@
 			res.end();	//ends the signal
 
 		});
-
-		return sendMessageRoute;	//returned to be extracted from routesjs
+		//expose router and all of its configed routes back to routesjs to be used in serverjs
+		return sendMessageRoute;
 		};
 
 }());
