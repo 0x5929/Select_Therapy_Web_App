@@ -1,62 +1,29 @@
 (function() {
 	'use strict';
 
-//load all tools we need
+	//load all tools we need
 	var mongoose = require('mongoose');
 	var bcrypt   = require('bcrypt-nodejs');
-//load necessary db connection with simple err checking
+	var saltyRounds = 10;	//rounds of encryption to be used in generating pw hash 10 means 10 rounds of encryption, which is standard, vs 8 is the minimum 
 
-/*
-	var db = mongoose.connection;
-
-	
-	db.on('error', console.error.bind(console, 'connection error: '));
-	db.once('open', function() {	//once connection is open, runs the async function
-		//defining schema for our user model: for mongoose
-		var Schema = mongoose.Schema;
-		var userSchema = new Schema({
-			local: {
-				email: String,
-				password: String
-			}
-		});
-		//created a method to generate hash for pw property in schema
-		userSchema.methods.generateHash = function(password) {	//note that these functions are synchronized, maybe think about async ones?
-			return bcrypt.hashSync(password, bcrypt.genSalt(10));	//created a hashed salt for the password passed in, 10 means 10 rounds of encryption, which is standard, vs 8 is the minimum 
-		};
-		userSchema.methods.validPassword = function(password) {
-			return bcrypt.compareSync(password, this.local.password);
-		};
-		//note, the password hashing is done before setting the model to be sent to the database
-		//so all pw hashing is taken care, and we dont have to worry about it when dealing with it within db
-
-		module.exports = db.model('User', userSchema);
-
-		
-		});
-	
-		
-	*/
-	
+	//define schema, note all of the following Schema will be configured into a model and exported to be further configured with db 
 	var userSchema = mongoose.Schema({
 			local: {
 				email: String,
 				password: String
 			}
 		});
-		//created a method to generate hash for pw property in schema
+	//created a method to generate hash for pw property in schema
 	userSchema.methods.generateHash = function(password) {	//note that these functions are synchronized, maybe think about async ones?
-		return bcrypt.hashSync(password, bcrypt.genSalt(10, function(err, salt) {
+		return bcrypt.hashSync(password, bcrypt.genSalt(saltyRounds, function(err, salt) {
 			if (err) throw err;
-			console.log(salt);
 			return salt;
-		}));	//created a hashed salt for the password passed in, 10 means 10 rounds of encryption, which is standard, vs 8 is the minimum 
+		}));	
 	};
 	userSchema.methods.validPassword = function(password) {
 		return bcrypt.compareSync(password, this.local.password);
 	};
-	//note, the password hashing is done before setting the model to be sent to the database
-	//so all pw hashing is taken care, and we dont have to worry about it when dealing with it within db
+	//note, the password hashing is done in passport strategy, with schema methods before saving the instance of model to be sent to the database in passportjs
 	module.exports = mongoose.model('User', userSchema);
 	
 }());

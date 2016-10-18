@@ -6,7 +6,7 @@
 var fs = require('fs'),
 	express = require('express'),
 	app = express(),
-	port = process.env.PORT || 7080,
+	port = process.env.PORT || 8080,
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	flash = require('connect-flash'),

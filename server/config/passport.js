@@ -2,9 +2,8 @@
 	'use strict';
 
 	var LocalStrategy = require('passport-local').Strategy,
-		User = require('../models/users.js');
-//exposing the passport configuration back to the server
-	module.exports = function(passport) {
+		User = require('../models/users.js');	//note this is called, and model has already been initialize and connected with db in the db config 
+	module.exports = function(passport) {	//exposing the passport for configuration in server, this function is to be run while required in server, and will thus all the following code will configure passport configs
 			//passport session set up
 			//used for persistent log in sessions
 			passport.serializeUser(function(user, done) {
@@ -78,6 +77,5 @@
 						return done(null, user);
 					});
 				}));
-	
 	};
 }());
