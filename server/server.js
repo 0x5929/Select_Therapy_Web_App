@@ -6,7 +6,7 @@
 var fs = require('fs'),
 	express = require('express'),
 	app = express(),
-	port = process.env.PORT || 8080,
+	port = process.env.PORT || 7080,
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	flash = require('connect-flash'),
@@ -17,11 +17,15 @@ var fs = require('fs'),
 	logger = require('morgan'),
 	session = require('express-session'),
 
-	configDB = require('./config/database.js');
+	configDB = require('./config/database.js')(mongoose);
 
 //configuration
+//database configuration
+
+configDB.databaseConnectionConfig();
 mongoose.connect(configDB.url);
-require('./config/passport.js')(passport);
+require('./config/passport.js')(passport, configDB.databaseConnection);
+
 
 //Setting up express application
 app.use(logger('common'));

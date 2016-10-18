@@ -6,15 +6,15 @@
 	var bcrypt   = require('bcrypt-nodejs');
 //load necessary db connection with simple err checking
 
-
-	var db = mongoose.connection,
-		userModel;
+/*
+	var db = mongoose.connection;
 
 	
 	db.on('error', console.error.bind(console, 'connection error: '));
 	db.once('open', function() {	//once connection is open, runs the async function
 		//defining schema for our user model: for mongoose
-		var userSchema = mongoose.Schema({
+		var Schema = mongoose.Schema;
+		var userSchema = new Schema({
 			local: {
 				email: String,
 				password: String
@@ -30,12 +30,13 @@
 		//note, the password hashing is done before setting the model to be sent to the database
 		//so all pw hashing is taken care, and we dont have to worry about it when dealing with it within db
 
-		userModel = mongoose.model('User', userSchema);
+		module.exports = db.model('User', userSchema);
 
 		
 		});
-	module.exports = userModel;
-	/*
+	
+		
+	*/
 	
 	var userSchema = mongoose.Schema({
 			local: {
@@ -53,5 +54,5 @@
 	//note, the password hashing is done before setting the model to be sent to the database
 	//so all pw hashing is taken care, and we dont have to worry about it when dealing with it within db
 	module.exports = mongoose.model('User', userSchema);
-	*/
+	
 }());

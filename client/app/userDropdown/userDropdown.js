@@ -33,9 +33,9 @@
 							confirmPassword: signUpModalInstanceCtrl.confirmPassword
 						};
 						$http.post('/signUp', postData).then(function(successResponse) {
-
+							console.log(successResponse);
 						}, function(failureResponse) {
-							
+							console.log('failureResponse');
 						});
 					};
 
