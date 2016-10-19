@@ -48,7 +48,7 @@
 									newUser.save(function(err) {
 										if (err) 
 											handleError(err);
-										return done(null, newUser);
+										return done(null, newUser, req.flash('signupSuccess', 'Welcome!'));
 									});		
 							}else {
 								console.log('hello world from mismatch password');
