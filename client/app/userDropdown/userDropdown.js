@@ -35,7 +35,11 @@
 						$http.post('/signUp', postData).then(function(successResponse) {
 							console.log(successResponse.data);
 						}, function(failureResponse) {
-							console.log('failureResponse');
+							//clearing the fields & adding message;
+							signUpModalInstanceCtrl.message = 'Failed signUp';
+							signUpModalInstanceCtrl.email = '';
+							signUpModalInstanceCtrl.password = '';
+							signUpModalInstanceCtrl.confirmPassword = '';
 						});
 					};
 
