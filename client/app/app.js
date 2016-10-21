@@ -3,15 +3,16 @@
 	//main app module
 	//loading all custom and google dependency modules
 	angular.module('myApp', [
+		'ui.router',
 		'services.looksIntegrationByUIB',
+		'services.AuthenticationFactory',
 		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
-		'myApp.ContactUs',
-		'ui.router'])
+		'myApp.ContactUs'])
 //configuring how the application is routed, basically directly maps the webpage, 
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
-		.config(function($stateProvider, $urlRouterProvider){
+		.config(['$stateProvider', '$urlRouterProvider', 'AuthenticationFactory', function($stateProvider, $urlRouterProvider, AuthenticationFactory){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/english');
 			$stateProvider
@@ -104,6 +105,16 @@
 					controller: 'ContactUsCtrl',
 					controllerAs: 'contactControl'
 				})
+				.state('english.school', {
+					views: {
+						'content@': {
+							templateUrl: 'app/school/view/english/school.html',
+							resolve: {
+								checkLoggedin: AuthenticationFactory.checkLoggedin
+							}
+						}
+					}
+				})
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
 						'content@': {
@@ -188,5 +199,5 @@
 						}
 					}
 				});
-		});
+		}]);
 }());

@@ -7,7 +7,7 @@
 		var signUpRoute = express.Router();
 		//config routes for router
 		signUpRoute.post('/', passport.authenticate('local-signup'), function(req, res) {
-			req.send(req.user);
+			res.send(req.user);
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return signUpRoute;

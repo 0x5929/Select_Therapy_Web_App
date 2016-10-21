@@ -1,14 +1,12 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB'])
-		.controller('userDropdownControl', ['$scope', dropdownCtrl]);
-	
-	angular.module('myApp.userDropdown')
+	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'ui.router'])
+		.controller('userDropdownControl', ['$scope', dropdownCtrl])
 		.controller('signInModalControl', ['$scope', '$uibModal', '$log', signInModalControl])
 		.controller('signUpModalControl', ['$scope', '$uibModal', '$log', signUpModalControl])
 		.controller('signInModalInstanceController', ['$scope', '$uibModalInstance', signInModalInstanceController])
-		.controller('signUpModalInstanceController', ['$scope', '$uibModalInstance', '$http', signUpModalInstanceController]);
+		.controller('signUpModalInstanceController', ['$scope', '$uibModalInstance', '$http', '$state', signUpModalInstanceController]);
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
 				
@@ -24,7 +22,7 @@
 		  			};
 				}
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $uibModalInstance, $http) {//these couple of functions names could be changed
+				function signUpModalInstanceController($scope, $uibModalInstance, $http, $state) {//these couple of functions names could be changed
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.ok = function () {
 						var postData = {
@@ -33,7 +31,8 @@
 							confirmPassword: signUpModalInstanceCtrl.confirmPassword
 						};
 						$http.post('/signUp', postData).then(function(successResponse) {
-							console.log(successResponse.data);
+							$state.go('english.school');
+							$uibModalInstance.close('logged in');
 						}, function(failureResponse) {
 							//clearing the fields & adding message;
 							signUpModalInstanceCtrl.message = 'Failed signUp';
