@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'ui.router'])
+	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'ui.router'])
 		.controller('userDropdownControl', ['$scope', dropdownCtrl])
 		.controller('signInModalControl', ['$scope', '$uibModal', '$log', signInModalControl])
 		.controller('signUpModalControl', ['$scope', '$uibModal', '$log', signUpModalControl])
