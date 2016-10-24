@@ -97,6 +97,7 @@
 	*/
 					
 				}
+				
 
 				//function for signInModalControl
 				function signInModalControl($scope, modalService) {
@@ -106,7 +107,7 @@
 					};
 					
 				}
-				
+
 				//function for signUpModalControl
 				function signUpModalControl($scope, modalService) {
 					var signUpModalCtrl = this;
