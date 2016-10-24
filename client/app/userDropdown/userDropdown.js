@@ -1,29 +1,82 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'ui.router'])
+	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'ui.router'])
+		.factory('modalService', ['$rootScope', '$uibModal', modalService])
 		.controller('userDropdownControl', ['$scope', dropdownCtrl])
-		.controller('signInModalControl', ['$scope', '$uibModal', '$log', signInModalControl])
-		.controller('signUpModalControl', ['$scope', '$uibModal', '$log', signUpModalControl])
-		.controller('signInModalInstanceController', ['$scope', '$uibModalInstance', signInModalInstanceController])
-		.controller('signUpModalInstanceController', ['$scope', '$uibModalInstance', '$http', '$state', signUpModalInstanceController]);
+		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
+		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
+		.controller('signInModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signInModalInstanceController])
+		.controller('signUpModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signUpModalInstanceController]);
+				//ModalService function
+				function modalService($rootScope, $uibModal) {
+
+					function assignCurrentUser(user) {
+						$rootScope.currentUser = user;
+						return user;
+					}
+
+					function loginModalService () {
+						var modalInstance = $uibModal.open({
+						  animation: true,
+					      ariaLabelledBy: 'modal-title',
+					      ariaDescribedBy: 'modal-body',
+					      templateUrl: 'app/userDropdown/view/english/signIn/signInModal.html', 
+					      controller: 	'signInModalInstanceController',
+					      controllerAs: 'signInModalInstanceCtrl',
+					      size: 'lg'
+						});
+
+						return modalInstance.result.then(assignCurrentUser);
+					}
+
+					function signUpModalService () {
+						var modalInstance = $uibModal.open({
+						  animation: true,
+					      ariaLabelledBy: 'modal-title',
+					      ariaDescribedBy: 'modal-body',
+					      templateUrl: 'app/userDropdown/view/english/signUp/signUpModal.html', 
+					      controller: 	'signUpModalInstanceController',
+					      controllerAs: 'signUpModalInstanceCtrl',
+					      size: 'lg'
+						});
+
+						return modalInstance.result.then(assignCurrentUser);
+					}
+
+					return {
+						loginModalService: loginModalService,
+						signUpModalService: signUpModalService
+					};
+				}
+
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
-				
 				}
+
 				//controller function for signInModalInstanceController
-				function signInModalInstanceController($scope, $uibModalInstance) {
+				function signInModalInstanceController($scope, $state, AuthenticationFactory) {
 					var signInModalInstanceCtrl = this;
-					signInModalInstanceCtrl.ok = function () {//these couple of functions names could be changed
-					    $uibModalInstance.close('hello');
-					};
-					signInModalInstanceCtrl.cancel = function () {
-		    			$uibModalInstance.dismiss('cancel');
-		  			};
+					signInModalInstanceCtrl.cancel = $scope.$dismiss;
+
+					signInModalInstanceCtrl.submit = function(email, password) {
+						AuthenticationFactory.login(email, password).then(function(user){
+							$scope.$close(user);
+						});
+					}
 				}
+
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $uibModalInstance, $http, $state) {//these couple of functions names could be changed
+				function signUpModalInstanceController($scope, $state, AuthenticationFactory) {
 					var signUpModalInstanceCtrl = this;
+
+					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
+					signUpModalInstanceCtrl.ok = function(postData) {
+						AuthenticationFactory.signUp(postData).then(function(user) {
+							$scope.$close(user);
+						});
+					};
+					/*
 					signUpModalInstanceCtrl.ok = function () {
 						var postData = {
 							email: signUpModalInstanceCtrl.email,
@@ -41,65 +94,26 @@
 							signUpModalInstanceCtrl.confirmPassword = '';
 						});
 					};
-
+	*/
 					
 				}
+
 				//function for signInModalControl
-				function signInModalControl($scope, $uibModal, $log) {
-					var self = this;
-					this.animationsEnabled = true;
-			   	    this.openModal = function (size) {
-					    var modalInstance = $uibModal.open({
-					      animation: this.animationsEnabled,
-					      ariaLabelledBy: 'modal-title',
-					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signIn/signInModal.html', 
-					      controller: 	'signInModalInstanceController',
-					      controllerAs: 'signInModalInstanceCtrl',
-					      size: size,
-					      resolve: {//maybe resolve user data from cookies?
-					        user: function () {
-					          return;
-					        }
-					      }
-					    });
-
-					    modalInstance.result.then(function () {	//when modal is closed 
-
-					      //do something when the modal is closed
-					      console.log('hello world from signInmodalInstance result promise');//logs it onto the client
-					    }, function () {	//when the modal is dismissed by cancel
-					      $log.info('Modal dismissed at: ' + new Date());	//logs the modal dimiss time info on client side
-					   });
+				function signInModalControl($scope, modalService) {
+					var signInModalCtrl = this;
+					signInModalCtrl.openModal = function() {
+						modalService.loginModalService();
 					};
+					
 				}
+				
 				//function for signUpModalControl
-				function signUpModalControl($scope, $uibModal, $log) {
-					var self = this;
-					this.animationsEnabled = true;
-					this. openModal = function(size) {
-						var modalInstance = $uibModal.open({
-					      animation: this.animationsEnabled,
-					      ariaLabelledBy: 'modal-title',
-					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signUp/signUpModal.html', 
-					      controller: 	'signUpModalInstanceController',
-					      controllerAs: 'signUpModalInstanceCtrl',
-					      size: size,
-					      resolve: {//maybe resolve user data from cookies?
-					        user: function () {
-					          return;
-					        }
-					      }
-					    });
-					    modalInstance.result.then(function () {	//when modal is closed 
-					      //do something when the modal is closed
-
-					      console.log('hello world from signUpmodalInstance result promise');//logs it onto the client
-					    }, function () {	//when the modal is dismissed by cancel
-					      $log.info('Modal dismissed at: ' + new Date());	//logs the modal dimiss time info on client side
-					   });
-					}
+				function signUpModalControl($scope, modalService) {
+					var signUpModalCtrl = this;
+					signUpModalCtrl.openModal = function() {
+						modalService.signUpModalService();
+					};
+			
 				}
 
 }());
