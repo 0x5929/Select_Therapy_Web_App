@@ -12,7 +12,7 @@
 		'myApp.ContactUs'])
 //configuring how the application is routed, basically directly maps the webpage, 
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
-		.config(['$stateProvider', '$urlRouterProvider', 'AuthenticationFactory', function($stateProvider, $urlRouterProvider, AuthenticationFactory){
+		.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/english');
 			$stateProvider
@@ -108,12 +108,10 @@
 				.state('english.school', {
 					views: {
 						'content@': {
-							templateUrl: 'app/school/view/english/school.html',
-							resolve: {
-								checkLoggedin: AuthenticationFactory.checkLoggedin
-							}
+							templateUrl: 'app/school/view/english/school.html'
 						}
-					}
+					},
+					authenticate: true
 				})
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
@@ -199,5 +197,26 @@
 						}
 					}
 				});
+		}])
+		.config(['$httpProvider', function($httpProvider) {
+			$httpProvider.interceptors.push(function($q, $injector) {
+				return {
+					responseError: function(rejection) {
+						if (rejection.status === 401){
+							$injector.get('$state').transitionTo('english.Home');
+							return $q.reject(rejection); 
+						}
+					}
+				};
+			});
+		}])
+		.run(['$rootScope', '$state', 'AuthenticationFactory', function($rootScope, $state, AuthenticationFactory) {
+			$rootScope.$on('$stateChangeStart', function(event, toState) {
+				var logginRequired = toState.authenticate;
+				if (logginRequired && !AuthenticationFactory.resolvedCheckLoggedIn()){
+					event.preventDefault();
+					$state.go(english.Home);	
+				}
+			});
 		}]);
 }());
