@@ -61,7 +61,7 @@
 
 					signInModalInstanceCtrl.submit = function(email, password) {
 						AuthenticationFactory.login(email, password).then(function(user){
-							$scope.$close(user);
+							$scope.$close(user);	//user is passed to the result promise of the modal for assignCurrentUser function 
 						});
 					}
 				}
@@ -69,7 +69,11 @@
 				//controller function for signUpModalInstanceController
 				function signUpModalInstanceController($scope, $state, AuthenticationFactory) {
 					var signUpModalInstanceCtrl = this;
-
+					var postData = {
+							email: signUpModalInstanceCtrl.email,
+							password: signUpModalInstanceCtrl.password,
+							confirmPassword: signUpModalInstanceCtrl.confirmPassword
+						};
 					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
 					signUpModalInstanceCtrl.ok = function(postData) {
 						AuthenticationFactory.signUp(postData).then(function(user) {
