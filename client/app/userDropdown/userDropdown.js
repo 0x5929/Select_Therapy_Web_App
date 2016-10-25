@@ -1,54 +1,12 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'ui.router'])
-		.factory('modalService', ['$rootScope', '$uibModal', modalService])
+	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'services.modalService', 'ui.router'])
 		.controller('userDropdownControl', ['$scope', dropdownCtrl])
 		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
 		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
 		.controller('signInModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signInModalInstanceController])
 		.controller('signUpModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signUpModalInstanceController]);
-				//ModalService function
-				function modalService($rootScope, $uibModal) {
-
-					function assignCurrentUser(user) {
-						$rootScope.currentUser = user;
-						return user;
-					}
-
-					function loginModalService () {
-						var modalInstance = $uibModal.open({
-						  animation: true,
-					      ariaLabelledBy: 'modal-title',
-					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signIn/signInModal.html', 
-					      controller: 	'signInModalInstanceController',
-					      controllerAs: 'signInModalInstanceCtrl',
-					      size: 'lg'
-						});
-
-						return modalInstance.result.then(assignCurrentUser);
-					}
-
-					function signUpModalService () {
-						var modalInstance = $uibModal.open({
-						  animation: true,
-					      ariaLabelledBy: 'modal-title',
-					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signUp/signUpModal.html', 
-					      controller: 	'signUpModalInstanceController',
-					      controllerAs: 'signUpModalInstanceCtrl',
-					      size: 'lg'
-						});
-
-						return modalInstance.result.then(assignCurrentUser);
-					}
-
-					return {
-						loginModalService: loginModalService,
-						signUpModalService: signUpModalService
-					};
-				}
 
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
@@ -69,15 +27,21 @@
 				//controller function for signUpModalInstanceController
 				function signUpModalInstanceController($scope, $state, AuthenticationFactory) {
 					var signUpModalInstanceCtrl = this;
-					var postData = {
+					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
+					signUpModalInstanceCtrl.ok = function() {
+						var postData = {
 							email: signUpModalInstanceCtrl.email,
 							password: signUpModalInstanceCtrl.password,
 							confirmPassword: signUpModalInstanceCtrl.confirmPassword
 						};
-					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
-					signUpModalInstanceCtrl.ok = function(postData) {
-						AuthenticationFactory.signUp(postData).then(function(user) {
-							$scope.$close(user);
+						console.log('consolelog @ signUpModalInstanceCtrl', postData);
+						AuthenticationFactory.signUp(postData).then(
+								function(user) {
+									$state.go('english.school');
+									$scope.$close(user);
+								},  
+								function(failureResponse) {
+									console.log('consolelog @ signUpModalInstanceCtrl', failureResponse);
 						});
 					};
 					/*
@@ -102,14 +66,12 @@
 					
 				}
 				
-
 				//function for signInModalControl
 				function signInModalControl($scope, modalService) {
 					var signInModalCtrl = this;
 					signInModalCtrl.openModal = function() {
 						modalService.loginModalService();
-					};
-					
+					};		
 				}
 
 				//function for signUpModalControl
@@ -118,7 +80,6 @@
 					signUpModalCtrl.openModal = function() {
 						modalService.signUpModalService();
 					};
-			
 				}
 
 }());
