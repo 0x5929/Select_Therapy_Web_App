@@ -33,7 +33,7 @@
 							}
 							if (user){
 								console.log('hello world from already taken user');
-								return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+								return done(null, false);	// flash fucked up the status code, beware
 							}else if (password === req.body.confirmPassword) {
 									console.log('hello world from new user');
 									//create new user

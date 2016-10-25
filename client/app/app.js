@@ -12,7 +12,11 @@
 		'myApp.ContactUs'])
 //configuring how the application is routed, basically directly maps the webpage, 
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
-		.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
+		.config(['$httpProvider', httpConfiguration])
+		.run(['$rootScope', '$state', 'AuthenticationFactory', appRunConfiguration]);
+
+		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/english');
 			$stateProvider
@@ -197,20 +201,25 @@
 						}
 					}
 				});
-		}])
-		.config(['$httpProvider', function($httpProvider) {
+		}
+
+
+		function httpConfiguration($httpProvider) {
 			$httpProvider.interceptors.push(function($q, $injector) {
 				return {
 					responseError: function(rejection) {
 						if (rejection.status === 401){
+							console.log('hello world from httpConfiguration', rejection);
 							$injector.get('$state').transitionTo('english.Home');
 							return $q.reject(rejection); 
 						}
 					}
 				};
 			});
-		}])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', function($rootScope, $state, AuthenticationFactory) {
+		}
+
+
+		function appRunConfiguration($rootScope, $state, AuthenticationFactory) {
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
 				if (logginRequired && !AuthenticationFactory.resolvedCheckLoggedIn()){
@@ -218,5 +227,5 @@
 					$state.go(english.Home);	
 				}
 			});
-		}]);
+		}
 }());
