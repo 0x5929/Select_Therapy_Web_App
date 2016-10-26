@@ -205,7 +205,7 @@
 		}
 
 
-		function httpConfiguration($httpProvider) {
+		function httpConfiguration($httpProvider) {		//	handling rejection from server b/c unauthorized
 			$httpProvider.interceptors.push(function($q, $injector) {
 				return {
 					responseError: function(rejection) {
@@ -226,8 +226,8 @@
 				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
 					event.preventDefault();
 					modalService.loginModalService().then(function(user) {
-						console.log(user);	//	signal testing
-						return $state.go(english.school);
+						console.log('hello world from appRunConfiguration: ', user);	//	signal testing
+						return $state.go('english.school');
 					}).catch(function(failureResponse) {
 						console.log(failureResponse);	//signal testing
 						return $state.go('english.Home');

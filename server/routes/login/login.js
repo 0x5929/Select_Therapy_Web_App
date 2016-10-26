@@ -1,14 +1,13 @@
 (function() {
 	'use strict';
-
-	module.exports = function(express, passport) {
+		module.exports = function(express, passport) {
 		//initialize router
-		var signUpRoute = express.Router();
+		var loginRoute = express.Router();
 		//config routes for router
-		signUpRoute.post('/', passport.authenticate('local-signup'), function(req, res) {
+		loginRoute.post('/', passport.authenticate('local-signin'), function(req, res) {
 			res.send(req.user);
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
-		return signUpRoute;
+		return loginRoute;
 	};
 }());

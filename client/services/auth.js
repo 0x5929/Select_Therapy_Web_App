@@ -41,9 +41,25 @@
 					return deferred.promise;
 				}
 
+				function login(postData) {
+					var deferred = $q.defer();
+
+					$http.post('/login', postData).then(
+						function(user) {
+							console.log('hello world from auth.login: ', user);
+							deferred.resolve(user);
+						},
+						function(failureResponse) {
+							console.log('hello world from auth.login: ', failureResponse);
+							deferred.reject(failureResponse);
+					});
+					return deferred.promise;
+				}
+
 				return {
 					checkLoggedin: checkLoggedin,
 					signUp: signUp,
+					login: login,
 					resolvedCheckLoggedIn: resolvedCheckLoggedIn
 				};	
 			}
