@@ -4,6 +4,10 @@
 		.factory('modalService', ['$rootScope', '$uibModal', ModalService]);
 
 		function ModalService($rootScope, $uibModal) {
+					var services = {
+						loginModalService: loginModalService,
+						signUpModalService: signUpModalService
+					};
 
 					function assignCurrentUser(user) {
 						$rootScope.currentUser = user;
@@ -39,9 +43,6 @@
 						return modalInstance.result.then(assignCurrentUser);
 					}
 
-					return {
-						loginModalService: loginModalService,
-						signUpModalService: signUpModalService
-					}
+					return services;
 		}
 }());

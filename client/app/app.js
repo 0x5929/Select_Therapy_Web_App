@@ -4,8 +4,10 @@
 	//loading all custom and google dependency modules
 	angular.module('myApp', [
 		'ui.router',
+		'ngMaterial',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
+		'services.toastFactory',
 		'services.modalService',
 		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
@@ -15,7 +17,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', appRunConfiguration]);
+		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -220,17 +222,18 @@
 		}
 
 
-		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService) {
+		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService, toastFactory) {
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
 				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
 					event.preventDefault();
 					modalService.loginModalService().then(function(user) {
 						console.log('hello world from appRunConfiguration: ', user);	//	signal testing
-						return $state.go('english.school');
+						$state.go('english.school');
+						toastFactory.successLogin();
 					}).catch(function(failureResponse) {
 						console.log(failureResponse);	//signal testing
-						return $state.go('english.Home');
+						$state.go('english.Home');
 					});
 						
 				}

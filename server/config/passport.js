@@ -71,9 +71,9 @@
 						if (err)
 							return done(err);
 						if (!user)
-							return done(null, false, req.flash('loginMessage', 'No User Found!'));
+							return done(null, false);
 						if (!user.validPassword(password))
-							return done(null, false, req.flash('loginMessage', 'Invalid Password!'));
+							return done(null, false);
 						return done(null, user);
 					});
 				}));

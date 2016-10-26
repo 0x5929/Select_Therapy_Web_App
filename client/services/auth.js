@@ -4,6 +4,13 @@
 		.factory('AuthenticationFactory', ['$http', '$q', '$state', AuthFactory]);
 
 			function AuthFactory($http, $q, $state) {
+				
+				var services = {
+					checkLoggedin: checkLoggedin,
+					signUp: signUp,
+					login: login
+				};
+
 				function checkLoggedin() {
 					var deferred = $q.defer();
 					$http.get('/loggedIn').then(function(user) {
@@ -21,9 +28,7 @@
 
 					return deferred.promise;
 				}
-				function resolvedCheckLoggedIn() {
-					return checkLoggedin().then(function() {return true}, function() {return false});
-				}
+				
 
 				function signUp(postData) {
 					var deferred = $q.defer();
@@ -56,11 +61,6 @@
 					return deferred.promise;
 				}
 
-				return {
-					checkLoggedin: checkLoggedin,
-					signUp: signUp,
-					login: login,
-					resolvedCheckLoggedIn: resolvedCheckLoggedIn
-				};	
+				return services;
 			}
 }());
