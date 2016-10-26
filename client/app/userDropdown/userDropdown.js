@@ -6,7 +6,7 @@
 		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
 		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
 		.controller('signInModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signInModalInstanceController])
-		.controller('signUpModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', signUpModalInstanceController]);
+		.controller('signUpModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', '$q', signUpModalInstanceController]);
 
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
@@ -25,7 +25,7 @@
 				}
 
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $state, AuthenticationFactory) {
+				function signUpModalInstanceController($scope, $state, AuthenticationFactory, $q) {
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
 					signUpModalInstanceCtrl.ok = function() {
@@ -37,10 +37,19 @@
 						console.log('consolelog @ signUpModalInstanceCtrl', postData);
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {
-									$state.go('english.school');
+									//var deferred = $q.deferred();
+									//$state.go('english.school');	//because $scope.$close goes to a promise that does another function
+									//and if that promise is finished later, and we go to state english school, it will not be authorized
+									//temporay solution is to not go to english.school, and just close the modal promise with belows code
+									//need to think of a way to run asyncly to wait until modal is finished closing and then go to state en school
 									$scope.$close(user);
 								},  
 								function(failureResponse) {
+									//clearing the fields & adding message;	//	adding message could be done with angular flash
+									signUpModalInstanceCtrl.message = 'Failed signUp';
+									signUpModalInstanceCtrl.email = '';
+									signUpModalInstanceCtrl.password = '';
+									signUpModalInstanceCtrl.confirmPassword = '';
 									console.log('hello world from signUpModalInstanceCtrl Error Bitch : ', failureResponse);
 									console.log('consolelog @ signUpModalInstanceCtrl', failureResponse);
 						});

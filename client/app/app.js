@@ -6,6 +6,7 @@
 		'ui.router',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
+		'services.modalService',
 		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
@@ -14,7 +15,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', appRunConfiguration]);
+		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', appRunConfiguration]);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -219,12 +220,19 @@
 		}
 
 
-		function appRunConfiguration($rootScope, $state, AuthenticationFactory) {
+		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService) {
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
-				if (logginRequired && !AuthenticationFactory.resolvedCheckLoggedIn()){
+				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
 					event.preventDefault();
-					$state.go(english.Home);	
+					modalService.loginModalService().then(function(user) {
+						console.log(user);	//	signal testing
+						return $state.go(english.school);
+					}).catch(function(failureResponse) {
+						console.log(failureResponse);	//signal testing
+						return $state.go('english.Home');
+					});
+						
 				}
 			});
 		}

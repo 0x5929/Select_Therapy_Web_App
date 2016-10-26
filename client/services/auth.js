@@ -31,7 +31,8 @@
 					$http.post('/signUp', postData).then(
 						function(user) {
 							console.log('hello world from authjs', user);
-							return user;
+							//return user;
+							deferred.resolve(user);
 					}, function(failureResponse) {
 							//need to clear the fields & adding message;
 							console.log('hello world from authjs', failureResponse);
