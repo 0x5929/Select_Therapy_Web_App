@@ -41,6 +41,7 @@
 									$scope.$close(user);
 								},  
 								function(failureResponse) {
+									console.log('hello world from signUpModalInstanceCtrl Error Bitch : ', failureResponse);
 									console.log('consolelog @ signUpModalInstanceCtrl', failureResponse);
 						});
 					};

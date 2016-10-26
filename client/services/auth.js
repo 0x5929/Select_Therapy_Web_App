@@ -35,7 +35,7 @@
 					}, function(failureResponse) {
 							//need to clear the fields & adding message;
 							console.log('hello world from authjs', failureResponse);
-							return failureResponse;
+							deferred.reject(failureResponse);
 					});
 					return deferred.promise;
 				}
