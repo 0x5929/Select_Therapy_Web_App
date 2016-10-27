@@ -16,7 +16,7 @@
 					$mdToast.simple()
 						.textContent('Congrats! You have successfully registered, and now logged in!!')
 						.position('top right')
-						.hideDelay(5000)
+						.hideDelay(1000)
 					);
 			}
 
@@ -25,7 +25,7 @@
 					$mdToast.simple()
 						.textContent('Welcome! You have successfully signed in!!')
 						.position('top right')
-						.hideDelay(5000)
+						.hideDelay(1000)
 					);
 			}
 
@@ -34,7 +34,7 @@
 					$mdToast.simple()
 						.textContent('Thank you ' + name + ', you rock! Your message will be evaluated and responded to shortly!')
 						.position('top right')
-						.hideDelay(5000)
+						.hideDelay(1000)
 					);			
 			}
 			
