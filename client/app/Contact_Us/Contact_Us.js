@@ -1,27 +1,27 @@
 (function() {
 	'use strict';
-	angular.module('myApp.ContactUs', [])
-		. controller('ContactUsCtrl', ['$scope', '$http', ContactUsCtrl]);
+	angular.module('myApp.ContactUs', ['services.toastFactory'])
+		. controller('contactUsControl', ['$scope', '$http', 'toastFactory', ContactUsCtrl]);
 
-		function ContactUsCtrl($scope, $http) {
-			var self = this;
-			this.sendMessage = function() {
+		function ContactUsCtrl($scope, $http, toastFactory) {
+			var contactUsCtrl = this;
+			contactUsCtrl.sendMessage = function() {
 				var messageContent = {
-					name: this.fullName,
-					email: this.emailAddress,
-					message: this.message
+					name: contactUsCtrl.fullName,
+					email: contactUsCtrl.emailAddress,
+					message: contactUsCtrl.message
 				};
-			// clears the input text boxes for refresh purposes
-			this.refresh = function() {
-				//below can be used in a modal servce as well! 
-				this.emailAddress = '';
-				this.message = 'Thank you ' + this.fullName + ', you rock! Your message will be evaluated and responded to shortly!';
-				this.fullName = '';
+			// clears the input text boxes for refresh purposes, and set up toast for toasting purposes
+			contactUsCtrl.refresh = function() {
+				toastFactory.thankYouMessage(contactUsCtrl.fullName);
+				contactUsCtrl.emailAddress = '';
+				contactUsCtrl.message = '';
+				contactUsCtrl.fullName = '';
 			};
 				console.log('button works!');	//button test
 				$http.post('/sendMessage/', messageContent).success(function(response){
 					console.log('once success, console log successfully sent message');	//signal test
-					self.refresh();	//refreshes the message text area box
+					contactUsCtrl.refresh();	//refreshes the message text area box
 				});
 			};
 		}
