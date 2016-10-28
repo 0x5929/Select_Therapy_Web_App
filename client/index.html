@@ -4,18 +4,20 @@
 <head>
 <!-- Loading BootStrap Stylesheets -->
 	<link rel="stylesheet" href="scripts/css/bootstrap/dist/css/bootstrap.css" />
-<!--BootStrap BootWatch themed cosmo, and font awesome has been commented out
+    <link rel="stylesheet" href="scripts/css/angular-material/angular-material.css" />
+
+    <!--BootStrap BootWatch themed cosmo, and font awesome has been commented out
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" />
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="scripts/css/main/main.css" />
  -->
-    <link rel="stylesheet" href="scripts/css/angular-material/angular-material.css" />
 	<title>Select Therapy Institute</title>
 </head>
 <!-- Inititalizing Angular -->
 <body ng-app="myApp">
 <!-- all of the Header container needs to be routed inside another ui-view controlled by the language nav bar -->
 <!--Header Container -->
-	<div class="container-fluid">
+	<div class="container-fluid" id="header">
 		<div class="row">
 			<div class="col-xs-10" ui-view="header"></div>
 			<div class="col-xs-2">
@@ -28,7 +30,7 @@
 		</div>
 	</div>
 <!--Middle Container -->
-	<div class="container-fluid">
+	<div class="container-fluid" id="contentContainer">
 		<div class="row">
 			<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
 		</div>
@@ -37,7 +39,11 @@
 			</div>
 			<!-- this will just be one more step further nested within either english or chinese.MenuNavBarItems -->
 			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
+			
+			<md-content>
 			<div ui-view="content"></div>
+			</md-content>
+			
 			<div class="col-md-2">
 			</div>
 		</div>
