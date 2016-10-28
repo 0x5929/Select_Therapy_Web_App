@@ -5,11 +5,11 @@
 <!-- Loading BootStrap Stylesheets -->
 	<link rel="stylesheet" href="scripts/css/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="scripts/css/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="scripts/css/main/main.css" />
 
     <!--BootStrap BootWatch themed cosmo, and font awesome has been commented out
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css" />
     <link data-require="bootstrap@3.3.5" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="scripts/css/main/main.css" />
  -->
 	<title>Select Therapy Institute</title>
 </head>
@@ -31,20 +31,23 @@
 	</div>
 <!--Middle Container -->
 	<div class="container-fluid" id="contentContainer">
-		<div class="row">
+		<div class="row" id="mainPicContent">
 			<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
 		</div>
 		<div class="row">
-			<div class="col-md-2">
+			<div class="col-md-2" id="leftContent">
+			Hello World from Left Content
 			</div>
 			<!-- this will just be one more step further nested within either english or chinese.MenuNavBarItems -->
 			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
 			
-			<md-content>
-			<div ui-view="content"></div>
-			</md-content>
+		
+			<div class="col-md-8" ui-view="content" id="middleContent">
+			</div>
 			
-			<div class="col-md-2">
+			
+			<div class="col-md-2" id="rightContent">
+			Hello World From right content
 			</div>
 		</div>
 	</div>
