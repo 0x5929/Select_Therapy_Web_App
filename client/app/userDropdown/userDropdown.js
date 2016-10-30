@@ -15,8 +15,14 @@
 				//controller function for signInModalInstanceController
 				function signInModalInstanceController($scope, $state, AuthenticationFactory, toastFactory) {
 					var signInModalInstanceCtrl = this;
+					signInModalInstanceCtrl.showErrorMessage = false;
 					signInModalInstanceCtrl.cancel = $scope.$dismiss;
-
+					signInModalInstanceCtrl.refreshUponFailure = function(message) {
+						signInModalInstanceCtrl.email = '';
+						signInModalInstanceCtrl.password = '';
+						signInModalInstanceCtrl.showErrorMessage = true;
+						signInModalInstanceCtrl.message = message;
+					};
 					signInModalInstanceCtrl.ok = function(email, password) {
 						var postData = {
 							email: email,
@@ -25,6 +31,9 @@
 						AuthenticationFactory.login(postData).then(function(user){
 							$scope.$close(user);	//user is passed to the result promise of the modal for assignCurrentUser function 
 							toastFactory.successLogin();
+						}, function(failureResponse) {
+							var message = failureResponse.data;
+							signInModalInstanceCtrl.refreshUponFailure(message);
 						});
 					}
 				}
@@ -32,32 +41,29 @@
 				//controller function for signUpModalInstanceController
 				function signUpModalInstanceController($scope, $state, AuthenticationFactory, toastFactory) {
 					var signUpModalInstanceCtrl = this;
+					signUpModalInstanceCtrl.showErrorMessage = false;
 					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
+					signUpModalInstanceCtrl.refreshUponFailure = function(message) {	//clears the field and shows failure message
+						signUpModalInstanceCtrl.email = '';
+						signUpModalInstanceCtrl.password = '';
+						signUpModalInstanceCtrl.confirmPassword = '';
+						signUpModalInstanceCtrl.showErrorMessage = true;
+						signUpModalInstanceCtrl.message = message;
+					};
 					signUpModalInstanceCtrl.ok = function() {
 						var postData = {
 							email: signUpModalInstanceCtrl.email,
 							password: signUpModalInstanceCtrl.password,
 							confirmPassword: signUpModalInstanceCtrl.confirmPassword
 						};
-						console.log('consolelog @ signUpModalInstanceCtrl', postData);
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {
-									//var deferred = $q.deferred();
-									//$state.go('english.school');	//because $scope.$close goes to a promise that does another function
-									//and if that promise is finished later, and we go to state english school, it will not be authorized
-									//temporay solution is to not go to english.school, and just close the modal promise with belows code
-									//need to think of a way to run asyncly to wait until modal is finished closing and then go to state en school
 									$scope.$close(user);
 									toastFactory.successRegistration();
 								},  
 								function(failureResponse) {
-									//clearing the fields & adding message;	//	adding message could be done with angular flash
-									signUpModalInstanceCtrl.message = 'Failed signUp';
-									signUpModalInstanceCtrl.email = '';
-									signUpModalInstanceCtrl.password = '';
-									signUpModalInstanceCtrl.confirmPassword = '';
-									console.log('hello world from signUpModalInstanceCtrl Error Bitch : ', failureResponse);
-									console.log('consolelog @ signUpModalInstanceCtrl', failureResponse);
+									var message = failureResponse.data;
+									signUpModalInstanceCtrl.refreshUponFailure(message);			
 						});
 					};			
 				}

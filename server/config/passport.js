@@ -33,7 +33,7 @@
 							}
 							if (user){
 								console.log('hello world from already taken user');
-								return done(null, false);	// flash fucked up the status code, beware
+								return done(null, false, { message: 'Email Already Taken, please try again!'});	// req.flash fucked up the status code, beware
 							}else if (password === req.body.confirmPassword) {
 									console.log('hello world from new user');
 									//create new user
@@ -48,11 +48,11 @@
 									newUser.save(function(err) {
 										if (err) 
 											handleError(err);
-										return done(null, newUser, req.flash('signupSuccess', 'Welcome!'));
+										return done(null, newUser);
 									});		
 							}else {
 								console.log('hello world from mismatch password');
-								return done(null, false, req.flash('signupMessage', 'Passwords do not match!'));
+								return done(null, false, { message: 'Oops, your passwords are not matching, please try again!'});
 							}
 						});
 					});
@@ -68,12 +68,18 @@
 			},
 				function(req, email, password, done) {
 					User.findOne({'local.email': email}, function(err, user){
-						if (err)
+						if (err){
+							console.log('hello world from passportjs signin server err: ', err);
 							return done(err);
-						if (!user)
-							return done(null, false);
-						if (!user.validPassword(password))
-							return done(null, false);
+						}
+						if (!user){
+							console.log('hello world from passporjs signin user not found err');
+							return done(null, false, { message: 'User email not found, please try again!'});
+						}
+						if (!user.validPassword(password)){
+							console.log('hello world from passporjs signin invalid password err');
+							return done(null, false, { message: 'Invalid password, please try again!'});
+						}
 						return done(null, user);
 					});
 				}));

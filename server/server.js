@@ -9,7 +9,7 @@ var fs = require('fs'),
 	port = process.env.PORT || 8080,
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	flash = require('connect-flash'),
+	//flash = require('connect-flash'),
 	nodemailer = require('nodemailer'),
 	
 	bodyParser = require('body-parser'),
@@ -37,7 +37,7 @@ app.use(express.static("../client")); 	//setting up the static file location
 app.use(session({secret: 'kevinRenIsAweseome', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+//app.use(flash());
 
 //routes, passing in all the necessary module objs
 require('./routes/routes.js')(express, app, fs, bodyParser, nodemailer, passport);
