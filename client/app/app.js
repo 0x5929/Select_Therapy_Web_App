@@ -230,7 +230,6 @@
 					modalService.loginModalService().then(function(user) {
 						console.log('hello world from appRunConfiguration: ', user);	//	signal testing
 						$state.go('english.school');
-						toastFactory.successLogin();
 					}).catch(function(failureResponse) {
 						console.log(failureResponse);	//signal testing
 						$state.go('english.Home');
