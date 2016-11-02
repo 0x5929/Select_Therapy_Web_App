@@ -5,15 +5,32 @@
 		.controller('userDropdownControl', ['$scope', dropdownCtrl])
 		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
 		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
-		.controller('signInModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', 'toastFactory', signInModalInstanceController])
-		.controller('signUpModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', 'toastFactory', signUpModalInstanceController]);
+		.controller('signInModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', signInModalInstanceController])
+		.controller('signUpModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', signUpModalInstanceController])
+		.controller('signOutControl', ['$rootScope', '$state', 'toastFactory', 'AuthenticationFactory', signOutController]);
 
 				//empty controller, needed for dropdown action
 				function dropdownCtrl($scope) {
 				}
 
+				//function for signInModalControl
+				function signInModalControl($scope, modalService) {
+					var signInModalCtrl = this;
+					signInModalCtrl.openModal = function() {
+						modalService.loginModalService();
+					};		
+				}
+
+				//function for signUpModalControl
+				function signUpModalControl($scope, modalService) {
+					var signUpModalCtrl = this;
+					signUpModalCtrl.openModal = function() {
+						modalService.signUpModalService();
+					};
+				}
+
 				//controller function for signInModalInstanceController
-				function signInModalInstanceController($scope, $state, AuthenticationFactory, toastFactory) {
+				function signInModalInstanceController($scope, AuthenticationFactory, toastFactory) {
 					var signInModalInstanceCtrl = this;
 					signInModalInstanceCtrl.showErrorMessage = false;
 					signInModalInstanceCtrl.cancel = $scope.$dismiss;
@@ -39,7 +56,7 @@
 				}
 
 				//controller function for signUpModalInstanceController
-				function signUpModalInstanceController($scope, $state, AuthenticationFactory, toastFactory) {
+				function signUpModalInstanceController($scope, AuthenticationFactory, toastFactory) {
 					var signUpModalInstanceCtrl = this;
 					signUpModalInstanceCtrl.showErrorMessage = false;
 					signUpModalInstanceCtrl.cancel = $scope.$dismiss;
@@ -67,20 +84,23 @@
 						});
 					};			
 				}
-				
-				//function for signInModalControl
-				function signInModalControl($scope, modalService) {
-					var signInModalCtrl = this;
-					signInModalCtrl.openModal = function() {
-						modalService.loginModalService();
-					};		
-				}
 
-				//function for signUpModalControl
-				function signUpModalControl($scope, modalService) {
-					var signUpModalCtrl = this;
-					signUpModalCtrl.openModal = function() {
-						modalService.signUpModalService();
+				//controller function for signOutControl
+				function signOutController($rootScope, $state, toastFactory, AuthenticationFactory) {
+					var signOutCtrl = this;
+					signOutCtrl.signOut = function() {
+						//toast
+						toastFactory.signOut();
+						//authPost to server
+						AuthenticationFactory.signOut().then(
+							function(success) {
+								$rootScope.currentUser = undefined;
+								$state.go('english.Home');
+							}, 
+							function(failure) {
+								//really this should never fail
+								console.log('something terrible has happend signoutcntrl in userdropdownjs: ', failure);
+							});
 					};
 				}
 

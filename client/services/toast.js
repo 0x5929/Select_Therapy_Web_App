@@ -5,9 +5,11 @@
 		.factory('toastFactory', ['$mdToast', toastFactory]);
 
 		function toastFactory($mdToast) {
+
 			var services = {
 				successRegistration: successRegistration,
 				successLogin: successLogin,
+				signOut: signOut,
 				thankYouMessage: thankYouMessage
 			};
 
@@ -25,6 +27,16 @@
 				$mdToast.show(
 					$mdToast.simple()
 						.textContent('Welcome! You have successfully signed in!!')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(1000)
+					);
+			}
+
+			function signOut() {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent('You have successfully signed out!')
 						.position('top right')
 						.parent('#header')
 						.hideDelay(1000)

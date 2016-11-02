@@ -6,26 +6,22 @@
 			function AuthFactory($http, $q, $state) {
 				
 				var services = {
-					checkLoggedin: checkLoggedin,
+					signOut: signOut,
 					signUp: signUp,
 					login: login
 				};
 
-				function checkLoggedin() {
+				function signOut() {
 					var deferred = $q.defer();
-					$http.get('/loggedIn').then(function(user) {
-						if (user !== '0'){
-							deferred.resolve('welcome');
-						}
-						else{
+					$http.post('/signOut').then(
+						function(success) {
+							console.log('hello world from auth, success response in signout post: ', success);
+							deferred.resolve();
+						}, 
+						function(failure) {
+							console.log('hello world from auth, failure response in signout post: ', failure);
 							deferred.reject();
-							$state.go('english.Home');
-			
-						}
-					}, function(failureResponse) {
-						console.log(failureResponse);
-					});
-
+						});
 					return deferred.promise;
 				}
 				
@@ -38,7 +34,8 @@
 							console.log('hello world from authjs', user);
 							//return user;
 							deferred.resolve(user);
-					}, function(failureResponse) {
+						}, 
+						function(failureResponse) {
 							//need to clear the fields & adding message;
 							console.log('hello world from authjs', failureResponse);
 							deferred.reject(failureResponse);
