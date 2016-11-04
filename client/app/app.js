@@ -5,6 +5,7 @@
 	angular.module('myApp', [
 		'ui.router',
 		'ngMaterial',
+		'ngCookies',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
 		'services.toastFactory',
