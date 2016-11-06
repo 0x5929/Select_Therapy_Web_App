@@ -226,16 +226,16 @@
 
 		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService, toastFactory) {
 		
-    			
-    			AuthenticationFactory.checkLoggedIn().then(
-    				function(user) {
-    					//set rootscope.currentuser
-    					console.log(user);
-    					$rootScope.currentUser = user;
-    				}, 
-    				function() {
-    					$rootScope.currentUser = undefined;
-    				});
+    		
+    		AuthenticationFactory.checkLoggedIn().then(
+    			function(user) {
+    				//set rootscope.currentuser
+    				console.log(user);
+    				$rootScope.currentUser = user;
+    			}, 
+    			function() {
+    				$rootScope.currentUser = undefined;
+    			});
 			
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {

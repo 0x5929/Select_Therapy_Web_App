@@ -59,14 +59,15 @@
 
 				function checkLoggedIn() {
 					var deferred = $q.defer();
-					$http.get('/checkLoggedIn').then(
+					$http.get('/checkLoggedIn').then(	//	because the response from server is always 200, it will never fail, thus no catch or failure  block
 						function(user) {
-							console.log('success response from server in checkLoggedIn function of authjs: ', user);
-							deferred.resolve(user);
-						}, 
-						function(failure) {
-							console.log('uh oh, failure response from server in checkLoggedIn function of authjs', failure);
-							deferred.reject();
+							if (user && user.data._id) {
+								console.log('success response from server in checkLoggedIn function of authjs: ', user);
+								deferred.resolve(user);
+							} else {
+								console.log('there is no user: ', user)
+								deferred.reject();
+							}
 						});
 					return deferred.promise;
 				}

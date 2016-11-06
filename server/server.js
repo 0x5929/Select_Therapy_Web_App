@@ -9,14 +9,14 @@ var fs = require('fs'),
 	port = process.env.PORT || 8080,
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	//flash = require('connect-flash'),
 	nodemailer = require('nodemailer'),
-	
+	//middleware
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	logger = require('morgan'),
 	session = require('express-session'),
-
+	mongoStore = require('connect-mongo')(session),
+	//fetching database configuration
 	configDB = require('./config/database.js')(mongoose);
 
 //configuration
@@ -28,16 +28,18 @@ require('./config/passport.js')(passport);
 
 
 //Setting up express application
-app.use(logger('common'));
-app.use(cookieParser());
+app.use(logger('dev'));
+app.use(cookieParser('kevinRenIsAweseome'));
 app.use(bodyParser.json());	//get information from html forms
 app.use(express.static("../client")); 	//setting up the static file location
 
 //required set up for passport sessions
-app.use(session({secret: 'kevinRenIsAweseome', resave: true, saveUninitialized: false}));
+app.use(session({secret: 'kevinRenIsAweseome', 
+				 saveUninitialized: false, 
+				 resave: false,
+				 store: new mongoStore({ mongooseConnection: mongoose.connection})}));
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(flash());
 
 //routes, passing in all the necessary module objs
 require('./routes/routes.js')(express, app, fs, bodyParser, nodemailer, passport);

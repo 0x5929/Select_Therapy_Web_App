@@ -17,7 +17,7 @@
 				req.logIn(user, function(err) {
 					if (err)
 						return next(err);
-					return res.send(req.user);
+					return res.status(200).send(req.user);
 				});
 			})(req, res, next);
 		});
