@@ -94,6 +94,7 @@
 						//authPost to server
 						AuthenticationFactory.signOut().then(
 							function(success) {
+								console.log('hello world');
 								$rootScope.currentUser = undefined;
 								$state.go('english.Home');
 							}, 

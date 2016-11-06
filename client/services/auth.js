@@ -8,12 +8,13 @@
 				var services = {
 					signOut: signOut,
 					signUp: signUp,
-					login: login
+					login: login,
+					checkLoggedIn: checkLoggedIn
 				};
 
 				function signOut() {
 					var deferred = $q.defer();
-					$http.post('/signOut').then(
+					$http.get('/signOut').then(
 						function(success) {
 							console.log('hello world from auth, success response in signout post: ', success);
 							deferred.resolve();
@@ -28,7 +29,6 @@
 
 				function signUp(postData) {
 					var deferred = $q.defer();
-					console.log(postData);
 					$http.post('/signUp', postData).then(
 						function(user) {
 							console.log('hello world from authjs', user);
@@ -45,7 +45,6 @@
 
 				function login(postData) {
 					var deferred = $q.defer();
-
 					$http.post('/login', postData).then(
 						function(user) {
 							console.log('hello world from auth.login: ', user);
@@ -55,6 +54,20 @@
 							console.log('hello world from auth.login: ', failureResponse);
 							deferred.reject(failureResponse);
 					});
+					return deferred.promise;
+				}
+
+				function checkLoggedIn() {
+					var deferred = $q.defer();
+					$http.get('/checkLoggedIn').then(
+						function(user) {
+							console.log('success response from server in checkLoggedIn function of authjs: ', user);
+							deferred.resolve(user);
+						}, 
+						function(failure) {
+							console.log('uh oh, failure response from server in checkLoggedIn function of authjs', failure);
+							deferred.reject();
+						});
 					return deferred.promise;
 				}
 

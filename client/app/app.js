@@ -18,7 +18,8 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
+		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration])
+//		.run('$rootScope', 'AuthenticationFactory', authCheckConfiguration);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -224,6 +225,19 @@
 
 
 		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService, toastFactory) {
+		
+    			
+    			AuthenticationFactory.checkLoggedIn().then(
+    				function(user) {
+    					//set rootscope.currentuser
+    					console.log(user);
+    					$rootScope.currentUser = user;
+    				}, 
+    				function() {
+    					$rootScope.currentUser = undefined;
+    				});
+			
+
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
 				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
@@ -239,4 +253,21 @@
 				}
 			});
 		}
+
+		function authCheckConfiguration($rootScope, AuthenticationFactory) {
+			$rootScope.$on('$viewContentLoading', function(event, viewConfig) { 
+    			// Access to all the view config properties.
+    			// and one special property 'targetView'
+    			// viewConfig.targetView
+    			AuthenticationFactory.checkLoggedIn().then(
+    				function(user) {
+    					//set rootscope.currentuser
+    					$rooScope.currentUser = user;
+    				}, 
+    				function(failure) {
+    					$rootScope.currentUser = undefined;
+    				});
+			});
+		}
+		
 }());

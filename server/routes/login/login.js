@@ -1,5 +1,6 @@
 (function() {
 	'use strict';
+
 		module.exports = function(express, passport) {
 		//initialize router
 		var loginRoute = express.Router();

@@ -34,7 +34,7 @@ app.use(bodyParser.json());	//get information from html forms
 app.use(express.static("../client")); 	//setting up the static file location
 
 //required set up for passport sessions
-app.use(session({secret: 'kevinRenIsAweseome', resave: true, saveUninitialized: true}));
+app.use(session({secret: 'kevinRenIsAweseome', resave: true, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(flash());
