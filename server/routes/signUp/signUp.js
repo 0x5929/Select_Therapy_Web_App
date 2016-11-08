@@ -12,7 +12,7 @@
 			console.log('ERRORS');
 			console.log('=============');
 			console.log(errors);
-			if (errors) res.status(400).send(errors);
+			if (errors) res.status(400).send(errors.msg);
 			else {
 				passport.authenticate('local-signup', function(err, user, info) {
 					if (err)

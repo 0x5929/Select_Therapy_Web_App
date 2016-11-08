@@ -34,12 +34,11 @@
 							console.log('hello world from authjs', user);
 							//return user;
 							deferred.resolve(user);
-						}, 
-						function(failureResponse) {
+						}).catch(function(failureResponse) {
 							//need to clear the fields & adding message;
-							console.log('hello world from authjs', failureResponse);
+							console.log('hello world from authjs BAD response', failureResponse);
 							deferred.reject(failureResponse);
-					});
+						});
 					return deferred.promise;
 				}
 
@@ -49,10 +48,9 @@
 						function(user) {
 							console.log('hello world from auth.login: ', user);
 							deferred.resolve(user);
-						},
-						function(failureResponse) {
-							console.log('hello world from auth.login: ', failureResponse);
-							deferred.reject(failureResponse);
+						}).catch(function(badResposne) {
+							console.log('hello world from auth.login, badder response: ', badResposne);
+							deferred.reject(badResposne);
 					});
 					return deferred.promise;
 				}
@@ -67,6 +65,7 @@
 							}
 						}, 
 						function(failureResponse) {
+							console.log('there is no user, instead we get failure response: ', failureResponse);
 							deferred.reject();
 						});
 
