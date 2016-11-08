@@ -32,10 +32,9 @@
 					$http.post('/signUp', postData).then(
 						function(user) {
 							console.log('hello world from authjs', user);
-							//return user;
-							deferred.resolve(user);
-						}).catch(function(failureResponse) {
-							//need to clear the fields & adding message;
+								deferred.resolve(user);
+						}, 
+						function(failureResponse) {//need to clear the fields & adding message;
 							console.log('hello world from authjs BAD response', failureResponse);
 							deferred.reject(failureResponse);
 						});

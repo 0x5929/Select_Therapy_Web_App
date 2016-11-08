@@ -6,13 +6,12 @@
 		var signUpRoute = express.Router();
 		//config routes for router
 		signUpRoute.post('/', function(req, res, next) {
-
 			req.check('email', 'Invalid email address!').isEmail();
 			var errors = req.validationErrors();
 			console.log('ERRORS');
 			console.log('=============');
 			console.log(errors);
-			if (errors) res.status(400).send(errors.msg);
+			if (errors) res.status(400).send(errors[0].msg);
 			else {
 				passport.authenticate('local-signup', function(err, user, info) {
 					if (err)

@@ -209,7 +209,7 @@
 		}
 
 
-		function httpConfiguration($httpProvider) {		//	handling rejection from server b/c unauthorized
+		function httpConfiguration($httpProvider) {		//	handling rejection from server b/c unauthorized, etc..
 			$httpProvider.interceptors.push(function($q, $injector) {
 				return {
 					responseError: function(rejection) {
@@ -218,6 +218,8 @@
 							$injector.get('$state').transitionTo('english.Home');
 							return $q.reject(rejection); 
 						}
+						else
+							return $q.reject(rejection);
 					}
 				};
 			});
