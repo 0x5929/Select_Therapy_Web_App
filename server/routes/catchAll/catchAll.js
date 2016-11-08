@@ -5,7 +5,7 @@
 		//initialize router
 		var catchAllRoute = express.Router();
 		//config routes for router
-		catchAllRoute.get('*', function(req, res) {
+		catchAllRoute.all('*', function(req, res) {
 			res.sendFile('index.html', {root : path.resolve(__dirname + '/../../../client/')});
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs

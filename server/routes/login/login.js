@@ -13,7 +13,7 @@
 				if (err)
 					return next(err);
 				if (!user)
-					return res.status(401).send(info.message);
+					return res.status(400).send(info.message);
 				req.logIn(user, function(err) {
 					if (err)
 						return next(err);

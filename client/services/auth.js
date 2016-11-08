@@ -64,11 +64,12 @@
 							if (user && user.data._id) {
 								console.log('success response from server in checkLoggedIn function of authjs: ', user);
 								deferred.resolve(user);
-							} else {
-								console.log('there is no user: ', user)
-								deferred.reject();
 							}
+						}, 
+						function(failureResponse) {
+							deferred.reject();
 						});
+
 					return deferred.promise;
 				}
 

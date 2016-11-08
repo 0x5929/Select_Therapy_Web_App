@@ -17,10 +17,19 @@
 				res.status(200).send('okay we are logged in');
 			}
 			*/
+			/*
 			console.log(req.user);
 			console.log('==================');
 			console.log(req.session);
 			res.status(200).send(req.user);
+			*/
+			var loggedIn = req.user;
+			if (loggedIn) 
+				res.status(200).send(req.user);
+			else 
+				res.status(401);
+
+
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return checkLoggedInRoute;

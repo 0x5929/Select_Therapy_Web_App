@@ -4,6 +4,7 @@
 // need to read more about express and its functions. 10/01/2016
 //fetching all tools
 var fs = require('fs'),
+	path = require('path'),
 	express = require('express'),
 	app = express(),
 	port = process.env.PORT || 8080,
@@ -11,9 +12,11 @@ var fs = require('fs'),
 	passport = require('passport'),
 	nodemailer = require('nodemailer'),
 	//middleware
+	errHandling = require(path.join(__dirname, '/config/errHandling.js')),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	logger = require('morgan'),
+	validator = require('express-validator'),
 	session = require('express-session'),
 	mongoStore = require('connect-mongo')(session),
 	//fetching database configuration
@@ -30,8 +33,10 @@ require('./config/passport.js')(passport);
 //Setting up express application
 app.use(logger('dev'));
 app.use(cookieParser('kevinRenIsAweseome'));
-app.use(bodyParser.json());	//get information from html forms
-app.use(express.static("../client")); 	//setting up the static file location
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
+app.use(validator());
+app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
 
 //required set up for passport sessions
 app.use(session({secret: 'kevinRenIsAweseome', 
@@ -42,7 +47,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes, passing in all the necessary module objs
-require('./routes/routes.js')(express, app, fs, bodyParser, nodemailer, passport);
+require('./routes/routes.js')(express, app, fs, bodyParser, validator, nodemailer, passport);
+
+//error handling
+app.use(errHandling);
 
 //firing this baby up
 app.listen(port, console.log('magic happens on port: ', port));

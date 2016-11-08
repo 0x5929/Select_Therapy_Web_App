@@ -2,11 +2,11 @@
 
 	'use strict';
 
-	module.exports = function(express, app, fs, bodyParser, nodemailer, passport) {	//exposing this file to server, all necessary objs passed in
+	module.exports = function(express, app, fs, bodyParser, validator, nodemailer, passport) {	//exposing this file to server, all necessary objs passed in
 		//fetching all routers with its configueration from their seperate file modules
 		var contactUsMessageRouter = require('./sendMessage/sendMessage.js')(express, app, bodyParser, nodemailer);
 		var aboutUsDownloadRouter = require('./aboutUsPDFDownload/aboutUsPDFDownload.js')(express, fs);
-		var signUpRouter = require('./signUp/signUp.js')(express, passport);
+		var signUpRouter = require('./signUp/signUp.js')(express, validator, passport);
 		var loginRouter = require('./login/login.js')(express, passport);
 		var signOutRouter = require('./signOut/signOut.js')(express);
 		var checkLoggedInRouter = require('./checkLoggedIn/checkLoggedIn.js')(express);
@@ -20,7 +20,6 @@
 		app.use('/signOut/', signOutRouter);
 		app.use('/checkLoggedIn/', checkLoggedInRouter);
 		app.use('*', catchAllRouter);
-		//below needs to be encapsulated in its own module
 
 	};
 }());
