@@ -34,7 +34,7 @@
 							if (user){
 								console.log('hello world from already taken user');
 								return done(null, false, { message: 'Email Already Taken, please try again!'});	// req.flash fucked up the status code, beware
-							}else if (password === req.body.confirmPassword) {
+							}else if (password === req.body.confirmPassword) {	//	need to seperate this into validator middleware
 									console.log('hello world from new user');
 									//create new user
 									var newUser = new User();

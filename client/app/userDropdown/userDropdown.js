@@ -79,7 +79,7 @@
 									toastFactory.successRegistration();
 								},  
 								function(failureResponse) {
-									var message = failureResponse.data;
+									var message = failureResponse;
 									signUpModalInstanceCtrl.refreshUponFailure(message);			
 						});
 					};			
