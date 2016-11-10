@@ -19,8 +19,8 @@
         <form class="form-horizontal">
 	          	<div class="modal-header">
 	              	<h3 class="modal-title" id="modal-title"><span class="fa fa-sign-in"> New User Registration</h3><br>
-	              	<div class="alert alert-danger" ng-if="signUpModalInstanceCtrl.showErrorMessage">
-  						{{signUpModalInstanceCtrl.message}}
+	              	<div class="alert alert-danger" ng-if="signUpModalInstanceCtrl.showErrorMessage" ng-repeat="message in signUpModalInstanceCtrl.messages track by $index">
+  						{{message}}
 					</div>
 	            </div>
 	            <div class="modal-body" id="modal-body">

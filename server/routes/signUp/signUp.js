@@ -5,14 +5,11 @@
 		//initialize router
 		var signUpRoute = express.Router();
 		//config routes for router
-		signUpRoute.post('/', function(req, res, next) {
-			req.check('email', '>Invalid email address!').isEmail();
+		signUpRoute.post('/', function(req, res, next) {	//	first we check for errors of misvalidation
+			req.check('email', 'Invalid email address!').isEmail();
 			req.check('password', 'Oops, password is not at least 6 charatacters long, please try again!').isLength({min: 6});
-			req.check('password', '>Oops, passwords are not matching, please try again!').equals(req.body.confirmPassword);
+			req.check('password', 'Oops, passwords are not matching, please try again!').equals(req.body.confirmPassword);
 			var errors = req.validationErrors();
-			console.log('ERRORS');
-			console.log('=============');
-			console.log(errors);
 			if (errors) {
 				var errMsg = errors.map(function(err) {
 					return err.msg;

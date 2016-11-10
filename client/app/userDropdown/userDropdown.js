@@ -65,7 +65,7 @@
 						signUpModalInstanceCtrl.password = '';
 						signUpModalInstanceCtrl.confirmPassword = '';
 						signUpModalInstanceCtrl.showErrorMessage = true;
-						signUpModalInstanceCtrl.message = message;
+						signUpModalInstanceCtrl.messages = message;	//	this is going to be an array
 					};
 					signUpModalInstanceCtrl.ok = function() {
 						var postData = {
@@ -79,8 +79,15 @@
 									toastFactory.successRegistration();
 								},  
 								function(failureResponse) {
-									var message = failureResponse;
-									signUpModalInstanceCtrl.refreshUponFailure(message);			
+									var messages = [];
+									if (typeof failureResponse.data === 'string'){
+										messages.push(failureResponse.data);
+										signUpModalInstanceCtrl.refreshUponFailure(messages);
+										;
+									}else {
+										messages = failureResponse.data;
+										signUpModalInstanceCtrl.refreshUponFailure(messages);
+									}		
 						});
 					};			
 				}

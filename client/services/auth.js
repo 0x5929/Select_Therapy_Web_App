@@ -36,11 +36,7 @@
 						}, 
 						function(failureResponse) {//need to clear the fields & adding message;
 							console.log('hello world from authjs BAD response', failureResponse);
-							var data = failureResponse.data;
-							if (typeof data === 'String') 
-								deferred.reject(data);
-							else 
-								deferred.reject(data);
+							deferred.reject(failureResponse)
 						});
 					return deferred.promise;
 				}
