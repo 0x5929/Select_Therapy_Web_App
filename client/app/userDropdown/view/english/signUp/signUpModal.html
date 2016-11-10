@@ -1,24 +1,6 @@
-<!--
-<div class="modal-header">
-    <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-</div>
-<div class="modal-body" id="modal-body">
-    <h3>Hello World from Sign Up Modal</h3>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="signUpModalInstanceCtrl.ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="signUpModalInstanceCtrl.cancel()">Cancel</button>
-</div>
-
--->
-
-
-
-    <!-- attributs inside form tag below that have been removed for development: <action="" method="POST"> 
-    We need to include those tags in order to complete the register form-->
         <form class="form-horizontal">
 	          	<div class="modal-header">
-	              	<h3 class="modal-title" id="modal-title"><span class="fa fa-sign-in"> New User Registration</h3><br>
+	              	<h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-log-in"></span> New User Registration</h3><br>
 	              	<div class="alert alert-danger" ng-if="signUpModalInstanceCtrl.showErrorMessage" ng-repeat="message in signUpModalInstanceCtrl.messages track by $index">
   						{{message}}
 					</div>
@@ -42,10 +24,22 @@
 		            </div>
 
 		            <div class="form-group">
-		              	<label class="control-label col-sm-2" for="password_confirm">Password (Confirm):</label>
+		              	<label class="control-label col-sm-2" for="password_confirm">Re-enter Password:</label>
 		              	<div class="col-sm-10">
 		                	<input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Please confirm password"
 		                	ng-model="signUpModalInstanceCtrl.confirmPassword">
+		              	</div>
+		            </div>
+
+		            <div class="form-group">
+		              	<label class="control-label col-sm-2" for="SignUpAs">Sign up as: </label>
+		              	<div class="col-sm-10">
+		                	<select name="SignUpAs" ng-model="signUpModalInstanceCtrl.signUpAs">
+    							<option value="Student">Student</option>
+    							<option value="Staff">Staff</option>
+    							<option value="Admin">Admin</option>
+  							</select>
+  							{{signUpModalInstanceCtrl.signUpAs}}
 		              	</div>
 		            </div>
 	         	</div>

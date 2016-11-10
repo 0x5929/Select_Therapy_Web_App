@@ -120,7 +120,8 @@
 							templateUrl: 'app/school/view/english/school.html'
 						}
 					},
-					authenticate: true
+					authenticate: true,
+					securityLevel: 'Student'
 				})
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
@@ -242,6 +243,7 @@
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
+				var securityLevel = toState.securityLevel;
 				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
 					event.preventDefault();
 					modalService.loginModalService().then(function(user) {
