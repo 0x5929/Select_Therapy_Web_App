@@ -36,8 +36,7 @@
 						'content': {
 							templateUrl: 'app/Home/view/english/Home.html'
 						}
-					},
-					data: { securityLevel: 'None' }
+					}
 				})
 				.state('chinese', {
 					views: {
@@ -50,8 +49,7 @@
 						'content': {
 							templateUrl: 'app/Home/view/chinese/Home.html'
 						}
-					},
-					data: { securityLevel: 'None' }
+					}
 				})
 				.state('english.Home', {
 					views: {
@@ -253,34 +251,49 @@
 			
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
-				var logginRequired = toState.authenticate;
-				var securityLevel = toState.data.securityLevel;
-				
-				if (securityLevel === 'Student') {
-					if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
+				var loginRequired = toState.authenticate,
+				currentUser = $rootScope.currentUser,
+				securityLevel,
+				securityAccess = [],
+				errMsg;
+				//assign security level
+				if (toState.data && toState.data.securityLevel) securityLevel = toState.data.securityLevel;		
+				else securityLevel = 'None';
+				//assign security access
+				if (currentUser && currentUser.data.local.security) {
+					if (securityAccess.indexOf(currentUser.data.local.security) === -1)
+						securityAccess.push(currentUser.data.local.security);
+					if (securityAccess.indexOf('Admin') !== -1)	//if logged in as admin, you need access to staff level pages too
+						securityAccess.push('Staff');
+				}
+				else securityAccess = [];	
+
+				if (securityLevel === 'Student') {	//first level of security = students
+					if (loginRequired && typeof currentUser === 'undefined'){
 						event.preventDefault();
-						modalService.loginModalService().then(function(user) {
-							console.log('hello world from appRunConfiguration: ', user);	//	signal testing
+						modalService.loginModalService().then(function(user) {	//success login will redirect user to school
 							$state.go('english.school');
-						}).catch(function(failureResponse) {
-							console.log(failureResponse);	//signal testing
+						}).catch(function(failureResponse) {	//if somehow log in fails, user is redirected back to home.
 							$state.go('english.Home');
 						});
 					}
-				}else if (securityLevel === 'Staff') {	// 2 senarios, one already logged in, two logged in but not enough clearance 
-					if (logginRequired && typeof $rootScope.currentUser === 'undefined') {
+				}else if (securityLevel === 'Staff') {	// second level of security = staff
+					if (loginRequired && typeof currentUser === 'undefined') {	//scenario when you are not logged in
 						event.preventDefault();
 						modalService.loginModalService().then(function(user) {
-							console.log('hello world from appRunConfiguration: ', user);	//	signal testing
-							$state.go('english.school');
-						}).catch(function(failureResponse) {
-							console.log(failureResponse);	//signal testing
+							if (securityAccess.indexOf(user.data.local.security) === -1)
+								securityAccess.push(user.data.local.security);
+							console.log(securityAccess);	//undefined if no security set
+							if (securityAccess.indexOf(securityLevel) !== -1)	//if after log in you have enough access
+								$state.go('english.staff');
+							else 
+								$state.go('english.Home');	//if not enough access, then user is redirected to home
+							//possibly adding an error toast after the loggin success toast using timeout
+						}).catch(function(failureResponse) {	//if login failed, redirect user to home
 							$state.go('english.Home');
 						}); 
-					}else if (logginRequired && ($rootScope.currentUser.data.local.security !== 'Staff' 
-								|| $rootScope.currentUser.data.local.security !== 'Admin'
-								|| $rootScope.currentUser.data.local.security === undefined)) {
-						var errMsg = 'Sorry, You are not authorized to enter this page!';
+					}else if (loginRequired && securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
+						errMsg = 'Sorry, you need to be signed in as Admin to access the Admin page!';
 						event.preventDefault();
 						toastFactory.errorToast(errMsg);
 						$state.go('english.Home');
