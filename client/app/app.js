@@ -18,8 +18,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration])
-//		.run('$rootScope', 'AuthenticationFactory', authCheckConfiguration);
+		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -37,7 +36,8 @@
 						'content': {
 							templateUrl: 'app/Home/view/english/Home.html'
 						}
-					}
+					},
+					data: { securityLevel: 'None' }
 				})
 				.state('chinese', {
 					views: {
@@ -50,7 +50,8 @@
 						'content': {
 							templateUrl: 'app/Home/view/chinese/Home.html'
 						}
-					}
+					},
+					data: { securityLevel: 'None' }
 				})
 				.state('english.Home', {
 					views: {
@@ -64,7 +65,8 @@
 						'content@': {
 							templateUrl: 'app/Home/view/chinese/Home.html'
 						}
-					}
+					},
+					data: { securityLevel: 'None' }
 				})
 				.state('english.Class_Schedule', {
 					views: {
@@ -120,8 +122,17 @@
 							templateUrl: 'app/school/view/english/school.html'
 						}
 					},
-					authenticate: true,
-					securityLevel: 'Student'
+					data: { securityLevel: 'Student' },
+					authenticate: true
+				})
+				.state('english.staff', {
+					views: {
+						'content@': {
+							templateUrl: 'app/staff/view/english/staff.html'
+						}
+					},
+					data: { securityLevel: 'Staff' },
+					authenticate: true
 				})
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
@@ -243,35 +254,41 @@
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var logginRequired = toState.authenticate;
-				var securityLevel = toState.securityLevel;
-				if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
-					event.preventDefault();
-					modalService.loginModalService().then(function(user) {
-						console.log('hello world from appRunConfiguration: ', user);	//	signal testing
-						$state.go('english.school');
-					}).catch(function(failureResponse) {
-						console.log(failureResponse);	//signal testing
+				var securityLevel = toState.data.securityLevel;
+				
+				if (securityLevel === 'Student') {
+					if (logginRequired && typeof $rootScope.currentUser === 'undefined'){
+						event.preventDefault();
+						modalService.loginModalService().then(function(user) {
+							console.log('hello world from appRunConfiguration: ', user);	//	signal testing
+							$state.go('english.school');
+						}).catch(function(failureResponse) {
+							console.log(failureResponse);	//signal testing
+							$state.go('english.Home');
+						});
+					}
+				}else if (securityLevel === 'Staff') {	// 2 senarios, one already logged in, two logged in but not enough clearance 
+					if (logginRequired && typeof $rootScope.currentUser === 'undefined') {
+						event.preventDefault();
+						modalService.loginModalService().then(function(user) {
+							console.log('hello world from appRunConfiguration: ', user);	//	signal testing
+							$state.go('english.school');
+						}).catch(function(failureResponse) {
+							console.log(failureResponse);	//signal testing
+							$state.go('english.Home');
+						}); 
+					}else if (logginRequired && ($rootScope.currentUser.data.local.security !== 'Staff' 
+								|| $rootScope.currentUser.data.local.security !== 'Admin'
+								|| $rootScope.currentUser.data.local.security === undefined)) {
+						var errMsg = 'Sorry, You are not authorized to enter this page!';
+						event.preventDefault();
+						toastFactory.errorToast(errMsg);
 						$state.go('english.Home');
-					});
-						
+					}
 				}
 			});
 		}
 
-		function authCheckConfiguration($rootScope, AuthenticationFactory) {
-			$rootScope.$on('$viewContentLoading', function(event, viewConfig) { 
-    			// Access to all the view config properties.
-    			// and one special property 'targetView'
-    			// viewConfig.targetView
-    			AuthenticationFactory.checkLoggedIn().then(
-    				function(user) {
-    					//set rootscope.currentuser
-    					$rooScope.currentUser = user;
-    				}, 
-    				function(failure) {
-    					$rootScope.currentUser = undefined;
-    				});
-			});
-		}
+
 		
 }());

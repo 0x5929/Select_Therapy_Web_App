@@ -24,7 +24,11 @@
 					req.logIn(user, function(err) {
 						if (err)
 							return next(err);
+						console.log('LOOK FOR SECURITY LEVEL PLEASE');
+						console.log('====================');
+						console.log(req.user);
 						return res.status(200).send(req.user);
+
 					});
 				})(req, res, next);
 			}

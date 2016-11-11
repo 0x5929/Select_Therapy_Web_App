@@ -71,7 +71,8 @@
 						var postData = {
 							email: signUpModalInstanceCtrl.email,
 							password: signUpModalInstanceCtrl.password,
-							confirmPassword: signUpModalInstanceCtrl.confirmPassword
+							confirmPassword: signUpModalInstanceCtrl.confirmPassword,
+							signUpAs: signUpModalInstanceCtrl.signUpAs
 						};
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {

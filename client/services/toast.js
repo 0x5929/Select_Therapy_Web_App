@@ -10,7 +10,8 @@
 				successRegistration: successRegistration,
 				successLogin: successLogin,
 				signOut: signOut,
-				thankYouMessage: thankYouMessage
+				thankYouMessage: thankYouMessage,
+				errorToast: errorToast
 			};
 
 			function successRegistration() {
@@ -47,6 +48,16 @@
 				$mdToast.show(
 					$mdToast.simple()
 						.textContent('Thank you ' + name + ', you rock! Your message will be evaluated and responded to shortly!')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(3000)
+					);			
+			}
+
+			function errorToast(message) {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent(message)
 						.position('top right')
 						.parent('#header')
 						.hideDelay(3000)

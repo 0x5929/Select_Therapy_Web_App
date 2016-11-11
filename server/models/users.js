@@ -10,7 +10,8 @@
 	var userSchema = mongoose.Schema({
 			local: {
 				email: String,
-				password: String
+				password: String,
+				security: String
 			}
 		});
 	//created a method to generate hash for pw property in schema

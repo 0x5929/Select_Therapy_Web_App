@@ -33,7 +33,7 @@
 							}
 							if (user){
 								console.log('hello world from already taken user');
-								return done(null, false, { message: 'Email Already Taken, please try again!'});	// req.flash fucked up the status code, beware
+								return done(null, false, { message: 'Email Already Taken, please try again!'});
 							}else {
 								console.log('hello world from new user');
 								//create new user
@@ -44,6 +44,8 @@
 								console.log(newUser.local.email);
 								newUser.local.password = newUser.generateHash(password);
 								console.log(newUser.local.password);
+								newUser.local.security = req.body.signUpAs;
+								console.log(newUser.local.security);
 								//save new user
 								newUser.save(function(err) {
 									if (err) 
