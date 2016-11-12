@@ -33,13 +33,17 @@
 
 		            <div class="form-group">
 		              	<label class="control-label col-sm-2" for="SignUpAs">Sign up as: </label>
-		              	<div class="col-sm-10">
-		                	<select name="SignUpAs" ng-model="signUpModalInstanceCtrl.signUpAs">
-    							<option selected value="Student">Student</option>	<!-- Selected not working, need to figure out -->
+		              	<div class="col-sm-2">
+		                	<select name="SignUpAs" ng-model="signUpModalInstanceCtrl.signUpAs" 
+		                	ng-init="signUpModalInstanceCtrl.signUpAs = 'Student'">
+    							<option value="Student">Student</option>	<!-- Selected not working, need to figure out -->
     							<option value="Staff">Staff</option>
     							<option value="Admin">Admin</option>
   							</select>
-  							{{signUpModalInstanceCtrl.signUpAs}}
+		              	</div>
+		              	<label class="control-label col-sm-2" for="SignUpAs">Pin: </label>
+		              	<div class="col-sm-3">
+		                	<input type="password" name="pin" maxlength="4" size="4" ng-model="signUpModalInstanceCtrl.pin">
 		              	</div>
 		            </div>
 	         	</div>

@@ -35,8 +35,16 @@ app.use(logger('dev'));
 app.use(cookieParser('kevinRenIsAweseome'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
-app.use(validator());
 app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
+app.use(validator({
+	customValidators:{	//these custom pins could be changed.
+		pinVerification: function(pin, signUpAs) {
+			if (pin === 'sti8')	return signUpAs = 'Admin';
+			if (pin === 'sti7')	return signUpAs = 'Staff';
+			if (pin === 'sti6')	return signUpAs = 'Student';
+			return false;
+		}
+	} }));
 
 //required set up for passport sessions
 app.use(session({secret: 'kevinRenIsAweseome', 

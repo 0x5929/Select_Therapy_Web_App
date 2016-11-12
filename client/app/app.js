@@ -63,8 +63,7 @@
 						'content@': {
 							templateUrl: 'app/Home/view/chinese/Home.html'
 						}
-					},
-					data: { securityLevel: 'None' }
+					}
 				})
 				.state('english.Class_Schedule', {
 					views: {
@@ -263,7 +262,7 @@
 					//if logged in as admin, you need access to staff level pages too
 					if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');		
 				}
-				
+
 				if (loginRequired && securityLevel === 'Student') {	//first level of security = students
 					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();

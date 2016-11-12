@@ -64,6 +64,7 @@
 						signUpModalInstanceCtrl.email = '';
 						signUpModalInstanceCtrl.password = '';
 						signUpModalInstanceCtrl.confirmPassword = '';
+						signUpModalInstanceCtrl.pin ='';
 						signUpModalInstanceCtrl.showErrorMessage = true;
 						signUpModalInstanceCtrl.messages = message;	//	this is going to be an array
 					};
@@ -72,7 +73,8 @@
 							email: signUpModalInstanceCtrl.email,
 							password: signUpModalInstanceCtrl.password,
 							confirmPassword: signUpModalInstanceCtrl.confirmPassword,
-							signUpAs: signUpModalInstanceCtrl.signUpAs
+							signUpAs: signUpModalInstanceCtrl.signUpAs,
+							pin: signUpModalInstanceCtrl.pin
 						};
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {
