@@ -18,7 +18,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
+		.run(['$rootScope', '$state', '$timeout', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -236,9 +236,9 @@
 		}
 
 
-		function appRunConfiguration($rootScope, $state, AuthenticationFactory, modalService, toastFactory) {
+		function appRunConfiguration($rootScope, $state, $timeout, AuthenticationFactory, modalService, toastFactory) {
 		
-    		
+
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
     				//set rootscope.currentuser
@@ -253,49 +253,53 @@
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var loginRequired = toState.authenticate,
 				currentUser = $rootScope.currentUser,
-				securityLevel,
 				securityAccess = [],
+				securityLevel,
 				errMsg;
+				
+				console.log('everytime there is a state change the security access is: ', securityAccess);
 				//assign security level
 				if (toState.data && toState.data.securityLevel) securityLevel = toState.data.securityLevel;		
-				else securityLevel = 'None';
+				console.log(securityLevel);	//	or it could be undefined?
 				//assign security access
 				if (currentUser && currentUser.data.local.security) {
-					if (securityAccess.indexOf(currentUser.data.local.security) === -1)
-						securityAccess.push(currentUser.data.local.security);
-					if (securityAccess.indexOf('Admin') !== -1)	//if logged in as admin, you need access to staff level pages too
+					//if (securityAccess.indexOf(currentUser.data.local.security) === -1)	//	no longer needed because securityaccess is refreshed everytime page refreshes
+					securityAccess.push(currentUser.data.local.security);
+					if (securityAccess.indexOf('Admin') > -1)	//if logged in as admin, you need access to staff level pages too
 						securityAccess.push('Staff');
 				}
-				else securityAccess = [];	
-
-				if (securityLevel === 'Student') {	//first level of security = students
-					if (loginRequired && typeof currentUser === 'undefined'){
+				console.log('everytime i visit a page, after the evualation of current users security, it keeps going from empty to staff or admin and staff, :', securityAccess);
+				if (loginRequired && securityLevel === 'Student') {	//first level of security = students
+					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();
-						modalService.loginModalService().then(function(user) {	//success login will redirect user to school
+						modalService.loginModalService().then(function(user) {	//success student login will redirect user to school for students
 							$state.go('english.school');
 						}).catch(function(failureResponse) {	//if somehow log in fails, user is redirected back to home.
 							$state.go('english.Home');
 						});
-					}
-				}else if (securityLevel === 'Staff') {	// second level of security = staff
-					if (loginRequired && typeof currentUser === 'undefined') {	//scenario when you are not logged in
+					}	//the above if block ensures that anybody logs in is able to view student (school) page
+				}else if (loginRequired && securityLevel === 'Staff') {	// second level of security = staff
+					if (typeof currentUser === 'undefined') {	//scenario when you are not logged in
 						event.preventDefault();
 						modalService.loginModalService().then(function(user) {
-							if (securityAccess.indexOf(user.data.local.security) === -1)
-								securityAccess.push(user.data.local.security);
-							console.log(securityAccess);	//undefined if no security set
-							if (securityAccess.indexOf(securityLevel) !== -1)	//if after log in you have enough access
+							var userSecurityLvl = user.data.local.security;
+							console.log('this should be empty right before the securityAccess.push method: ', securityAccess);
+							securityAccess.push(userSecurityLvl);
+							if (securityAccess.indexOf('Admin') > -1)	//if user security is admin, add staff access as well
+								securityAccess.push('Staff');
+							console.log('and this is what security access look like after the push: ', securityAccess);	//undefined if no security set on user
+							console.log('securityLevel should be refreshed every time page is routed to diff states, but should be reevaulated evertime too , : ', securityLevel);
+							if (securityAccess.indexOf(securityLevel) > -1)	//if after log in you have enough access
 								$state.go('english.staff');
 							else 
-								$state.go('english.Home');	//if not enough access, then user is redirected to home
-							//possibly adding an error toast after the loggin success toast using timeout
+								$state.go('english.school');	//if not enough access, then user is redirected to home
 						}).catch(function(failureResponse) {	//if login failed, redirect user to home
 							$state.go('english.Home');
 						}); 
-					}else if (loginRequired && securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
+					}else if (securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
 						errMsg = 'Sorry, you need to be signed in as Admin to access the Admin page!';
 						event.preventDefault();
-						toastFactory.errorToast(errMsg);
+						$timeout(toastFactory.errorToast(errMsg), 3250);	//all error message needs to be fired with set time out function longer than the toast length, because you dont want overlap glitch
 						$state.go('english.Home');
 					}
 				}
