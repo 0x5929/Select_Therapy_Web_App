@@ -237,7 +237,6 @@
 
 
 		function appRunConfiguration($rootScope, $state, $timeout, AuthenticationFactory, modalService, toastFactory) {
-		
 
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
@@ -247,8 +246,7 @@
     			}, 
     			function() {
     				$rootScope.currentUser = undefined;
-    			});
-			
+    			});	
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var loginRequired = toState.authenticate,
@@ -256,19 +254,16 @@
 				securityAccess = [],
 				securityLevel,
 				errMsg;
-				
-				console.log('everytime there is a state change the security access is: ', securityAccess);
+
 				//assign security level
-				if (toState.data && toState.data.securityLevel) securityLevel = toState.data.securityLevel;		
-				console.log(securityLevel);	//	or it could be undefined?
+				if (toState.data && toState.data.securityLevel) securityLevel = toState.data.securityLevel;
 				//assign security access
 				if (currentUser && currentUser.data.local.security) {
-					//if (securityAccess.indexOf(currentUser.data.local.security) === -1)	//	no longer needed because securityaccess is refreshed everytime page refreshes
 					securityAccess.push(currentUser.data.local.security);
-					if (securityAccess.indexOf('Admin') > -1)	//if logged in as admin, you need access to staff level pages too
-						securityAccess.push('Staff');
+					//if logged in as admin, you need access to staff level pages too
+					if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');		
 				}
-				console.log('everytime i visit a page, after the evualation of current users security, it keeps going from empty to staff or admin and staff, :', securityAccess);
+				
 				if (loginRequired && securityLevel === 'Student') {	//first level of security = students
 					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();
@@ -279,21 +274,19 @@
 						});
 					}	//the above if block ensures that anybody logs in is able to view student (school) page
 				}else if (loginRequired && securityLevel === 'Staff') {	// second level of security = staff
-					if (typeof currentUser === 'undefined') {	//scenario when you are not logged in
+					if (typeof currentUser === 'undefined') {	//if no user signed in
 						event.preventDefault();
 						modalService.loginModalService().then(function(user) {
 							var userSecurityLvl = user.data.local.security;
-							console.log('this should be empty right before the securityAccess.push method: ', securityAccess);
 							securityAccess.push(userSecurityLvl);
-							if (securityAccess.indexOf('Admin') > -1)	//if user security is admin, add staff access as well
-								securityAccess.push('Staff');
-							console.log('and this is what security access look like after the push: ', securityAccess);	//undefined if no security set on user
-							console.log('securityLevel should be refreshed every time page is routed to diff states, but should be reevaulated evertime too , : ', securityLevel);
-							if (securityAccess.indexOf(securityLevel) > -1)	//if after log in you have enough access
-								$state.go('english.staff');
-							else 
-								$state.go('english.school');	//if not enough access, then user is redirected to home
-						}).catch(function(failureResponse) {	//if login failed, redirect user to home
+							//if user security is admin, add staff access as well
+							if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
+							//if after log in you have enough access	
+							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('english.staff');
+							//if not enough access, then user is redirected to home
+							else $state.go('english.school');
+						})
+						.catch(function(failureResponse) {	//if login failed, redirect user to home
 							$state.go('english.Home');
 						}); 
 					}else if (securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
