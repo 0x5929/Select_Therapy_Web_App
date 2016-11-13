@@ -11,7 +11,6 @@
 
 					function assignCurrentUser(user) {
 						$rootScope.currentUser = user;
-						console.log('current user is assigned');
 						return user;
 					}
 

@@ -12,25 +12,28 @@ var fs = require('fs'),
 	passport = require('passport'),
 	nodemailer = require('nodemailer'),
 	//middleware
-	errHandling = require(path.join(__dirname, '/config/errHandling.js')),
+	errHandling = require(path.join(__dirname, '/services/errHandling.js')),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	logger = require('morgan'),
 	validator = require('express-validator'),
 	session = require('express-session'),
 	mongoStore = require('connect-mongo')(session),
-	//fetching database configuration
-	configDB = require('./config/database.js')(mongoose);
+	//fetching configuration material
+	configDB = require(path.join(__dirname, '/config/database.js'))(mongoose),
+	configCV = require(path.join(__dirname, '/config/customValidator.js')),
+	configNM = require(path.join(__dirname, '/config/nodemail.js')),
+	//fetching services
+	nodemailerService = require(path.join(__dirname, '/services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
 
 //configuration
-//database configuration
 
-configDB.databaseConnectionConfig();
+configDB.databaseConnectionConfig();	//database configuration
 mongoose.connect(configDB.url);
-require('./config/passport.js')(passport);
+require('./config/passport.js')(passport);	//passport configuration
 
 
-//Setting up express application
+//Setting up express application middlewares
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -38,22 +41,16 @@ app.use(bodyParser.urlencoded({ extended: false }));	//get information from html
 app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
 app.use(validator({
 	customValidators:{	//these custom pins could be changed.
-		pinVerification: function(pin, signUpAs) {
-			if (pin === 'sti8')	return signUpAs = 'Admin';
-			if (pin === 'sti7')	return signUpAs = 'Staff';
-			if (pin === 'sti6')	return signUpAs = 'Student';
-			return false;
-		}
-	} }));
-
-//required set up for passport sessions
+		pinVerification: configCV.pinVerificationHandler
+	}}));
+//Setting up for express/passport sessions
 app.use(session({name: 'server-session-cookie-id',
 				 secret: 'kevinRenIsAweseome', 
 				 saveUninitialized: false, 
 				 resave: false,
 				 store: new mongoStore({ 
 				 	mongooseConnection: mongoose.connection,
-				 	ttl: 1 * 24 * 60* 60	//1day
+				 	ttl: 1 * 24 * 60 * 60	//1day
 				 	}),
 				 cookie: { path: '/', httpOnly: false, secure: false , maxAge: 86400000}	//1day
 				}));
@@ -61,10 +58,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes, passing in all the necessary module objs
-require('./routes/routes.js')(express, app, fs, bodyParser, validator, nodemailer, passport);
+require('./routes/routes.js')(express, app, fs, path, bodyParser, validator, nodemailerService, passport);
 
 //error handling
-app.use(errHandling);
+app.use(errHandling.initialErrHandler, errHandling.finalErrHandler);
 
 //firing this baby up
 app.listen(port, console.log('magic happens on port: ', port));

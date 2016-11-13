@@ -58,7 +58,6 @@
 						AuthenticationFactory.login(postData).then(function(user){
 							$scope.$close(user);	//user is passed to the result promise of the modal for assignCurrentUser function 
 							toastFactory.successLogin();
-							console.log('THIS IS DOCUMENT COOKIE: ', document.cookie);
 						}, function(failureResponse) {
 							var message = failureResponse.data;
 							signInModalInstanceCtrl.refreshUponFailure(message);
@@ -90,7 +89,6 @@
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {
 									$scope.$close(user);
-									console.log('AND THIS IS THE COOKIE AFTER SIGN UP: ', document.cookie);
 									toastFactory.successRegistration();
 								},  
 								function(failureResponse) {
@@ -116,7 +114,6 @@
 						//authPost to server
 						AuthenticationFactory.signOut().then(
 							function(success) {
-								console.log('hello world');
 								$rootScope.currentUser = undefined;
 								$state.go('english.Home');
 							}, 

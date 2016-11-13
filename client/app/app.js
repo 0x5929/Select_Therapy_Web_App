@@ -277,8 +277,8 @@
 					if (typeof currentUser === 'undefined') {	//if no user signed in
 						event.preventDefault();
 						modalService.loginModalService().then(function(user) {
-							var userSecurityLvl = user.data.local.security;
-							securityAccess.push(userSecurityLvl);
+							var userSecurityAccess = user.data.local.security;
+							securityAccess.push(userSecurityAccess);
 							//if user security is admin, add staff access as well
 							if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
 							//if after log in you have enough access	

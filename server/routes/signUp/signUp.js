@@ -1,25 +1,30 @@
 (function() {
 	'use strict';
 
-	module.exports = function(express, validator, passport) {
+	module.exports = signUpHandler;
+
+	function signUpHandler(express, validator, passport) {
 		//initialize router
 		var signUpRoute = express.Router();
 		//config routes for router
-		signUpRoute.post('/', function(req, res, next) {	//	first we check for errors of misvalidation
+		signUpRoute.post('/', function(req, res, next) {
+			var errors;
+			//	first we check for errors of misvalidation
 			req.check('email', 'Invalid email address!').isEmail();
 			req.check('password', 'Oops, password is not at least 6 charatacters long, please try again!').isLength({min: 6});
 			req.check('password', 'Oops, passwords are not matching, please try again!').equals(req.body.confirmPassword);
 			req.check('pin', 'WARNING! WRONG PIN!!').pinVerification(req.body.signUpAs);
-			var errors = req.validationErrors();
-			console.log('ERRORS: ');
-			console.log('===============');
-			console.log(errors);
+			errors = req.validationErrors();
 			if (errors) {
 				var errMsg = errors.map(function(err) {
 					return err.msg;
 				});
+				console.log(errMsg);
 				res.status(400).send(errMsg);
-			}else {
+			}else	return next();
+		}, 
+		function(req, res, next) {	
+
 				passport.authenticate('local-signup', function(err, user, info) {
 					if (err)
 						return next(err);
@@ -28,14 +33,11 @@
 					req.logIn(user, function(err) {
 						if (err)
 							return next(err);
-						console.log('LOOK FOR SECURITY LEVEL PLEASE');
-						console.log('====================');
-						console.log(req.user);
 						return res.status(200).send(req.user);
 
 					});
-				})(req, res, next);
-			}
+				})(req);	//passing in req object for passport
+			
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return signUpRoute;

@@ -14,13 +14,12 @@
 
 				function signOut() {
 					var deferred = $q.defer();
+
 					$http.get('/signOut').then(
 						function(success) {
-							console.log('hello world from auth, success response in signout post: ', success);
 							deferred.resolve();
 						}, 
 						function(failure) {
-							console.log('hello world from auth, failure response in signout post: ', failure);
 							deferred.reject();
 						});
 					return deferred.promise;
@@ -29,13 +28,12 @@
 
 				function signUp(postData) {
 					var deferred = $q.defer();
+
 					$http.post('/signUp', postData).then(
 						function(user) {
-							console.log('hello world from authjs', user);
 								deferred.resolve(user);
 						}, 
-						function(failureResponse) {//need to clear the fields & adding message;
-							console.log('hello world from authjs BAD response', failureResponse);
+						function(failureResponse) {	//need to clear the fields & adding message;
 							deferred.reject(failureResponse)
 						});
 					return deferred.promise;
@@ -43,14 +41,14 @@
 
 				function login(postData) {
 					var deferred = $q.defer();
-					if (!postData.remember)
+
+					if (!postData.remember)	//	check for setting if cookie is needed
 						cookieFactory.removeCookies('rememberMeCookie');
 					$http.post('/login', postData).then(
 						function(user) {
-							console.log('hello world from auth.login: ', user);
 							deferred.resolve(user);
-						}).catch(function(badResposne) {
-							console.log('hello world from auth.login, badder response: ', badResposne);
+						}, 
+						function(badResposne) {
 							deferred.reject(badResposne);
 					});
 					return deferred.promise;
@@ -58,16 +56,15 @@
 
 				function checkLoggedIn() {
 					var deferred = $q.defer();
+
 					$http.get('/checkLoggedIn').then(	//	because the response from server is always 200, it will never fail, thus no catch or failure  block
 						function(user) {
 							if (user && user.data._id) {
-								console.log('success response from server in checkLoggedIn function of authjs: ', user);
 								deferred.resolve(user);
 							}
 						}, 
 						function(failureResponse) {
-							console.log('there is no user, instead we get failure response: ', failureResponse);
-							deferred.reject();
+							deferred.reject(failureResponse);
 						});
 
 					return deferred.promise;

@@ -3,7 +3,10 @@
 
 	var LocalStrategy = require('passport-local').Strategy,
 		User = require('../models/users.js');	//note this is called, and model has already been initialize and connected with db in the db config 
-	module.exports = function(passport) {	//exposing the passport for configuration in server, this function is to be run while required in server, and will thus all the following code will configure passport configs
+	module.exports = passportConfigHandler;
+//exposing the passport for configuration in server, this function is to be run while required in server, 
+//and b/c it doesnt hae a returned value, thus all the following code will configure passport configs
+	function passportConfigHandler(passport) {	
 			//passport session set up
 			//used for persistent log in sessions
 			passport.serializeUser(function(user, done) {
@@ -23,33 +26,23 @@
 				passReqToCallback: true //passes the req obj to the callback in LocalStrategy
 			}, 
 				function(req, email, password, done) {
-				//async usage of process.nextTick, think about why we need it? 
-					console.log(req.body);
+				//async usage of process.nextTick, this following function wont fire unless req is passed
 					process.nextTick(function() {
 						User.findOne({'local.email': email}, function(err, user) {
-							if (err){
-								console.log('hello world from server error');
-								return done(err);	//server error
-							}
-							if (user){
-								console.log('hello world from already taken user');
-								return done(null, false, { message: 'Email Already Taken, please try again!'});
-							}else {
-								console.log('hello world from new user');
-								//create new user
+							//server error
+							if (err)	return done(err);	
+							//if user already exists err	
+							if (user)	return done(null, false, { message: 'Email Already Taken, please try again!'});	
+							else {	//create new user
 								var newUser = new User();
 								//set new user credentials
-								console.log('hello world from new user created');
 								newUser.local.email = email;
-								console.log(newUser.local.email);
 								newUser.local.password = newUser.generateHash(password);
-								console.log(newUser.local.password);
 								newUser.local.security = req.body.signUpAs;
-								console.log(newUser.local.security);
 								//save new user
 								newUser.save(function(err) {
 									if (err) 
-										handleError(err);	//	this needs to be better implemented
+										return done(err);	//	this needs to be better implemented
 									return done(null, newUser);
 								});		
 							}
@@ -66,20 +59,18 @@
 				passReqToCallback: true
 			},
 				function(req, email, password, done) {
-					User.findOne({'local.email': email}, function(err, user){
-						if (err){
-							console.log('hello world from passportjs signin server err: ', err);
-							return done(err);
-						}
-						if (!user){
-							console.log('hello world from passporjs signin user not found err');
-							return done(null, false, { message: 'User email not found, please try again!'});
-						}
-						if (!user.validPassword(password)){
-							console.log('hello world from passporjs signin invalid password err');
-							return done(null, false, { message: 'Invalid password, please try again!'});
-						}
-						return done(null, user);
+					//async usage of process.nextTick, this following function wont fire unless req is passed
+					process.nextTick(function() {
+						User.findOne({'local.email': email}, function(err, user){
+							//server error
+							if (err)	return done(err);
+							//user does not exist err
+							if (!user)	return done(null, false, { message: 'User email not found, please try again!'});
+							//user invalid password erre
+							if (!user.validPassword(password))	return done(null, false, { message: 'Invalid password, please try again!'});
+							//if no errors exist, return user as authenticated
+							return done(null, user);
+						});
 					});
 				}));
 	};
