@@ -10,9 +10,18 @@
 		checkLoggedInRoute.get('/', function(req, res, next) {	
 			var loggedIn = req.user;
 			//if req.user exists, meaning there is session, send client user
-			if (loggedIn) return res.status(200).send(req.user);
+			if (loggedIn){
+				console.log('this should be a user session: ');
+				console.log(req.session);
+				return res.status(200).send(req.user);
+			}
 			//or else, send status code 401 for unauthorization
-			else return res.status(401);
+			else {
+				req.session.destroy();
+				console.log('should be no session: ');
+				console.log(req.session);
+				return res.status(401);
+			}
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return checkLoggedInRoute;

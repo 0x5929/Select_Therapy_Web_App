@@ -57,7 +57,7 @@
 				function checkLoggedIn() {
 					var deferred = $q.defer();
 
-					$http.get('/checkLoggedIn').then(	//	because the response from server is always 200, it will never fail, thus no catch or failure  block
+					$http.get('/checkLoggedIn').then(	
 						function(user) {
 							if (user && user.data._id) {
 								deferred.resolve(user);

@@ -52,7 +52,7 @@ app.use(session({name: 'server-session-cookie-id',
 				 	mongooseConnection: mongoose.connection,
 				 	ttl: 1 * 24 * 60 * 60	//1day
 				 	}),
-				 cookie: { path: '/', httpOnly: false, secure: false , maxAge: 86400000}	//1day
+				 cookie: { path: '/', httpOnly: false, secure: false , maxAge: 86400000 }	//1day
 				}));
 app.use(passport.initialize());
 app.use(passport.session());
