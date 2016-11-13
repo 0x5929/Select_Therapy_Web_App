@@ -24,8 +24,19 @@
 			res.status(200).send(req.user);
 			*/
 			var loggedIn = req.user;
-			if (loggedIn) 
+			console.log('===================');
+			console.log(req.session.cookie);
+			console.log(req.session);
+			console.log(req.cookies);
+			if (loggedIn) {
+				console.log('===================abcs');
+				console.log(req.session.cookie);
+				console.log('HELLO WORLD THIS IS REQUEST.COOKIES: ');
+				console.log(req.cookies);
+				//res.setHeader('Set-Cookie','test=' + req.user._id);
+				res.cookie('differentCookie', req.user._id, { httpOnly : false, expires: new Date(Date.now() + 900000) });	//test
 				res.status(200).send(req.user);
+			}
 			else 
 				res.status(401);
 

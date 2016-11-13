@@ -23,13 +23,14 @@
       <div class="form-group"> 
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
-            <label><input type="checkbox">Remember me</label>
+            <label><input type="checkbox" ng-model="signInModalInstanceCtrl.remember">Remember me</label>
           </div>
         </div>
       </div>
       <div class="form-group"> 
         <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default" ng-click="signInModalInstanceCtrl.ok(signInModalInstanceCtrl.email, signInModalInstanceCtrl.password)">Submit</button>
+          <button type="submit" class="btn btn-default" 
+          ng-click="signInModalInstanceCtrl.ok(signInModalInstanceCtrl.email, signInModalInstanceCtrl.password, signInModalInstanceCtrl.remember)">Submit</button>
           <button type="cancel" class="btn btn-default" ng-click="signInModalInstanceCtrl.cancel()">Cancel</button>
         </div>
       </div>

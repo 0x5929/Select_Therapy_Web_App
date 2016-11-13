@@ -10,6 +10,7 @@
 		'services.AuthenticationFactory',
 		'services.toastFactory',
 		'services.modalService',
+		'services.cookies',
 		'myApp.userDropdown',
 		'myApp.ProgramsDropdown',
 		'myApp.About',

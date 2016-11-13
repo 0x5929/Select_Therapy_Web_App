@@ -1,9 +1,18 @@
 (function() {
 	'use strict';
 	angular.module('services.cookies', ['ngCookies'])
-		.factory('cookieService', ['$scope', '$cookies', cookieService]);
+		.factory('cookieFactory', ['$cookies', cookieFactoryHanlder]);
 
-		function cookieService($scope, $cookies) {
+		function cookieFactoryHanlder($cookies) {
+			var services = { 
+					getCookies: getCookies 
+			};
 			
+			function getCookies(key) {
+				return $cookies.get(key);
+			}
+
+			return services;
+
 		}
 }());

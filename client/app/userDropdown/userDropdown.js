@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 	
-	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'services.modalService', 'services.toastFactory', 'ui.router'])
+	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'services.modalService', 'services.toastFactory', 'services.cookies', 'ui.router'])
 		.controller('userDropdownControl', ['$scope', dropdownCtrl])
 		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
 		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
-		.controller('signInModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', signInModalInstanceController])
+		.controller('signInModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', 'cookieFactory', signInModalInstanceController])
 		.controller('signUpModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', signUpModalInstanceController])
 		.controller('signOutControl', ['$rootScope', '$state', 'toastFactory', 'AuthenticationFactory', signOutController]);
 
@@ -30,24 +30,35 @@
 				}
 
 				//controller function for signInModalInstanceController
-				function signInModalInstanceController($scope, AuthenticationFactory, toastFactory) {
+				function signInModalInstanceController($scope, AuthenticationFactory, toastFactory, cookieFactory) {
 					var signInModalInstanceCtrl = this;
 					signInModalInstanceCtrl.showErrorMessage = false;
 					signInModalInstanceCtrl.cancel = $scope.$dismiss;
+
+					if (cookieFactory.getCookies('rememberMeCookie'))
+						var cookie = JSON.parse(cookieFactory.getCookies('rememberMeCookie').replace('j:', ''));
+						if (cookie) {
+						signInModalInstanceCtrl.email = cookie.email;
+						signInModalInstanceCtrl.password = cookie.pw;
+						signInModalInstanceCtrl.remember = true;
+						}	
+
 					signInModalInstanceCtrl.refreshUponFailure = function(message) {
 						signInModalInstanceCtrl.email = '';
 						signInModalInstanceCtrl.password = '';
 						signInModalInstanceCtrl.showErrorMessage = true;
 						signInModalInstanceCtrl.message = message;
 					};
-					signInModalInstanceCtrl.ok = function(email, password) {
+					signInModalInstanceCtrl.ok = function(email, password, remember) {
 						var postData = {
 							email: email,
-							password: password
+							password: password,
+							remember: remember
 						};
 						AuthenticationFactory.login(postData).then(function(user){
 							$scope.$close(user);	//user is passed to the result promise of the modal for assignCurrentUser function 
 							toastFactory.successLogin();
+							console.log('THIS IS DOCUMENT COOKIE: ', document.cookie);
 						}, function(failureResponse) {
 							var message = failureResponse.data;
 							signInModalInstanceCtrl.refreshUponFailure(message);
@@ -79,6 +90,7 @@
 						AuthenticationFactory.signUp(postData).then(
 								function(user) {
 									$scope.$close(user);
+									console.log('AND THIS IS THE COOKIE AFTER SIGN UP: ', document.cookie);
 									toastFactory.successRegistration();
 								},  
 								function(failureResponse) {

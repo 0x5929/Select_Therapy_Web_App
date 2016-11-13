@@ -9,6 +9,10 @@
 		//	res.send(req.user);
 		//});
 		loginRoute.post('/', function(req, res, next) {
+		var cookieValue = JSON.stringify({email: req.body.email, pw: req.body.password});
+		var cookieOption = { httpOnly : false, expires: new Date(Date.now() + 1210000000) };
+			if (req.body.remember)
+				res.cookie('rememberMeCookie', cookieValue, cookieOption);
 			passport.authenticate('local-signin', function(err, user, info) {
 				if (err)
 					return next(err);

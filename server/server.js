@@ -32,7 +32,7 @@ require('./config/passport.js')(passport);
 
 //Setting up express application
 app.use(logger('dev'));
-app.use(cookieParser('kevinRenIsAweseome'));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
 app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
@@ -47,10 +47,16 @@ app.use(validator({
 	} }));
 
 //required set up for passport sessions
-app.use(session({secret: 'kevinRenIsAweseome', 
+app.use(session({name: 'server-session-cookie-id',
+				 secret: 'kevinRenIsAweseome', 
 				 saveUninitialized: false, 
 				 resave: false,
-				 store: new mongoStore({ mongooseConnection: mongoose.connection})}));
+				 store: new mongoStore({ 
+				 	mongooseConnection: mongoose.connection,
+				 	ttl: 1 * 24 * 60* 60	//1day
+				 	}),
+				 cookie: { path: '/', httpOnly: false, secure: false , maxAge: 86400000}	//1day
+				}));
 app.use(passport.initialize());
 app.use(passport.session());
 
