@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
-	angular.module('services.AuthenticationFactory', ['ui.router'])
-		.factory('AuthenticationFactory', ['$http', '$q', '$state', AuthFactory]);
+	angular.module('services.AuthenticationFactory', ['ui.router', 'services.cookies'])
+		.factory('AuthenticationFactory', ['$http', '$q', '$state', 'cookieFactory', AuthFactoryHandler]);
 
-			function AuthFactory($http, $q, $state) {
+			function AuthFactoryHandler($http, $q, $state, cookieFactory) {
 				
 				var services = {
 					signOut: signOut,
@@ -43,6 +43,8 @@
 
 				function login(postData) {
 					var deferred = $q.defer();
+					if (!postData.remember)
+						cookieFactory.removeCookies('rememberMeCookie');
 					$http.post('/login', postData).then(
 						function(user) {
 							console.log('hello world from auth.login: ', user);

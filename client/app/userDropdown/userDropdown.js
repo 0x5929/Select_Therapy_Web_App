@@ -35,14 +35,14 @@
 					signInModalInstanceCtrl.showErrorMessage = false;
 					signInModalInstanceCtrl.cancel = $scope.$dismiss;
 
-					if (cookieFactory.getCookies('rememberMeCookie'))
+					if (cookieFactory.getCookies('rememberMeCookie')) {
 						var cookie = JSON.parse(cookieFactory.getCookies('rememberMeCookie').replace('j:', ''));
 						if (cookie) {
 						signInModalInstanceCtrl.email = cookie.email;
 						signInModalInstanceCtrl.password = cookie.pw;
 						signInModalInstanceCtrl.remember = true;
 						}	
-
+					}
 					signInModalInstanceCtrl.refreshUponFailure = function(message) {
 						signInModalInstanceCtrl.email = '';
 						signInModalInstanceCtrl.password = '';

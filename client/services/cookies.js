@@ -5,11 +5,16 @@
 
 		function cookieFactoryHanlder($cookies) {
 			var services = { 
-					getCookies: getCookies 
+					getCookies: getCookies,
+					removeCookies: removeCookies
 			};
 			
 			function getCookies(key) {
 				return $cookies.get(key);
+			}
+
+			function removeCookies(key) {
+				return $cookies.remove(key);
 			}
 
 			return services;
