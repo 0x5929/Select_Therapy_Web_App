@@ -11,7 +11,7 @@
 				var cookieValue,
 				cookieOption;
 
-				if (req.body.remember) {
+				if (req.body.remember) {	//need to not send password to client because its dangerous to store senstive info in cookie to be seen
 					cookieValue = JSON.stringify({ email: req.body.email, pw: req.body.password });
 					cookieOption = { httpOnly : false, expires: new Date(Date.now() + 1210000000) };	//2 weeks expiration for cookie
 					res.cookie('rememberMeCookie', cookieValue, cookieOption);

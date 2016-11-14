@@ -17,7 +17,7 @@
 			}
 			//or else, send status code 401 for unauthorization
 			else {
-				req.session.destroy();
+				req.session.destroy();	//clears any server session if no user is logged in
 				console.log('should be no session: ');
 				console.log(req.session);
 				return res.status(401);
