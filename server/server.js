@@ -11,6 +11,7 @@ var fs = require('fs'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	nodemailer = require('nodemailer'),
+	helmet = require('helmet'),
 	//middleware
 	errHandling = require(path.join(__dirname, '/services/errHandling.js')),
 	bodyParser = require('body-parser'),
@@ -35,9 +36,10 @@ require('./config/passport.js')(passport);	//passport configuration
 
 //Setting up express application middlewares
 app.use(logger('dev'));
-app.use(cookieParser());
+app.use(cookieParser('kevinRenIsAweseome', { httpOnly: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
+app.use(helmet());	//security helmet
 app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
 app.use(validator({
 	customValidators:{	//these custom pins could be changed.
@@ -52,7 +54,7 @@ app.use(session({name: 'server-session-cookie-id',
 				 	mongooseConnection: mongoose.connection,
 				 	ttl: 1 * 24 * 60 * 60	//1day
 				 	}),
-				 cookie: { path: '/', httpOnly: false, secure: false , maxAge: 86400000 }	//1day
+				 cookie: { path: '/', httpOnly: true, secure: false , maxAge: 86400000 }	//1day
 				}));
 app.use(passport.initialize());
 app.use(passport.session());
