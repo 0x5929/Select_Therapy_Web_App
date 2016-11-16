@@ -15,6 +15,7 @@
 		var catchAllRouter = require(path.join(__dirname, 'catchAll/catchAll.js'))(express);
 		//application needs to call/hookup all the routers using the 'use' method with router starting route as first parameter, and router with its configs as second
 		//set up all routes with necessary routers. 
+
 		app.use('/sendMessage/', contactUsMessageRouter);
 		app.use('/About/', aboutUsDownloadRouter);
 		app.use('/signUp/', signUpRouter);

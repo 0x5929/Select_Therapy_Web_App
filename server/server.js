@@ -12,14 +12,17 @@ var fs = require('fs'),
 	passport = require('passport'),
 	nodemailer = require('nodemailer'),
 	helmet = require('helmet'),
+	csrf = require('csurf'),
 	//middleware
-	errHandling = require(path.join(__dirname, 'services/errHandling.js')),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	logger = require('morgan'),
 	validator = require('express-validator'),
 	session = require('express-session'),
 	mongoStore = require('connect-mongo')(session),
+	errHandling = require(path.join(__dirname, 'services/errHandling.js')),
+	csrfTokenMiddleware = require(path.join(__dirname, 'services/csrfToken.js')),
+
 	//fetching configuration material
 	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose),
 	configCV = require(path.join(__dirname, 'config/customValidator.js')),
@@ -40,7 +43,6 @@ app.use(cookieParser('kevinRenIsAweseome', { httpOnly: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
 app.use(helmet());	//security helmet
-app.use(express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 app.use(validator({
 	customValidators:{	//these custom pins could be changed.
 		pinVerification: configCV.pinVerificationHandler
@@ -58,12 +60,16 @@ app.use(session({name: 'server-session-cookie-id',
 				}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(csrf());	//security csrf
+app.use('/', csrfTokenMiddleware.csrfTokenAssignment);
+app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objs
 require('./routes/routes.js')(express, app, fs, path, bodyParser, validator, nodemailerService, passport);
 
 //error handling
-app.use(errHandling.initialErrHandler, errHandling.finalErrHandler);
+app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err
+app.use(errHandling.initialErrHandler, errHandling.finalErrHandler);	//everything else
 
 //firing this baby up
 app.listen(port, console.log('magic happens on port: ', port));
