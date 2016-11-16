@@ -13,7 +13,7 @@ var fs = require('fs'),
 	nodemailer = require('nodemailer'),
 	helmet = require('helmet'),
 	//middleware
-	errHandling = require(path.join(__dirname, '/services/errHandling.js')),
+	errHandling = require(path.join(__dirname, 'services/errHandling.js')),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	logger = require('morgan'),
@@ -21,11 +21,11 @@ var fs = require('fs'),
 	session = require('express-session'),
 	mongoStore = require('connect-mongo')(session),
 	//fetching configuration material
-	configDB = require(path.join(__dirname, '/config/database.js'))(mongoose),
-	configCV = require(path.join(__dirname, '/config/customValidator.js')),
-	configNM = require(path.join(__dirname, '/config/nodemail.js')),
+	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose),
+	configCV = require(path.join(__dirname, 'config/customValidator.js')),
+	configNM = require(path.join(__dirname, 'config/nodemail.js')),
 	//fetching services
-	nodemailerService = require(path.join(__dirname, '/services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
+	nodemailerService = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
 
 //configuration
 
@@ -40,7 +40,7 @@ app.use(cookieParser('kevinRenIsAweseome', { httpOnly: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
 app.use(helmet());	//security helmet
-app.use(express.static(path.join(__dirname, '/../client'))); 	//setting up the static file location
+app.use(express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 app.use(validator({
 	customValidators:{	//these custom pins could be changed.
 		pinVerification: configCV.pinVerificationHandler
