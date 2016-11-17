@@ -60,12 +60,11 @@ app.use(session({name: 'server-session-cookie-id',
 				}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(csrf());	//security csrf
-app.use('/', csrfTokenMiddleware.csrfTokenAssignment);
+app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angular
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objs
-require('./routes/routes.js')(express, app, fs, path, bodyParser, validator, nodemailerService, passport);
+require('./routes/routes.js')(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

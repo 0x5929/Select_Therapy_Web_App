@@ -9,7 +9,8 @@
 					signOut: signOut,
 					signUp: signUp,
 					login: login,
-					checkLoggedIn: checkLoggedIn
+					checkLoggedIn: checkLoggedIn,
+					csrfProtection: csrfProtection
 				};
 
 				function signOut() {
@@ -65,6 +66,20 @@
 						}, 
 						function(failureResponse) {
 							deferred.reject(failureResponse);
+						});
+
+					return deferred.promise;
+				}
+
+				function csrfProtection() {
+					var deferred = $q.defer();
+
+					$http.get('/csrfToken').then(
+						function(success) {
+							deferred.resolve(success);
+						}, 
+						function(failure) {
+							deferred.reject(failure);
 						});
 
 					return deferred.promise;

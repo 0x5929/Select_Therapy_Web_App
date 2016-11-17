@@ -19,7 +19,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', '$timeout', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
+		.run(['$rootScope', '$state', '$timeout', '$cookies', '$http', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration]);
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -236,7 +236,9 @@
 		}
 
 
-		function appRunConfiguration($rootScope, $state, $timeout, AuthenticationFactory, modalService, toastFactory) {
+		function appRunConfiguration($rootScope, $state, $timeout, $cookies, $http, AuthenticationFactory, modalService, toastFactory) {
+			//get and set header for csrf token from server for csrf protection
+			AuthenticationFactory.csrfProtection();
 
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
