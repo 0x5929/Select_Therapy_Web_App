@@ -4,39 +4,39 @@
 					<li role="presentation" ng-mouseleave="ProgramsDropdownCtrl.showHomeCh=false">
 						<a ui-sref=".Home">
 							<span ng-mouseenter="ProgramsDropdownCtrl.showHomeCh=true" ng-if="!(ProgramsDropdownCtrl.showHomeCh)">Home</span>
-							<span ng-if="ProgramsDropdownCtrl.showHomeCh">主页</span>
+							<span id="homeChinese" ng-if="ProgramsDropdownCtrl.showHomeCh">主页</span>
 						</a>
 					</li>
-					<li role ="presentation" ng-mouseleave="ProgramsDropdownCtrl.showClassScheduleCh=false">
+					<li role="presentation" ng-mouseleave="ProgramsDropdownCtrl.showClassScheduleCh=false">
 						<a ui-sref=".Class_Schedule">
 							<span ng-mouseenter="ProgramsDropdownCtrl.showClassScheduleCh=true" ng-if="!(ProgramsDropdownCtrl.showClassScheduleCh)">Class Schedule</span>
-							<span ng-if="ProgramsDropdownCtrl.showClassScheduleCh">課程安排</span>
+							<span id="ClassScheduleChinese" ng-if="ProgramsDropdownCtrl.showClassScheduleCh">課程安排</span>
 						</a>
 					</li>
 						<!-- Programs Dropdown Menu -->
-					<li role ="presentation" class="btn-group" uib-dropdown ng-mouseleave="ProgramsDropdownCtrl.showProgramsCh=false">
+					<li role="presentation" class="btn-group" uib-dropdown ng-mouseleave="ProgramsDropdownCtrl.showProgramsCh=false">
 						<a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">
-							<span ng-mouseenter="ProgramsDropdownCtrl.showProgramsCh=true" ng-if="!(ProgramsDropdownCtrl.showProgramsCh)">Programs</span>
-							<span ng-if="ProgramsDropdownCtrl.showProgramsCh">培訓計劃</span>
+							<span ng-mouseenter="ProgramsDropdownCtrl.showProgramsCh=true" ng-if="!(ProgramsDropdownCtrl.showProgramsCh)">Program</span>
+							<span id="programChinese" ng-if="ProgramsDropdownCtrl.showProgramsCh">培訓計劃</span>
 						</a>
 					<!-- This is the drop down menu, points to the template url, for further encapsulation -->
 						<ul class="dropdown-menu" uib-dropdown-menu template-url="app/Programs/view/english/ProgramsDropdown/ProgramsDropdown.html" aria-labelledby="button-template-url">
 						</ul>
 					</li>
-					<li role ="presentation" ng-mouseleave="ProgramsDropdownCtrl.showAboutCh=false">
+					<li role="presentation" ng-mouseleave="ProgramsDropdownCtrl.showAboutCh=false">
 						<a ui-sref=".About">
-							<span  ng-mouseenter="ProgramsDropdownCtrl.showAboutCh=true" ng-if="!(ProgramsDropdownCtrl.showAboutCh)">About Us</span>
-							<span ng-if="ProgramsDropdownCtrl.showAboutCh">关于我们</span>
+							<span ng-mouseenter="ProgramsDropdownCtrl.showAboutCh=true" ng-if="!(ProgramsDropdownCtrl.showAboutCh)">About Us</span>
+							<span id="aboutUsChinese" ng-if="ProgramsDropdownCtrl.showAboutCh">关于我们</span>
 						</a>
 					</li>
-					<li role ="presentation" ng-mouseleave="ProgramsDropdownCtrl.showContactUsCh=false">
+					<li role="presentation" ng-mouseleave="ProgramsDropdownCtrl.showContactUsCh=false">
 						<a ui-sref=".Contact_Us">
-							<span  ng-mouseenter="ProgramsDropdownCtrl.showContactUsCh=true" ng-if="!(ProgramsDropdownCtrl.showContactUsCh)"> Contact Us</span>
-							<span ng-if="ProgramsDropdownCtrl.showContactUsCh">聯係我們</span>
+							<span ng-mouseenter="ProgramsDropdownCtrl.showContactUsCh=true" ng-if="!(ProgramsDropdownCtrl.showContactUsCh)">Contact Us</span>
+							<span id="contactUsChinese" ng-if="ProgramsDropdownCtrl.showContactUsCh">聯係我們</span>
 						</a>
 					</li>
-					<li role ="presentation"><a ui-sref=".school">School</a></li>
-					<li role ="presentation"><a ui-sref=".staff">Staff</a></li>
+					<li role="presentation"><a ui-sref=".school">School</a></li>
+					<li role="presentation"><a ui-sref=".staff">Staff</a></li>
 				</ul>
 			</div>
 			<!-- Initiated User Dropdown Controller -->

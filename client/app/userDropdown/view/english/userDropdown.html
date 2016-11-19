@@ -1,5 +1,29 @@
 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
-	<li role="menuitem" ng-controller="signInModalControl as signInModalCtrl" ng-if="!($root.currentUser)"><a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal()">Sign In</a></li>
-	<li role="menuitem" ng-controller="signUpModalControl as signUpModalCtrl" ng-if="!($root.currentUser)"><a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal()">Sign Up</a></li>
-	<li role="menuitem" ng-controller="signOutControl as signOutCtrl" ng-if="$root.currentUser"><a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut()">Sign Out</a></li>
+	<li role="menuitem" 
+		ng-controller="signInModalControl as signInModalCtrl" 
+		ng-if="!($root.currentUser)" 
+		ng-mouseleave="signInModalCtrl.showSignInCh=false">
+		<a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal()">
+			<span ng-mouseenter="signInModalCtrl.showSignInCh=true" ng-if="!(signInModalCtrl.showSignInCh)">Sign In</span>
+			<span ng-if="signInModalCtrl.showSignInCh">登陸</span>
+		</a>
+	</li>
+	<li role="menuitem" 
+		ng-controller="signUpModalControl as signUpModalCtrl" 
+		ng-if="!($root.currentUser)" 
+		ng-mouseleave="signUpModalCtrl.showSignUpCh=false">
+		<a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal()">
+			<span ng-mouseenter="signUpModalCtrl.showSignUpCh=true" ng-if="!(signUpModalCtrl.showSignUpCh)">Sign Up</span>
+			<span ng-if="signUpModalCtrl.showSignUpCh">註冊</span>
+		</a>
+	</li>
+	<li role="menuitem" 
+		ng-controller="signOutControl as signOutCtrl" 
+		ng-if="$root.currentUser" 
+		ng-mouseleave="signOutCtrl.showSignOutCh=false">
+		<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut()">
+			<span ng-mouseenter="signOutCtrl.showSignOutCh=true" ng-if="!(signOutCtrl.showSignOutCh)">Sign Out</span>
+			<span ng-if="signOutCtrl.showSignOutCh">登出</span>
+		</a>
+	</li>
 </ul>
