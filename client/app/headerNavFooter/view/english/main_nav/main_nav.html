@@ -1,7 +1,12 @@
 <!-- Initiated programDropdown Controller -->
-			<div class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownCtrl">
+			<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl">
 				<ul class="nav nav-pills">
-					<li role ="presentation"><a ui-sref=".Home">Home</a></li>
+					<li role="presentation" ng-mouseleave="ProgramsDropdownCtrl.option=false">
+						<a ui-sref=".Home">
+							<span  ng-mouseenter="ProgramsDropdownCtrl.option=true" ng-if="!(ProgramsDropdownCtrl.option)">Home</span>
+							<span ng-if="ProgramsDropdownCtrl.option">主页</span>
+						</a>
+					</li>
 					<li role ="presentation"><a ui-sref=".Class_Schedule">Class Schedule</a></li>
 						<!-- Programs Dropdown Menu -->
 					<li role ="presentation" class="btn-group" uib-dropdown><a id="button-template-url" type="button" class="btn" uib-dropdown-toggle ng-disabled="disabled">Programs</a>
