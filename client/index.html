@@ -19,18 +19,21 @@
 <!--Header Container -->
 	<div class="container-fluid" id="header">
 		<div class="row">
-			<div class="col-xs-10" ui-view="header"></div>
+			<div class="col-xs-10" ui-view="header">
+				<h1 style="font-family: cursive">Select Therapy Institute</h1>
+			</div>
 			<div class="col-xs-2">
 				<h3><button class="btn btn-link" ui-sref="english" href="#english">English</button><button class="btn btn-link" ui-sref="chinese">Chinese</button></h3>
 			</div>
 		</div>
 	<!-- Main Top Navigation -->
 	<!-- and all of the nav elements needs to have a ui-sref of English.Home, or Chinese.About etc.. -->
-		<div class="row" ui-view="mainNav">	
+		<div class="row" ui-view="mainNav">
 		</div>
 	</div>
 <!--Middle Container -->
-	<div class="container-fluid" id="contentContainer" ui-view="content">
+	<div class="container-fluid" id="contentContainer" ui-view="content"></div>
+	<!-- 
 		<div class="row" id="mainPicContent">
 			<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
 		</div>
@@ -38,8 +41,7 @@
 			<div class="col-md-2" id="leftContent">
 			Hello World from Left Content
 			</div>
-			<!-- this will just be one more step further nested within either english or chinese.MenuNavBarItems -->
-			<!-- The UI VIEW interchangeable content controlled by the main module's configuration using ui.view for the main menu, or language setting-->
+			
 			<div class="col-md-8" ui-view="content">
 			</div>
 			
@@ -48,7 +50,8 @@
 			Hello World From right content
 			</div>
 		</div>
-	</div>
+-->
+	
 <!-- Loading Library Scripts -->
 <script src="scripts/js/angular/angular.js"></script>
 <script src="scripts/js/angular-animate/angular-animate.js"></script>
@@ -64,6 +67,7 @@
 <script src="services/toast.js"></script>
 <script src="services/cookies.js"></script>
 <!-- Loading Controller Scripts -->
+<script src="app/headerNavFooter/navCtrl.js"></script>
 <script src="app/Programs/ProgramsDropdown.js"></script>
 <script src="app/userDropdown/userDropdown.js"></script>
 <script src="app/About/AboutCtrl.js"></script>

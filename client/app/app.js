@@ -12,6 +12,7 @@
 		'services.modalService',
 		'services.cookies',
 		'myApp.userDropdown',
+		'myApp.mainNav',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
 		'myApp.ContactUs'])
@@ -23,14 +24,14 @@
 
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
-			$urlRouterProvider.otherwise('/english');
+			$urlRouterProvider.otherwise('/homePage');
 			$stateProvider
-				.state('english', {
-					url: '/english',
-					views: {
+				.state('homePage', {
+					url: '/homePage',
+					views: {/*
 						'header': {
 							templateUrl: 'app/headerNavFooter/view/english/header/header.html'
-						},
+						},*/
 						'mainNav': {
 							templateUrl: 'app/headerNavFooter/view/english/main_nav/main_nav.html'
 						},
@@ -38,7 +39,7 @@
 							templateUrl: 'app/Home/view/english/Home.html'
 						}
 					}
-				})
+				})//i want to get rid of this chinese link
 				.state('chinese', {
 					views: {
 						'header': {
@@ -52,7 +53,7 @@
 						}
 					}
 				})
-				.state('english.Home', {
+				.state('homePage.Home', {
 					views: {
 						'content@': {	//needed a '@' b/c this is a view within the english view, and the ui-view content is in html, needs to be referenced properly
 							templateUrl: 'app/Home/view/english/Home.html'
@@ -66,7 +67,7 @@
 						}
 					}
 				})
-				.state('english.Class_Schedule', {
+				.state('homePage.Class_Schedule', {
 					views: {
 						'content@': {
 							templateUrl: 'app/Class_Schedule/view/english/Class_Schedule.html'

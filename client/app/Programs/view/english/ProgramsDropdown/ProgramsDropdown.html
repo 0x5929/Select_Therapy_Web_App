@@ -1,38 +1,62 @@
 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
 	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showNACh=false">
-		<a ui-sref=".Nurse_Assistant_Training_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showNACh=true" ng-if="!(ProgramsDropdownCtrl.showNACh)">Nurse Assistant Training Programs</span>
-			<span ng-if="ProgramsDropdownCtrl.showNACh">護士助理執照培訓班</span>
+		<a href="" ng-click="mainNavCtrl.scrollTo('CNAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showNACh=false">
+			<span ng-mouseenter="ProgramsDropdownCtrl.showNACh=true" ng-if="!(ProgramsDropdownCtrl.showNACh)">
+				Nurse Assistant Training Programs
+			</span>
+			<span ng-if="ProgramsDropdownCtrl.showNACh">
+				護士助理執照培訓班
+			</span>
 		</a>
 	</li>
-	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showHHAch=false">
-		<a ui-sref=".Home_Health_Aid_Training_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showHHAch=true" ng-if="!(ProgramsDropdownCtrl.showHHAch)">Home Health Aid Training Program</span>
-			<span ng-if="ProgramsDropdownCtrl.showHHAch">40小時家庭醫療助理課程</span>
+	<li role="menuitem">
+		<a href="" ng-mouseenter="ProgramsDropdownCtrl.showHHAch=true"  ng-mouseleave="ProgramsDropdownCtrl.showHHAch=false" ng-click="mainNavCtrl.scrollTo('HHAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showHHAch=false">
+			<span ng-if="!(ProgramsDropdownCtrl.showHHAch)">
+				Home Health Aid Training Program
+			</span>
+			<span ng-if="ProgramsDropdownCtrl.showHHAch">
+				40小時家庭醫療助理課程
+			</span>
 		</a>
 	</li>
 	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showSGCh=false">
-		<a ui-sref=".Security_Guard_Training_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showSGCh=true" ng-if="!(ProgramsDropdownCtrl.showSGCh)">Security Guard Training Program</span>
-			<span ng-if="ProgramsDropdownCtrl.showSGCh">警衛保安執照培訓班</span>
+		<a href="" ng-click="mainNavCtrl.scrollTo('SGProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showSGCh=false">
+			<span ng-mouseenter="ProgramsDropdownCtrl.showSGCh=true" ng-if="!(ProgramsDropdownCtrl.showSGCh)">
+				Security Guard Training Program
+			</span>
+			<span ng-if="ProgramsDropdownCtrl.showSGCh">
+				警衛保安執照培訓班
+			</span>
 		</a>
 	</li>
 	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showCPRCh=false">
-		<a ui-sref=".CPR_BLS_HSFA_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showCPRCh=true" ng-if="!(ProgramsDropdownCtrl.showCPRCh)">CPR BLS HSFA for HealthCare Providers</span>
-			<span id="programCPRCh" ng-if="ProgramsDropdownCtrl.showCPRCh">心肺復蘇CPR培訓</span>
+		<a href="" ng-click="mainNavCtrl.scrollTo('CPRProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
+			<span ng-mouseenter="ProgramsDropdownCtrl.showCPRCh=true" ng-if="!(ProgramsDropdownCtrl.showCPRCh)">
+				CPR BLS HSFA for HealthCare Providers
+			</span>
+			<span id="programCPRCh" ng-if="ProgramsDropdownCtrl.showCPRCh">
+				心肺復蘇CPR培訓
+			</span>
 		</a>
 	</li>
 	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showESLCh=false">
-		<a ui-sref=".English_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showESLCh=true" ng-if="!(ProgramsDropdownCtrl.showESLCh)">English Second Language Program</span>
-			<span ng-if="ProgramsDropdownCtrl.showESLCh">英語晉級班</span>
+		<a href="" ng-click="mainNavCtrl.scrollTo('ESLProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showESLCh=false">
+			<span ng-mouseenter="ProgramsDropdownCtrl.showESLCh=true" ng-if="!(ProgramsDropdownCtrl.showESLCh)">
+				English Second Language Program
+			</span>
+			<span ng-if="ProgramsDropdownCtrl.showESLCh">
+				英語晉級班
+			</span>
 		</a>
 	</li>
 	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showAcuCh=false">
-		<a ui-sref=".Acupuncture_CEU_Program">
-			<span ng-mouseenter="ProgramsDropdownCtrl.showAcuCh=true" ng-if="!(ProgramsDropdownCtrl.showAcuCh)">Acupuncture CEU Program</span>
-			<span ng-if="ProgramsDropdownCtrl.showAcuCh">針灸再教育學分課程</span>
+		<a href="" ng-click="mainNavCtrl.scrollTo('ACU_CEUProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
+			<span ng-mouseenter="ProgramsDropdownCtrl.showAcuCh=true" ng-if="!(ProgramsDropdownCtrl.showAcuCh)">
+				Acupuncture CEU Program
+			</span>
+			<span ng-if="ProgramsDropdownCtrl.showAcuCh">
+				針灸再教育學分課程
+			</span>
 		</a>
 	</li>
 </ul>
