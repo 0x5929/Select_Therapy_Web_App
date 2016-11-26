@@ -1,10 +1,10 @@
 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="button-template-url">
-	<li role="menuitem" ng-mouseleave="ProgramsDropdownCtrl.showNACh=false">
+	<li role="menuitem" id="CNAShowCh">
 		<a href="" ng-click="mainNavCtrl.scrollTo('CNAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showNACh=false">
 			<span ng-mouseenter="ProgramsDropdownCtrl.showNACh=true" ng-if="!(ProgramsDropdownCtrl.showNACh)">
 				Nurse Assistant Training Programs
 			</span>
-			<span ng-if="ProgramsDropdownCtrl.showNACh">
+			<span ng-mouseleave="ProgramsDropdownCtrl.showNACh=false" ng-if="ProgramsDropdownCtrl.showNACh">
 				護士助理執照培訓班
 			</span>
 		</a>
