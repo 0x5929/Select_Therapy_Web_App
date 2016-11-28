@@ -2,15 +2,38 @@
 	'use strict';
 	
 	angular.module('myApp.userDropdown', ['services.looksIntegrationByUIB', 'services.AuthenticationFactory', 'services.modalService', 'services.toastFactory', 'services.cookies', 'ui.router'])
-		.controller('userDropdownControl', ['$scope', dropdownCtrl])
+		.controller('userDropdownControl', ['$scope', dropdownCtrlHandler])
 		.controller('signInModalControl', ['$scope', 'modalService', signInModalControl])
 		.controller('signUpModalControl', ['$scope', 'modalService', signUpModalControl])
 		.controller('signInModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', 'cookieFactory', signInModalInstanceController])
 		.controller('signUpModalInstanceController', ['$scope', 'AuthenticationFactory', 'toastFactory', signUpModalInstanceController])
 		.controller('signOutControl', ['$rootScope', '$state', 'toastFactory', 'AuthenticationFactory', signOutController]);
 
-				//empty controller, needed for dropdown action
-				function dropdownCtrl($scope) {
+				//userdropdownControll handler
+				function dropdownCtrlHandler($scope) {
+					var userDropdownCtrl = this;
+					var flipableItems = [
+						'showSignInCh', 
+						'showSignUpCh', 
+						'showSignOutCh'
+					];
+					userDropdownCtrl.flipTranslation = function(item) {
+						flipableItems.forEach(handler);
+						function handler(element) {
+							if (element === item)
+								userDropdownCtrl[element] = true;
+							else
+								userDropdownCtrl[element] = false;
+						}
+
+					};
+					userDropdownCtrl.ensureEnglish = function() {
+						flipableItems.forEach(handler);
+						function handler(element) {
+							userDropdownCtrl[element] = false;
+						}
+					};
+
 				}
 
 				//function for signInModalControl
