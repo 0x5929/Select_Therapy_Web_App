@@ -1,6 +1,6 @@
 <!-- Initiated mainNav Controller -->
 		<div ng-controller="mainNavControl as mainNavCtrl">
-			<div lang="zh-Hant" class="col-xs-10" id="mainNav">
+			<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl">
 				<ul class="nav nav-pills">
 					<li role="presentation" ng-mouseleave="mainNavCtrl.showHomeCh=false">
 						<a ui-sref=".Home" ng-init="mainNavCtrl.showHomeCh=false">
@@ -23,8 +23,8 @@
 						</a>
 					</li>
 <!-- PROGRAM DROPDOWN MENU -->
-					<li role="presentation" class="btn-group" uib-dropdown  auto-close="always" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl" ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish()">
-						<a id="single-button" type="button" class="btn" ng-disabled="disabled" 
+					<li role="presentation" class="btn-group" uib-dropdown is-open="ProgramsDropdownCtrl.status.isopen" ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish()">
+						<a id="single-button" type="button" class="btn"  uib-dropdown-toggle ng-disabled="disabled" 
 							ng-mouseleave="mainNavCtrl.showProgramsCh=false"
 							ng-init="mainNavCtrl.showProgramsCh=false">
 							<span ng-mouseenter="mainNavCtrl.showProgramsCh=true" ng-if="!(mainNavCtrl.showProgramsCh)">
@@ -37,7 +37,7 @@
 <!-- PROGRAM DROPDOWN CONTENT -->
 						<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showNACh')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('CNAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showNACh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CNAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showNACh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showNACh)">
 										Nurse Assistant Training Programs
 									</span>
@@ -47,7 +47,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showHHAch')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('HHAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showHHAch=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('HHAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showHHAch=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showHHAch)">
 										Home Health Aid Training Program
 									</span>
@@ -57,7 +57,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showSGCh')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('SGProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showSGCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('SGProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showSGCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showSGCh)">
 										Security Guard Training Program
 									</span>
@@ -67,7 +67,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showCPRCh')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('CPRProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CPRProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showCPRCh)">
 										CPR BLS HSFA for HealthCare Providers
 									</span>
@@ -77,7 +77,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showESLCh')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('ESLProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showESLCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ESLProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showESLCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showESLCh)">
 										English Second Language Program
 									</span>
@@ -87,7 +87,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showAcuCh')">
-								<a href="" ng-click="mainNavCtrl.scrollTo('ACU_CEUProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ACU_CEUProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showAcuCh)">
 										Acupuncture CEU Program
 									</span>

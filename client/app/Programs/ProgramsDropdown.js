@@ -3,10 +3,11 @@
 	
 	angular.module('myApp.ProgramsDropdown', ['services.looksIntegrationByUIB'])
 
-		.controller('ProgramsDropdownControl', ['$scope', DropdownCtrlHandler]);
+		.controller('ProgramsDropdownControl', ['$scope', '$location', '$anchorScroll', DropdownCtrlHandler]);
 	
-	function DropdownCtrlHandler($scope) {
+	function DropdownCtrlHandler($scope, $location, $anchorScroll) {
 		var ProgramsDropdownCtrl = this;
+		ProgramsDropdownCtrl.status = {isopen: false};
 		var flipTranslationMenuElements = [
 			'showNACh',
 			'showHHAch',
@@ -29,6 +30,12 @@
 			function handler(element) {
 				ProgramsDropdownCtrl[element] = false;
 			}
+		};
+		ProgramsDropdownCtrl.scrollTo = function(locationID) {
+				$location.hash(locationID);
+				$anchorScroll.yOffset = 150;
+				//ProgramsDropdownCtrl.status.isOpen = !ProgramsDropdownCtrl.status.isOpen;
+				$anchorScroll();
 		};
 		
 	}
