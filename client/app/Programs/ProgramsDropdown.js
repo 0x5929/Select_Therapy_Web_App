@@ -37,6 +37,13 @@
 				//ProgramsDropdownCtrl.status.isOpen = !ProgramsDropdownCtrl.status.isOpen;
 				$anchorScroll();
 		};
-		
+		ProgramsDropdownCtrl.hideMenu = function() {
+			var menu = angular.element(document.querySelector('.dropdown-menu'));
+			menu.css('display', 'none');
+		};
+		ProgramsDropdownCtrl.showMenu = function() {
+			var menu = angular.element(document.querySelector('.dropdown-menu'));
+			menu.css('display', 'block');
+		};
 	}
 }());

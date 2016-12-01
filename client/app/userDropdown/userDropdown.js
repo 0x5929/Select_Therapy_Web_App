@@ -33,6 +33,15 @@
 							userDropdownCtrl[element] = false;
 						}
 					};
+					userDropdownCtrl.hideMenu = function() {
+						var menu = angular.element(document.querySelector('.user-dropdown-menu'));
+						menu.css('display', 'none');
+					};
+					userDropdownCtrl.showMenu = function() {
+						var menu = angular.element(document.querySelector('.user-dropdown-menu'));
+						menu.css('display', 'block');
+					};
+
 
 				}
 

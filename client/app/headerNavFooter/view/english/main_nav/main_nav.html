@@ -23,8 +23,8 @@
 						</a>
 					</li>
 <!-- PROGRAM DROPDOWN MENU -->
-					<li role="presentation" class="btn-group" uib-dropdown is-open="ProgramsDropdownCtrl.status.isopen" ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish()">
-						<a id="single-button" type="button" class="btn"  uib-dropdown-toggle ng-disabled="disabled" 
+					<li role="presentation" class="btn-group" uib-dropdown ng-mouseenter="ProgramsDropdownCtrl.showMenu()" ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish(); ProgramsDropdownCtrl.hideMenu()">
+						<a id="single-button" type="button" class="btn" ng-disabled="disabled" 
 							ng-mouseleave="mainNavCtrl.showProgramsCh=false"
 							ng-init="mainNavCtrl.showProgramsCh=false">
 							<span ng-mouseenter="mainNavCtrl.showProgramsCh=true" ng-if="!(mainNavCtrl.showProgramsCh)">
@@ -37,7 +37,7 @@
 <!-- PROGRAM DROPDOWN CONTENT -->
 						<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 							<li role="menuitem" class="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showNACh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CNAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showNACh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CNAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showNACh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showNACh)">
 										Nurse Assistant Training Programs
 									</span>
@@ -47,7 +47,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showHHAch')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('HHAProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showHHAch=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('HHAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showHHAch=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showHHAch)">
 										Home Health Aid Training Program
 									</span>
@@ -57,7 +57,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showSGCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('SGProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showSGCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('SGProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSGCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showSGCh)">
 										Security Guard Training Program
 									</span>
@@ -67,7 +67,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showCPRCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CPRProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CPRProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showCPRCh)">
 										CPR BLS HSFA for HealthCare Providers
 									</span>
@@ -77,7 +77,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showESLCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ESLProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showESLCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ESLProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showESLCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showESLCh)">
 										English Second Language Program
 									</span>
@@ -87,7 +87,7 @@
 								</a>
 							</li>
 							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showAcuCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ACU_CEUProgramDescriptionSection')" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
+								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ACU_CEUProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
 									<span ng-if="!(ProgramsDropdownCtrl.showAcuCh)">
 										Acupuncture CEU Program
 									</span>
@@ -125,14 +125,14 @@
 			</div>
 <!-- USER DROPDOWN MENU -->
 			<div class="col-xs-2" id="userNav" ng-controller="userDropdownControl as userDropdownCtrl">
-			    <div class="btn-group" uib-dropdown ng-mouseleave="userDropdownCtrl.ensureEnglish()">
+			    <div class="btn-group" uib-dropdown ng-mouseleave="userDropdownCtrl.ensureEnglish(); userDropdownCtrl.hideMenu()" ng-mouseenter="userDropdownCtrl.showMenu()">
 				     <button id="userButton" type="button" class="btn btn-primary" ng-disabled="disabled">
 				   		<span class="glyphicon glyphicon-user"></span>
 				    </button>
 <!-- USER DROPDOWN MENU ITEMS -->
-				    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+				    <ul class="user-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 						<li role="menuitem" ng-controller="signInModalControl as signInModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignInCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal()" ng-init="ProgramsDropdownCtrl.showSignInCh=false">
+							<a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal(); userDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSignInCh=false">
 								<span ng-if="!(userDropdownCtrl.showSignInCh)">
 									Sign In
 								</span>
@@ -142,7 +142,7 @@
 							</a>
 						</li>
 						<li role="menuitem" ng-controller="signUpModalControl as signUpModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignUpCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal()">
+							<a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal(); userDropdownCtrl.hideMenu()">
 								<span ng-if="!(userDropdownCtrl.showSignUpCh)">
 									Sign Up
 								</span>
@@ -152,7 +152,7 @@
 							</a>
 						</li>
 						<li role="menuitem" ng-controller="signOutControl as signOutCtrl" ng-if="$root.currentUser" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignOutCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut()">
+							<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut(); userDropdownCtrl.hideMenu()">
 								<span ng-if="!(signOutCtrl.showSignOutCh)">
 									Sign Out
 								</span>
