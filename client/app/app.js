@@ -6,7 +6,6 @@
 		'ui.router',
 		'ngMaterial',
 		'ngCookies',
-		'headroom',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
 		'services.toastFactory',
