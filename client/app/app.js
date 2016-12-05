@@ -36,10 +36,11 @@
 			$stateProvider
 				.state('homePage', {
 					url: '/homePage',
+					templateUrl: 'app/Home/view/english/Home.html'/*
 					views: {/*
 						'header': {
 							templateUrl: 'app/headerNavFooter/view/english/header/header.html'
-						},*/
+						},
 						'mainNav': {
 							templateUrl: 'app/headerNavFooter/view/english/main_nav/main_nav.html'
 						},
@@ -47,27 +48,17 @@
 							templateUrl: 'app/Home/view/english/Home.html'
 						}
 					}
+					*/
 				})//i want to get rid of this chinese link
-				.state('chinese', {
-					views: {
-						'header': {
-							templateUrl: 'app/headerNavFooter/view/chinese/header/header.html'
-						},
-						'mainNav': {
-							templateUrl: 'app/headerNavFooter/view/chinese/main_nav/main_nav.html'
-						},
-						'content': {
-							templateUrl: 'app/Home/view/chinese/Home.html'
-						}
-					}
-				})
-				.state('homePage.Home', {
-					views: {
+				.state('Home', {
+					templateUrl: 'app/Home/view/english/Home.html'
+					/*views: {
 						'content@': {	//needed a '@' b/c this is a view within the english view, and the ui-view content is in html, needs to be referenced properly
 							templateUrl: 'app/Home/view/english/Home.html'
 						}
-					}
+					}*/
 				})
+				/*
 				.state('chinese.Home', {
 					views: {
 						'content@': {
@@ -122,25 +113,30 @@
 					},
 					controller: 'ContactUsCtrl',
 					controllerAs: 'contactControl'
-				})
-				.state('english.school', {
+				})*/
+				.state('school', {
+					templateUrl: 'app/school/view/english/school.html',/*
 					views: {
 						'content@': {
 							templateUrl: 'app/school/view/english/school.html'
 						}
 					},
+					*/
 					data: { securityLevel: 'Student' },
 					authenticate: true
 				})
-				.state('english.staff', {
+				.state('staff', {
+					templateUrl: 'app/staff/view/english/staff.html',/*
 					views: {
 						'content@': {
 							templateUrl: 'app/staff/view/english/staff.html'
 						}
 					},
+					*/
 					data: { securityLevel: 'Staff' },
 					authenticate: true
 				})
+				/*
 				.state('english.Nurse_Assistant_Training_Program', {
 					views: {
 						'content@': {
@@ -224,7 +220,7 @@
 							templateUrl: 'app/Programs/view/chinese/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
 						}
 					}
-				});
+				})*/;
 		}
 
 
@@ -234,7 +230,7 @@
 					responseError: function(rejection) {
 						if (rejection.status === 401){
 							console.log('hello world from httpConfiguration', rejection);
-							$injector.get('$state').transitionTo('english.Home');
+							$injector.get('$state').transitionTo('Home');
 							return $q.reject(rejection); 
 						}
 						else
@@ -279,9 +275,9 @@
 					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();
 						modalService.loginModalService().then(function(user) {	//success student login will redirect user to school for students
-							$state.go('english.school');
+							$state.go('school');
 						}).catch(function(failureResponse) {	//if somehow log in fails, user is redirected back to home.
-							$state.go('english.Home');
+							$state.go('Home');
 						});
 					}	//the above if block ensures that anybody logs in is able to view student (school) page
 				}else if (loginRequired && securityLevel === 'Staff') {	// second level of security = staff
@@ -293,18 +289,18 @@
 							//if user security is admin, add staff access as well
 							if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
 							//if after log in you have enough access	
-							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('english.staff');
+							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('staff');
 							//if not enough access, then user is redirected to home
-							else $state.go('english.school');
+							else $state.go('school');
 						})
 						.catch(function(failureResponse) {	//if login failed, redirect user to home
-							$state.go('english.Home');
+							$state.go('Home');
 						}); 
 					}else if (securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
 						errMsg = 'Sorry, you need to be signed in as Admin to access the Admin page!';
 						event.preventDefault();
 						$timeout(toastFactory.errorToast(errMsg), 3250);	//all error message needs to be fired with set time out function longer than the toast length, because you dont want overlap glitch
-						$state.go('english.Home');
+						$state.go('Home');
 					}
 				}
 			});
