@@ -17,20 +17,8 @@
 <body ng-app="myApp">
 <!-- all of the Header container needs to be routed inside another ui-view controlled by the language nav bar -->
 <!--Header Container -->
-	<header class="container-fluid" id="header">
-		<div class="row">
-			<div class="col-xs-10" ui-view="header">
-				<h1 style="font-family: cursive">Select Therapy Institute</h1>
-			</div>
-			<div class="col-xs-2">
-				<h3><button class="btn btn-link" ui-sref="english" href="#english">English</button><button class="btn btn-link" ui-sref="chinese">Chinese</button></h3>
-			</div>
-		</div>
-	<!-- Main Top Navigation -->
-	<!-- and all of the nav elements needs to have a ui-sref of English.Home, or Chinese.About etc.. -->
-		<div class="row" ui-view="mainNav">
-		</div>
-	</header>
+	<my-header></my-header>
+	
 <!--Middle Container -->
 	<div class="container-fluid" id="contentContainer" ui-view="content"></div>
 	<!-- 
@@ -71,10 +59,8 @@
 <script src="services/modal.js"></script>
 <script src="services/toast.js"></script>
 <script src="services/cookies.js"></script>
-<script src="services/headerjs/headroom.js"></script>
-<script src="services/headerjs/angular.headroom.js"></script>
 <!-- Loading Controller Scripts -->
-<script src="app/headerNavFooter/navCtrl.js"></script>
+<script src="app/headerNavFooter/controllers/navCtrl.js"></script>
 <script src="app/Programs/ProgramsDropdown.js"></script>
 <script src="app/userDropdown/userDropdown.js"></script>
 <script src="app/About/AboutCtrl.js"></script>
@@ -82,5 +68,7 @@
 <script src="app/indexControllers/backToTopController.js"></script>
 <!-- Loading Application Scripts-->
 <script src="app/app.js"></script>
+<!-- Loading Directive Scripts -->
+<script src="app/headerNavFooter/directives/headerDirective.js"></script>
 </body>
 </html>
