@@ -19,7 +19,7 @@
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
 					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signIn/signInModal.html', 
+					      templateUrl: 'app/Header/view/main_nav/userDropdown/signIn/signInModal.html', 
 					      controller: 	'signInModalInstanceController',
 					      controllerAs: 'signInModalInstanceCtrl',
 					      size: 'lg'
@@ -33,7 +33,7 @@
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
 					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/userDropdown/view/english/signUp/signUpModal.html', 
+					      templateUrl: 'app/Header/view/main_nav/userDropdown/signUp/signUpModal.html', 
 					      controller: 	'signUpModalInstanceController',
 					      controllerAs: 'signUpModalInstanceCtrl',
 					      size: 'lg'

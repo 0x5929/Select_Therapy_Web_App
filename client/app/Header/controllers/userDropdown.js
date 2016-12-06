@@ -147,7 +147,7 @@
 						AuthenticationFactory.signOut().then(
 							function(success) {
 								$rootScope.currentUser = undefined;
-								$state.go('english.Home');
+								$state.go('Home');
 							}, 
 							function(failure) {
 								//really this should never fail

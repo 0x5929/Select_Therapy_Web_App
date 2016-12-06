@@ -21,206 +21,29 @@
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
 		.run(['$rootScope', '$state', '$timeout', '$cookies', '$http', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration])
-		/*.directive('myHeader', function () {
-			//initializing the directive
-			var directive = {};
-			//setting the directive settings
-			directive.template = "HELLO WORLD"
-			//returning the directive
-			return directive;
-		})*/;
-
+		
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/homePage');
 			$stateProvider
 				.state('homePage', {
 					url: '/homePage',
-					templateUrl: 'app/Home/view/english/Home.html'/*
-					views: {/*
-						'header': {
-							templateUrl: 'app/headerNavFooter/view/english/header/header.html'
-						},
-						'mainNav': {
-							templateUrl: 'app/headerNavFooter/view/english/main_nav/main_nav.html'
-						},
-						'content': {
-							templateUrl: 'app/Home/view/english/Home.html'
-						}
-					}
-					*/
-				})//i want to get rid of this chinese link
+					templateUrl: 'app/Home/view/Home.html'
+				})
 				.state('Home', {
-					templateUrl: 'app/Home/view/english/Home.html'
-					/*views: {
-						'content@': {	//needed a '@' b/c this is a view within the english view, and the ui-view content is in html, needs to be referenced properly
-							templateUrl: 'app/Home/view/english/Home.html'
-						}
-					}*/
+					templateUrl: 'app/Home/view/Home.html'
 				})
-				/*
-				.state('chinese.Home', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Home/view/chinese/Home.html'
-						}
-					}
-				})
-				.state('homePage.Class_Schedule', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Class_Schedule/view/english/Class_Schedule.html'
-						}	
-					}
-				})
-				.state('chinese.Class_Schedule', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Class_Schedule/view/chinese/Class_Schedule.html'
-						}
-					}
-				})
-				.state('english.About', {
-					views: {
-						'content@': {
-							templateUrl: 'app/About/view/english/About.html'
-						}	
-					},
-					controller: 'AboutCtrl'
-				})
-				.state('chinese.About', {
-					views: {
-						'content@': {
-							templateUrl: 'app/About/view/chinese/About.html'
-						}
-					},
-					controller: 'AboutCtrl'
-				})
-				.state('english.Contact_Us', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Contact_Us/view/english/Contact_Us.html'
-						}	
-					},
-					controller: 'ContactUsCtrl',
-					controllerAs: 'contactControl'
-				})
-				.state('chinese.Contact_Us', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Contact_Us/view/chinese/Contact_Us.html'
-						}
-					},
-					controller: 'ContactUsCtrl',
-					controllerAs: 'contactControl'
-				})*/
+				
 				.state('school', {
-					templateUrl: 'app/school/view/english/school.html',/*
-					views: {
-						'content@': {
-							templateUrl: 'app/school/view/english/school.html'
-						}
-					},
-					*/
+					templateUrl: 'app/school/view/english/school.html',
 					data: { securityLevel: 'Student' },
 					authenticate: true
 				})
 				.state('staff', {
-					templateUrl: 'app/staff/view/english/staff.html',/*
-					views: {
-						'content@': {
-							templateUrl: 'app/staff/view/english/staff.html'
-						}
-					},
-					*/
+					templateUrl: 'app/staff/view/english/staff.html',
 					data: { securityLevel: 'Staff' },
 					authenticate: true
-				})
-				/*
-				.state('english.Nurse_Assistant_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
-						}	
-					}
-				})
-				.state('chinese.Nurse_Assistant_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/Nurse_Assistant_Program/Nurse_Assistant_Training_Program.html'
-						}
-					}
-				})
-				.state('english.Home_Health_Aid_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/HHA_Program/Home_Health_Aid_Training_Program.html'
-						}	
-					}
-				})
-				.state('chinese.Home_Health_Aid_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/HHA_Program/Home_Health_Aid_Training_Program.html'
-						}
-					}
-				})
-				.state('english.Security_Guard_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
-						}	
-					}
-				})
-				.state('chinese.Security_Guard_Training_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/Security_Guard_Training_Program/Security_Guard_Training_Program.html'
-						}
-					}
-				})
-				.state('english.CPR_BLS_HSFA_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/CPR_BLS_HSFA_Program/CPR_BLS_HSFA_Program.html'
-						}	
-					}
-				})
-				.state('chinese.CPR_BLS_HSFA_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/CPR_BLS_HSFA_Program/CPR_BLS_HSFA_Program.html'
-						}
-					}
-				})
-				.state('english.English_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/English_Program/English_Program.html'
-						}	
-					}
-				})
-				.state('chinese.English_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/English_Program/English_Program.html'
-						}
-					}
-				})
-				.state('english.Acupuncture_CEU_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/english/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
-						}	
-					}
-				})
-				.state('chinese.Acupuncture_CEU_Program', {
-					views: {
-						'content@': {
-							templateUrl: 'app/Programs/view/chinese/Acupuncture_CEU_Program/Acupuncture_CEU_Program.html'
-						}
-					}
-				})*/;
+				});
 		}
 
 

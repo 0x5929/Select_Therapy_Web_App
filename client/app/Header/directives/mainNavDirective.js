@@ -8,7 +8,7 @@
 			//initialize directive
 			var directive = {};
 			//directive set up
-			directive.templateUrl = '/app/Header/view/english/main_nav/main_nav.html';
+			directive.templateUrl = '/app/Header/view/main_nav/main_nav.html';
 			directive.scope = {};
 			//return directive
 			return directive;
