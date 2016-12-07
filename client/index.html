@@ -12,10 +12,10 @@
 <body ng-app="myApp">
 <!--Header -->
 	<my-header></my-header>	
-<!-- Content -->
+<!-- Content Loaded Dynamically using ui router -->
 	<div class="container-fluid" id="contentContainer" ui-view></div>
 <!-- Footer  -->
-	<footer class="container-fluid" id="footer">HELLO WORLD FROM FOOTER YA BITCH</footer>
+	<my-footer></my-footer>
 <!-- BACK TO THE TOP ANCHOR -->
 	<a href="#" class="back-to-top" style="display: inline;">
 		<span class="glyphicon glyphicon-hand-up"></span>
@@ -47,5 +47,6 @@
 <!-- Loading Directive Scripts -->
 <script src="app/Header/directives/headerDirective.js"></script>
 <script src="app/Header/directives/mainNavDirective.js"></script>
+<script src="app/Footer/directives/myFooterDirective.js"></script>
 </body>
 </html>
