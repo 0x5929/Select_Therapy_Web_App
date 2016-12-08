@@ -1,168 +1,169 @@
 <!-- Initiated mainNav Controller -->
-		<div ng-controller="mainNavControl as mainNavCtrl">
-			<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl">
-				<ul class="nav nav-pills">
-					<li role="presentation" ng-mouseleave="mainNavCtrl.showHomeCh=false">
-						<a href="" ng-click="mainNavCtrl.scrollTo('PreviousHomeSection')" 
-							ng-init="mainNavCtrl.showHomeCh=false">
-							<span ng-mouseenter="mainNavCtrl.showHomeCh=true" ng-if="!(mainNavCtrl.showHomeCh)">
-								Home
-							</span>
-							<span id="homeChinese" ng-if="mainNavCtrl.showHomeCh">
-								主页
-							</span>
-						</a>
-					</li>
-					<li role="presentation" ng-mouseleave="mainNavCtrl.showClassScheduleCh=false">
-						<a href="" ng-click="mainNavCtrl.scrollTo('classScheduleSection')" 
-							ng-init="mainNavCtrl.showClassScheduleCh=false">
-							<span ng-mouseenter="mainNavCtrl.showClassScheduleCh=true" ng-if="!(mainNavCtrl.showClassScheduleCh)">		Class Schedule
-							</span>
-							<span id="ClassScheduleChinese" ng-if="mainNavCtrl.showClassScheduleCh">
-								課程安排
-							</span>
-						</a>
-					</li>
+<div ng-controller="mainNavControl as mainNavCtrl">
+	<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl">
+		<ul class="nav nav-pills">
+			<li role="presentation" ng-mouseleave="mainNavCtrl.showHomeCh=false">
+				<a href="" ng-click="mainNavCtrl.scrollTo('PreviousHomeSection')" 
+					ng-init="mainNavCtrl.showHomeCh=false">
+					<span ng-mouseenter="mainNavCtrl.showHomeCh=true" ng-if="!(mainNavCtrl.showHomeCh)">
+						Home
+					</span>
+					<span id="homeChinese" ng-if="mainNavCtrl.showHomeCh">
+						主页
+					</span>
+				</a>
+			</li>
+			<li role="presentation" ng-mouseleave="mainNavCtrl.showClassScheduleCh=false">
+				<a href="" ng-click="mainNavCtrl.scrollTo('classScheduleSection')" 
+					ng-init="mainNavCtrl.showClassScheduleCh=false">
+					<span ng-mouseenter="mainNavCtrl.showClassScheduleCh=true" ng-if="!(mainNavCtrl.showClassScheduleCh)">	Class Schedule
+					</span>
+					<span id="ClassScheduleChinese" ng-if="mainNavCtrl.showClassScheduleCh">
+						課程安排
+					</span>
+				</a>
+			</li>
 <!-- PROGRAM DROPDOWN MENU -->
-					<li role="presentation" class="btn-group" uib-dropdown ng-mouseenter="ProgramsDropdownCtrl.showMenu()" ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish(); ProgramsDropdownCtrl.hideMenu()">
-						<a id="single-button" type="button" class="btn" ng-disabled="disabled" 
-							ng-mouseleave="mainNavCtrl.showProgramsCh=false"
-							ng-init="mainNavCtrl.showProgramsCh=false">
-							<span ng-mouseenter="mainNavCtrl.showProgramsCh=true" ng-if="!(mainNavCtrl.showProgramsCh)">
-								Program
-							</span>
-							<span id="programChinese" ng-if="mainNavCtrl.showProgramsCh">
-								培訓計劃
-							</span>
-						</a>
+			<li role="presentation" class="btn-group" uib-dropdown ng-mouseenter="ProgramsDropdownCtrl.showMenu()"	ng-mouseleave="ProgramsDropdownCtrl.ensureEnglish(); ProgramsDropdownCtrl.hideMenu()">
+				<a id="single-button" type="button" class="btn" ng-disabled="disabled" 
+					ng-mouseleave="mainNavCtrl.showProgramsCh=false"
+					ng-init="mainNavCtrl.showProgramsCh=false">
+					<span ng-mouseenter="mainNavCtrl.showProgramsCh=true" ng-if="!(mainNavCtrl.showProgramsCh)">
+						Program
+					</span>
+					<span id="programChinese" ng-if="mainNavCtrl.showProgramsCh">
+						培訓計劃
+					</span>
+				</a>
 <!-- PROGRAM DROPDOWN CONTENT -->
-						<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-							<li role="menuitem" class="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showNACh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CNAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showNACh=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showNACh)">
-										Nurse Assistant Training Programs
-									</span>
-									<span ng-if="ProgramsDropdownCtrl.showNACh">
-										護士助理執照培訓班
-									</span>
-								</a>
-							</li>
-							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showHHAch')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('HHAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showHHAch=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showHHAch)">
-										Home Health Aid Training Program
-									</span>
-									<span ng-if="ProgramsDropdownCtrl.showHHAch">
-										40小時家庭醫療助理課程
-									</span>
-								</a>
-							</li>
-							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showSGCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('SGProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSGCh=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showSGCh)">
-										Security Guard Training Program
-									</span>
-									<span ng-if="ProgramsDropdownCtrl.showSGCh">
-										警衛保安執照培訓班
-									</span>
-								</a>
-							</li>
-							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showCPRCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CPRProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showCPRCh)">
-										CPR BLS HSFA for HealthCare Providers
-									</span>
-									<span id="programCPRCh" ng-if="ProgramsDropdownCtrl.showCPRCh">
-										心肺復蘇CPR培訓
-									</span>
-								</a>
-							</li>
-							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showESLCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ESLProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showESLCh=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showESLCh)">
-										English Second Language Program
-									</span>
-									<span ng-if="ProgramsDropdownCtrl.showESLCh">
-										英語晉級班
-									</span>
-								</a>
-							</li>
-							<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showAcuCh')">
-								<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ACU_CEUProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
-									<span ng-if="!(ProgramsDropdownCtrl.showAcuCh)">
-										Acupuncture CEU Program
-									</span>
-									<span ng-if="ProgramsDropdownCtrl.showAcuCh">
-										針灸再教育學分課程
-									</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-<!-- REST OF NAV ITEMS -->
-					<li role="presentation" ng-mouseleave="mainNavCtrl.showAboutCh=false">
-						<a href="" ng-click="mainNavCtrl.scrollTo('aboutSection')" ng-init="mainNavCtrl.showAboutCh=false">
-							<span ng-mouseenter="mainNavCtrl.showAboutCh=true" ng-if="!(mainNavCtrl.showAboutCh)">
-								About Us
+				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li role="menuitem" class="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showNACh')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CNAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showNACh=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showNACh)">
+								Nurse Assistant Training Programs
 							</span>
-							<span id="aboutUsChinese" ng-if="mainNavCtrl.showAboutCh">
-								关于我们
+							<span ng-if="ProgramsDropdownCtrl.showNACh">
+								護士助理執照培訓班
 							</span>
 						</a>
 					</li>
-					<li role="presentation" ng-mouseleave="mainNavCtrl.showContactUsCh=false">
-						<a href="" ng-click="mainNavCtrl.scrollTo('contactUsSection')" ng-init="mainNavCtrl.showContactUsCh=false">
-							<span ng-mouseenter="mainNavCtrl.showContactUsCh=true" ng-if="!(mainNavCtrl.showContactUsCh)">
-								Contact Us
+					<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showHHAch')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('HHAProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showHHAch=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showHHAch)">
+								Home Health Aid Training Program
 							</span>
-							<span id="contactUsChinese" ng-if="mainNavCtrl.showContactUsCh">
-								聯係我們
+							<span ng-if="ProgramsDropdownCtrl.showHHAch">
+								40小時家庭醫療助理課程
 							</span>
 						</a>
 					</li>
-					<li role="presentation"><a ui-sref=".school">School</a></li>
-					<li role="presentation"><a ui-sref=".staff">Staff</a></li>
+					<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showSGCh')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('SGProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSGCh=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showSGCh)">
+								Security Guard Training Program
+							</span>
+							<span ng-if="ProgramsDropdownCtrl.showSGCh">
+								警衛保安執照培訓班
+							</span>
+						</a>
+					</li>
+					<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showCPRCh')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('CPRProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showCPRCh=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showCPRCh)">
+								CPR BLS HSFA for HealthCare Providers
+							</span>
+							<span id="programCPRCh" ng-if="ProgramsDropdownCtrl.showCPRCh">
+								心肺復蘇CPR培訓
+							</span>
+						</a>
+					</li>
+					<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showESLCh')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ESLProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showESLCh=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showESLCh)">
+								English Second Language Program
+							</span>
+							<span ng-if="ProgramsDropdownCtrl.showESLCh">
+								英語晉級班
+							</span>
+						</a>
+					</li>
+					<li role="menuitem" ng-mouseenter="ProgramsDropdownCtrl.flipTranslation('showAcuCh')">
+						<a href="" ng-click="ProgramsDropdownCtrl.scrollTo('ACU_CEUProgramDescriptionSection'); ProgramsDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showAcuCh=false">
+							<span ng-if="!(ProgramsDropdownCtrl.showAcuCh)">
+								Acupuncture CEU Program
+							</span>
+							<span ng-if="ProgramsDropdownCtrl.showAcuCh">
+								針灸再教育學分課程
+							</span>
+						</a>
+					</li>
 				</ul>
-			</div>
+			</li>
+<!-- REST OF NAV ITEMS -->
+			<li role="presentation" ng-mouseleave="mainNavCtrl.showAboutCh=false">
+				<a href="" ng-click="mainNavCtrl.scrollTo('aboutSection')" ng-init="mainNavCtrl.showAboutCh=false">
+					<span ng-mouseenter="mainNavCtrl.showAboutCh=true" ng-if="!(mainNavCtrl.showAboutCh)">
+						About Us
+					</span>
+					<span id="aboutUsChinese" ng-if="mainNavCtrl.showAboutCh">
+						关于我们
+					</span>
+				</a>
+			</li>
+			<li role="presentation" ng-mouseleave="mainNavCtrl.showContactUsCh=false">
+				<a href="" ng-click="mainNavCtrl.scrollTo('contactUsSection')" ng-init="mainNavCtrl.showContactUsCh=false">
+					<span ng-mouseenter="mainNavCtrl.showContactUsCh=true" ng-if="!(mainNavCtrl.showContactUsCh)">
+						Contact Us
+					</span>
+					<span id="contactUsChinese" ng-if="mainNavCtrl.showContactUsCh">
+						聯係我們
+					</span>
+				</a>
+			</li>
+			<li role="presentation"><a ui-sref=".school">School</a></li>
+			<li role="presentation"><a ui-sref=".staff">Staff</a></li>
+		</ul>
+	</div>
 <!-- USER DROPDOWN MENU -->
-			<div class="col-xs-2" id="userNav" ng-controller="userDropdownControl as userDropdownCtrl">
-			    <div class="btn-group" uib-dropdown ng-mouseleave="userDropdownCtrl.ensureEnglish(); userDropdownCtrl.hideMenu()" ng-mouseenter="userDropdownCtrl.showMenu()">
-				     <button id="userButton" type="button" class="btn btn-primary" ng-disabled="disabled">
-				   		<span class="glyphicon glyphicon-user"></span>
-				    </button>
+	<div class="col-xs-2" id="userNav" ng-controller="userDropdownControl as userDropdownCtrl">
+		<div class="btn-group" uib-dropdown ng-mouseleave="userDropdownCtrl.ensureEnglish(); userDropdownCtrl.hideMenu()" ng-mouseenter="userDropdownCtrl.showMenu()">
+			<button id="userButton" type="button" class="btn btn-primary" ng-disabled="disabled">
+				<span class="glyphicon glyphicon-user"></span>
+			</button>
 <!-- USER DROPDOWN MENU ITEMS -->
-				    <ul class="user-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-						<li role="menuitem" ng-controller="signInModalControl as signInModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignInCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal(); userDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSignInCh=false">
-								<span ng-if="!(userDropdownCtrl.showSignInCh)">
-									Sign In
-								</span>
-								<span ng-if="userDropdownCtrl.showSignInCh">
-									登陸
-								</span>
-							</a>
-						</li>
-						<li role="menuitem" ng-controller="signUpModalControl as signUpModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignUpCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal(); userDropdownCtrl.hideMenu()">
-								<span ng-if="!(userDropdownCtrl.showSignUpCh)">
-									Sign Up
-								</span>
-								<span ng-if="userDropdownCtrl.showSignUpCh">
-									註冊
-								</span>
-							</a>
-						</li>
-						<li role="menuitem" ng-controller="signOutControl as signOutCtrl" ng-if="$root.currentUser" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignOutCh')">
-							<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut(); userDropdownCtrl.hideMenu()">
-								<span ng-if="!(signOutCtrl.showSignOutCh)">
-									Sign Out
-								</span>
-								<span ng-if="signOutCtrl.showSignOutCh">
-									登出
-								</span>
-							</a>
-						</li>
-					</ul>
-			    </div>
-			</div>
+			<ul class="user-dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+				<li role="menuitem" ng-controller="signInModalControl as signInModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignInCh')">
+					<a style="cursor: pointer; cursor: hand;" ng-click="signInModalCtrl.openModal(); userDropdownCtrl.hideMenu()" ng-init="ProgramsDropdownCtrl.showSignInCh=false">
+						<span ng-if="!(userDropdownCtrl.showSignInCh)">
+							Sign In
+						</span>
+						<span ng-if="userDropdownCtrl.showSignInCh">
+							登陸
+						</span>
+					</a>
+				</li>
+				<li role="menuitem" ng-controller="signUpModalControl as signUpModalCtrl" ng-if="!($root.currentUser)" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignUpCh')">
+					<a style="cursor: pointer; cursor: hand;" ng-click="signUpModalCtrl.openModal(); userDropdownCtrl.hideMenu()">
+						<span ng-if="!(userDropdownCtrl.showSignUpCh)">
+							Sign Up
+						</span>
+						<span ng-if="userDropdownCtrl.showSignUpCh">
+							註冊
+						</span>
+					</a>
+				</li>
+				<li role="menuitem" ng-controller="signOutControl as signOutCtrl" ng-if="$root.currentUser" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignOutCh')">
+					<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut(); 
+					userDropdownCtrl.hideMenu()">
+						<span ng-if="!(signOutCtrl.showSignOutCh)">
+							Sign Out
+						</span>
+						<span ng-if="signOutCtrl.showSignOutCh">
+							登出
+						</span>
+					</a>
+				</li>
+			</ul>
 		</div>
+	</div>
+</div>
