@@ -1,12 +1,12 @@
-<footer>
+<footer ng-controller="footerController as footerctrl">
 	<div class="footer-distributed container-fluid" id="footer">
 		<div class="row" id="promoEmailSection">
 			<p>SIGN UP FOR OUR EXCLUSIVE OFFERS</p>
 			<div class="form-group promoEmailform">
 				<div class="input-group">
-					<input type="text" name="promoEmail" class="form-control" id="promoEmailInput" placeholder="Enter your E-mail address">
+					<input type="text" name="promoEmail" class="form-control" id="promoEmailInput" placeholder="Enter your E-mail address" ng-model="footerctrl.promoEmailInput">
 					<span class="input-group-btn">
-						<button class="btn btn-default" id="promoInputBtn" type="button">
+						<button class="btn btn-default" id="promoInputBtn" type="button" ng-click="footerctrl.submit()">
 							<i class="fa fa-plus-square-o" aria-hidden="true"></i>
 						</button>
 					</span>

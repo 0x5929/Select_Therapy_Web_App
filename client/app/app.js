@@ -15,7 +15,8 @@
 		'myApp.mainNav',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
-		'myApp.ContactUs'])
+		'myApp.ContactUs',
+		'myApp.footer'])
 //configuring how the application is routed, basically directly maps the webpage, 
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
