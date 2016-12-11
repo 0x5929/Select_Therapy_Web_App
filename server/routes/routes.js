@@ -7,8 +7,8 @@
 	function routeHandler(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware) {	//exposing this file to server, all necessary objs passed in
 		//fetching all routers with its configueration from their seperate file modules
 		var contactUsMessageRouter = require(path.join(__dirname, 'sendMessage/sendMessage.js'))(express, app, bodyParser, nodemailerService);
-		var aboutUsDownloadRouter = require(path.join(__dirname, 'aboutUsPDFDownload/aboutUsPDFDownload.js'))(express, fs);
-		var promoEmailRouter = require(path.join(__dirname, 'promoEmail/promoEmail.js'))(express, validator);
+		var aboutUsDownloadRouter = require(path.join(__dirname, 'aboutUsPDFDownload/aboutUsPDFDownload.js'))(express, fs, path);
+		var promoEmailRouter = require(path.join(__dirname, 'promoEmail/promoEmail.js'))(express, app, validator, bodyParser, path);
 		var signUpRouter = require(path.join(__dirname, 'signUp/signUp.js'))(express, validator, passport);
 		var loginRouter = require(path.join(__dirname, 'login/login.js'))(express, passport);
 		var signOutRouter = require(path.join(__dirname, 'signOut/signOut.js'))(express);

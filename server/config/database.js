@@ -3,10 +3,10 @@
 
 	module.exports = databaseConfigHandler;
 
-	function databaseConfigHandler(mongoose){
+	function databaseConfigHandler(mongoose, path){
 
 		var services = {
-			url : 'mongodb://localhost/users/',
+			url : 'mongodb://localhost/ST_Inst/',
 			databaseConnectionConfig : databaseConnectionConfig
 		};
 
@@ -18,7 +18,8 @@
 			db.on('error', console.error.bind(console, 'connection error: '));
 			db.once('open', function() {
   			//loading all models with schema defined already in their respective model page
-			var Users = require('../models/users.js');	
+			var Users = require(path.join(__dirname, '../models/users.js'));	
+			var promoOfferEmails = require(path.join(__dirname, '../models/promoOffer.js'));
 			});
 		}
 		//exposing services

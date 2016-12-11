@@ -10,6 +10,7 @@
 				var postData = {
 					promoEmail: email
 				};
+				
 				ajaxService.post('/promoEmail', postData).then(
 					function(success) {
 						toastFactory.promoEmail();

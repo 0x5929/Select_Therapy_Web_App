@@ -24,7 +24,7 @@ var fs = require('fs'),
 	csrfTokenMiddleware = require(path.join(__dirname, 'services/csrfToken.js')),
 
 	//fetching configuration material
-	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose),
+	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
 	configCV = require(path.join(__dirname, 'config/customValidator.js')),
 	configNM = require(path.join(__dirname, 'config/nodemail.js')),
 	//fetching services
@@ -34,7 +34,7 @@ var fs = require('fs'),
 
 configDB.databaseConnectionConfig();	//database configuration
 mongoose.connect(configDB.url);
-require('./config/passport.js')(passport);	//passport configuration
+require(path.join(__dirname, '/config/passport.js'))(passport, path);	//passport configuration
 
 
 //Setting up express application middlewares
@@ -64,7 +64,7 @@ app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angul
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objs
-require('./routes/routes.js')(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware);
+require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err
