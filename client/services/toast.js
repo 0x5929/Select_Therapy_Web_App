@@ -10,6 +10,7 @@
 				successRegistration: successRegistration,
 				successLogin: successLogin,
 				signOut: signOut,
+				promoEmail: promoEmail,
 				thankYouMessage: thankYouMessage,
 				errorToast: errorToast
 			};
@@ -37,7 +38,17 @@
 			function signOut() {
 				$mdToast.show(
 					$mdToast.simple()
-						.textContent('You have successfully signed out!')
+						.textContent('You have successfully signed out!!')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(1000)
+					);
+			}
+
+			function promoEmail(){
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent('Many incredible offers coming your way!!')
 						.position('top right')
 						.parent('#header')
 						.hideDelay(1000)

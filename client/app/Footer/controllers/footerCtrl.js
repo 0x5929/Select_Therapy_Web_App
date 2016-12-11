@@ -1,13 +1,26 @@
 (function() {
 	'use strict';
-	angular.module('myApp.footer', [])
-		.controller('footerController', ['$scope', myfooterCtrlHandler]);
+	angular.module('myApp.footer', ['services.ajaxService', 'services.toastFactory'])
+		.controller('footerController', ['$scope', 'ajaxService', 'toastFactory', myfooterCtrlHandler]);
 
-		function myfooterCtrlHandler($scope) {
+		function myfooterCtrlHandler($scope, ajaxService, toastFactory) {
 			var footerctrl = this;
-			footerctrl.submit = function() {
+			footerctrl.submit = function(email) {
+				//ajax to server
+				var postData = {
+					promoEmail: email
+				};
+				ajaxService.post('/promoEmail', postData).then(
+					function(success) {
+						toastFactory.promoEmail();
+					}, 
+					function(failure) {
+						toastFactory.errorToast(failure.data);
+					}
+				);
+				//clear input
 				footerctrl.promoEmailInput = '';
-				//add more stuff
+				
 			};
 		}
 }());

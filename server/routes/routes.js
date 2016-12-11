@@ -8,6 +8,7 @@
 		//fetching all routers with its configueration from their seperate file modules
 		var contactUsMessageRouter = require(path.join(__dirname, 'sendMessage/sendMessage.js'))(express, app, bodyParser, nodemailerService);
 		var aboutUsDownloadRouter = require(path.join(__dirname, 'aboutUsPDFDownload/aboutUsPDFDownload.js'))(express, fs);
+		var promoEmailRouter = require(path.join(__dirname, 'promoEmail/promoEmail.js'))(express, validator);
 		var signUpRouter = require(path.join(__dirname, 'signUp/signUp.js'))(express, validator, passport);
 		var loginRouter = require(path.join(__dirname, 'login/login.js'))(express, passport);
 		var signOutRouter = require(path.join(__dirname, 'signOut/signOut.js'))(express);
@@ -19,6 +20,7 @@
 
 		app.use('/sendMessage/', contactUsMessageRouter);
 		app.use('/About/', aboutUsDownloadRouter);
+		app.use('/promoEmail/', promoEmailRouter);
 		app.use('/signUp/', signUpRouter);
 		app.use('/login/', loginRouter);
 		app.use('/signOut/', signOutRouter);
