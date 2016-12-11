@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 	angular.module('services.modalService', ['services.looksIntegrationByUIB'])
-		.factory('modalService', ['$rootScope', '$uibModal', ModalService]);
+		.factory('modalFactory', ['$rootScope', '$uibModal', modalFactoryHandler]);
 
-		function ModalService($rootScope, $uibModal) {
+		function modalFactoryHandler($rootScope, $uibModal) {
 					var services = {
 						loginModalService: loginModalService,
 						signUpModalService: signUpModalService

@@ -155,10 +155,10 @@
 				<li role="menuitem" ng-controller="signOutControl as signOutCtrl" ng-if="$root.currentUser" ng-mouseenter="userDropdownCtrl.flipTranslation('showSignOutCh')">
 					<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut(); 
 					userDropdownCtrl.hideMenu()">
-						<span ng-if="!(signOutCtrl.showSignOutCh)">
+						<span ng-if="!(userDropdownCtrl.showSignOutCh)">
 							Sign Out
 						</span>
-						<span ng-if="signOutCtrl.showSignOutCh">
+						<span ng-if="userDropdownCtrl.showSignOutCh">
 							登出
 						</span>
 					</a>

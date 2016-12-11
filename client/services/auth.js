@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
-	angular.module('services.AuthenticationFactory', ['ui.router', 'services.cookies'])
-		.factory('AuthenticationFactory', ['$http', '$q', '$state', 'cookieFactory', AuthFactoryHandler]);
+	angular.module('services.AuthenticationFactory', ['ui.router', 'services.cookies', 'services.ajaxService'])
+		.factory('AuthenticationFactory', ['$q', '$state', 'cookieService', 'ajaxService', AuthFactoryHandler]);
 
-			function AuthFactoryHandler($http, $q, $state, cookieFactory) {
+			function AuthFactoryHandler($q, $state, cookieService, ajaxService) {
 				
 				var services = {
 					signOut: signOut,
@@ -16,11 +16,11 @@
 				function signOut() {
 					var deferred = $q.defer();
 
-					$http.get('/signOut').then(
-						function(success) {
-							deferred.resolve();
+					ajaxService.get('/signOut').then(
+						function(successResponse) {
+							deferred.resolve();	
 						}, 
-						function(failure) {
+						function(failureResponse) {
 							deferred.reject();
 						});
 					return deferred.promise;
@@ -30,12 +30,12 @@
 				function signUp(postData) {
 					var deferred = $q.defer();
 
-					$http.post('/signUp', postData).then(
+					ajaxService.post('/signUp', postData).then(
 						function(user) {
-								deferred.resolve(user);
+							deferred.resolve(user);
 						}, 
-						function(failureResponse) {	//need to clear the fields & adding message;
-							deferred.reject(failureResponse)
+						function(failureResponse) {
+							deferred.reject(failureResponse);
 						});
 					return deferred.promise;
 				}
@@ -44,21 +44,22 @@
 					var deferred = $q.defer();
 
 					if (!postData.remember)	//	check for setting if cookie is needed
-						cookieFactory.removeCookies('rememberMeCookie');
-					$http.post('/login', postData).then(
+						cookieService.removeCookies('rememberMeCookie');
+					
+					ajaxService.post('/login', postData).then(
 						function(user) {
 							deferred.resolve(user);
 						}, 
-						function(badResposne) {
-							deferred.reject(badResposne);
-					});
+						function(failureResponse) {
+							deferred.reject(failureResponse);
+						});
 					return deferred.promise;
 				}
 
 				function checkLoggedIn() {
 					var deferred = $q.defer();
 
-					$http.get('/checkLoggedIn').then(	
+					ajaxService.get('/checkLoggedIn').then(
 						function(user) {
 							if (user && user.data._id) {
 								deferred.resolve(user);
@@ -67,21 +68,19 @@
 						function(failureResponse) {
 							deferred.reject(failureResponse);
 						});
-
 					return deferred.promise;
 				}
 
 				function csrfProtection() {
 					var deferred = $q.defer();
 
-					$http.get('/csrfToken').then(
+					ajaxService.get('/csrfToken').then(
 						function(success) {
 							deferred.resolve(success);
 						}, 
-						function(failure) {
-							deferred.reject(failure);
+						function(failureResponse) {
+							deferred.reject(failureResponse);
 						});
-
 					return deferred.promise;
 				}
 

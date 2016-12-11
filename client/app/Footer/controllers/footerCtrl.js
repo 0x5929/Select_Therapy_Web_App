@@ -7,7 +7,7 @@
 			var footerctrl = this;
 			footerctrl.submit = function() {
 				footerctrl.promoEmailInput = '';
-				
+				//add more stuff
 			};
 		}
 }());

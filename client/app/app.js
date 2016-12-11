@@ -11,7 +11,8 @@
 		'services.toastFactory',
 		'services.modalService',
 		'services.cookies',
-		'myApp.userDropdown',
+		'services.ajaxService',
+		'myApp.userFunctionalities',
 		'myApp.mainNav',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
@@ -21,7 +22,7 @@
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
-		.run(['$rootScope', '$state', '$timeout', '$cookies', '$http', 'AuthenticationFactory', 'modalService', 'toastFactory', appRunConfiguration])
+		.run(['$rootScope', '$state', '$timeout', '$cookies', '$http', 'AuthenticationFactory', 'modalFactory', 'toastFactory', appRunConfiguration])
 		
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
@@ -65,14 +66,12 @@
 		}
 
 
-		function appRunConfiguration($rootScope, $state, $timeout, $cookies, $http, AuthenticationFactory, modalService, toastFactory) {
+		function appRunConfiguration($rootScope, $state, $timeout, $cookies, $http, AuthenticationFactory, modalFactory, toastFactory) {
 			//get and set header for csrf token from server for csrf protection
 			AuthenticationFactory.csrfProtection();
 
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
-    				//set rootscope.currentuser
-    				console.log(user);
     				$rootScope.currentUser = user;
     			}, 
     			function() {
@@ -98,7 +97,7 @@
 				if (loginRequired && securityLevel === 'Student') {	//first level of security = students
 					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();
-						modalService.loginModalService().then(function(user) {	//success student login will redirect user to school for students
+						modalFactory.loginModalService().then(function(user) {	//success student login will redirect user to school for students
 							$state.go('school');
 						}).catch(function(failureResponse) {	//if somehow log in fails, user is redirected back to home.
 							$state.go('Home');
@@ -107,7 +106,7 @@
 				}else if (loginRequired && securityLevel === 'Staff') {	// second level of security = staff
 					if (typeof currentUser === 'undefined') {	//if no user signed in
 						event.preventDefault();
-						modalService.loginModalService().then(function(user) {
+						modalFactory.loginModalService().then(function(user) {
 							var userSecurityAccess = user.data.local.security;
 							securityAccess.push(userSecurityAccess);
 							//if user security is admin, add staff access as well

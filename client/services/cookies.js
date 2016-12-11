@@ -1,23 +1,15 @@
 (function() {
 	'use strict';
 	angular.module('services.cookies', ['ngCookies'])
-		.factory('cookieFactory', ['$cookies', cookieFactoryHanlder]);
+		.service('cookieService', ['$cookies', cookieServiceHandler]);
 
-		function cookieFactoryHanlder($cookies) {
-			var services = { 
-					getCookies: getCookies,
-					removeCookies: removeCookies
-			};
+		function cookieServiceHandler($cookies) {
 			
-			function getCookies(key) {
-				return $cookies.get(key);
-			}
-
-			function removeCookies(key) {
-				return $cookies.remove(key);
-			}
-
-			return services;
-
+		this.getCookies = function(key) {
+			return $cookies.get(key);
+		};
+		this.removeCookies = function(key) {
+			return $cookies.remove(key);
+		};
 		}
 }());
