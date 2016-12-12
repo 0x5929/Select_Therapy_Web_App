@@ -7,7 +7,6 @@
 	
 	function DropdownCtrlHandler($scope, $location, $anchorScroll) {
 		var ProgramsDropdownCtrl = this;
-		ProgramsDropdownCtrl.status = {isopen: false};
 		var flipTranslationMenuElements = [
 			'showNACh',
 			'showHHAch',

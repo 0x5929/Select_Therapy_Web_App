@@ -1,6 +1,6 @@
 <!-- Initiated mainNav Controller -->
 <div ng-controller="mainNavControl as mainNavCtrl">
-	<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl">
+	<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl" ng-mouseleave="mainNavCtrl.ensureEnglish()">
 		<ul class="nav nav-pills">
 			<li role="presentation" ng-mouseleave="mainNavCtrl.showHomeCh=false">
 				<a href="" ng-click="mainNavCtrl.scrollTo('PreviousHomeSection')" 
@@ -120,8 +120,6 @@
 					</span>
 				</a>
 			</li>
-			<li role="presentation"><a ui-sref=".school">School</a></li>
-			<li role="presentation"><a ui-sref=".staff">Staff</a></li>
 		</ul>
 	</div>
 <!-- USER DROPDOWN MENU -->
