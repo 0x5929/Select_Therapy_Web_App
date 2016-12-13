@@ -6,7 +6,9 @@
 		function modalFactoryHandler($rootScope, $uibModal) {
 					var services = {
 						loginModalService: loginModalService,
-						signUpModalService: signUpModalService
+						signUpModalService: signUpModalService/*,
+						PrivacyPolicyModalService: PrivacyPolicyModalService,
+						TermsOfUseModalService: TermsOfUseModalService*/
 					};
 
 					function assignCurrentUser(user) {
