@@ -35,7 +35,6 @@
 				.state('Home', {
 					templateUrl: 'app/Home/view/Home.html'
 				})
-				
 				.state('school', {
 					templateUrl: 'app/school/view/english/school.html',
 					data: { securityLevel: 'Student' },
