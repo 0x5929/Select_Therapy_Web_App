@@ -6,9 +6,9 @@
 		function modalFactoryHandler($rootScope, $uibModal) {
 					var services = {
 						loginModalService: loginModalService,
-						signUpModalService: signUpModalService/*,
+						signUpModalService: signUpModalService,
 						PrivacyPolicyModalService: PrivacyPolicyModalService,
-						TermsOfUseModalService: TermsOfUseModalService*/
+						TermsOfUseModalService: TermsOfUseModalService
 					};
 
 					function assignCurrentUser(user) {
@@ -42,6 +42,34 @@
 						});
 
 						return modalInstance.result.then(assignCurrentUser);
+					}
+
+					function PrivacyPolicyModalService() {
+						var modalInstance = $uibModal.open({
+						  animation: true,
+					      ariaLabelledBy: 'modal-title',
+					      ariaDescribedBy: 'modal-body',
+					      templateUrl: 'app/Header/view/main_nav/userDropdown/signUp/signUpModal.html', 
+					      controller: 	'privacyPolicyModalInstanceController',
+					      controllerAs: 'privacyPolicyModalInstanceCtrl',
+					      size: 'lg'
+						});
+
+						return modalInstance.result.then();
+					}
+
+					function TermsOfUseModalService() {
+						var modalInstance = $uibModal.open({
+						  animation: true,
+					      ariaLabelledBy: 'modal-title',
+					      ariaDescribedBy: 'modal-body',
+					      templateUrl: 'app/Header/view/main_nav/userDropdown/signUp/signUpModal.html', 
+					      controller: 	'termsOfUseModalInstanceController',
+					      controllerAs: 'termsOfUseModalInstanceCtrl',
+					      size: 'lg'
+						});
+
+						return modalInstance.result.then();
 					}
 
 					return services;
