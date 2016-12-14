@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	angular.module('myApp.footer', ['services.ajaxService', 'services.toastFactory', 'services.modalService'])
+	angular.module('myApp.footer', ['services.ajaxService', 'services.toastFactory', 'services.modalService', 'services.looksIntegrationByUIB'])
 		.controller('footerController', ['$scope', 'ajaxService', 'toastFactory', myfooterCtrlHandler]);
 
 		function myfooterCtrlHandler($scope, ajaxService, toastFactory) {

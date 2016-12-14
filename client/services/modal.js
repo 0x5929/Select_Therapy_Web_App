@@ -49,7 +49,7 @@
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
 					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/Header/view/main_nav/userDropdown/signUp/signUpModal.html', 
+					      templateUrl: 'app/Footer/view/privacyPolicy.html', 
 					      controller: 	'privacyPolicyModalInstanceController',
 					      controllerAs: 'privacyPolicyModalInstanceCtrl',
 					      size: 'lg'
@@ -63,7 +63,7 @@
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
 					      ariaDescribedBy: 'modal-body',
-					      templateUrl: 'app/Header/view/main_nav/userDropdown/signUp/signUpModal.html', 
+					      templateUrl: 'app/Footer/view/termsOfUse.html', 
 					      controller: 	'termsOfUseModalInstanceController',
 					      controllerAs: 'termsOfUseModalInstanceCtrl',
 					      size: 'lg'

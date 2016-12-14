@@ -1,9 +1,15 @@
 (function() {
 	'use strict';
 	angular.module('myApp.footer')
-		.controller('termsOfUseModalInstanceController', ['$scope', termsOfUseModalInstanceHandler]);
+		.controller('termsOfUseModalInstanceController', ['$scope', '$uibModalInstance', termsOfUseModalInstanceHandler]);
 
-		function termsOfUseModalInstanceHandler($scope) {
+		function termsOfUseModalInstanceHandler($scope, $uibModalInstance) {
 			var termsOfUseModalInstanceCtrl = this;
+			termsOfUseModalInstanceCtrl.ok = function() {
+				$uibModalInstance.close();
+			};
+			termsOfUseModalInstanceCtrl.cancel = function() {
+				$uibModalInstance.dismiss();
+			};
 		}
 }());
