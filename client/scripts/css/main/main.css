@@ -1,0 +1,291 @@
+/* header ID styles */
+#header{
+	height: 150px;
+	position: fixed;
+	overflow: visible !important;
+	width: 100%;
+	z-index: 150;
+	background-color: white;
+}
+/* for visual affects to know where this element is */
+#contentContainer{
+	padding-top: 150px;	
+	position: relative;
+	z-index: 100;
+	margin-bottom: 370px;
+	width: 100%;
+	background-color: white;
+}
+/* for visual affects to know where this element is */
+#mainPicContent{
+	background-color: #FF0000;	
+}
+/* for visual affects to know where this element is */
+#leftContent{
+	background-color: #800000;	
+	height: 100px;
+}
+/* for visual affects to know where this element is */
+#rightContent{
+	background-color: #F08080;
+	height: 100px;
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#ClassScheduleChinese{
+	padding-left: 22px;
+	padding-right: 22px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#homeChinese{
+	padding-left: 10px;
+	padding-right: 10px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#programChinese{
+	padding-right: 4px;
+	padding-left: 4px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#aboutUsChinese{
+	padding-right: 5px;
+	padding-left: 5px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#contactUsChinese{
+	padding-right: 10px;
+	padding-left: 10px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#programCPRCh{
+	padding-right: 143px;
+}
+/* fix program dropdownmenu to have no margin at top so mouse cannot unhover while lookin at menu */
+.dropdown-menu{
+	margin-top: 0;
+}
+/* fix user dropdownmenus to have no margin at top so mouse cannot unhover while lookin at menu */
+.user-dropdown-menu{
+	margin-top: 0;
+}
+/* user button style */
+#userButton{
+	border-radius: 5px;
+}
+/* make sure once menu item is pressed the dropdown menu is gone 
+.menuitem:focus .dropdown-menu{
+	display:none;
+}
+*/
+/* back to top anchor style */
+.back-to-top{
+ 	background: none;
+ 	margin-right: 5;
+ 	position: fixed;
+ 	bottom: 0;
+ 	right: 0;
+ 	width: 50px;
+ 	height: 50px;
+ 	z-index: 100;
+ 	display: none;
+ 	text-decoration: none;
+ 	color: black;
+}
+/* back to top span picture style (finger pointing up) */
+.back-to-top span{
+ 	font-size: 50px;
+  	color: #6289D7; 
+}
+/* ===========================================
+FOOTER STYLE 
+============================================== */
+#promoEmailSection{
+	text-align: center;
+	margin-bottom: 5px;
+	color: white;
+}
+
+.promoEmailform{
+	width: 27%;
+	margin: auto;
+}
+
+#promoEmailInput{
+	background-color: #292c2f;
+	margin: auto;
+	border-radius: 5px;
+	color: white;
+}
+
+#promoInputBtn{
+	color: white;
+	background-color: #292c2f;
+	padding: 0;
+	border: none;
+	margin-left: 5px;
+}
+#promoInputBtn i{
+	font-size: 35px;
+}
+
+#footer{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	height: 370px;
+	clear: both;
+	z-index: 50;
+}
+
+.footer-distributed{
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 55px 50px;
+	margin-top: 80px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+	display: inline-block;
+	vertical-align: top;
+}
+/* Footer left */
+.footer-distributed .footer-left{
+	width: 40%;
+}
+/* The company logo */
+.footer-distributed h3{
+	color:  #ffffff;
+	font: normal 36px 'Cookie', cursive;
+	margin: 0;
+}
+.footer-distributed h3 span{
+	color:  #5383d3;
+}
+/* Footer links */
+.footer-distributed .footer-links{
+	color:  #ffffff;
+	margin: 20px 0 12px;
+	padding: 0;
+}
+
+.footer-distributed .footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color:  inherit;
+}
+
+.footer-distributed .footer-company-name{
+	color:  #8f9296;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+/* Footer Center */
+.footer-distributed .footer-center{
+	width: 35%;
+}
+
+.footer-distributed .footer-center i{
+	background-color:  #33383b;
+	color: #ffffff;
+	font-size: 25px;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 42px;
+	margin: 10px 15px;
+	vertical-align: middle;
+}
+
+.footer-distributed .footer-center i.fa-envelope{
+	font-size: 17px;
+	line-height: 38px;
+}
+
+.footer-distributed .footer-center p{
+	display: inline-block;
+	color: #ffffff;
+	vertical-align: middle;
+	margin:0;
+}
+
+.footer-distributed .footer-center p span{
+	display:block;
+	font-weight: normal;
+	font-size:14px;
+	line-height:2;
+}
+
+.footer-distributed .footer-center p a{
+	color:  #5383d3;
+	text-decoration: none;;
+}
+/* Footer Right */
+.footer-distributed .footer-right{
+	width: 20%;
+}
+
+.footer-distributed .footer-company-about{
+	line-height: 20px;
+	color:  #92999f;
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+	display: block;
+	color:  #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.footer-distributed .footer-icons{
+	margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #33383b;
+	border-radius: 2px;
+
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+
+	margin-right: 3px;
+	margin-bottom: 5px;
+}
+/* If you don't want the footer to be responsive, remove these media queries */
+@media (max-width: 880px) {
+
+	.footer-distributed{
+		font: bold 14px sans-serif;
+	}
+
+	.footer-distributed .footer-left,
+	.footer-distributed .footer-center,
+	.footer-distributed .footer-right{
+		display: block;
+		width: 100%;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	.footer-distributed .footer-center i{
+		margin-left: 0;
+	}
+}
