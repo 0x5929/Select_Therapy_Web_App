@@ -6,7 +6,7 @@
 	function databaseConfigHandler(mongoose, path){
 
 		var services = {
-			url : 'mongodb://localhost/ST_Inst/',
+			url : 'mongodb://kevinren:jordan45@ds054289.mlab.com:54289/st_inst',
 			databaseConnectionConfig : databaseConnectionConfig
 		};
 
