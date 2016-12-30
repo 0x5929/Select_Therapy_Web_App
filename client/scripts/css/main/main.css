@@ -289,3 +289,11 @@ FOOTER STYLE
 		margin-left: 0;
 	}
 }
+/* Main Nav */
+#mainNav li {
+	background-color: white;
+}
+
+#mainNav a {
+	color: black;
+}
