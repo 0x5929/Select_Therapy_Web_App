@@ -1,6 +1,9 @@
 (function() {
 	'use strict';
-
+/*
+	remember when doing mass sending emails, do a quality check,
+ meaning deleting all the useless emails that are not valid
+*/
 	module.exports = promoEmailHandler;
 
 	function promoEmailHandler(express, app, validator, bodyParser, path) {
@@ -24,8 +27,8 @@
 			newEmail.email = req.body.promoEmail;	//saving request body's email into db
 			newEmail.save(function(err) {
 				if (err) next(err);
-			});
-			return res.sendStatus(200);	
+				return res.sendStatus(200);	
+			});	
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return promoEmailRoute;
