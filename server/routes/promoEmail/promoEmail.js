@@ -24,8 +24,8 @@
 			newEmail.email = req.body.promoEmail;	//saving request body's email into db
 			newEmail.save(function(err) {
 				if (err) next(err);
-				return res.status(200);
 			});
+			return res.sendStatus(200);	
 		});
 		//expose router and all of its configed routes back to routesjs to be used in serverjs
 		return promoEmailRoute;
