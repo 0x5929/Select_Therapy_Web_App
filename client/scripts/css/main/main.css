@@ -289,7 +289,7 @@ FOOTER STYLE
 		margin-left: 0;
 	}
 }
-/* Main Nav */
+/* Main Nav
 #mainNav li {
 	background-color: white;
 }
@@ -297,3 +297,11 @@ FOOTER STYLE
 #mainNav a {
 	color: black;
 }
+ */
+ .mainNavEl {
+ 	background-color: white;
+ }
+ .mainNavEl a {
+ 	color: black;
+ }
+ 
