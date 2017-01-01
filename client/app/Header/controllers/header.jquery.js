@@ -19,8 +19,9 @@
 			return false;	//stops propogation
 		})
  */
- 		var navEl = $('.mainNavEl');	//not a goodidea, maybe selecting from parent
+ 		var navEl = $("#mainNav li:nth-child(n)");	//not a goodidea, maybe selecting from parent
  		//need to think of a way to work around the nth child of these elements
+		var backgroundColor = navEl.css("background-color");
 		
 	});
 }());
