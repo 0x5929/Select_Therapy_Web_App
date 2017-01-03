@@ -23,6 +23,7 @@
  		//need to think of a way to work around the nth child of these elements
 		var backgroundColor = navEl.css("background-color");
 	*/
+	//need to work on this selection of children
 	console.log('hello world from header.jQuery.js');
 		var navEl = $('#mainNav').children();
 		console.log(navEl);
