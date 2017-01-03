@@ -18,10 +18,18 @@
 			$('html, body').animate({scrollTop: 0}, duration);
 			return false;	//stops propogation
 		})
- */
+ *//*
  		var navEl = $("#mainNav li:nth-child(n)");	//not a goodidea, maybe selecting from parent
  		//need to think of a way to work around the nth child of these elements
 		var backgroundColor = navEl.css("background-color");
-		
+	*/
+	console.log('hello world from header.jQuery.js');
+		var navEl = $('#mainNav').children();
+		console.log(navEl);
+		navEl.each(function(index, value){
+			$(this).hover(function(){
+				$(this).css("background-color", "black");
+			});
+		});	
 	});
 }());

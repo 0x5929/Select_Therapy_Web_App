@@ -1,7 +1,7 @@
 <!-- Initiated mainNav Controller -->
 <div ng-controller="mainNavControl as mainNavCtrl">
-	<div lang="zh-Hant" class="col-xs-10" id="mainNav" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl" ng-mouseleave="mainNavCtrl.ensureEnglish()">
-		<ul class="nav nav-pills">
+	<div lang="zh-Hant" class="col-xs-10" ng-controller="ProgramsDropdownControl as ProgramsDropdownCtrl" ng-mouseleave="mainNavCtrl.ensureEnglish()">
+		<ul class="nav nav-pills" id="mainNav">
 			<li class="mainNavEl" role="presentation" ng-mouseleave="mainNavCtrl.showHomeCh=false">
 				<a href="" ng-click="mainNavCtrl.scrollTo('PreviousHomeSection')" 
 					ng-init="mainNavCtrl.showHomeCh=false">
