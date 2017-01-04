@@ -24,13 +24,17 @@
 		var backgroundColor = navEl.css("background-color");
 	*/
 	//need to work on this selection of children
-	console.log('hello world from header.jQuery.js');
-		var navEl = $('#mainNav').children();
-		console.log(navEl);
-		navEl.each(function(index, value){
-			$(this).hover(function(){
-				$(this).css("background-color", "black");
-			});
-		});	
+		console.log('hello world from header.jQuery.js');
+		$("#mainNav").on({
+			mouseenter:	function() {
+				$(this).addClass("active_navEl");
+				console.log('hello world from hover action');
+			}, 
+			mouseleave: function() {
+				$(this).removeClass("active_navEl");
+				console.log('hello world from unhover action')
+			}
+		}, 'li');
+			
 	});
 }());

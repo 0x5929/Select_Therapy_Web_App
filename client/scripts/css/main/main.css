@@ -305,3 +305,7 @@ FOOTER STYLE
  	color: black;
  }
  
+.active_navEl {
+	background-color: blue;
+	color: orange;
+}
