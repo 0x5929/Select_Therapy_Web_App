@@ -7,6 +7,29 @@
 	z-index: 150;
 	background-color: white;
 }
+/* navigation styling */
+.mainNavEl {
+ 	background-color: white;
+ }
+ .mainNavEl a {
+ 	color: black;
+ }
+ 
+.nav>li>a:focus, .nav>li>a:hover {
+  background-color: #369AE6;
+  color: white;
+}
+/* with help of stackoverflowquestion http://stackoverflow.com/questions/30142687/nav-pills-hover-background-color-change-bootstrap-3*/
+.nav>li>ul>li>a:focus, .nav>li>ul>li>a:hover {
+  background-color: #369AE6;
+  color: white;
+}
+
+.user-dropdown-menu>li>a:focus, .user-dropdown-menu>li>a:hover {
+  background-color: #369AE6;
+  color: white;
+}
+
 /* for visual affects to know where this element is */
 #contentContainer{
 	padding-top: 150px;	
@@ -288,24 +311,4 @@ FOOTER STYLE
 	.footer-distributed .footer-center i{
 		margin-left: 0;
 	}
-}
-/* Main Nav
-#mainNav li {
-	background-color: white;
-}
-
-#mainNav a {
-	color: black;
-}
- */
- .mainNavEl {
- 	background-color: white;
- }
- .mainNavEl a {
- 	color: black;
- }
- 
-.active_navEl {
-	background-color: blue;
-	color: orange;
 }
