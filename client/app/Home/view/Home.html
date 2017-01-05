@@ -1,10 +1,20 @@
 <!-- HOME PAGE -->
 <div id="PreviousHomeSection">
-<!--
-	<div class="row" id="mainPicContent">
-		<img src="http://www.st-inst.com/templates/Original/images/english/header.jpg" class="img-responsive, center-block">
-	</div>
--->
+
+<!-- ANGULAR UI CAROUSEL -->
+
+	<div id="carousel" ng-controller="carouselController as carouselCtrl">
+  		<div style="height: 305px">
+    		<div uib-carousel interval="carouselCtrl.myInterval">
+      			<div uib-slide ng-repeat="slide in carouselCtrl.slides">
+        			<img ng-src="{{slide.image}}" style="margin:auto;">
+        			<div class="carousel-caption">
+          				<p>{{slide.text}}</p>
+        			</div>
+      			</div>
+    		</div>
+  		</div>
+  	</div>
 	<div class="row">
 		<div class="col-md-2" id="leftContent">
 				Hello World from Left Content

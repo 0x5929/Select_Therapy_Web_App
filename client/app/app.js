@@ -14,6 +14,7 @@
 		'services.ajaxService',
 		'myApp.userFunctionalities',
 		'myApp.mainNav',
+		'myApp.home',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
 		'myApp.ContactUs',
