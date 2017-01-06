@@ -1,25 +1,23 @@
 <!-- HOME PAGE -->
 <div id="PreviousHomeSection">
-
-<!-- ANGULAR UI CAROUSEL -->
-
-	<div id="carousel" ng-controller="carouselController as carouselCtrl">
-  		<div style="height: 305px">
-    		<div uib-carousel interval="carouselCtrl.myInterval">
-      			<div uib-slide ng-repeat="slide in carouselCtrl.slides">
-        			<img ng-src="{{slide.image}}" style="margin:auto;">
-        			<div class="carousel-caption">
-          				<p>{{slide.text}}</p>
-        			</div>
-      			</div>
-    		</div>
-  		</div>
-  	</div>
 	<div class="row">
 		<div class="col-md-2" id="leftContent">
-				Hello World from Left Content
+				Hello World from Left Contentdzfgasdf
 		</div>
 		<div class="col-md-8">
+			<!-- ANGULAR UI CAROUSEL -->
+			<div id="carousel" ng-controller="carouselController as carouselCtrl">
+  				<div style="height: 305px">
+    				<div uib-carousel interval="carouselCtrl.myInterval">
+      					<div uib-slide ng-repeat="slide in carouselCtrl.slides" index="$index">
+        					<img src="{{slide.image}}" style="margin:auto;">
+        					<div class="carousel-caption">
+          						<p>{{slide.text}}</p>
+        					</div>
+      					</div>
+    				</div>
+  				</div>
+  			</div>
 			<h2 class="text-center">Current Offer</h2>
 				<p> CNA day class is enrolling now and will start on September 27th. For more information, please call 626-572-7231,9am-5pm on Monday-Thursday and 9am-4pm on Friday. We welcome all prospective students to come and check out our upcoming class, and the services we offer. CNA Classes are only 8 weeks long. Free job placement after passing State Exam. Not many seats left! Sign up as soon as possible.
 				</p>
