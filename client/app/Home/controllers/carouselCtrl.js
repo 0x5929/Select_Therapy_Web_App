@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	angular.module('myApp.home', ['services.looksIntegrationByUIB'])
+	angular.module('myApp.home', ['ui.bootstrap'])
 		.controller('carouselController', ['$scope', carouselCtrlHandler]);
 
 		function carouselCtrlHandler($scope) {
@@ -16,7 +16,7 @@
 				console.log('why wont i work inside addSlide');
     			var newWidth = 600 + carouselCtrl.slides.length + 1;
     			carouselCtrl.slides.push({	//what if the location is using windows command and need a backslash instead '\' ?
-      				image: '/client/app/Home/view/test.jpg',
+      				image: 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS-5gi_vcEp_i_GNntYeaOtybGBsnUY0870HH62XAc5xlBd9rrlaGEHoHxc',
 				    text: ['Rotation 1','Rotation 2', 'Rotation 3', 'Rotation 4', 'Rotation 5', 'Rotation 6', 'Rotation 7', 'Rotation 8', 'Rotation 9', 'Rotation 10'][carouselCtrl.slides.length % 1],
     				id: currIndex++
     			});
