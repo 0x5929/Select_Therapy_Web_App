@@ -39,20 +39,17 @@
 	width: 100%;
 	background-color: white;
 }
-/* for visual affects to know where this element is */
-#mainPicContent{
-	background-color: #FF0000;	
-}
-/* for visual affects to know where this element is */
+/* for visual affects to know where this element is 
 #leftContent{
 	background-color: #800000;	
 	height: 100px;
 }
-/* for visual affects to know where this element is */
+/* for visual affects to know where this element is 
 #rightContent{
 	background-color: #F08080;
 	height: 100px;
 }
+*/
 /* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
 #ClassScheduleChinese{
 	padding-left: 22px;
