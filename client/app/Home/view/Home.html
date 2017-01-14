@@ -2,10 +2,10 @@
 <div id="PreviousHomeSection">
 	<div class="row">
 		<div class="col-md-12" id="carousel" ng-controller="carouselController as carouselCtrl">
-  			<div style="height: 450px">
+  			<div>
     			<div uib-carousel active="0" interval="carouselCtrl.myInterval">
       				<div uib-slide ng-repeat="slide in carouselCtrl.slides track by slide.id" index="slide.id">
-        				<img ng-src="{{slide.image}}" style="margin:auto;">
+        				<img class="carouselImg" ng-src="{{slide.image}}" style="margin:auto;">
         				<div class="carousel-caption">
           					<p>{{slide.text}}</p>
         				</div>

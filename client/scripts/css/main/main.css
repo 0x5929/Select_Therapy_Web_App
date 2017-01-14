@@ -311,5 +311,14 @@ FOOTER STYLE
 }
 
 #carousel {
-	
+	height: 400px;
+}
+
+.carouselImg {
+	height: 400px;
+	width: 100%;
+}
+
+#headerS {
+	color: #369AE6;
 }
