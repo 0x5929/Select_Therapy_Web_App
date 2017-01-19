@@ -4,6 +4,7 @@
 	//loading all custom and google dependency modules
 	angular.module('myApp', [
 		'ui.router',
+		'ui.calendar',
 		'ngMaterial',
 		'ngCookies',
 		'services.looksIntegrationByUIB',
