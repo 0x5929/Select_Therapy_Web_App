@@ -65,7 +65,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="row">>
+	<div class="row">
 		<div class="col-md-12">
 			<h2 class="text-center">Current Offer</h2>
 				<p> CNA day class is enrolling now and will start on September 27th. For more information, please call 626-572-7231,9am-5pm on Monday-Thursday and 9am-4pm on Friday. We welcome all prospective students to come and check out our upcoming class, and the services we offer. CNA Classes are only 8 weeks long. Free job placement after passing State Exam. Not many seats left! Sign up as soon as possible.
@@ -76,7 +76,9 @@
 <!-- /END OF PREVIOUS HOME PAGE -->
 <div id="classScheduleSection">
 	<div class="row" id="schoolCalandar">
-		<div class="col-md-12"></div>
+		<div class="col-md-12" ng-controller="calendarController as calendarCtrl">
+			<div ui-calendar="calendarCtrl.uiConfig.calendar" ng-model="calendarCtrl.eventSources"></div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-2" id="CNA_Schedule">

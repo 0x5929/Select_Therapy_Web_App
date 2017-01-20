@@ -16,6 +16,7 @@
 		'myApp.userFunctionalities',
 		'myApp.mainNav',
 		'myApp.home',
+		'myApp.classSchedule',
 		'myApp.ProgramsDropdown',
 		'myApp.About',
 		'myApp.ContactUs',
