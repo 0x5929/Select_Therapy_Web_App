@@ -9,6 +9,7 @@
 		var calendarCtrl = this;
 		calendarCtrl.uiConfig = {
 			calendar: {
+				googleCalendarApiKey: 'AIzaSyDF5FLbmUL2esV4eiQhewws-BtfC49ftmU', 
 				height: 450,
 				editable: false,
 				header: {
@@ -23,7 +24,7 @@
 		};
 		calendarCtrl.eventSources = [
 			{
-				
+				googleCalendarId: 'https://calendar.google.com/calendar/embed?src=yeruiinstitute%40gmail.com&ctz=America/Los_Angeles'
 			}
 		];
 	}
