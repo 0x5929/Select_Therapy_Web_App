@@ -24,7 +24,7 @@
 		};
 		calendarCtrl.eventSources = [
 			{
-				googleCalendarId: 'https://calendar.google.com/calendar/embed?src=yeruiinstitute%40gmail.com&ctz=America/Los_Angeles'
+				googleCalendarId: 'yeruiinstitute@gmail.com'
 			}
 		];
 	}
