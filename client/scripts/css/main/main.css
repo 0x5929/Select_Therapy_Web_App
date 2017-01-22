@@ -1,3 +1,10 @@
+/*
+	PRIMARY COLOR OF PAGE:
+	- #4198D3 (One shade of blue)
+	- white
+	- need to find a good gray
+*/
+
 /* header ID styles */
 #header{
 	height: 120px;
@@ -6,6 +13,10 @@
 	width: 100%;
 	z-index: 150;
 	background-color: white;
+}
+
+#headerS {
+	color: #4198D3;
 }
 /* navigation styling */
 .mainNavEl {
@@ -16,17 +27,17 @@
  }
  
 .nav>li>a:focus, .nav>li>a:hover {
-  background-color: #369AE6;
+  background-color: #4198D3;
   color: white;
 }
 /* with help of stackoverflowquestion http://stackoverflow.com/questions/30142687/nav-pills-hover-background-color-change-bootstrap-3*/
 .nav>li>ul>li>a:focus, .nav>li>ul>li>a:hover {
-  background-color: #369AE6;
+  background-color: #4198D3;
   color: white;
 }
 
 .user-dropdown-menu>li>a:focus, .user-dropdown-menu>li>a:hover {
-  background-color: #369AE6;
+  background-color: #4198D3;
   color: white;
 }
 
@@ -90,6 +101,7 @@
 /* user button style */
 #userButton{
 	border-radius: 5px;
+	background-color: #4198D3
 }
 /* make sure once menu item is pressed the dropdown menu is gone 
 .menuitem:focus .dropdown-menu{
@@ -113,7 +125,7 @@
 /* back to top span picture style (finger pointing up) */
 .back-to-top span{
  	font-size: 50px;
-  	color: #6289D7; 
+  	color: #4198D3; 
 }
 /* ===========================================
 FOOTER STYLE 
@@ -317,8 +329,4 @@ FOOTER STYLE
 .carouselImg {
 	height: 400px;
 	width: 100%;
-}
-
-#headerS {
-	color: #369AE6;
 }
