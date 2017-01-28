@@ -5,24 +5,26 @@
 
 		function ContactUsCtrl($scope, $http, toastFactory) {
 			var contactUsCtrl = this;
+			contactUsCtrl.refresh = function() {
+				toastFactory.thankYouMessage(contactUsCtrl.fullName);	//toast
+				contactUsCtrl.emailAddress = '';
+				contactUsCtrl.message = '';
+				contactUsCtrl.fullName = '';
+			};
 			contactUsCtrl.sendMessage = function() {
 				var messageContent = {
 					name: contactUsCtrl.fullName,
 					email: contactUsCtrl.emailAddress,
 					message: contactUsCtrl.message
 				};
-			// clears the input text boxes for refresh purposes, and set up toast for toasting purposes
-			contactUsCtrl.refresh = function() {
-				toastFactory.thankYouMessage(contactUsCtrl.fullName);
-				contactUsCtrl.emailAddress = '';
-				contactUsCtrl.message = '';
-				contactUsCtrl.fullName = '';
-			};
 				console.log('button works!');	//button test
-				$http.post('/sendMessage/', messageContent).success(function(response){
-					console.log('once success, console log successfully sent message');	//signal test
-					contactUsCtrl.refresh();	//refreshes the message text area box
-				});
+				if (messageContent.name && messageContent.email && messageContent.message) {
+					$http.post('/sendMessage/', messageContent).success(function(response){
+						console.log('once success, console log successfully sent message');	//signal test
+						contactUsCtrl.refresh();	//refreshes the message text area box
+					});
+				}else
+					toastFactory.errorToast('Please make sure you enter all your info before hitting send!');
 			};
 		}
 }());

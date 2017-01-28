@@ -12,6 +12,7 @@
 	overflow: visible !important;
 	width: 100%;
 	z-index: 150;
+	right: 0;
 	background-color: white;
 }
 
@@ -41,13 +42,12 @@
   color: white;
 }
 
-/* for visual affects to know where this element is */
-#contentContainer{
-	padding-top: 120px;	
+#wrapper{
+	padding-top: 550px;	
 	position: relative;
 	z-index: 100;
-	margin-bottom: 370px;
 	width: 100%;
+	bottom: 370px;
 	background-color: white;
 }
 /* for visual affects to know where this element is 
@@ -159,25 +159,30 @@ FOOTER STYLE
 	font-size: 35px;
 }
 
+
 #footer{
-	position: fixed;
+	position: fixed;	
+	box-sizing: border-box;
 	bottom: 0;
 	left: 0;
-	right: 0;
+	right: 15;
   	height: 370px;
 	clear: both;
 	z-index: 50;
+	background-color: #292c2f;
 }
 
 .footer-distributed{
 	background-color: #292c2f;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
 	box-sizing: border-box;
-	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
-	padding: 55px 50px;
+	left: 0;
+	right: 0;
+	padding: 55px 50px 0px 50px;
 	margin-top: 80px;
+	margin-right: 0px;
 }
 
 .footer-distributed .footer-left,
@@ -252,8 +257,8 @@ FOOTER STYLE
 .footer-distributed .footer-center p span{
 	display:block;
 	font-weight: normal;
-	font-size:14px;
-	line-height:2;
+	font-size: 14px;
+	line-height: 2;
 }
 
 .footer-distributed .footer-center p a{
@@ -329,4 +334,8 @@ FOOTER STYLE
 .carouselImg {
 	height: 400px;
 	width: 100%;
+}
+
+my-footer {
+	background-color: #292c2f;
 }
