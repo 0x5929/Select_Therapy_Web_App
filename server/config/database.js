@@ -20,6 +20,7 @@
   			//loading all models with schema defined already in their respective model page
 			var Users = require(path.join(__dirname, '../models/users.js'));	
 			var promoOfferEmails = require(path.join(__dirname, '../models/promoOffer.js'));
+			var students = require(path.join(__dirname, '../models/students.js'));
 			});
 		}
 		//exposing services

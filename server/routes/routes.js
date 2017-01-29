@@ -6,6 +6,7 @@
 
 	function routeHandler(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware) {	//exposing this file to server, all necessary objs passed in
 		//fetching all routers with its configueration from their seperate file modules
+		var adminRouter = require(path.join(__dirname, 'adminRouter/adminRouter.js'))(express, app, path, bodyParser);
 		var contactUsMessageRouter = require(path.join(__dirname, 'sendMessage/sendMessage.js'))(express, app, bodyParser, nodemailerService);
 		var aboutUsDownloadRouter = require(path.join(__dirname, 'aboutUsPDFDownload/aboutUsPDFDownload.js'))(express, fs, path);
 		var promoEmailRouter = require(path.join(__dirname, 'promoEmail/promoEmail.js'))(express, app, validator, bodyParser, path);
@@ -18,6 +19,7 @@
 		//application needs to call/hookup all the routers using the 'use' method with router starting route as first parameter, and router with its configs as second
 		//set up all routes with necessary routers. 
 
+		app.use('/adminSearch/', adminRouter);
 		app.use('/sendMessage/', contactUsMessageRouter);
 		app.use('/About/', aboutUsDownloadRouter);
 		app.use('/promoEmail/', promoEmailRouter);
