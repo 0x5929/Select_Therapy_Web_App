@@ -41,6 +41,6 @@
 			}
 		}
 
-		return adminRoute
+		return adminRoute;
 	}
 }());

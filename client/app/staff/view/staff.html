@@ -1,0 +1,35 @@
+<!--
+<div class="row">
+	<h3>Search By:</h3>
+	<br>
+	<form ng-controller="adminSearchController as admin_search_ctrl">
+		<input type="text" ng-model="admin_search_ctrl.searchInput">
+		<select ng-model="admin_search_ctrl.searchParameter">
+			<option ng-value="name">Name</option>
+			<option ng-value="email">email</option>
+			<option ng-value="phone_number">Phone number</option>
+		</select>
+		<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
+	</form>
+</div>
+-->
+<!-- COULD PUT CALENDAR OVER HERE TOO -->
+<!-- OPTIONS SIDE -->
+<div class="row">
+<button class="btn" ui-sref="staff.Admin_Search">Admin Search</button>
+<button class="btn" ui-sref="staff.Admin_Add">Admin Add</button>
+<button class="btn" ui-sref="staff.Admin_Modify">Admin Modify</button>
+<button class="btn" ui-sref="staff.Admin_Remove">Admin Remove</button>
+<br>
+</div>
+<hr>
+<!-- OUTPUT SIDE -->
+<!-- Dynamic content populated by ui view -->
+<div class="row">
+	<div class="col-md-6">
+		<div ui-view="AdminDatabaseInput"></div>
+	</div>
+	<div class="col-md-6">
+		<div ui-view="AdminDatabaseOuput"></div>
+	</div>
+</div>

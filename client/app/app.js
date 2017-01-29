@@ -32,11 +32,8 @@
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/homePage');
 			$stateProvider
-				.state('homePage', {
-					url: '/homePage',
-					templateUrl: 'app/Home/view/Home.html'
-				})
 				.state('Home', {
+					url: '/homePage',
 					templateUrl: 'app/Home/view/Home.html'
 				})
 				.state('school', {
@@ -45,8 +42,56 @@
 					authenticate: true
 				})
 				.state('staff', {
-					templateUrl: 'app/staff/view/english/staff.html',
+					templateUrl: 'app/staff/view/staff.html',
 					data: { securityLevel: 'Staff' },
+					authenticate: true
+				})
+				.state('staff.Admin_Search', {
+					views: {
+						'AdminDatabaseInput@staff': {
+							templateUrl: 'app/staff/view/Admin_Search_Input.html'
+						},
+						'AdminDatabaseOuput@staff': {
+							templateUrl: 'app/staff/view/Admin_Search_Output.html'
+						}
+					},
+					data: {securityLevel: 'staff'},
+					authenticate: true
+				})
+				.state('Admin_Add', {
+					views: {
+						'AdminDatabaseInput@staff': {
+							templateUrl: ''
+						},
+						'AdminDatabaseOuput@staff': {
+							templateUrl: ''
+						}
+					},
+					data: {securityLevel: 'staff'},
+					authenticate: true
+				})
+				.state('Admin_Modify', {
+					views: {
+						'AdminDatabaseInput@staff': {
+							templateUrl: ''
+						},
+						'AdminDatabaseOuput@staff': {
+							templateUrl: ''
+						}
+					},
+					data: {securityLevel: 'staff'},
+					authenticate: true
+				})
+				.state('Admin_Remove', {
+					views: {
+						'AdminDatabaseInput@staff': {
+							templateUrl: ''
+						},
+						'AdminDatabaseOuput@staff': {
+							templateUrl: ''
+						}
+					},
+					data: {securityLevel: 'staff'},
 					authenticate: true
 				});
 		}
