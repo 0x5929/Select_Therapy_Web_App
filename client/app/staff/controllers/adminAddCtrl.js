@@ -27,13 +27,12 @@
 				passedOn3rd: admin_add_ctrl.passedOn3rd
 			};
 
-				console.log(postData);
 				ajaxService.post('/admin/add/', postData)
 				.then(function(successResponse) {
-					console.log(postData);
+					console.log(successResponse);
 				}, 
 			function(failureResposne) {
-
+					console.log(failureResposne);
 				});
 			};
 		};
