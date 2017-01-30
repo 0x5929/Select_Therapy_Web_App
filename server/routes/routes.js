@@ -19,7 +19,7 @@
 		//application needs to call/hookup all the routers using the 'use' method with router starting route as first parameter, and router with its configs as second
 		//set up all routes with necessary routers. 
 
-		app.use('/adminSearch/', adminRouter);
+		app.use('/admin/', adminRouter);
 		app.use('/sendMessage/', contactUsMessageRouter);
 		app.use('/About/', aboutUsDownloadRouter);
 		app.use('/promoEmail/', promoEmailRouter);

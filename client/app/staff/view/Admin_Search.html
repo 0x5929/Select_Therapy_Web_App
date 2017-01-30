@@ -1,0 +1,26 @@
+<div class="row" ng-controller="adminSearchController as admin_search_ctrl">
+	<div class="col-md-6">
+		<h3 class="text-center">  Search By:</h3>
+		<br>
+		<form class="text-center">
+			<input type="text" ng-model="admin_search_ctrl.searchInput">
+			<select ng-model="admin_search_ctrl.searchParameter">
+				<option ng-value="name">Name</option>
+				<option ng-value="email">email</option>
+				<option ng-value="phone_number">Phone number</option>
+			</select>
+			<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
+		</form>
+	</div>
+	<div class="col-md-6" ng-if="admin_search_ctrl.message">
+		{{ admin_search_ctrl.message }}
+	</div>
+	<div class="col-md-6" ng-if="admin_search_ctrl.data">
+		Student name: {{ admin_search_ctrl.data.name }}
+		Student number: {{ admin_search_ctrl.data.number }}
+		Student email: {{ admin_search_ctrl.data.email }}
+		Student program: {{ admin_search_ctrl.data.program }}
+		Student graduate: {{ admin_search_ctrl.data.graduate }}
+		Student job Placed: {{ admin_search_ctrl.data.jobPlaced }}
+	</div>
+</div>

@@ -49,25 +49,19 @@
 				.state('staff.Admin_Search', {
 					views: {
 						'AdminDatabaseInput@staff': {
-							templateUrl: 'app/staff/view/Admin_Search_Input.html'
-						},
-						'AdminDatabaseOuput@staff': {
-							templateUrl: 'app/staff/view/Admin_Search_Output.html'
+							templateUrl: 'app/staff/view/Admin_Search.html'
 						}
 					},
-					data: {securityLevel: 'staff'},
+					data: { securityLevel: 'staff' },
 					authenticate: true
 				})
-				.state('Admin_Add', {
+				.state('staff.Admin_Add', {
 					views: {
 						'AdminDatabaseInput@staff': {
-							templateUrl: ''
-						},
-						'AdminDatabaseOuput@staff': {
-							templateUrl: ''
+							templateUrl: 'app/staff/view/Admin_Add.html'
 						}
 					},
-					data: {securityLevel: 'staff'},
+					data: { securityLevel: 'Admin' },
 					authenticate: true
 				})
 				.state('Admin_Modify', {
@@ -79,7 +73,7 @@
 							templateUrl: ''
 						}
 					},
-					data: {securityLevel: 'staff'},
+					data: { securityLevel: 'staff' },
 					authenticate: true
 				})
 				.state('Admin_Remove', {
@@ -91,7 +85,7 @@
 							templateUrl: ''
 						}
 					},
-					data: {securityLevel: 'staff'},
+					data: { securityLevel: 'staff' },
 					authenticate: true
 				});
 		}

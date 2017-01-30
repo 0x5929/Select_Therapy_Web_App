@@ -1,0 +1,82 @@
+<div class="row" ng-controller="adminAddController as admin_add_ctrl">
+	<div class="col-md-12">
+		<h3 class="text-center">  Please Enter the Student's Information :</h3>
+		<br>
+		<div class="form-group">
+			<label class="control-label col-md-3" for="name">Name:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.name" class="form-control" name="name" placeholder="Enter Student's Name">
+			</div>
+			<label class="control-label col-md-3" for="phoneNumber">Phone Number:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.phoneNumber" class="form-control" name="phoneNumber" placeholder="Enter Student's Phone Number">
+			</div>
+			<label class="control-label col-md-3" for="email">email:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.email" class="form-control" name="email" placeholder="Enter Student's email">
+			</div>
+			<label class="control-label col-md-3" for="program">Program:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.program" class="form-control" name="program" placeholder="Enter Student's Program">
+			</div>
+			<label class="control-label col-md-3" for="graduate">Graduate:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.graduate" class="form-control" name="graduate" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.graduate" class="form-control" name="graduate" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="tuitionPaid">Tuition Paid:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.tuitionPaid" class="form-control" name="tuitionPaid" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.tuitionPaid" class="form-control" name="graduate" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="jobPlaced">Job Placed:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.jobPlaced" class="form-control" name="jobPlaced" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.jobPlaced" class="form-control" name="jobPlaced" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="fullTimePos">Full Time:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.fullTimePos" class="form-control" name="fullTimePos" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.fullTimePos" class="form-control" name="fullTimePos" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="partTimePos">Part Time:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.partTimePos" class="form-control" name="partTimePos" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.partTimePos" class="form-control" name="partTimePos" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="payRate">Pay Rate:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate">
+			</div>
+			<label class="control-label col-md-3" for="jobDescription">Job Description:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.jobDescription" class="form-control" name="jobDescription" placeholder="Enter Student's Job Description">
+			</div>
+			<label class="control-label col-md-3" for="noJobReason">No Job Reason:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.noJobReason" class="form-control" name="noJobReason" placeholder="Enter Student's Reason for Unemployment">
+			</div>
+			<label class="control-label col-md-3" for="passedExam">Passed Exam:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.passedExam" class="form-control" name="passedExam" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.partTimePos" class="form-control" name="passedExam" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="passedOn1st">Passed Exam On 1st Try:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.passedOn1st" class="form-control" name="passedOn1st" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.passedOn1st" class="form-control" name="passedOn2nd" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="passedOn2nd">Passed Exam On 2nd Try:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.passedOn2nd" class="form-control" name="passedOn2nd" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.passedOn2nd" class="form-control" name="passedOn2nd" value="false">No
+			</div>
+			<label class="control-label col-md-3" for="passedOn3rd">Passed Exam On 3rd Try:</label>
+			<div class="col-md-9">
+				<input type="radio" ng-model="admin_add_ctrl.passedOn3rd" class="form-control" name="passedOn3rd" value="true">Yes
+				<input type="radio" ng-model="admin_add_ctrl.passedOn3rd" class="form-control" name="passedOn3rd" value="false">No
+			</div>
+			<input type="submit" value="Submit" ng-click="admin_add_ctrl.submit()">
+		</div>
+	</div>
+</div>

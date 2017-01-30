@@ -8,16 +8,17 @@
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: false }));
 
-		adminRoute.post('/', adminSearchPostHandler);
+		adminRoute.get('/search', adminSearchGetHandler);
+		adminRoute.post('/add', adminAddPostHandler);
 		
-		function adminSearchPostHandler(req, res, next) {
-
-			var requestData = req.body;
-			var searchParameter = requestData.parameter;
-			var searchInput = requestData.input;
-			console.log(requestData);
+		function adminSearchGetHandler(req, res, next) {
+			var searchParameter = req.query.parameter;
+			var searchInput = req.query.input;
 			console.log(searchParameter);
 			console.log(searchInput);
+
+			if (!searchInput || !searchParameter)
+				return res.status(400).send('invalid entry');
 			if (searchParameter === 'Name') {
 				STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
 					console.log(err);
@@ -39,6 +40,12 @@
 					if (!user) return res.send('nope no user here');
 				});
 			}
+		}
+
+		function adminAddPostHandler(req, res, next) {
+			var requestBody = req.body;
+			console.log('hello world');
+			console.log(requestBody);
 		}
 
 		return adminRoute;

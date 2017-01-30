@@ -3,13 +3,14 @@
 
 	//load tools
 	var mongoose = require('mongoose');
+	//define Schema
 	var studentSchema = mongoose.Schema({
 		name: String,
-		phoneNumber: String,
+		phoneNumber: Number,
 		email: String,
 		program: String,
 		graduate: Boolean,
-		paid: Boolean,
+		tuitionPaid: Boolean,
 		jobPlaced: Boolean,
 		fullTimePos: Boolean,
 		partTimePos: Boolean,
