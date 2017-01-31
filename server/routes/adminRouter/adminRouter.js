@@ -51,6 +51,7 @@
 			console.log(requestBody);
 			//parse all neccessary fields to be correctly input into db
 			requestBody.phoneNumber = Number(requestBody.phoneNumber);
+			requestBody.ssn = Number(requestBody.ssn);
 			requestBody.payRate = Number(requestBody.payRate);
 			requestBody.graduate = Boolean(requestBody.graduate);
 			requestBody.tuitionPaid = Boolean(requestBody.tuitionPaid);

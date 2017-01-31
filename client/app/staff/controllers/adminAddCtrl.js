@@ -5,12 +5,14 @@
 
 		function adminAddControllerHandler($scope, ajaxService) {
 			var admin_add_ctrl = this;
-			var postData = null;
+			admin_add_ctrl.postData = null;
 			admin_add_ctrl.submit = function() {
 				
-				postData = {
+				admin_add_ctrl.postData = {
 				name: admin_add_ctrl.name,
 				phoneNumber: admin_add_ctrl.phoneNumber,
+				ssn: admin_add_ctrl.ssn,
+				address: admin_add_ctrl.address,
 				email: admin_add_ctrl.email,
 				program: admin_add_ctrl.program,
 				graduate: admin_add_ctrl.graduate,
@@ -27,8 +29,13 @@
 				passedOn3rd: admin_add_ctrl.passedOn3rd
 			};
 
-				ajaxService.post('/admin/add/', postData)
+				ajaxService.post('/admin/add/', admin_add_ctrl.postData)
 				.then(function(successResponse) {
+					/* refresh purposes, doesnt work yet, needs more work
+					for (var key in admin_add_ctrl.postData) {
+						key = '';
+					}
+					*/
 					console.log(successResponse);
 				}, 
 			function(failureResposne) {

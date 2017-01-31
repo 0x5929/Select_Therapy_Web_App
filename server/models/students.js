@@ -7,6 +7,8 @@
 	var studentSchema = mongoose.Schema({
 		name: String,
 		phoneNumber: Number,
+		ssn: Number,
+		address: String,
 		email: String,
 		program: String,
 		graduate: Boolean,
