@@ -11,6 +11,7 @@
 				successLogin: successLogin,
 				signOut: signOut,
 				promoEmail: promoEmail,
+				successAdd: successAdd,
 				thankYouMessage: thankYouMessage,
 				errorToast: errorToast
 			};
@@ -49,6 +50,16 @@
 				$mdToast.show(
 					$mdToast.simple()
 						.textContent('Many incredible offers coming your way!!')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(1000)
+					);
+			}
+
+			function successAdd(name) {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent(' ' + name + ' has been added to the database, thank you!')
 						.position('top right')
 						.parent('#header')
 						.hideDelay(1000)
