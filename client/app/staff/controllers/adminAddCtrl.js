@@ -31,16 +31,21 @@
 
 				ajaxService.post('/admin/add/', admin_add_ctrl.postData)
 				.then(function(successResponse) {
-					/* refresh purposes, doesnt work yet, needs more work
-					for (var key in admin_add_ctrl.postData) {
-						key = '';
-					}
-					*/
+					console.log(admin_add_ctrl.postData);
+					admin_add_ctrl.refresh(admin_add_ctrl.postData);
 					console.log(successResponse);
 				}, 
 			function(failureResposne) {
 					console.log(failureResposne);
 				});
+			};
+
+			admin_add_ctrl.refresh = function(obj) {
+				for (var key in obj) {
+					obj[key] = '';
+					console.log(key);
+					console.log(obj);
+				}
 			};
 		};
 }());
