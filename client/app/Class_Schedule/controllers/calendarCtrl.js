@@ -7,6 +7,7 @@
 	function calendarControlHandler($scope) {
 		//config object
 		var calendarCtrl = this;
+		
 		calendarCtrl.uiConfig = {
 			calendar: {
 				googleCalendarApiKey: 'AIzaSyDF5FLbmUL2esV4eiQhewws-BtfC49ftmU', 
