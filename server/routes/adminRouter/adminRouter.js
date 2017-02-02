@@ -37,7 +37,7 @@
 					if (!user) return res.send('nope no user here');
 				});
 			}else if (searchParameter === 'Phone number'){
-					STIDbStudentCollection.findOne({'phone_number': searchInput}, function(err, user) {
+					STIDbStudentCollection.findOne({'phoneNumber': searchInput}, function(err, user) {
 					if (err) return next(err);
 					if (user) return res.send(user);
 					if (!user) return res.send('nope no user here');
@@ -47,8 +47,6 @@
 
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;
-			console.log('hello world');
-			console.log(requestBody);
 			//parse all neccessary fields to be correctly input into db
 			requestBody.phoneNumber = Number(requestBody.phoneNumber);
 			requestBody.ssn = Number(requestBody.ssn);
@@ -62,14 +60,42 @@
 			requestBody.passedOn1st = Boolean(requestBody.passedOn1st);
 			requestBody.passedOn2nd = Boolean(requestBody.passedOn2nd);
 			requestBody.passedOn3rd = Boolean(requestBody.passedOn3rd);
-			
-			console.log(requestBody);	//check again
 			//calling next to further handle request
 			next();
 		}
 
 		function adminAddPostHandler(req, res, next) {
-			res.status(200).send('signal recieved');
+			console.log(req.body);
+			STIDbStudentCollection.findOne({'name': req.body.name}, function(err, user) {
+				if (err) return next(err);
+				if (user) return res.status(400).send('This user already exists!');
+				if (!user) {	//if no user, then save all the creditials from client side
+					var newStudent = new STIDbStudentCollection();
+					newStudent.name = req.body.name;
+					newStudent.phoneNumber = req.body.phoneNumber;
+					newStudent.ssn = req.body.ssn;
+					newStudent.address = req.body.address;
+					newStudent.email = req.body.email;
+					newStudent.program = req.body.program;
+					newStudent.graduate = req.body.graduate;
+					newStudent.tuitionPaid = req.body.tuitionPaid;
+					newStudent.jobPlaced = req.body.jobPlaced;
+					newStudent.fullTimePos = req.body.fullTimePos;
+					newStudent.partTimePos = req.body.partTimePos;
+					newStudent.payRate = req.body.payRate;
+					newStudent.jobDescription = req.body.jobDescription;
+					newStudent.noJobReason = req.body.noJobReason;
+					newStudent.passedExam = req.body.passedExam;
+					newStudent.passedOn1st = req.body.passedOn1st;
+					newStudent.passedOn2nd = req.body.passedOn2nd;
+					newStudent.passedOn3rd = req.body.passedOn3rd;
+					//save the new student
+					newStudent.save(function(err) {
+						if (err) return next(err);
+					});
+				}
+			})
+			return res.status(200).send('newStudent SEnt');
 		}
 
 		return adminRoute;

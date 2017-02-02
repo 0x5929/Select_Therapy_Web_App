@@ -27,7 +27,7 @@
 				passReqToCallback: true //passes the req obj to the callback in LocalStrategy
 			}, 
 				function(req, email, password, done) {
-				//async usage of process.nextTick, this following function wont fire unless req is passed
+				//async usage of process.nextTick, this following function wont fire unless req is passed in
 					process.nextTick(function() {
 						User.findOne({'local.email': email}, function(err, user) {
 							//server error
