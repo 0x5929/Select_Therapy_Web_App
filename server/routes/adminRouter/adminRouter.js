@@ -12,6 +12,7 @@
 		//mainm Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
+		adminRoute.put('/modify', adminModifyPutHandler);
 		
 		//handler and middleware functions used in routes
 		function adminSearchGetHandler(req, res, next) {
@@ -28,19 +29,19 @@
 					console.log(user);
 					if (err) return next(err);
 					if (user) return res.send(user);
-					if (!user) return res.send('nope no user here');
+					if (!user) return res.status(400).send('nope no user here');
 				});
 			}else if (searchParameter === 'email') {
 					STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
 					if (err) return next(err);
 					if (user) return res.send(user);
-					if (!user) return res.send('nope no user here');
+					if (!user) return res.status(400).send('nope no user here');
 				});
 			}else if (searchParameter === 'Phone number'){
 					STIDbStudentCollection.findOne({'phoneNumber': searchInput}, function(err, user) {
 					if (err) return next(err);
 					if (user) return res.send(user);
-					if (!user) return res.send('nope no user here');
+					if (!user) return res.status(400).send('nope no user here');
 				});
 			}
 		}
@@ -95,7 +96,27 @@
 					});
 				}
 			})
-			return res.status(200).send('newStudent SEnt');
+			return res.status(200).send('newStudent added');
+		}
+
+		function adminModifyPutHandler(req, res, next) {
+			var requestBody = req.body;
+			var modifyingKeys = Object.keys(requestBody);
+			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
+				if (err) return next(err);
+				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db");
+				if (user) {
+					modifyingKeys.forEach(function(key) {
+						if (key === "originalName") return;	//skipping the original name key
+						user[key] = requestBody[key];	//updating the keys
+						user.save(function(err, updatedUser) {
+							if (err) return next(err);
+						});
+					});
+
+					return res.status(200).send('updatedUser');			
+				}
+			});
 		}
 
 		return adminRoute;

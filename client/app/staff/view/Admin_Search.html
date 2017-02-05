@@ -18,93 +18,100 @@
 	<div class="col-md-6" ng-if="admin_search_ctrl.data">
 		<div>
 			Student name: {{ admin_search_ctrl.data.name }}
-			<input type="text" name="name" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="name" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['name']">
 			<hr>
 		</div>
 		<div>
 			Student phone number: {{ admin_search_ctrl.data.phoneNumber }}
-			<input type="text" name="phoneNumber" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="phoneNumber" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['phoneNumber']">
 			<hr>
 		</div>
 		<div>
 			Student social security number: {{ admin_search_ctrl.data.ssn }}
-			<input type="text" name="ssn" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="ssn" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['ssn']">
 			<hr>
 		</div>
 		<div>
 			Student address: {{ admin_search_ctrl.data.address }}
-			<input type="text" name="address" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="address" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['address']">
 			<hr>
 		</div>
 		<div>
 			Student email: {{ admin_search_ctrl.data.email }}
-			<input type="text" name="email" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="email" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['email']">
 			<hr>
 		</div>
 		<div>
 			Student program: {{ admin_search_ctrl.data.program }}
-			<input type="text" name="program" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="program" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['program']">
 			<hr>
 		</div>
 		<div>
 			Student job tuition paid: {{ admin_search_ctrl.data.tuitionPaid }}
-			<input type="text" name="tuitionPaid" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="tuitionPaid" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['tuitionPaid']">
 			<hr>
 		</div>
 		<div>
 			Student graduate: {{ admin_search_ctrl.data.graduate }}
-			<input type="text" name="graduate" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="graduate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['graduate']">
 			<hr>
 		</div>
 		<div>
 			Student passed exam: {{ admin_search_ctrl.data.passedExam }}
-			<input type="text" name="passedExam" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="passedExam" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedExam']">
 			<hr>
 		</div>
 		<div>
 			Student passed on 1st try: {{ admin_search_ctrl.data.passedOn1st }}
-			<input type="text" name="passedOn1st" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="passedOn1st" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedOn1st']">
 			<hr>
 		</div>
 		<div>
 			Student passed on 2nd try: {{ admin_search_ctrl.data.passedOn2nd }}
-			<input type="text" name="passedOn2nd" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="passedOn2nd" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedOn2nd']">
 			<hr>
 		</div>
 		<div>
 			Student passed on 3rd try: {{ admin_search_ctrl.data.passedOn3rd }}
-			<input type="text" name="passedOn3rd" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="passedOn3rd" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedOn3rd']">
 			<hr>
 		</div>
 		<div>
 			Student job Placed: {{ admin_search_ctrl.data.jobPlaced }}
-			<input type="text" name="jobPlaced" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="jobPlaced" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['jobPlaced']">
 			<hr>
 		</div>
 		<div>
 			Student job description: {{ admin_search_ctrl.data.jobDescription }}
-			<input type="text" name="jobDescription" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="jobDescription" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['jobDescription']">
 			<hr>
 		</div>
 		<div>
 			Student Reason for Unemployment: {{ admin_search_ctrl.data.noJobReason }}
-			<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['noJobReason']">
 			<hr>
 		</div>
 		<div>
 			Student part time pos: {{ admin_search_ctrl.data.partTimePos }}
-			<input type="text" name="partTimePos" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="partTimePos" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['partTimePos']">
 			<hr>
 		</div>
 		<div>	
 			Student full time pos: {{ admin_search_ctrl.data.fullTimePos }}
-			<input type="text" name="fullTimePos" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="fullTimePos" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['fullTimePos']">
 			<hr>
 		</div>
 		<div>
 			Student pay rate: {{ admin_search_ctrl.data.payRate }}
-			<input type="text" name="payRate" ng-if="admin_search_ctrl.editOn">
+			<input type="text" name="payRate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['payRate']">
 			<hr>
 		</div>
+		<div>
+			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.edit()">Edit</button>
+			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.submitChanges()">Submit Changes</button>
+			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.editOn=false">Cancel</button>
+		</div>
 	</div>
+	<br>
+	<br>
 </div>

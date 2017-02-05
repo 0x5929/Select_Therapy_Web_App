@@ -115,6 +115,7 @@
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
     				$rootScope.currentUser = user;
+    				console.log($rootScope.currentUser);
     			}, 
     			function() {
     				$rootScope.currentUser = undefined;
