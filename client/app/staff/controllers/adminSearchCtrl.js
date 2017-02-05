@@ -19,9 +19,9 @@
 
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
-					admin_search_ctrl.message = 'success response but really no data';
+					admin_search_ctrl.data = successResponse.data;
 				}, function(failureResponse) {
-					console.log(failureResponse);
+					admin_search_ctrl.message = 'failure response from server, need to err handle';
 				});
 		};
 	}
