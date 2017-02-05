@@ -20,9 +20,9 @@
 		jobDescription: String,
 		noJobReason: String,
 		passedExam: Boolean,
-		PassedOn1st: Boolean,
-		PassedOn2nd: Boolean,
-		PassedOn3rd: Boolean
+		passedOn1st: Boolean,
+		passedOn2nd: Boolean,
+		passedOn3rd: Boolean
 	});
 	
 	module.exports = mongoose.model('students', studentSchema);
