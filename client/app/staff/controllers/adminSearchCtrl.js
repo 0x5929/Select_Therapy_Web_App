@@ -23,6 +23,9 @@
 			passedOn3rd: ''
 		};
 
+		admin_search_ctrl.delete = function() {
+			//admin delete routes
+		};
 
 		admin_search_ctrl.edit = function() {
 			admin_search_ctrl.editOn = true;
