@@ -68,6 +68,7 @@
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
 					admin_search_ctrl.data = successResponse.data;
+					admin_search_ctrl.showResultTable = true;
 				}, function(failureResponse) {
 					admin_search_ctrl.data = null;
 					admin_search_ctrl.message = failureResponse.data;

@@ -13,6 +13,24 @@
 			</select>
 			<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
 		</form>
+		<table ng-if="admin_search_ctrl.showResultTable">
+			<thead>
+				<th>Student Name</th>
+				<th>Student Phone Number</th>
+				<th>Student Program</th>
+				<th>Student Graduation Status</th>
+				<th>Student Payment Status</th>
+				<th>Student Exam Status</th>
+			</thead>
+			<tr ng-repeat="student in admin_search_ctrl.data">
+				<td>{{ student.name }}</td>
+				<td>{{ student.phoneNumber }}</td>
+				<td>{{ student.program }}</td>
+				<td>{{ student.graduate }}</td>
+				<td>{{ student.tuitionPaid }}</td>
+				<td>{{ student.passedExam }}</td>	
+			</tr>		
+		</table>
 	</div>
 	<div class="col-md-6" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
