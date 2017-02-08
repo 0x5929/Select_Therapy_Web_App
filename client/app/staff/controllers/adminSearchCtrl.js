@@ -6,7 +6,7 @@
 	function adminSearchCtrlHandler($rootScope, $scope, ajaxService) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
-		admin_search_ctrl.data = null;	//this gets passed in to the view, need to be updated as data comes back from server
+		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
 		admin_search_ctrl.editOn = false;
 		admin_search_ctrl.putData = {
 			name: '',
@@ -31,6 +31,11 @@
 			admin_search_ctrl.editOn = true;
 		};
 
+		admin_search_ctrl.showDetail = function(student) {
+			admin_search_ctrl.showFullDetail = true;
+			admin_search_ctrl.studentDetail = student;
+		};
+
 		admin_search_ctrl.isAdmin = function() {
 			if ($rootScope.currentUser.data.local.security === 'Admin')	return true;
 			else return false;
@@ -51,7 +56,7 @@
 			if (putDataAfterFilter.passedOn2nd && putDataAfterFilter.passedOn2nd.toLowerCase() === 'false')	putDataAfterFilter.passedOn2nd = '';
 			if (putDataAfterFilter.passedOn3rd && putDataAfterFilter.passedOn3rd.toLowerCase() === 'false')	putDataAfterFilter.passedOn3rd = '';
 			//need to attach the original name so the server can look it up and edit its contents
-			putDataAfterFilter.originalName = admin_search_ctrl.data.name;
+			putDataAfterFilter.originalName = admin_search_ctrl.studentDetail.name;
 			//returning the filtered through obj
 			return putDataAfterFilter;
 		};
@@ -67,10 +72,11 @@
 
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
-					admin_search_ctrl.data = successResponse.data;
+					admin_search_ctrl.data.push(successResponse.data);
+					admin_search_ctrl.message = '';
 					admin_search_ctrl.showResultTable = true;
 				}, function(failureResponse) {
-					admin_search_ctrl.data = null;
+					admin_search_ctrl.data = [];
 					admin_search_ctrl.message = failureResponse.data;
 				});
 		};
