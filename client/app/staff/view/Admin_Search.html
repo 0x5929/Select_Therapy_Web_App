@@ -1,7 +1,7 @@
 <!-- COULD THINK ABOUT HAVING MULITPLE VIEWS FROM SEARCH. One view is rendered when admin search is pressed on staff page, which goes here, then a table view of students matching with search is generated on the right side, then after clicking on the student, his or her info needs to pop up in another view, possibly below the two columns -->
 
 <div class="row" ng-controller="adminSearchController as admin_search_ctrl">
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<h3 class="text-center">  Search By:</h3>
 		<br>
 		<form class="text-center">
@@ -15,12 +15,12 @@
 		</form>
 		<table ng-if="admin_search_ctrl.showResultTable">
 			<thead>
-				<th>Student Name</th>
-				<th>Student Phone Number</th>
-				<th>Student Program</th>
-				<th>Student Graduation Status</th>
-				<th>Student Payment Status</th>
-				<th>Student Exam Status</th>
+				<th>Student Name |</th>
+				<th>Student Phone Number |</th>
+				<th>Student Program |</th>
+				<th>Student Graduation Status |</th>
+				<th>Student Payment Status |</th>
+				<th>Student Exam Status </th>
 			</thead>
 			<tr ng-repeat="student in admin_search_ctrl.data">
 				<td>{{ student.name }}</td>
@@ -32,10 +32,10 @@
 			</tr>		
 		</table>
 	</div>
-	<div class="col-md-6" ng-if="admin_search_ctrl.message">
+	<div class="col-md-4" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
 	</div>
-	<div class="col-md-6" ng-if="admin_search_ctrl.data">
+	<div class="col-md-4" ng-if="admin_search_ctrl.data">
 		<div>
 			Student name: {{ admin_search_ctrl.data.name }}
 			<input type="text" name="name" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['name']">
