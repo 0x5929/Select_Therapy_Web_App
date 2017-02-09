@@ -2,7 +2,8 @@
 	'use strict';
 
 	angular.module('myApp.admin', ['services.ajaxService', 'services.toastFactory'])
-		.controller('adminSearchController', ['$rootScope', '$scope', 'ajaxService', adminSearchCtrlHandler])
+		.controller('adminSearchController', ['$rootScope', '$scope', 'ajaxService', adminSearchCtrlHandler]);
+		
 	function adminSearchCtrlHandler($rootScope, $scope, ajaxService) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
@@ -72,11 +73,14 @@
 
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
+					admin_search_ctrl.showFullDetail = false;
+					admin_search_ctrl.data = [];	//need to account for when an array of users is returned from server for findAll method in db
 					admin_search_ctrl.data.push(successResponse.data);
 					admin_search_ctrl.message = '';
 					admin_search_ctrl.showResultTable = true;
 				}, function(failureResponse) {
 					admin_search_ctrl.data = [];
+					admin_search_ctrl.showFullDetail = false;
 					admin_search_ctrl.message = failureResponse.data;
 				});
 		};
