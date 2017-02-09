@@ -343,3 +343,14 @@ FOOTER STYLE
 my-footer {
 	background-color: #292c2f;
 }
+
+/* ADMIN SEARCH RESULT TABLE SYTLE */
+/* MAKING THE TABLE SCROLLABLE 
+
+#adminSearch thead>tr{
+	display: block;
+}
+
+tbody{
+	display: block;
+}*/

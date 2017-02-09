@@ -1,6 +1,6 @@
 <!-- COULD THINK ABOUT HAVING MULITPLE VIEWS FROM SEARCH. One view is rendered when admin search is pressed on staff page, which goes here, then a table view of students matching with search is generated on the right side, then after clicking on the student, his or her info needs to pop up in another view, possibly below the two columns -->
 
-<div class="row" ng-controller="adminSearchController as admin_search_ctrl">
+<div class="row" id="adminSearch" ng-controller="adminSearchController as admin_search_ctrl">
 	<div class="col-md-8">
 		<h3 class="text-center">  Search By:</h3>
 		<br>
@@ -13,24 +13,30 @@
 			</select>
 			<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
 		</form>
-		<table ng-if="admin_search_ctrl.showResultTable">
-			<thead>
-				<th>Student Name |</th>
-				<th>Student Phone Number |</th>
-				<th>Student Program |</th>
-				<th>Student Graduation Status |</th>
-				<th>Student Payment Status |</th>
-				<th>Student Exam Status </th>
-			</thead>
-			<tr ng-repeat="student in admin_search_ctrl.data">
-				<td><a style="cursor: pointer;" ng-click="admin_search_ctrl.showDetail(student)">{{ student.name }}</a></td>
-				<td>{{ student.phoneNumber }}</td>
-				<td>{{ student.program }}</td>
-				<td>{{ student.graduate }}</td>
-				<td>{{ student.tuitionPaid }}</td>
-				<td>{{ student.passedExam }}</td>	
-			</tr>		
-		</table>
+		<div style="width: 100%; height: 75px; overflow: auto;">
+			<table ng-if="admin_search_ctrl.showResultTable">
+				<thead>
+					<tr>
+						<th>Student Name |</th>
+						<th>Student Phone Number |</th>
+						<th>Student Program |</th>
+						<th>Student Graduation Status |</th>
+						<th>Student Payment Status |</th>
+						<th>Student Exam Status </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in admin_search_ctrl.data">
+						<td><a style="cursor: pointer;" ng-click="admin_search_ctrl.showDetail(student)">{{ student.name }}</a></td>
+						<td>{{ student.phoneNumber }}</td>
+						<td>{{ student.program }}</td>
+						<td>{{ student.graduate }}</td>
+						<td>{{ student.tuitionPaid }}</td>
+						<td>{{ student.passedExam }}</td>	
+					</tr>		
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<div class="col-md-4" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
