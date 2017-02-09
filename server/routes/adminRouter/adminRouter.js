@@ -23,7 +23,9 @@
 
 			if (!searchInput || !searchParameter)
 				return res.status(400).send('invalid entry');
-			if (searchParameter === 'Name') {
+			if (searchParameter === 'Name') {	//	we could add a couple more such as ssn, cna program rotation, 
+												//	hha program rotation, esol program rotation number, 
+												//	and sg program rotation 
 				STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
 					console.log(err);
 					console.log(user);
@@ -38,9 +40,10 @@
 					if (!user) return res.status(400).send('nope no user here');
 				});
 			}else if (searchParameter === 'Phone number'){
-					STIDbStudentCollection.findOne({'phoneNumber': searchInput}, function(err, user) {
+					STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
+					console.log(users);
 					if (err) return next(err);
-					if (user) return res.send(user);
+					if (users) return res.send(users);
 					if (!user) return res.status(400).send('nope no user here');
 				});
 			}
