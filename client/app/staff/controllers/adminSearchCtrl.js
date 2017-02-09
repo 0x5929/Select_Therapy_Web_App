@@ -2,9 +2,9 @@
 	'use strict';
 
 	angular.module('myApp.admin', ['services.ajaxService', 'services.toastFactory'])
-		.controller('adminSearchController', ['$rootScope', '$scope', 'ajaxService', adminSearchCtrlHandler]);
+		.controller('adminSearchController', ['$rootScope', '$scope', 'ajaxService', 'toastFactory', adminSearchCtrlHandler]);
 
-	function adminSearchCtrlHandler($rootScope, $scope, ajaxService) {
+	function adminSearchCtrlHandler($rootScope, $scope, ajaxService, toastFactory) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
@@ -34,7 +34,7 @@
 
 		admin_search_ctrl.showDetail = function(student) {
 			admin_search_ctrl.showFullDetail = true;
-			admin_search_ctrl.studentDetail = student;
+			admin_search_ctrl.studentDetail = student;	//passing along the single student selected to show full detail by the controller
 		};
 
 		admin_search_ctrl.isAdmin = function() {
@@ -63,8 +63,7 @@
 		};
 
 		admin_search_ctrl.submit = function () {
-			var config;
-			config = {
+			var config = {
 				params: {
 					parameter: admin_search_ctrl.searchParameter,
 					input: admin_search_ctrl.searchInput
@@ -101,8 +100,10 @@
 
 			ajaxService.put('/admin/modify/', data)
 				.then(function(successResponse) {	//could add a success toast
+					toastFactory.sucessEdit();
 					console.log(successResponse);
 				}, function(failureResponse) {	//could add a failure toast
+					toastFactory.errorToast('Sorry, an error has occured');
 					console.log(failureResponse);
 				});
 		};

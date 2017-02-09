@@ -12,6 +12,7 @@
 				signOut: signOut,
 				promoEmail: promoEmail,
 				successAdd: successAdd,
+				sucessEdit: successEdit,
 				thankYouMessage: thankYouMessage,
 				errorToast: errorToast
 			};
@@ -64,6 +65,17 @@
 						.parent('#header')
 						.hideDelay(1000)
 					);
+			}
+
+			function successEdit() {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent('This user has been modified and saved, thank you!')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(1000)
+					);
+
 			}
 
 			function thankYouMessage(name) {
