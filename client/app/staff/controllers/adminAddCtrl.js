@@ -15,7 +15,10 @@
 				ssn: admin_add_ctrl.ssn,
 				address: admin_add_ctrl.address,
 				email: admin_add_ctrl.email,
-				program: admin_add_ctrl.program,
+				program: [{
+					programName: admin_add_ctrl.programName,
+					programRotation: admin_add_ctrl.programRotation
+				}],
 				graduate: admin_add_ctrl.graduate,
 				tuitionPaid: admin_add_ctrl.tuitionPaid,
 				jobPlaced: admin_add_ctrl.jobPlaced,
@@ -48,10 +51,10 @@
 				admin_add_ctrl.ssn = '';
 				admin_add_ctrl.address = '';
 				admin_add_ctrl.email = '';
-				admin_add_ctrl.program = '';
 				admin_add_ctrl.payRate = '';
 				admin_add_ctrl.jobDescription = '';
-				admin_add_ctrl.noJobReason = '';				
+				admin_add_ctrl.noJobReason = '';	
+				admin_add_ctrl.showAddProgramInput = false;			
 
 //Boolean Values
 				var graduate = document.getElementsByName('graduate');

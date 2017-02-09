@@ -15,7 +15,10 @@
 			ssn: '',
 			address: '',
 			email: '',
-			program: '',
+			program: [{
+				programName: '',
+				programRotation: ''
+			}],
 			tuitionPaid: '',
 			graduate: '',
 			passedExam: '',
@@ -49,7 +52,7 @@
 					putDataAfterFilter[inputField] = data[inputField];
 			}
 			//this will convert false to empty string to be converted to boolean false or 0 value in the server side.
-			if (putDataAfterFilter.program && putDataAfterFilter.program.toLowerCase() === 'false')	putDataAfterFilter.program = '';
+//			if (putDataAfterFilter.program && putDataAfterFilter.program.toLowerCase() === 'false')	putDataAfterFilter.program = '';
 			if (putDataAfterFilter.tuitionPaid && putDataAfterFilter.tuitionPaid.toLowerCase() === 'false')	putDataAfterFilter.tuitionPaid = '';
 			if (putDataAfterFilter.graduate && putDataAfterFilter.graduate.toLowerCase() === 'false')	putDataAfterFilter.graduate = '';
 			if (putDataAfterFilter.passedExam && putDataAfterFilter.passedExam.toLowerCase() === 'false')	putDataAfterFilter.passedExam = '';
@@ -74,6 +77,13 @@
 				.then(function(successResponse) {
 					admin_search_ctrl.showFullDetail = false;
 					if (successResponse.data[0]){	//need to account for when an array of users is returned from server for findAll method in db
+						successResponse.data.forEach(function(student) {	//each student from the response will map their program to only its name
+																			//then having the array of mapped results to be joined so it returns names only
+							student.program = student.program.map(function(program) {
+								return program.name;
+							});
+							studnet.program.join();
+						});
 						admin_search_ctrl.data = successResponse.data;
 						admin_search_ctrl.message = '';
 						admin_search_ctrl.showResultTable = true;

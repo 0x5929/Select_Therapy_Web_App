@@ -10,7 +10,7 @@
 		ssn: Number,
 		address: String,
 		email: String,
-		program: String,
+		program: [{}],
 		graduate: Boolean,
 		tuitionPaid: Boolean,
 		jobPlaced: Boolean,
