@@ -76,20 +76,22 @@
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
 					admin_search_ctrl.showFullDetail = false;
-					if (successResponse.data[0]){	//need to account for when an array of users is returned from server for findAll method in db
+					if (Array.isArray(successResponse.data)){	//need to account for when an array of users is returned from server for findAll method in db
 						successResponse.data.forEach(function(student) {	//each student from the response will map their program to only its name
-																			//then having the array of mapped results to be joined so it returns names only
+																			//then having the array of mapped results to be joined so it returns strings of names only
 							student.program = student.program.map(function(program) {
-								return program.name;
-							});
-							studnet.program.join();
-						});
-						admin_search_ctrl.data = successResponse.data;
+								return program.programName;
+							}).join();
+						});	
+						admin_search_ctrl.data = successResponse.data;	//data is used for iteration in ng-repeat
 						admin_search_ctrl.message = '';
 						admin_search_ctrl.showResultTable = true;
 					}
 					else {
 						admin_search_ctrl.data = [];	
+						successResponse.data.program = successResponse.data.program.map(function(program) {
+							return program.programName;
+						}).join();
 						admin_search_ctrl.data.push(successResponse.data);
 						admin_search_ctrl.message = '';
 						admin_search_ctrl.showResultTable = true;

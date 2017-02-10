@@ -16,8 +16,20 @@
 				address: admin_add_ctrl.address,
 				email: admin_add_ctrl.email,
 				program: [{
-					programName: admin_add_ctrl.programName,
-					programRotation: admin_add_ctrl.programRotation
+					programName: admin_add_ctrl.FirstprogramName,
+					programRotation: admin_add_ctrl.FirstprogramRotation
+				}, {
+					programName: admin_add_ctrl.SecondprogramName,
+					programRotation: admin_add_ctrl.SecondprogramRotation
+				}, {
+					programName: admin_add_ctrl.ThirdprogramName,
+					programRotation: admin_add_ctrl.ThirdprogramRotation
+				}, {
+					programName: admin_add_ctrl.ForthprogramName,
+					programRotation: admin_add_ctrl.ForthprogramName
+				}, {
+					programName: admin_add_ctrl.FifthprogramName,
+					programRotation: admin_add_ctrl.FifthprogramRotation
 				}],
 				graduate: admin_add_ctrl.graduate,
 				tuitionPaid: admin_add_ctrl.tuitionPaid,
@@ -33,6 +45,10 @@
 				passedOn3rd: admin_add_ctrl.passedOn3rd
 			};
 
+				postData.program.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+					return eachProgram.programName && eachProgram.programRotation;
+				});
+				console.log(postData);
 				ajaxService.post('/admin/add/', postData)
 				.then(function(successResponse) {
 					toastFactory.successAdd(postData.name);

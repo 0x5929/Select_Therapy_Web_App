@@ -37,11 +37,31 @@
 			</div>
 		</div>
 		<div class="form-group row">
-		<button ng-click="admin_add_ctrl.showAddProgramInput = true">Add Program</button>
-			<label class="control-label col-md-3" for="program">Program:</label>
-			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput">
-				<input type="text" ng-model="admin_add_ctrl.programName" class="form-control" name="programName" placeholder="Enter Student's Program Name">
-				<input type="text" ng-model="admin_add_ctrl.programRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number">
+			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput1 = true">Add 1st Program</button>
+			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput2 = true">Add 2nd Program</button>
+			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput3 = true">Add 3rd Program</button>
+			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput4 = true">Add 4th Program</button>
+			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput5 = true">Add 5th Program</button>
+			<label class="control-label col-md-1" for="program">Program:</label>
+			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput1">
+				<input type="text" ng-model="admin_add_ctrl.FirstprogramName" class="form-control" name="programName" placeholder="Enter Student's 1st Program Name">
+				<input type="text" ng-model="admin_add_ctrl.FirstprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">
+			</div>
+			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput2">
+				<input type="text" ng-model="admin_add_ctrl.SecondprogramName" class="form-control" name="programName" placeholder="Enter Student's 2nd Program Name">
+				<input type="text" ng-model="admin_add_ctrl.SecondprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
+			</div>
+			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput3">
+				<input type="text" ng-model="admin_add_ctrl.ThirdprogramName" class="form-control" name="programName" placeholder="Enter Student's 3rd Program Name">
+				<input type="text" ng-model="admin_add_ctrl.ThirdprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for the 3rd Program">
+			</div>
+			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput4">
+				<input type="text" ng-model="admin_add_ctrl.ForthprogramName" class="form-control" name="programName" placeholder="Enter Student's 4th Program Name">
+				<input type="text" ng-model="admin_add_ctrl.ForthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
+			</div>
+			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput5">
+				<input type="text" ng-model="admin_add_ctrl.FifthprogramName" class="form-control" name="programName" placeholder="Enter Student's 5th Program Name">
+				<input type="text" ng-model="admin_add_ctrl.FifthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
 			</div>
 		</div>
 		<div class="form-group row">
