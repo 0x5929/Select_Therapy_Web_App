@@ -103,6 +103,7 @@
 		}
 
 		function adminModifyPutHandler(req, res, next) {
+			console.log(req.body);
 			var requestBody = req.body;
 			var modifyingKeys = Object.keys(requestBody);
 			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {

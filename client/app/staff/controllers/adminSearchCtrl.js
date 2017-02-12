@@ -9,7 +9,6 @@
 		admin_search_ctrl.message = '';
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
 		admin_search_ctrl.editOn = false;
-		admin_search_ctrl.programEditArr = [];
 		admin_search_ctrl.putData = {
 			name: '',
 			phoneNumber: '',
@@ -29,8 +28,30 @@
 			//admin delete routes
 		};
 
+		admin_search_ctrl.deleteProgram = function(programObj) {
+			//delete program
+			admin_search_ctrl.studentDetail.program = admin_search_ctrl.studentDetail.program.filter(function(eachProgram) {
+				return eachProgram.programName !== programObj.programName;	//returning only obj that dont match with parameter obj, thus deleting that from array
+			});
+			admin_search_ctrl.submitChanges();	//calling submitChanges so changes can be submmited to database
+		};
+
+		admin_search_ctrl.modifyProgram = function(programObj) {
+			admin_search_ctrl.studentDetail.program.forEach(function(eachProgram) {
+				if (eachProgram.programName !== programObj.programName)	return;	//skip to next program obj if its not matched
+				else{	//once matched update the program name and rotation field with ng-model in view
+					if (admin_search_ctrl.modifyProgramName)	eachProgram.programName = admin_search_ctrl.modifyProgramName;
+					if (admin_search_ctrl.modifyProgramRotation)	eachProgram.programRotation = admin_search_ctrl.modifyProgramRotation;
+				}
+				admin_search_ctrl.submitChanges();	//finally call submit changes again for data to be saved in db, meaning one modification can happen per time.
+
+			});
+		};
+
 		admin_search_ctrl.edit = function() {
 			admin_search_ctrl.editOn = true;
+			admin_search_ctrl.showFinalCancel = true;
+			admin_search_ctrl.showSubmitChanges = true;
 		};
 
 		admin_search_ctrl.showDetail = function(student) {
@@ -43,35 +64,50 @@
 			else return false;
 		};
 
+		admin_search_ctrl.programModifyCancel = function() {
+			admin_search_ctrl.showFinalCancel = true;
+			admin_search_ctrl.showSubmitChanges = true;	//turn submit changes btn back on.
+			admin_search_ctrl.editCurrentProgramBtn = false;	//turning all program edits off
+			admin_search_ctrl.addNewProgram = false;
+			admin_search_ctrl.deleteProgramBtn = false
+			if (Array.isArray(admin_search_ctrl.modifyCurrentProgramInputNBtn)){	//if evaluated as array
+				admin_search_ctrl.modifyCurrentProgramInputNBtn.forEach(function(value) {
+					value = false;
+				});
+			}else{	//if evaluated as obj
+				for (var key in admin_search_ctrl.modifyCurrentProgramInputNBtn){
+					admin_search_ctrl.modifyCurrentProgramInputNBtn[key] = false;
+				}
+			}
+		};
+
 		admin_search_ctrl.putChangesFilter = function(data) {
 			var putDataAfterFilter = {};
 			var newDataForProgram = {};
 			var putDataForProgram;
 			for (var inputField in data) {	//first we filter through the fields that is being editted
-				if (inputField === 'program'){	/*//this is for program field, only modify the ones that is being changed.
-					putDataForProgram = data[inputField].filter(function(eachProgram) {
-						return eachProgram.programName && eachProgram.programRotation;
-					});
-					console.log(putDataForProgram);
-					if (putDataForProgram[0])
-						putDataAfterFilter[inputField] = putDataForProgram;
-					if (admin_search_ctrl.newProgramName && admin_search_ctrl.newProgramRotation){	//this condition is for new program additions
-						newDataForProgram.programName = admin_search_ctrl.newProgramName;
-						newDataForProgram.programRotation = admin_search_ctrl.newProgramRotation;
-						putDataForProgram.push(newDataForProgram);
-						putDataAfterFilter[inputField] = putDataForProgram;
-					} 
-					else break;*/
-					if (admin_search_ctrl.programEditArr[0])
-						putDataAfterFilter[inputField] = admin_search_ctrl.programEditArr;
-					if (admin_search_ctrl.newProgramName && admin_search_ctrl.newProgramRotation){
-						newDataForProgram.programName = admin_search_ctrl.newProgramName;
-						newDataForProgram.programRotation = admin_search_ctrl.newProgramRotation;
-						admin_search_ctrl.studentDetail.program.push(newDataForProgram);
+				if (inputField === 'program'){//if putData.program:
+					if (admin_search_ctrl.modifyProgramName || admin_search_ctrl.modifyProgramRotation)	//if modifying program
 						putDataAfterFilter[inputField] = admin_search_ctrl.studentDetail.program;
-						console.log(admin_search_ctrl.studentDetail);
-						console.log(putDataAfterFilter);
+					if (admin_search_ctrl.newProgramName && admin_search_ctrl.newProgramRotation){	//if adding new program
+						newDataForProgram.programName = admin_search_ctrl.newProgramName;	//setting newDataForProgram obj
+						newDataForProgram.programRotation = admin_search_ctrl.newProgramRotation;
+
+						if (admin_search_ctrl.modifyProgramName || admin_search_ctrl.modifyProgramRotation){	//if programs are being added and editted at the same time
+							putDataAfterFilter[inputField].push(newDataForProgram);	//pushing the new one is the already editted data obj from earlier condition
+							console.log(putDataAfterFilter);
+							console.log(newDataForProgram);
+						}
+						else{
+							admin_search_ctrl.studentDetail.program.push(newDataForProgram);	//pushing this object into the original 
+							putDataAfterFilter[inputField] = admin_search_ctrl.studentDetail.program;	//setting original to the filtered through data obj
+							console.log(admin_search_ctrl.studentDetail);
+							console.log(putDataAfterFilter);
+						}
 					}
+					if (!putDataAfterFilter[inputField])	//this checks if the two above condidtions: edit or add are not met, 
+						putDataAfterFilter[inputField] = admin_search_ctrl.studentDetail.program;	//if they arent met, the puDataAFterFilter[inputField] part of the obj should be undefined, 
+															//so lets equate the student details array, so we update programs every edit, and account for deleted programs 
 				}
 				else if (data[inputField] !== '')	//for the rest of the fields, we filter through the ones that is editted
 					putDataAfterFilter[inputField] = data[inputField];
@@ -130,15 +166,20 @@
 
 		admin_search_ctrl.submitChanges = function() {
 			var data = admin_search_ctrl.putChangesFilter(admin_search_ctrl.putData);
-			for (var key in admin_search_ctrl.putData) {	//clears all fields when submit is pressed
-				admin_search_ctrl.putData[key] = '';
-			}
-			admin_search_ctrl.editOn = false;	//after clicking submit changes, edit is turned off
+			
+			admin_search_ctrl.editOn = false;	//after clicking submit changes, edit and the rest of ng-ifs are off
 			admin_search_ctrl.editCurrentProgram = false;
+			admin_search_ctrl.addNewProgram = false;
+			admin_search_ctrl.deleteProgramBtn = false;
 
 			console.log(data);
 			ajaxService.put('/admin/modify/', data)
 				.then(function(successResponse) {	//could add a success toast
+					for (var key in admin_search_ctrl.putData) {	//clears all fields when submit is pressed
+						admin_search_ctrl.putData[key] = '';
+					}
+					admin_search_ctrl.newProgramName = admin_search_ctrl.newProgramRotation = '';	//clears new program addition field
+					admin_search_ctrl.modifyProgramName = admin_search_ctrl.modifyProgramRotation = ''; //clears modify program fields
 					toastFactory.sucessEdit();
 					console.log(successResponse);
 				}, function(failureResponse) {	//could add a failure toast
