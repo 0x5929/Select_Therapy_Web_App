@@ -9,16 +9,14 @@
 		admin_search_ctrl.message = '';
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
 		admin_search_ctrl.editOn = false;
+		admin_search_ctrl.programEditArr = [];
 		admin_search_ctrl.putData = {
 			name: '',
 			phoneNumber: '',
 			ssn: '',
 			address: '',
 			email: '',
-			program: [{
-				programName: '',
-				programRotation: ''
-			}],
+			program: [],
 			tuitionPaid: '',
 			graduate: '',
 			passedExam: '',
@@ -47,8 +45,35 @@
 
 		admin_search_ctrl.putChangesFilter = function(data) {
 			var putDataAfterFilter = {};
+			var newDataForProgram = {};
+			var putDataForProgram;
 			for (var inputField in data) {	//first we filter through the fields that is being editted
-				if (data[inputField] !== '')
+				if (inputField === 'program'){	/*//this is for program field, only modify the ones that is being changed.
+					putDataForProgram = data[inputField].filter(function(eachProgram) {
+						return eachProgram.programName && eachProgram.programRotation;
+					});
+					console.log(putDataForProgram);
+					if (putDataForProgram[0])
+						putDataAfterFilter[inputField] = putDataForProgram;
+					if (admin_search_ctrl.newProgramName && admin_search_ctrl.newProgramRotation){	//this condition is for new program additions
+						newDataForProgram.programName = admin_search_ctrl.newProgramName;
+						newDataForProgram.programRotation = admin_search_ctrl.newProgramRotation;
+						putDataForProgram.push(newDataForProgram);
+						putDataAfterFilter[inputField] = putDataForProgram;
+					} 
+					else break;*/
+					if (admin_search_ctrl.programEditArr[0])
+						putDataAfterFilter[inputField] = admin_search_ctrl.programEditArr;
+					if (admin_search_ctrl.newProgramName && admin_search_ctrl.newProgramRotation){
+						newDataForProgram.programName = admin_search_ctrl.newProgramName;
+						newDataForProgram.programRotation = admin_search_ctrl.newProgramRotation;
+						admin_search_ctrl.studentDetail.program.push(newDataForProgram);
+						putDataAfterFilter[inputField] = admin_search_ctrl.studentDetail.program;
+						console.log(admin_search_ctrl.studentDetail);
+						console.log(putDataAfterFilter);
+					}
+				}
+				else if (data[inputField] !== '')	//for the rest of the fields, we filter through the ones that is editted
 					putDataAfterFilter[inputField] = data[inputField];
 			}
 			//this will convert false to empty string to be converted to boolean false or 0 value in the server side.
@@ -79,7 +104,7 @@
 					if (Array.isArray(successResponse.data)){	//need to account for when an array of users is returned from server for findAll method in db
 						successResponse.data.forEach(function(student) {	//each student from the response will map their program to only its name
 																			//then having the array of mapped results to be joined so it returns strings of names only
-							student.program = student.program.map(function(program) {
+							student.programViewForResultsTable = student.program.map(function(program) {
 								return program.programName;
 							}).join();
 						});	
@@ -89,7 +114,7 @@
 					}
 					else {
 						admin_search_ctrl.data = [];	
-						successResponse.data.program = successResponse.data.program.map(function(program) {
+						successResponse.data.programViewForResultsTable = successResponse.data.program.map(function(program) {
 							return program.programName;
 						}).join();
 						admin_search_ctrl.data.push(successResponse.data);
@@ -109,7 +134,9 @@
 				admin_search_ctrl.putData[key] = '';
 			}
 			admin_search_ctrl.editOn = false;	//after clicking submit changes, edit is turned off
+			admin_search_ctrl.editCurrentProgram = false;
 
+			console.log(data);
 			ajaxService.put('/admin/modify/', data)
 				.then(function(successResponse) {	//could add a success toast
 					toastFactory.sucessEdit();

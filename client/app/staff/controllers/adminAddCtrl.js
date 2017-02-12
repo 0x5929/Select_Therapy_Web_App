@@ -46,7 +46,6 @@
 			};
 
 				postData.program = postData.program.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
-					console.log(eachProgram.programName, eachProgram.programRotation);
 					return eachProgram.programName && eachProgram.programRotation;
 				});
 				console.log(postData);

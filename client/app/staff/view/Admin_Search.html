@@ -1,7 +1,7 @@
 <!-- COULD THINK ABOUT HAVING MULITPLE VIEWS FROM SEARCH. One view is rendered when admin search is pressed on staff page, which goes here, then a table view of students matching with search is generated on the right side, then after clicking on the student, his or her info needs to pop up in another view, possibly below the two columns -->
 
 <div class="row" id="adminSearch" ng-controller="adminSearchController as admin_search_ctrl">
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<h3 class="text-center">  Search By:</h3>
 		<br>
 		<form class="text-center">
@@ -29,7 +29,7 @@
 					<tr ng-repeat="student in admin_search_ctrl.data">
 						<td><a style="cursor: pointer;" ng-click="admin_search_ctrl.showDetail(student)">{{ student.name }}</a></td>
 						<td>{{ student.phoneNumber }}</td>
-						<td>{{ student.program }}</td>
+						<td>{{ student.programViewForResultsTable }}</td>
 						<td>{{ student.graduate }}</td>
 						<td>{{ student.tuitionPaid }}</td>
 						<td>{{ student.passedExam }}</td>	
@@ -38,10 +38,10 @@
 			</table>
 		</div>
 	</div>
-	<div class="col-md-4" ng-if="admin_search_ctrl.message">
+	<div class="col-md-5" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
 	</div>
-	<div class="col-md-4" ng-if="admin_search_ctrl.showFullDetail">
+	<div class="col-md-5" ng-if="admin_search_ctrl.showFullDetail">
 		<div>
 			Student name: {{ admin_search_ctrl.studentDetail.name }}
 			<input type="text" name="name" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['name']">
@@ -68,7 +68,36 @@
 			<hr>
 		</div>
 		<div>
-			Student program: {{ admin_search_ctrl.studentDetail.program }}
+			<span>Student program:</span>
+			<!-- The second if condition is for the button to only appear when there is programs to edit -->
+			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.studentDetail.program[0]['programName']" ng-click="admin_search_ctrl.editCurrentProgram = true">Edit Current Programs</button>
+			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.addNewProgram = true">Add New Program</button>
+			<table>
+				<thead>
+					<th>Program Name |</th>
+					<th>Program Rotation</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="programDetails in admin_search_ctrl.studentDetail.program">
+						<td>
+							{{ programDetails.programName }}
+							<input type="text" name="editCurrentProgramName" placeholder="Program Name" ng-if="admin_search_ctrl.editCurrentProgram" ng-model="admin_search_ctrl.programEditArr[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]['programName']">
+						</td>
+						<td>
+							{{ programDetails.programRotation }}
+							<input type="text" name="editCurrentProgramName" placeholder="Program Rotation" ng-if="admin_search_ctrl.editCurrentProgram" ng-model="admin_search_ctrl.programEditArr[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]['programRotation']">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" name="addNewProgram" placeholder="New Program Name" ng-if="admin_search_ctrl.addNewProgram" ng-model="admin_search_ctrl.newProgramName">
+						</td>
+						<td>
+							<input type="text" name="addNewProgram" placeholder="New Program Rotation" ng-if="admin_search_ctrl.addNewProgram" ng-model="admin_search_ctrl.newProgramRotation">
+						</td>
+					</tr>
+				</tbody>	
+			</table>
 			<input type="text" name="program" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['program']">
 			<hr>
 		</div>
@@ -136,7 +165,7 @@
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.edit()">Edit</button>
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.delete()">Delete</button>
 			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.submitChanges()">Submit Changes</button>
-			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.editOn=false">Cancel</button>
+			<button class="btn" ng-if="admin_search_ctrl.editOn" ng-click="admin_search_ctrl.editOn=false; admin_search_ctrl.editCurrentProgram=false">Cancel</button>
 		</div>
 	</div>
 	<br>
