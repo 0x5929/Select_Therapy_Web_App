@@ -9,6 +9,7 @@
 		admin_search_ctrl.message = '';
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
 		admin_search_ctrl.editOn = false;
+		admin_search_ctrl.showEditBtn = true;
 		admin_search_ctrl.putData = {
 			name: '',
 			phoneNumber: '',
@@ -48,6 +49,10 @@
 			});
 		};
 
+		admin_search_ctrl.submitNewProgram = function() {
+			admin_search_ctrl.submitChanges();	
+		};
+
 		admin_search_ctrl.edit = function() {
 			admin_search_ctrl.editOn = true;
 			admin_search_ctrl.showFinalCancel = true;
@@ -66,6 +71,7 @@
 
 		admin_search_ctrl.programModifyCancel = function() {
 			admin_search_ctrl.showFinalCancel = true;
+			admin_search_ctrl.showEditBtn = true;
 			admin_search_ctrl.showSubmitChanges = true;	//turn submit changes btn back on.
 			admin_search_ctrl.editCurrentProgramBtn = false;	//turning all program edits off
 			admin_search_ctrl.addNewProgram = false;
