@@ -43,7 +43,7 @@
 }
 
 html, body{
-	width:  auto;
+	width:  100%;
 	background-color: black;
 	margin: 0 0 0 0;
 }
@@ -52,9 +52,12 @@ html, body{
 	padding-top: 550px;	
 	position: relative;
 	z-index: 100;
-	width: auto;
+	width: 100%;
 	bottom: 370px;
 	background-color: white;
+	overflow-x: hidden; /* THIS MADE THE HORIZONTAL PROBLEM GO AWAY, 
+	BUT HIDES CERTAIN THE CPR PICTURE CONTENT AND ABOUT US BUTTON, 
+	NEED ANOTHER SOLUTION FOR THE OVER FLOWN ELEMENTS */
 }
 /* for visual affects to know where this element is 
 #leftContent{
