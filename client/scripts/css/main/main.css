@@ -42,11 +42,6 @@
   color: white;
 }
 
-html, body{
-	width:  100%;
-	background-color: black;
-	margin: 0 0 0 0;
-}
 
 #wrapper{
 	padding-top: 550px;	

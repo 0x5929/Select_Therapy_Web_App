@@ -15,14 +15,16 @@
 -->
 <!-- COULD PUT CALENDAR OVER HERE TOO -->
 <!-- OPTIONS SIDE -->
-<div class="row">
-	<button class="btn" ui-sref="staff.Admin_Search">Admin Search</button>
-	<button class="btn" ui-sref="staff.Admin_Add">Admin Add</button>
-	<button class="btn" ui-sref="staff.Admin_Recruit">Recruitment</button>
-	<br>
-</div>
-<hr>
-<!-- OUTPUT SIDE -->
-<!-- Dynamic content populated by ui view -->
+<div class="container-fluid" id="wrapper">
+	<div class="row" id="staffStuff">
+		<button class="btn" ui-sref="staff.Admin_Search">Admin Search</button>
+		<button class="btn" ui-sref="staff.Admin_Add">Admin Add</button>
+		<button class="btn" ui-sref="staff.Admin_Recruit">Recruitment</button>
+		<br>
+	</div>
+	<hr>
+	<!-- OUTPUT SIDE -->
+	<!-- Dynamic content populated by ui view -->
 
-<div ui-view="AdminView"></div>
+	<div ui-view="AdminView"></div>
+</div>
