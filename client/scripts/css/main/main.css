@@ -5,9 +5,13 @@
 	- need to find a good gray
 */
 
+.row {
+  margin-right: 0;
+}
+
 /* header ID styles */
 #header{
-	height: 120px;
+	/*height: 120px;*/
 	position: fixed;
 	overflow: visible !important;
 	width: 100%;
@@ -26,7 +30,7 @@
  .mainNavEl a {
  	color: black;
  }
- 
+
 .nav>li>a:focus, .nav>li>a:hover {
   background-color: #4198D3;
   color: white;
@@ -43,19 +47,20 @@
 }
 
 #wrapper{
-	padding-top: 550px;	
+  padding-top: 15%;
+	/*padding-top: 550px;*/
 	position: relative;
 	z-index: 100;
 	width: 100%;
-	bottom: 370px;
+	/*bottom: 370px;*/
 	background-color: white;
 }
-/* for visual affects to know where this element is 
+/* for visual affects to know where this element is
 #leftContent{
-	background-color: #800000;	
+	background-color: #800000;
 	height: 100px;
 }
-/* for visual affects to know where this element is 
+/* for visual affects to know where this element is
 #rightContent{
 	background-color: #F08080;
 	height: 100px;
@@ -103,7 +108,7 @@
 	border-radius: 5px;
 	background-color: #4198D3
 }
-/* make sure once menu item is pressed the dropdown menu is gone 
+/* make sure once menu item is pressed the dropdown menu is gone
 .menuitem:focus .dropdown-menu{
 	display:none;
 }
@@ -125,14 +130,14 @@
 /* back to top span picture style (finger pointing up) */
 .back-to-top span{
  	font-size: 50px;
-  	color: #4198D3; 
+  	color: #4198D3;
 }
 
 /* ===========================================
 Admin Add style
 */
 /* ===========================================
-FOOTER STYLE 
+FOOTER STYLE
 ============================================== */
 #promoEmailSection{
 	text-align: center;
@@ -165,12 +170,14 @@ FOOTER STYLE
 
 
 #footer{
-	position: fixed;	
+	/*position: fixed;	*/
 	box-sizing: border-box;
 	bottom: 0;
 	left: 0;
 	right: 15;
-  	height: 370px;
+  height: 100%;
+  padding-bottom: 1%;
+  /*height: 370px;*/
 	clear: both;
 	z-index: 50;
 	background-color: #292c2f;
@@ -345,7 +352,7 @@ my-footer {
 }
 
 /* ADMIN SEARCH RESULT TABLE SYTLE */
-/* MAKING THE TABLE SCROLLABLE 
+/* MAKING THE TABLE SCROLLABLE
 
 #adminSearch thead>tr{
 	display: block;
@@ -354,3 +361,17 @@ my-footer {
 tbody{
 	display: block;
 }*/
+/*========================*/
+/*Tin's edits*/
+/*========================*/
+#contactUsField {
+  margin-right: 1%;
+}
+
+form textarea {
+  width: 100%;
+}
+
+#performanceFacts button {
+  white-space: normal;
+}
