@@ -6,6 +6,20 @@
 		function adminAddControllerHandler($scope, ajaxService, toastFactory) {
 			var admin_add_ctrl = this;
 			var postData = null;
+
+
+			/*
+		DEV: MODIFYING AADMIN ADD MATERIAL 
+			when adding user detail, could include the following:
+			first:
+			last:
+			program:
+			how did they hear about us:
+
+			ALso, make sure all program going into db is CAPITAL letters, 
+			so make the appropriate changes into the search query on server end as well
+			do the same with all names, first  and last, seperated by a space
+		*/
 			
 			admin_add_ctrl.submit = function() {
 				
