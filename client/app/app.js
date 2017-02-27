@@ -1,4 +1,4 @@
-(function() {	
+(function() {
 	'use strict';
 	//main app module
 	//loading all custom and google dependency modules
@@ -22,12 +22,12 @@
 		'myApp.ContactUs',
 		'myApp.footer',
 		'myApp.admin'])
-//configuring how the application is routed, basically directly maps the webpage, 
+//configuring how the application is routed, basically directly maps the webpage,
 //which its own properties, such as views security(auth) options and controllers that can have their own servcies they depend on
 		.config(['$stateProvider', '$urlRouterProvider', stateRouteConfiguration])
 		.config(['$httpProvider', httpConfiguration])
 		.run(['$rootScope', '$state', '$timeout', '$cookies', '$http', 'AuthenticationFactory', 'modalFactory', 'toastFactory', appRunConfiguration])
-		
+
 		function stateRouteConfiguration($stateProvider, $urlRouterProvider){
 			//intitialize page to redirect to home
 			$urlRouterProvider.otherwise('/homePage');
@@ -83,7 +83,7 @@
 						if (rejection.status === 401){
 							console.log('hello world from httpConfiguration', rejection);
 							$injector.get('$state').transitionTo('Home');
-							return $q.reject(rejection); 
+							return $q.reject(rejection);
 						}
 						else
 							return $q.reject(rejection);
@@ -100,10 +100,10 @@
     		AuthenticationFactory.checkLoggedIn().then(
     			function(user) {
     				$rootScope.currentUser = user;
-    			}, 
+    			},
     			function() {
     				$rootScope.currentUser = undefined;
-    			});	
+    			});
 
 			$rootScope.$on('$stateChangeStart', function(event, toState) {
 				var loginRequired = toState.authenticate,
@@ -118,7 +118,7 @@
 				if (currentUser && currentUser.data.local.security) {
 					securityAccess.push(currentUser.data.local.security);
 					//if logged in as admin, you need access to staff level pages too
-					if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');		
+					if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
 				}
 
 				if (loginRequired && securityLevel === 'Student') {	//first level of security = students
@@ -138,14 +138,14 @@
 							securityAccess.push(userSecurityAccess);
 							//if user security is admin, add staff access as well
 							if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
-							//if after log in you have enough access	
+							//if after log in you have enough access
 							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('staff');
 							//if not enough access, then user is redirected to home
 							else $state.go('school');
 						})
 						.catch(function(failureResponse) {	//if login failed, redirect user to home
 							$state.go('Home');
-						}); 
+						});
 					}else if (securityAccess.indexOf(securityLevel) === -1) {	//scenario when you are logged in, but not enough access
 						errMsg = 'Sorry, you need to be signed in as Admin to access the Admin page!';
 						event.preventDefault();
@@ -157,5 +157,5 @@
 		}
 
 
-		
+
 }());
