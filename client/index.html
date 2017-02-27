@@ -1,6 +1,6 @@
 <!-- Index HTML -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 <!-- Loading Stylesheets -->
 	<link rel="stylesheet" href="scripts/css/bootstrap/dist/css/bootstrap.css" />
@@ -12,19 +12,17 @@
 	<title>ST Institute</title>
 </head>
 <!-- Inititalizing Angular -->
-<body ng-app="myApp">
+<body>
 <!--Header -->
-	<my-header></my-header>	
+  <my-header></my-header>
 <!-- Content Loaded Dynamically using ui router -->
 	<div ui-view></div>
-<!-- Footer  -->
-	<my-footer></my-footer>
 <!-- BACK TO THE TOP ANCHOR -->
 	<a href="#" class="back-to-top" style="display: inline;">
 		<span class="glyphicon glyphicon-hand-up"></span>
 	</a>
 <!-- Loading Library Scripts -->
-	<script src="scripts/js/jQuery/jquery.js"></script>
+  <script src="scripts/js/jQuery/jquery.js"></script>
 	<script src="scripts/js/moment/moment.js"></script>
 	<script src="scripts/js/angular/angular.js"></script>
 	<script src="scripts/js/angular-animate/angular-animate.js"></script>
