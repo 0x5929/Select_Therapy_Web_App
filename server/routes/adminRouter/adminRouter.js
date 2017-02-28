@@ -9,7 +9,7 @@
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: false }));
 
-		//mainm Routes and Methods
+		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
@@ -23,9 +23,10 @@
 
 			if (!searchInput || !searchParameter)
 				return res.status(400).send('invalid entry');
-			if (searchParameter === 'Name') {	//	we could add a couple more such as ssn, cna program rotation, 
-												//	hha program rotation, esol program rotation number, 
-												//	and sg program rotation 
+			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
+													hha program rotation, esol program rotation number, 
+													and sg program rotation */
+				searchInput = searchInput.toLowerCase();
 				STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
 					console.log(err);
 					console.log(user);
@@ -52,6 +53,7 @@
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;
 			//parse all neccessary fields to be correctly input into db
+			requestBody.name = requestBody.name.toLowerCase();	//make sure the input names are lowercase into the database
 			requestBody.phoneNumber = Number(requestBody.phoneNumber);
 			requestBody.ssn = Number(requestBody.ssn);
 			requestBody.payRate = Number(requestBody.payRate);
@@ -64,6 +66,9 @@
 			requestBody.passedOn1st = Boolean(requestBody.passedOn1st);
 			requestBody.passedOn2nd = Boolean(requestBody.passedOn2nd);
 			requestBody.passedOn3rd = Boolean(requestBody.passedOn3rd);
+			requestBody.program.forEach(function(eachProgram) {	//this is to ensure all programs entered into db is capitalized
+				eachProgram.programName = eachProgram.programName.toUpperCase();
+			});
 			//calling next to further handle request
 			next();
 		}
@@ -73,7 +78,6 @@
 			when adding user detail, could include the following:
 			first:
 			last:
-			program:
 			how did they hear about us:
 
 			ALso, make sure all program going into db is CAPITAL letters, 

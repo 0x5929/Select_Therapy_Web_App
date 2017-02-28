@@ -58,10 +58,12 @@
 				passedOn2nd: admin_add_ctrl.passedOn2nd,
 				passedOn3rd: admin_add_ctrl.passedOn3rd
 			};
-
-				postData.program = postData.program.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+			//below is to ensure if the 3rd or 2nd program is empty, they will be ignored when input into the db
+				postData.program = postData.program
+					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
 					return eachProgram.programName && eachProgram.programRotation;
 				});
+
 				console.log(postData);
 				ajaxService.post('/admin/add/', postData)
 				.then(function(successResponse) {
