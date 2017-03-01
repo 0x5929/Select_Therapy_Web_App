@@ -7,9 +7,15 @@
 	</div>
 	<div class="container-fluid">
 		<div class="form-group row">
-			<label class="control-label col-md-3" for="name">Name:</label>
+			<label class="control-label col-md-3" for="name">First Name:</label>
 			<div class="col-md-9">
-				<input type="text" ng-model="admin_add_ctrl.name" class="form-control" name="name" placeholder="Enter Student's Name">
+				<input type="text" ng-model="admin_add_ctrl.firstName" class="form-control" name="name" placeholder="Enter Student's First Name">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="control-label col-md-3" for="name">Last Name:</label>
+			<div class="col-md-9">
+				<input type="text" ng-model="admin_add_ctrl.lastName" class="form-control" name="name" placeholder="Enter Student's Last Name">
 			</div>
 		</div>
 		<div class="form-group row">
@@ -153,6 +159,17 @@
 			<label class="custom-control custom-radio" for="passedOn3rd">
 				No<input type="radio" ng-model="admin_add_ctrl.passedOn3rd" class="form-control" name="passedOn3rd" value="">
 			</label>
+		</div>
+		<div class="form-group row text-center">
+			<label class="control-label col-md-3" for="marketingSurvey">How did you hear about us?</label>
+			<select class="col-md-9" ng-model="admin_add_ctrl.marketingSurvey" name="marketingSurvey">
+				<option disabled ng-selected="true" ng-value=""> -- select an option -- </option>
+				<option ng-value="Chinese_In_LA">Chinese In LA</option>
+				<option ng-value="World_Journal">World Journal</option>
+				<option ng-value="Craigslist">Craigslist</option>
+				<option ng-value="Referred_By_Friend">Referred by friend</option>
+				<option ng-value="None">None of the above</option>
+			</select>
 		</div>
 	</div>
 	<hr>

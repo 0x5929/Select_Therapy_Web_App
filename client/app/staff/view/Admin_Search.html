@@ -206,6 +206,11 @@
 			<hr>
 		</div>
 		<div>
+			How did the student hear about us: {{ admin_search_ctrl.studentDetail.marketingSurvey }}
+			<input type="text" name="payRate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['payRate']" placeholder="True or False">
+			<hr>
+		</div>
+		<div>
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin() && admin_search_ctrl.showEditBtn" ng-click="admin_search_ctrl.edit()">Edit</button>
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.delete()">Delete</button>
 			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showSubmitChanges" ng-click="admin_search_ctrl.submitChanges()">Submit Changes</button>

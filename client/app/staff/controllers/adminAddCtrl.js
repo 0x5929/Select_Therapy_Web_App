@@ -6,25 +6,11 @@
 		function adminAddControllerHandler($scope, ajaxService, toastFactory) {
 			var admin_add_ctrl = this;
 			var postData = null;
-
-
-			/*
-		DEV: MODIFYING AADMIN ADD MATERIAL 
-			when adding user detail, could include the following:
-			first:
-			last:
-			program:
-			how did they hear about us:
-
-			ALso, make sure all program going into db is CAPITAL letters, 
-			so make the appropriate changes into the search query on server end as well
-			do the same with all names, first  and last, seperated by a space
-		*/
 			
 			admin_add_ctrl.submit = function() {
 				
 				postData = {
-				name: admin_add_ctrl.name,
+				name: admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
 				phoneNumber: admin_add_ctrl.phoneNumber,
 				ssn: admin_add_ctrl.ssn,
 				address: admin_add_ctrl.address,
@@ -56,7 +42,8 @@
 				passedExam: admin_add_ctrl.passedExam,
 				passedOn1st: admin_add_ctrl.passedOn1st,
 				passedOn2nd: admin_add_ctrl.passedOn2nd,
-				passedOn3rd: admin_add_ctrl.passedOn3rd
+				passedOn3rd: admin_add_ctrl.passedOn3rd,
+				marketingSurvey: admin_add_ctrl.marketingSurvey
 			};
 			//below is to ensure if the 3rd or 2nd program is empty, they will be ignored when input into the db
 				postData.program = postData.program
@@ -78,14 +65,25 @@
 
 			admin_add_ctrl.refresh = function() {	
 //strings and Numbers				
-				admin_add_ctrl.name = '';
+				admin_add_ctrl.firstName = '';
+				admin_add_ctrl.lastName = '';
 				admin_add_ctrl.phoneNumber = '';
 				admin_add_ctrl.ssn = '';
 				admin_add_ctrl.address = '';
 				admin_add_ctrl.email = '';
 				admin_add_ctrl.payRate = '';
 				admin_add_ctrl.jobDescription = '';
-				admin_add_ctrl.noJobReason = '';	
+				admin_add_ctrl.noJobReason = '';
+				admin_add_ctrl.FirstprogramName = '';
+				admin_add_ctrl.FirstprogramRotation = '';
+				admin_add_ctrl.SecondprogramName = '';
+				admin_add_ctrl.SecondprogramRotation = '';
+				admin_add_ctrl.ThirdprogramName = '';
+				admin_add_ctrl.ThirdprogramRotation = '';
+				admin_add_ctrl.ForthprogramName = '';
+				admin_add_ctrl.ForthprogramRotation = '';
+				admin_add_ctrl.FifthprogramName = '';
+				admin_add_ctrl.FifthprogramRotation = '';	
 				admin_add_ctrl.showAddProgramInput = false;			
 
 //Boolean Values
@@ -127,6 +125,10 @@
 				passedOn3rd.forEach(function(input) {
 					input.checked = false;
 				});
+
+//option value
+
+				admin_add_ctrl.marketingSurvey = '';
 
 			};
 		};

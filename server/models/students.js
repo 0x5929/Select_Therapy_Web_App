@@ -22,7 +22,8 @@
 		passedExam: Boolean,
 		passedOn1st: Boolean,
 		passedOn2nd: Boolean,
-		passedOn3rd: Boolean
+		passedOn3rd: Boolean,
+		marketingSurvey: String
 	});
 	
 	module.exports = mongoose.model('students', studentSchema);
