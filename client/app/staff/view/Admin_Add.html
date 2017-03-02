@@ -50,23 +50,64 @@
 			<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput5 = true">Add 5th Program</button>
 			<label class="control-label col-md-1" for="program">Program:</label>
 			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput1">
-				<input type="text" ng-model="admin_add_ctrl.FirstprogramName" class="form-control" name="programName" placeholder="Enter Student's 1st Program Name">
+			<!-- 	<input type="text" ng-model="admin_add_ctrl.FirstprogramName" class="form-control" name="programName" placeholder="Enter Student's 1st Program Name"> -->
+				<select class="col-md-11" ng-model="admin_add_ctrl.FirstprogramName" name="programName" class="form-control">
+						<option disabled ng-selected="true" ng-value=""> -- Select a Program -- </option>
+						<option ng-value="CNA">Certified Nurse Assistant</option>
+						<option ng-value="HHA">Home Health Aide</option>
+						<option ng-value="SG">Security Guard</option>
+						<option ng-value="Caregiver">Caregiver</option>
+						<option ng-value="ESOL">ESOL</option>
+				</select>
 				<input type="text" ng-model="admin_add_ctrl.FirstprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">
+				
 			</div>
 			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput2">
-				<input type="text" ng-model="admin_add_ctrl.SecondprogramName" class="form-control" name="programName" placeholder="Enter Student's 2nd Program Name">
+				<!-- <input type="text" ng-model="admin_add_ctrl.SecondprogramName" class="form-control" name="programName" placeholder="Enter Student's 2nd Program Name"> -->
+				<select class="col-md-11" ng-model="admin_add_ctrl.SecondprogramName" name="programName" class="form-control">
+						<option disabled ng-selected="true" ng-value=""> -- Select a Program -- </option>
+						<option ng-value="CNA">Certified Nurse Assistant</option>
+						<option ng-value="HHA">Home Health Aide</option>
+						<option ng-value="SG">Security Guard</option>
+						<option ng-value="Caregiver">Caregiver</option>
+						<option ng-value="ESOL">ESOL</option>
+				</select>
 				<input type="text" ng-model="admin_add_ctrl.SecondprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
 			</div>
 			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput3">
-				<input type="text" ng-model="admin_add_ctrl.ThirdprogramName" class="form-control" name="programName" placeholder="Enter Student's 3rd Program Name">
+				<!-- <input type="text" ng-model="admin_add_ctrl.ThirdprogramName" class="form-control" name="programName" placeholder="Enter Student's 3rd Program Name"> -->
+				<select class="col-md-11" ng-model="admin_add_ctrl.ThirdprogramName" name="programName" class="form-control">
+						<option disabled ng-selected="true" ng-value=""> -- Select a Program -- </option>
+						<option ng-value="CNA">Certified Nurse Assistant</option>
+						<option ng-value="HHA">Home Health Aide</option>
+						<option ng-value="SG">Security Guard</option>
+						<option ng-value="Caregiver">Caregiver</option>
+						<option ng-value="ESOL">ESOL</option>
+				</select>
 				<input type="text" ng-model="admin_add_ctrl.ThirdprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for the 3rd Program">
 			</div>
 			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput4">
-				<input type="text" ng-model="admin_add_ctrl.ForthprogramName" class="form-control" name="programName" placeholder="Enter Student's 4th Program Name">
+				<!-- <input type="text" ng-model="admin_add_ctrl.ForthprogramName" class="form-control" name="programName" placeholder="Enter Student's 4th Program Name"> -->
+				<select class="col-md-11" ng-model="admin_add_ctrl.ForthprogramName" name="programName" class="form-control">
+						<option disabled ng-selected="true" ng-value=""> -- Select a Program -- </option>
+						<option ng-value="CNA">Certified Nurse Assistant</option>
+						<option ng-value="HHA">Home Health Aide</option>
+						<option ng-value="SG">Security Guard</option>
+						<option ng-value="Caregiver">Caregiver</option>
+						<option ng-value="ESOL">ESOL</option>
+				</select>
 				<input type="text" ng-model="admin_add_ctrl.ForthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
 			</div>
 			<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput5">
-				<input type="text" ng-model="admin_add_ctrl.FifthprogramName" class="form-control" name="programName" placeholder="Enter Student's 5th Program Name">
+				<!-- <input type="text" ng-model="admin_add_ctrl.FifthprogramName" class="form-control" name="programName" placeholder="Enter Student's 5th Program Name"> -->
+				<select class="col-md-11" ng-model="admin_add_ctrl.FifthprogramName" name="programName" class="form-control">
+						<option disabled ng-selected="true" ng-value=""> -- Select a Program -- </option>
+						<option ng-value="CNA">Certified Nurse Assistant</option>
+						<option ng-value="HHA">Home Health Aide</option>
+						<option ng-value="SG">Security Guard</option>
+						<option ng-value="Caregiver">Caregiver</option>
+						<option ng-value="ESOL">ESOL</option>
+				</select>
 				<input type="text" ng-model="admin_add_ctrl.FifthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
 			</div>
 		</div>

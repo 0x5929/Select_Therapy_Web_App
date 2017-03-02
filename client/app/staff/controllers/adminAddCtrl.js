@@ -1,4 +1,7 @@
 (function() {
+
+//NEED TO ADD ERROR HANDLING FOR THESE ADD FIELDS, CANCEL SUBMIT AND PROMPT ERR TOAST MESSAGE
+
 	'use strict';
 	angular.module('myApp.admin')
 		.controller('adminAddController', ['$scope', 'ajaxService', 'toastFactory', adminAddControllerHandler]);
@@ -74,17 +77,18 @@
 				admin_add_ctrl.payRate = '';
 				admin_add_ctrl.jobDescription = '';
 				admin_add_ctrl.noJobReason = '';
-				admin_add_ctrl.FirstprogramName = '';
 				admin_add_ctrl.FirstprogramRotation = '';
-				admin_add_ctrl.SecondprogramName = '';
 				admin_add_ctrl.SecondprogramRotation = '';
-				admin_add_ctrl.ThirdprogramName = '';
 				admin_add_ctrl.ThirdprogramRotation = '';
-				admin_add_ctrl.ForthprogramName = '';
 				admin_add_ctrl.ForthprogramRotation = '';
-				admin_add_ctrl.FifthprogramName = '';
-				admin_add_ctrl.FifthprogramRotation = '';	
-				admin_add_ctrl.showAddProgramInput = false;			
+				admin_add_ctrl.FifthprogramRotation = '';
+
+//setting the necessary ng-if to false	
+				admin_add_ctrl.showAddProgramInput1 = false;
+				admin_add_ctrl.showAddProgramInput2 = false;
+				admin_add_ctrl.showAddProgramInput3 = false;
+				admin_add_ctrl.showAddProgramInput4 = false;
+				admin_add_ctrl.showAddProgramInput5 = false;			
 
 //Boolean Values
 				var graduate = document.getElementsByName('graduate');
@@ -127,8 +131,12 @@
 				});
 
 //option value
-
 				admin_add_ctrl.marketingSurvey = '';
+				admin_add_ctrl.FirstprogramName = '';
+				admin_add_ctrl.SecondprogramName = '';
+				admin_add_ctrl.ThirdprogramName = '';
+				admin_add_ctrl.ForthprogramName = '';
+				admin_add_ctrl.FifthprogramName = '';
 
 			};
 		};
