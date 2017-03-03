@@ -10,6 +10,90 @@
 			var admin_add_ctrl = this;
 			var postData = null;
 			
+			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//commented out the radio buttons because I want to put dropdown select/option instead of radio button
+				//err conditions
+				if (!isNaN(dataTobeChecked.name)){
+					toastFactory.errorToast("please check the student's first and last name input");
+					return false;
+				}
+				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){
+					toastFactory.errorToast("please check the student's phone number input");
+					return false;
+				}
+				if (isNaN(dataTobeChecked.ssn) || dataTobeChecked.ssn.length !== 9){
+					toastFactory.errorToast("please check the student's ssn input");
+					return false;
+				}
+				if (!isNaN(dataTobeChecked.address)){
+					toastFactory.errorToast("please check the student's address input");
+					return false;
+				}
+				if (!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(dataTobeChecked.email))) {
+					toastFactory.errorToast("please enter a valid email");
+					return false;
+				}
+				for (var i = 0; i < dataTobeChecked.program.length; i++){
+					if (dataTobeChecked.program[i]['programName']){
+						toastFactory.errorToast("make sure you choose a valid program name");
+					}
+					if (isNaN(dataTobeChecked.program[i]['programRotation'])){
+						toastFactory.errorToast("make sure you enter a valid program rotation number")
+						return false;
+					}
+				}
+				// if (!(dataTobeChecked.graduate)){
+				// 	toastFactory.errorToast("please check the graduate field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.tuitionPaid){
+				// 	toastFactory.errorToast("please check the tuition field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.jobPlaced){
+				// 	toastFactory.errorToast("please check the job placed field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.fullTimePos){
+				// 	toastFactory.errorToast("please check the full time position field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.partTimePos){
+				// 	toastFactory.errorToast("please check the part time position field");
+				// 	return false;
+				// }
+				if (isNaN(dataTobeChecked.payRate)){
+					toastFactory.errorToast("please enter a valid pay rate");
+					return false;
+				}
+				if (dataTobeChecked.jobDescription){
+					toastFactory.errorToast("please check the job description field");
+					return false;
+				}
+				if (dataTobeChecked.noJobReason){
+					toastFactory.errorToast("please check the unemployed reason field");
+					return false;
+				}
+				// if (dataTobeChecked.passedExam){
+				// 	toastFactory.errorToast("please check the passed exam field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.passedOn1st){
+				// 	toastFactory.errorToast("please check the 1st time passing field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.passedOn2nd){
+				// 	toastFactory.errorToast("please check the 2nd time passing field");
+				// 	return false;
+				// }
+				// if (dataTobeChecked.passedOn3rd){
+				// 	toastFactory.errorToast("please check the 3rd time passing field");
+				// 	return false;
+				}
+				//returns true for ajax to be run if none of the above err conditions are met
+				return true;
+			};
+
+
 			admin_add_ctrl.submit = function() {
 				
 				postData = {
@@ -54,17 +138,21 @@
 					return eachProgram.programName && eachProgram.programRotation;
 				});
 
-				console.log(postData);
-				ajaxService.post('/admin/add/', postData)
-				.then(function(successResponse) {
-					toastFactory.successAdd(postData.name);
-					admin_add_ctrl.refresh();
-					console.log(successResponse);
-				}, 
-			function(failureResposne) {
-					console.log(failureResposne);
-				});
+				if (admin_add_ctrl.noErrorCheck(postData)){
+					console.log(postData);
+					ajaxService.post('/admin/add/', postData)
+					.then(function(successResponse) {
+						toastFactory.successAdd(postData.name);
+						admin_add_ctrl.refresh();
+						console.log(successResponse);
+					}, 
+					function(failureResposne) {
+						console.log(failureResposne);
+					});
+				} 
+				
 			};
+
 
 			admin_add_ctrl.refresh = function() {	
 //strings and Numbers				
