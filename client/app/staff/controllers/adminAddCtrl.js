@@ -219,6 +219,8 @@
 				});
 
 //option value
+//need to properly set the disabled ngselected option 
+//this is only a temporay solution, bc it only shows an emtpy option during test
 				admin_add_ctrl.marketingSurvey = '';
 				admin_add_ctrl.FirstprogramName = '';
 				admin_add_ctrl.SecondprogramName = '';
