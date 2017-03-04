@@ -7,6 +7,7 @@
 		.controller('adminAddController', ['$scope', 'ajaxService', 'toastFactory', adminAddControllerHandler]);
 
 		function adminAddControllerHandler($scope, ajaxService, toastFactory) {
+
 			var admin_add_ctrl = this;
 			var postData = null;
 			
@@ -33,66 +34,66 @@
 					return false;
 				}
 				for (var i = 0; i < dataTobeChecked.program.length; i++){
-					if (dataTobeChecked.program[i]['programName']){
+					if (!(dataTobeChecked.program[i]['programName'])){
 						toastFactory.errorToast("make sure you choose a valid program name");
+						return false;
 					}
 					if (isNaN(dataTobeChecked.program[i]['programRotation'])){
+						console.log(isNaN(dataTobeChecked.program[i]['programRotation']));
+						console.log(dataTobeChecked.program[i]['programRotation']);
+						console.log((dataTobeChecked.program[i]['programName']));
+						console.log(dataTobeChecked.program);
 						toastFactory.errorToast("make sure you enter a valid program rotation number")
 						return false;
 					}
 				}
-				// if (!(dataTobeChecked.graduate)){
-				// 	toastFactory.errorToast("please check the graduate field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.tuitionPaid){
-				// 	toastFactory.errorToast("please check the tuition field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.jobPlaced){
-				// 	toastFactory.errorToast("please check the job placed field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.fullTimePos){
-				// 	toastFactory.errorToast("please check the full time position field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.partTimePos){
-				// 	toastFactory.errorToast("please check the part time position field");
-				// 	return false;
-				// }
-				if (isNaN(dataTobeChecked.payRate)){
+				if (dataTobeChecked.graduate === 'noneSelected'){
+					toastFactory.errorToast("please check the graduate field");
+					return false;
+				}
+				if (dataTobeChecked.tuitionPaid === 'noneSelected'){
+					toastFactory.errorToast("please check the tuition field");
+					return false;
+				}
+				if (dataTobeChecked.jobPlaced === 'noneSelected'){
+					toastFactory.errorToast("please check the job placed field");
+					return false;
+				}
+				if (dataTobeChecked.jobPlaced === 'true' && dataTobeChecked.weeklyWorkHours === 'noneSelected'){
+					toastFactory.errorToast("please check the weekly hours field");
+					return false;
+				}
+				if (dataTobeChecked.jobPlaced === 'true' && isNaN(dataTobeChecked.payRate)){
 					toastFactory.errorToast("please enter a valid pay rate");
 					return false;
 				}
-				if (dataTobeChecked.jobDescription){
+				if (dataTobeChecked.jobPlaced === 'true' && !(dataTobeChecked.jobDescription)){
 					toastFactory.errorToast("please check the job description field");
 					return false;
 				}
-				if (dataTobeChecked.noJobReason){
+				if (dataTobeChecked.jobPlaced === '' && !(dataTobeChecked.noJobReason)){
 					toastFactory.errorToast("please check the unemployed reason field");
 					return false;
 				}
-				// if (dataTobeChecked.passedExam){
-				// 	toastFactory.errorToast("please check the passed exam field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.passedOn1st){
-				// 	toastFactory.errorToast("please check the 1st time passing field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.passedOn2nd){
-				// 	toastFactory.errorToast("please check the 2nd time passing field");
-				// 	return false;
-				// }
-				// if (dataTobeChecked.passedOn3rd){
-				// 	toastFactory.errorToast("please check the 3rd time passing field");
-				// 	return false;
+				if (dataTobeChecked.graduate === 'true' && dataTobeChecked.passedExam === 'noneSelected'){
+					toastFactory.errorToast("please check the passed exam field");
+					return false;
+				}
+				if (dataTobeChecked.graduate === '' && dataTobeChecked.notGraduatingReason === 'noneSelected'){
+					toastFactory.errorToast("please check the no gradute field");
+					return false;
+				}
+				if (dataTobeChecked.passedExam === 'true' && isNaN(dataTobeChecked.numberOfTries)){
+					toastFactory.errorToast("please check the exam num of tries field");
+					return false;
+				}
+				if (dataTobeChecked.passedExam === '' && dataTobeChecked.noPassReason === 'noneSelected'){
+					toastFactory.errorToast("please check the no pass reason field");
+					return false;
 				}
 				//returns true for ajax to be run if none of the above err conditions are met
 				return true;
 			};
-
 
 			admin_add_ctrl.submit = function() {
 				
@@ -119,23 +120,22 @@
 					programRotation: admin_add_ctrl.FifthprogramRotation
 				}],
 				graduate: admin_add_ctrl.graduate,
+				notGraduatingReason: admin_add_ctrl.notGraduatingReason,
 				tuitionPaid: admin_add_ctrl.tuitionPaid,
 				jobPlaced: admin_add_ctrl.jobPlaced,
-				fullTimePos: admin_add_ctrl.fullTimePos,
-				partTimePos: admin_add_ctrl.partTimePos,
+				weeklyWorkHours: admin_add_ctrl.weeklyWorkHours,
 				payRate: admin_add_ctrl.payRate,
 				jobDescription: admin_add_ctrl.jobDescription,
 				noJobReason: admin_add_ctrl.noJobReason,
 				passedExam: admin_add_ctrl.passedExam,
-				passedOn1st: admin_add_ctrl.passedOn1st,
-				passedOn2nd: admin_add_ctrl.passedOn2nd,
-				passedOn3rd: admin_add_ctrl.passedOn3rd,
+				numberOfTries: admin_add_ctrl.numberOfTries,
+				noPassReason: admin_add_ctrl.noPassReason,
 				marketingSurvey: admin_add_ctrl.marketingSurvey
 			};
 			//below is to ensure if the 3rd or 2nd program is empty, they will be ignored when input into the db
 				postData.program = postData.program
 					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
-					return eachProgram.programName && eachProgram.programRotation;
+					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 				});
 
 				if (admin_add_ctrl.noErrorCheck(postData)){
@@ -178,56 +178,23 @@
 				admin_add_ctrl.showAddProgramInput4 = false;
 				admin_add_ctrl.showAddProgramInput5 = false;			
 
-//Boolean Values
-				var graduate = document.getElementsByName('graduate');
-				var tuitionPaid = document.getElementsByName('tuitionPaid');
-				var jobPlaced = document.getElementsByName('jobPlaced');
-				var fullTimePos = document.getElementsByName('fullTimePos');
-				var partTimePos = document.getElementsByName('partTimePos');
-				var passedExam = document.getElementsByName('passedExam');
-				var passedOn1st = document.getElementsByName('passedOn1st');
-				var passedOn2nd = document.getElementsByName('passedOn2nd');
-				var passedOn3rd = document.getElementsByName('passedOn3rd');
-
-
-				graduate.forEach(function(input) {
-					input.checked = false;
-				});
-				tuitionPaid.forEach(function(input) {
-					input.checked = false;
-				});
-				jobPlaced.forEach(function(input) {
-					input.checked = false;
-				});
-				fullTimePos.forEach(function(input) {
-					input.checked = false;
-				});
-				partTimePos.forEach(function(input) {
-					input.checked = false;
-				});
-				passedExam.forEach(function(input) {
-					input.checked = false;
-				});
-				passedOn1st.forEach(function(input) {
-					input.checked = false;
-				});
-				passedOn2nd.forEach(function(input) {
-					input.checked = false;
-				});
-				passedOn3rd.forEach(function(input) {
-					input.checked = false;
-				});
 
 //option value
-//need to properly set the disabled ngselected option 
-//this is only a temporay solution, bc it only shows an emtpy option during test
-				admin_add_ctrl.marketingSurvey = '';
-				admin_add_ctrl.FirstprogramName = '';
-				admin_add_ctrl.SecondprogramName = '';
-				admin_add_ctrl.ThirdprogramName = '';
-				admin_add_ctrl.ForthprogramName = '';
-				admin_add_ctrl.FifthprogramName = '';
+				admin_add_ctrl.marketingSurvey = 'noneSelected';
+				admin_add_ctrl.graduate = 'noneSelected';
+				admin_add_ctrl.notGraduatingReason = 'noneSelected';
+				admin_add_ctrl.tuitionPaid = 'noneSelected';
+				admin_add_ctrl.jobPlaced = 'noneSelected';
+				admin_add_ctrl.weeklyWorkHours = 'noneSelected';
+				admin_add_ctrl.passedExam = 'noneSelected';
+				admin_add_ctrl.numberOfTries = 'noneSelected';
+				admin_add_ctrl.noPassReason = 'noneSelected';
+				admin_add_ctrl.FirstprogramName = 'noneSelected';
+				admin_add_ctrl.SecondprogramName = 'noneSelected';
+				admin_add_ctrl.ThirdprogramName = 'noneSelected';
+				admin_add_ctrl.ForthprogramName = 'noneSelected';
+				admin_add_ctrl.FifthprogramName = 'noneSelected';
 
 			};
-		};
+		}
 }());

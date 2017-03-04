@@ -57,15 +57,11 @@
 			requestBody.phoneNumber = Number(requestBody.phoneNumber);
 			requestBody.ssn = Number(requestBody.ssn);
 			requestBody.payRate = Number(requestBody.payRate);
+			requestBody.numberOfTries = Number(requestBody.numberOfTries);
 			requestBody.graduate = Boolean(requestBody.graduate);
 			requestBody.tuitionPaid = Boolean(requestBody.tuitionPaid);
 			requestBody.jobPlaced = Boolean(requestBody.jobPlaced);
-			requestBody.fullTimePos = Boolean(requestBody.fullTimePos);
-			requestBody.partTimePos = Boolean(requestBody.partTimePos);
 			requestBody.passedExam = Boolean(requestBody.passedExam);
-			requestBody.passedOn1st = Boolean(requestBody.passedOn1st);
-			requestBody.passedOn2nd = Boolean(requestBody.passedOn2nd);
-			requestBody.passedOn3rd = Boolean(requestBody.passedOn3rd);
 			requestBody.program.forEach(function(eachProgram) {	//this is to ensure all programs entered into db is capitalized
 				eachProgram.programName = eachProgram.programName.toUpperCase();
 			});
@@ -89,15 +85,17 @@
 					newStudent.graduate = req.body.graduate;
 					newStudent.tuitionPaid = req.body.tuitionPaid;
 					newStudent.jobPlaced = req.body.jobPlaced;
-					newStudent.fullTimePos = req.body.fullTimePos;
-					newStudent.partTimePos = req.body.partTimePos;
-					newStudent.payRate = req.body.payRate;
-					newStudent.jobDescription = req.body.jobDescription;
-					newStudent.noJobReason = req.body.noJobReason;
+					if (req.body.jobPlaced){
+						newStudent.weeklyWorkHours = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
+						newStudent.payRate = req.body.payRate;
+						newStudent.jobDescription = req.body.jobDescription;
+					}else	newStudent.noJobReason = req.body.noJobReason;				
 					newStudent.passedExam = req.body.passedExam;
-					newStudent.passedOn1st = req.body.passedOn1st;
-					newStudent.passedOn2nd = req.body.passedOn2nd;
-					newStudent.passedOn3rd = req.body.passedOn3rd;
+					if (req.body.graduate){	//depending on whether or not the student graduated, we save the necessary things to the db
+						if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;
+						else	newStudent.noPassReason = req.body.noPassReason;
+					}
+					else	newStudent.notGraduatingReason = req.body.notGraduatingReason;
 					newStudent.marketingSurvey = req.body.marketingSurvey;
 					//save the new student
 					newStudent.save(function(err) {

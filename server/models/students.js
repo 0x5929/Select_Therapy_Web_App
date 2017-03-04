@@ -4,7 +4,7 @@
 	//load tools
 	var mongoose = require('mongoose');
 	//define Schema
-	var studentSchema = mongoose.Schema({
+	var studentSchema = mongoose.Schema({	//NEED TO DEFINE WHICH FIELDS ARE REQUIRED TO BE ENTERED INTO DB
 		name: String,
 		phoneNumber: Number,
 		ssn: Number,
@@ -12,17 +12,16 @@
 		email: String,
 		program: [{}],
 		graduate: Boolean,
+		notGraduatingReason: String,
 		tuitionPaid: Boolean,
 		jobPlaced: Boolean,
-		fullTimePos: Boolean,
-		partTimePos: Boolean,
+		weeklyWorkHours: String,
 		payRate: Number,
 		jobDescription: String,
 		noJobReason: String,
 		passedExam: Boolean,
-		passedOn1st: Boolean,
-		passedOn2nd: Boolean,
-		passedOn3rd: Boolean,
+		numberOfTries: Number,
+		noPassReason: String,
 		marketingSurvey: String
 	});
 	
