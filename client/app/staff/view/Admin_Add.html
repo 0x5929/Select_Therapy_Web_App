@@ -41,15 +41,22 @@
 			<input type="text" ng-model="admin_add_ctrl.email" class="form-control" name="email" placeholder="Enter Student's email">
 		</div>
 	</div>
+<!-- /END OF STRING INPUTS -->
 	<div class="form-group row">
-		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput1 = true">Add 1st Program</button>
+<!-- 		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput1 = true">Add 1st Program</button>
 		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput2 = true">Add 2nd Program</button>
 		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput3 = true">Add 3rd Program</button>
 		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput4 = true">Add 4th Program</button>
-		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput5 = true">Add 5th Program</button>
-		<label class="control-label col-md-1" for="program">Program:</label>
-		<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput1">
-			<select class="col-md-11" ng-model="admin_add_ctrl.FirstprogramName" name="programName" class="form-control">
+		<button class="btn" ng-click="admin_add_ctrl.showAddProgramInput5 = true">Add 5th Program</button> -->
+		<button class="btn" ng-click="admin_add_ctrl.addProgramInput(admin_add_ctrl.programInputCount)">
+			Add Program
+		</button>
+		<button class="btn" ng-click="admin_add_ctrl.clearProgramInput(admin_add_ctrl.programInputCount)">
+			Clear Add Fields
+		</button>
+		<label class="control-label col-md-3" for="program">Program:</label>
+		<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput1">
+			<select ng-model="admin_add_ctrl.FirstprogramName" name="programName" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 				<option value="CNA">Certified Nurse Assistant</option>
 				<option value="HHA">Home Health Aide</option>
@@ -59,8 +66,8 @@
 			</select>
 			<input type="text" ng-model="admin_add_ctrl.FirstprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">	
 		</div>
-		<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput2">
-			<select class="col-md-11" ng-model="admin_add_ctrl.SecondprogramName" name="programName" class="form-control">
+		<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput2">
+			<select ng-model="admin_add_ctrl.SecondprogramName" name="programName" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 				<option value="CNA">Certified Nurse Assistant</option>
 				<option value="HHA">Home Health Aide</option>
@@ -70,8 +77,8 @@
 			</select>
 			<input type="text" ng-model="admin_add_ctrl.SecondprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
 		</div>
-		<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput3">
-			<select class="col-md-11" ng-model="admin_add_ctrl.ThirdprogramName" name="programName" class="form-control">
+		<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput3">
+			<select ng-model="admin_add_ctrl.ThirdprogramName" name="programName" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 				<option value="CNA">Certified Nurse Assistant</option>
 				<option value="HHA">Home Health Aide</option>
@@ -81,8 +88,8 @@
 			</select>
 			<input type="text" ng-model="admin_add_ctrl.ThirdprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for the 3rd Program">
 		</div>
-		<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput4">
-			<select class="col-md-11" ng-model="admin_add_ctrl.ForthprogramName" name="programName" class="form-control">
+		<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput4">
+			<select ng-model="admin_add_ctrl.ForthprogramName" name="programName" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 				<option value="CNA">Certified Nurse Assistant</option>
 				<option value="HHA">Home Health Aide</option>
@@ -92,8 +99,8 @@
 			</select>
 			<input type="text" ng-model="admin_add_ctrl.ForthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
 		</div>
-		<div class="col-md-11" ng-if="admin_add_ctrl.showAddProgramInput5">
-			<select class="col-md-11" ng-model="admin_add_ctrl.FifthprogramName" name="programName" class="form-control">
+		<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput5">
+			<select ng-model="admin_add_ctrl.FifthprogramName" name="programName" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 				<option value="CNA">Certified Nurse Assistant</option>
 				<option value="HHA">Home Health Aide</option>
@@ -104,6 +111,7 @@
 			<input type="text" ng-model="admin_add_ctrl.FifthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
 		</div>
 	</div>
+<!-- /END OF PROGRAM INPUTS -->
 	<div class="form-group row">
 		<label class="control-label col-md-3" for="tuitionPaid">Payment Status:</label>
 		<div class="col-md-9">
@@ -111,44 +119,6 @@
 				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
 				<option value="true">Paid</option>
 				<option value="">Did not finish Payment (Please check the payment spreadsheet)</option>
-			</select>
-		</div>
-	</div>
-	<div class="form-group row"> <!-- THINK ABOUT PUTTING THIS IN A NG IF DEPENDING ON STUDENT GRADUATION STATUS -->
-		<label class="control-label col-md-3" for="jobPlaced">Employment Status:</label>
-		<div class="col-md-9">
-			<select ng-model="admin_add_ctrl.jobPlaced" name="jobPlaced" class="form-control">
-				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-				<option value="true">Employed</option>
-				<option value="">Unemployed</option>
-			</select>
-		</div>
-	</div>
-	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
-		<label class="control-label col-md-3" for="payRate">Pay Rate:</label>
-		<div class="col-md-9">
-			<input type="text" ng-model="admin_add_ctrl.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate">
-		</div>
-	</div>
-	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
-		<label class="control-label col-md-3" for="jobDescription">Job Description:</label>
-		<div class="col-md-9">
-			<input type="text" ng-model="admin_add_ctrl.jobDescription" class="form-control" name="jobDescription" placeholder="Enter Student's Job Description">
-		</div>
-	</div>
-	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === ''">
-		<label class="control-label col-md-3" for="noJobReason">No Job Reason:</label>
-		<div class="col-md-9">
-			<input type="text" ng-model="admin_add_ctrl.noJobReason" class="form-control" name="noJobReason" placeholder="Enter Student's Reason for Unemployment">
-		</div>
-	</div>
-	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
-		<label class="control-label col-md-3" for="weeklyWorkHours">Full/Part time Position?</label>
-		<div class="col-md-9">
-			<select ng-model="admin_add_ctrl.weeklyWorkHours" name="weeklyWorkHours" class="form-control">
-				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-				<option value="fullTimePos">Full Time</option>
-				<option value="partTimePos">Part Time</option>
 			</select>
 		</div>
 	</div>
@@ -207,6 +177,44 @@
 			</select>
 		</div>
 	</div>
+	<div class="form-group row" ng-if="admin_add_ctrl.graduate === 'true'"> <!-- THINK ABOUT PUTTING THIS IN A NG IF DEPENDING ON STUDENT GRADUATION STATUS -->
+		<label class="control-label col-md-3" for="jobPlaced">Employment Status:</label>
+		<div class="col-md-9">
+			<select ng-model="admin_add_ctrl.jobPlaced" name="jobPlaced" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+				<option value="true">Employed</option>
+				<option value="">Unemployed</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
+		<label class="control-label col-md-3" for="payRate">Pay Rate:</label>
+		<div class="col-md-9">
+			<input type="text" ng-model="admin_add_ctrl.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate">
+		</div>
+	</div>
+	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
+		<label class="control-label col-md-3" for="jobDescription">Job Description:</label>
+		<div class="col-md-9">
+			<input type="text" ng-model="admin_add_ctrl.jobDescription" class="form-control" name="jobDescription" placeholder="Enter Student's Job Description">
+		</div>
+	</div>
+	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === ''">
+		<label class="control-label col-md-3" for="noJobReason">No Job Reason:</label>
+		<div class="col-md-9">
+			<input type="text" ng-model="admin_add_ctrl.noJobReason" class="form-control" name="noJobReason" placeholder="Enter Student's Reason for Unemployment">
+		</div>
+	</div>
+	<div class="form-group row" ng-if="admin_add_ctrl.jobPlaced === 'true'">
+		<label class="control-label col-md-3" for="weeklyWorkHours">Full/Part time Position?</label>
+		<div class="col-md-9">
+			<select ng-model="admin_add_ctrl.weeklyWorkHours" name="weeklyWorkHours" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+				<option value="fullTimePos">Full Time</option>
+				<option value="partTimePos">Part Time</option>
+			</select>
+		</div>
+	</div>
 	<div class="form-group row">
 		<label class="control-label col-md-3" for="marketingSurvey">How did you hear about us?</label>
 		<div class="col-md-9">
@@ -220,6 +228,7 @@
 			</select>
 		</div>
 	</div>
+<!-- /END OF OPTION INPUTS -->
 <hr>
 	<div class="text-center">
 		<button class="btn" ng-click="admin_add_ctrl.submit()">Submit</button>

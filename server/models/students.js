@@ -24,6 +24,6 @@
 		noPassReason: String,
 		marketingSurvey: String
 	});
-	
+	// name: {type: String, required: true}
 	module.exports = mongoose.model('students', studentSchema);
 }());

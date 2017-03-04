@@ -10,6 +10,8 @@
 
 			var admin_add_ctrl = this;
 			var postData = null;
+
+			admin_add_ctrl.programInputCount = 0
 			
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//commented out the radio buttons because I want to put dropdown select/option instead of radio button
 				//err conditions
@@ -55,7 +57,7 @@
 					toastFactory.errorToast("please check the tuition field");
 					return false;
 				}
-				if (dataTobeChecked.jobPlaced === 'noneSelected'){
+				if (dataTobeChecked.graduate === 'true' && dataTobeChecked.jobPlaced === 'noneSelected'){
 					toastFactory.errorToast("please check the job placed field");
 					return false;
 				}
@@ -195,6 +197,42 @@
 				admin_add_ctrl.ForthprogramName = 'noneSelected';
 				admin_add_ctrl.FifthprogramName = 'noneSelected';
 
+			};
+
+			admin_add_ctrl.addProgramInput = function(counter) {
+				var maxProgramCount = 4;
+				var humanCount = counter + 1;
+
+				//update counter
+				if (counter < maxProgramCount)	admin_add_ctrl.programInputCount++;
+				//set visual to true
+				admin_add_ctrl['showAddProgramInput' + humanCount] = true;
+				//stopping condition with err message
+				if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
+			};
+
+			admin_add_ctrl.clearProgramInput = function(counter) {
+				var minCount = -1;
+				var humanCount = counter + 1;
+				var ngModels = [
+					['FirstprogramName', 'FirstprogramRotation'],
+					['SecondprogramName', 'SecondprogramRotation'],
+					['ThirdprogramName', 'ThirdprogramRotation'],
+					['ForthprogramName', 'ForthprogramRotation'],
+					['FifthprogramName', 'FifthprogramRotation']
+				];
+				var specificNgModelProgramName = ngModels[counter][0];
+				var specificNgModelProgramRotation = ngModels[counter][1];
+
+				//update counter
+				if (counter > minCount + 1)	admin_add_ctrl.programInputCount--;
+				//clear data
+				admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//for programName
+				admin_add_ctrl[specificNgModelProgramRotation] = '';	//for programRotation
+				//turn visual off
+				admin_add_ctrl['showAddProgramInput' + humanCount] = false;
+				//stopping condition with err message
+				if (counter == minCount + 1)	toastFactory.errorToast("okay, you can add new programs now");
 			};
 		}
 }());
