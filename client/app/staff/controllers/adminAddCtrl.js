@@ -13,8 +13,8 @@
 
 			admin_add_ctrl.programInputCount = 0
 			
-			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//commented out the radio buttons because I want to put dropdown select/option instead of radio button
-				//err conditions
+			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	
+			//err conditions
 				if (!isNaN(dataTobeChecked.name)){
 					toastFactory.errorToast("please check the student's first and last name input");
 					return false;
@@ -45,7 +45,6 @@
 						return false;
 					}
 				}
-				//need another error check to see if the programs selected are the same
 				for (var j = 0; j < dataTobeChecked.program.length; j++){
 					for (var k = 0; k < dataTobeChecked.program.length; k++){
 						if (j !== k && dataTobeChecked.program[j]['programName'] === dataTobeChecked.program[k]['programName']){
@@ -139,21 +138,20 @@
 				noPassReason: admin_add_ctrl.noPassReason,
 				marketingSurvey: admin_add_ctrl.marketingSurvey
 			};
-			//below is to ensure if the 3rd or 2nd program is empty, they will be ignored when input into the db
+			//below is to ensure only proper data gets passed into ajax service
 				postData.program = postData.program
 					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
 					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 				});
-				if (admin_add_ctrl.noErrorCheck(postData)){
-					console.log(postData);
+				if (admin_add_ctrl.noErrorCheck(postData)){	//calling error check to ensure proper data going into server
 					ajaxService.post('/admin/add/', postData)
 					.then(function(successResponse) {
 						toastFactory.successAdd(postData.name);
 						admin_add_ctrl.refresh();
-						console.log(successResponse);
+						console.log('success: ', successResponse);
 					}, 
 					function(failureResposne) {
-						console.log(failureResposne);
+						console.log('error: ', failureResposne);
 					});
 				} 
 				
@@ -203,7 +201,10 @@
 
 			};
 
-			admin_add_ctrl.addProgramInput = function(counter) {
+			admin_add_ctrl.addProgramInput = function(counter) {	/*admin_add_ctrl.programInputCount gets passed in from view
+																		admin_add_ctrl.programInputCount = 0 is initialized at the start 
+																		of the controller script, loaded once per reload.
+																	*/
 				var maxProgramCount = 4;
 				var humanCount = counter + 1;
 
@@ -215,29 +216,29 @@
 				if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
 			};
 
-			admin_add_ctrl.clearProgramInput = function() {	
-				var maxProgramCount = 5;
-				var ngModels = [
-					['FirstprogramName', 'FirstprogramRotation'],
-					['SecondprogramName', 'SecondprogramRotation'],
-					['ThirdprogramName', 'ThirdprogramRotation'],
-					['ForthprogramName', 'ForthprogramRotation'],
-					['FifthprogramName', 'FifthprogramRotation']
+			admin_add_ctrl.clearProgramInput = function() {		//for the clear input button 
+				var maxProgramCount = 4;
+				var ngModels = [	//taken care of human counter
+					[ 'FirstprogramName', 'FirstprogramRotation' ],
+					[ 'SecondprogramName', 'SecondprogramRotation' ],
+					[ 'ThirdprogramName', 'ThirdprogramRotation' ],
+					[ 'ForthprogramName', 'ForthprogramRotation' ],
+					[ 'FifthprogramName', 'FifthprogramRotation' ]
 				];
 
 				//clearing all fields
-				for (var i = 0; i < maxProgramCount; i++) {
+				for (var i = 0; i <= maxProgramCount; i++) {
 				var specificNgModelProgramName = ngModels[i][0];
 				var specificNgModelProgramRotation = ngModels[i][1];
-					admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';
-					admin_add_ctrl[specificNgModelProgramRotation] = '';
+					admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//clearing program name
+					admin_add_ctrl[specificNgModelProgramRotation] = '';	//clearing program rotation
 				}
 				//turn off all visuals
-				for (var j = 1; j <= maxProgramCount; j++){
-					admin_add_ctrl['showAddProgramInput' + j] = false;
+				for (var j = 1; j <= maxProgramCount + 1; j++){	//adding 1 bc of the last program input (fifth) needs to be turned off as well
+					admin_add_ctrl[ 'showAddProgramInput' + j ] = false;
 				}
 				//update counter
-				admin_add_ctrl.programInputCount = 0;
+				admin_add_ctrl.programInputCount = 0; 
 
 			};
 
