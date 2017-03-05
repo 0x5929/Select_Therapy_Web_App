@@ -84,19 +84,21 @@
 					newStudent.program = req.body.program;
 					newStudent.graduate = req.body.graduate;
 					newStudent.tuitionPaid = req.body.tuitionPaid;
-					newStudent.jobPlaced = req.body.jobPlaced;
-					if (req.body.jobPlaced){
-						newStudent.weeklyWorkHours = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
-						newStudent.payRate = req.body.payRate;
-						newStudent.jobDescription = req.body.jobDescription;
-					}else	newStudent.noJobReason = req.body.noJobReason;				
-					newStudent.passedExam = req.body.passedExam;
-					if (req.body.graduate){	//depending on whether or not the student graduated, we save the necessary things to the db
-						if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;
-						else	newStudent.noPassReason = req.body.noPassReason;
+					newStudent.marketingSurvey = req.body.marketingSurvey;		
+//depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
+//and depending on those conditions we save the necessary data into db	
+					if (req.body.graduate){	//graduate condition
+						newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
+						newStudent.jobPlaced = req.body.jobPlaced;	//saving necesasry properties
+						if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
+						else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
+						if (req.body.jobPlaced){
+							newStudent.weeklyWorkHours = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
+							newStudent.payRate = req.body.payRate;
+							newStudent.jobDescription = req.body.jobDescription;
+						}else	newStudent.noJobReason = req.body.noJobReason;	
 					}
-					else	newStudent.notGraduatingReason = req.body.notGraduatingReason;
-					newStudent.marketingSurvey = req.body.marketingSurvey;
+					else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
 					//save the new student
 					newStudent.save(function(err) {
 						if (err) return next(err);

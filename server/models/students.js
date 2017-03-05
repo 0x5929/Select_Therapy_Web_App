@@ -4,16 +4,19 @@
 	//load tools
 	var mongoose = require('mongoose');
 	//define Schema
-	var studentSchema = mongoose.Schema({	//NEED TO DEFINE WHICH FIELDS ARE REQUIRED TO BE ENTERED INTO DB
-		name: String,
-		phoneNumber: Number,
-		ssn: Number,
-		address: String,
-		email: String,
-		program: [{}],
-		graduate: Boolean,
+	var studentSchema = mongoose.Schema({
+		//required fields
+		name: {type: String, required: true},
+		phoneNumber: {type: Number, required: true},
+		ssn: {type: Number, required: true},
+		address: {type: String, required: true},
+		email: {type: String, required: true},
+		program: {type: [{}], required: true},
+		tuitionPaid: {type: Boolean, required: true},
+		graduate: {type: Boolean, required: true},
+		marketingSurvey: {type: String, required: true},
+		//dependent fields, which depends on certain boolean value from above required fields
 		notGraduatingReason: String,
-		tuitionPaid: Boolean,
 		jobPlaced: Boolean,
 		weeklyWorkHours: String,
 		payRate: Number,
@@ -21,9 +24,8 @@
 		noJobReason: String,
 		passedExam: Boolean,
 		numberOfTries: Number,
-		noPassReason: String,
-		marketingSurvey: String
+		noPassReason: String
 	});
-	// name: {type: String, required: true}
+	
 	module.exports = mongoose.model('students', studentSchema);
 }());

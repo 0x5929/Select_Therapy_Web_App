@@ -144,6 +144,8 @@
 					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 				});
 				if (admin_add_ctrl.noErrorCheck(postData)){	//calling error check to ensure proper data going into server
+					admin_add_ctrl.dataFilter(postData);
+					console.log('testing before data is sent to server: ', postData);
 					ajaxService.post('/admin/add/', postData)
 					.then(function(successResponse) {
 						toastFactory.successAdd(postData.name);
@@ -157,8 +159,16 @@
 				
 			};
 
+			admin_add_ctrl.dataFilter = function(dataToBeFiltered) {	//to filter through the noneSelected, and change it to empty string to be evaluated as false;
+				for (var key in dataToBeFiltered) {
+					if ((typeof dataToBeFiltered[key] === 'string' && dataToBeFiltered[key] === 'noneSelected') ||
+						typeof dataToBeFiltered[key] === 'undefined')
+						dataToBeFiltered[key] = '';
+				}
+				console.log('testing after data is filtered: ', dataToBeFiltered);
+			};
 
-			admin_add_ctrl.refresh = function() {	
+			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
 				admin_add_ctrl.firstName = '';
 				admin_add_ctrl.lastName = '';
@@ -182,7 +192,6 @@
 				admin_add_ctrl.showAddProgramInput4 = false;
 				admin_add_ctrl.showAddProgramInput5 = false;			
 
-
 //option value
 				admin_add_ctrl.marketingSurvey = 'noneSelected';
 				admin_add_ctrl.graduate = 'noneSelected';
@@ -198,8 +207,8 @@
 				admin_add_ctrl.ThirdprogramName = 'noneSelected';
 				admin_add_ctrl.ForthprogramName = 'noneSelected';
 				admin_add_ctrl.FifthprogramName = 'noneSelected';
-
 			};
+
 
 			admin_add_ctrl.addProgramInput = function(counter) {	/*admin_add_ctrl.programInputCount gets passed in from view
 																		admin_add_ctrl.programInputCount = 0 is initialized at the start 
@@ -218,6 +227,7 @@
 
 			admin_add_ctrl.clearProgramInput = function() {		//for the clear input button 
 				var maxProgramCount = 4;
+
 				var ngModels = [	//taken care of human counter
 					[ 'FirstprogramName', 'FirstprogramRotation' ],
 					[ 'SecondprogramName', 'SecondprogramRotation' ],
