@@ -49,6 +49,17 @@
 						return false;
 					}
 				}
+				//need another error check to see if the programs selected are the same
+				for (var j = 0; j < dataTobeChecked.program.length; j++){
+					for (var k = 0; k < dataTobeChecked.program.length; k++){
+						if (j !== k && dataTobeChecked.program[j]['programName'] === dataTobeChecked.program[k]['programName']){
+							console.log(dataTobeChecked.program);
+							console.log(dataTobeChecked.program[j]['programName'], dataTobeChecked.program[k]['programName']);
+							toastFactory.errorToast("please make sure you don't add two of the same programs");
+							return false;
+						}
+					}
+				}
 				if (dataTobeChecked.graduate === 'noneSelected'){
 					toastFactory.errorToast("please check the graduate field");
 					return false;
@@ -139,7 +150,7 @@
 					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
 					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 				});
-
+				console.log('testing ngmodel for programs ', postData.program);
 				if (admin_add_ctrl.noErrorCheck(postData)){
 					console.log(postData);
 					ajaxService.post('/admin/add/', postData)
@@ -211,9 +222,8 @@
 				if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
 			};
 
-			admin_add_ctrl.clearProgramInput = function(counter) {
-				var minCount = -1;
-				var humanCount = counter + 1;
+			admin_add_ctrl.clearProgramInput = function() {	
+				var maxProgramCount = 5;
 				var ngModels = [
 					['FirstprogramName', 'FirstprogramRotation'],
 					['SecondprogramName', 'SecondprogramRotation'],
@@ -221,18 +231,22 @@
 					['ForthprogramName', 'ForthprogramRotation'],
 					['FifthprogramName', 'FifthprogramRotation']
 				];
-				var specificNgModelProgramName = ngModels[counter][0];
-				var specificNgModelProgramRotation = ngModels[counter][1];
 
+				//clearing all fields
+				for (var i = 0; i < maxProgramCount; i++) {
+				var specificNgModelProgramName = ngModels[i][0];
+				var specificNgModelProgramRotation = ngModels[i][1];
+					admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';
+					admin_add_ctrl[specificNgModelProgramRotation] = '';
+				}
+				//turn off all visuals
+				for (var j = 1; j <= maxProgramCount; j++){
+					admin_add_ctrl['showAddProgramInput' + j] = false;
+				}
 				//update counter
-				if (counter > minCount + 1)	admin_add_ctrl.programInputCount--;
-				//clear data
-				admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//for programName
-				admin_add_ctrl[specificNgModelProgramRotation] = '';	//for programRotation
-				//turn visual off
-				admin_add_ctrl['showAddProgramInput' + humanCount] = false;
-				//stopping condition with err message
-				if (counter == minCount + 1)	toastFactory.errorToast("okay, you can add new programs now");
+				admin_add_ctrl.programInputCount = 0;
+
 			};
+
 		}
 }());
