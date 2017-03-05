@@ -41,10 +41,6 @@
 						return false;
 					}
 					if (isNaN(dataTobeChecked.program[i]['programRotation'])){
-						console.log(isNaN(dataTobeChecked.program[i]['programRotation']));
-						console.log(dataTobeChecked.program[i]['programRotation']);
-						console.log((dataTobeChecked.program[i]['programName']));
-						console.log(dataTobeChecked.program);
 						toastFactory.errorToast("make sure you enter a valid program rotation number")
 						return false;
 					}
@@ -53,8 +49,6 @@
 				for (var j = 0; j < dataTobeChecked.program.length; j++){
 					for (var k = 0; k < dataTobeChecked.program.length; k++){
 						if (j !== k && dataTobeChecked.program[j]['programName'] === dataTobeChecked.program[k]['programName']){
-							console.log(dataTobeChecked.program);
-							console.log(dataTobeChecked.program[j]['programName'], dataTobeChecked.program[k]['programName']);
 							toastFactory.errorToast("please make sure you don't add two of the same programs");
 							return false;
 						}
@@ -150,7 +144,6 @@
 					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
 					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 				});
-				console.log('testing ngmodel for programs ', postData.program);
 				if (admin_add_ctrl.noErrorCheck(postData)){
 					console.log(postData);
 					ajaxService.post('/admin/add/', postData)
