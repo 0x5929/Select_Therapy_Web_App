@@ -41,7 +41,7 @@
 	<div class="col-md-5" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
 	</div>
-	<div class="col-md-5" ng-if="admin_search_ctrl.showFullDetail">
+	<div class="col-md-5" ng-if="admin_search_ctrl.showFullDetail" ng-controller="adminModifyController as admin_modify_ctrl">
 		<div>
 			Student name: {{ admin_search_ctrl.studentDetail.name }}
 			<input type="text" name="name" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['name']" placeholder="Modify Name">
@@ -69,7 +69,7 @@
 		</div>
 		<div>
 			<span>Student program:</span>
-			<!-- The second if condition is for the button to only appear when there is programs to edit -->
+			<!-- The if condition is for the button to only appear when there is programs to edit -->
 			<button class="btn" ng-if="admin_search_ctrl.studentDetail.program[0]['programName']" 
 							ng-click="admin_search_ctrl.editCurrentProgramBtn = true; 
 							admin_search_ctrl.deleteProgramBtn = false;
