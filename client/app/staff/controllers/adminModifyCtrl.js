@@ -24,9 +24,24 @@
 				passedOn3rd: ''
 			};
 
+			admin_modify_ctrl.turnEditOff = function() {
+				var target = [	//all the edit fields
+					'editNameOn',
+					'editPhoneOn',
+					'editSsnOn',
+					'editAddressOn',
+					'editEmailOn'
+				];
+
+				target.forEach(function(eachTarget) {	//turning each edit to false
+					admin_modify_ctrl[eachTarget] = false;
+				});
+			};
+
 			admin_modify_ctrl.deleteProgram = function(programObj) {	//this wont work because it depends on adminSeachController data such as programs. need to find a way to access it
 				//delete program
 				var originalProgram = $scope.admin_search_ctrl.studentDetail.program;	//accessing parent controller
+				console.log(originalProgram);
 				originalProgram = originalProgram.filter(function(eachProgram) {
 					return eachProgram.programName !== programObj.programName;	//returning only obj that dont match with parameter obj, thus deleting that from array
 				});
@@ -47,7 +62,7 @@
 			};
 
 			admin_modify_ctrl.submitNewProgram = function() {
-			admin_modify_ctrl.submitChanges();	
+				admin_modify_ctrl.submitChanges();	
 			};
 
 			admin_modify_ctrl.edit = function() {

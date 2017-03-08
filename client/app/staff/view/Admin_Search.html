@@ -1,15 +1,16 @@
 <!-- COULD THINK ABOUT HAVING MULITPLE VIEWS FROM SEARCH. One view is rendered when admin search is pressed on staff page, which goes here, then a table view of students matching with search is generated on the right side, then after clicking on the student, his or her info needs to pop up in another view, possibly below the two columns -->
 
 <div class="row" id="adminSearch" ng-controller="adminSearchController as admin_search_ctrl">
-	<div class="col-md-7">
+	<div class="col-md-6">
 		<h3 class="text-center">  Search By:</h3>
 		<br>
 		<form class="text-center">
-			<input type="text" ng-model="admin_search_ctrl.searchInput">
-			<select ng-model="admin_search_ctrl.searchParameter">
-				<option ng-value="name">Name</option>
-				<option ng-value="email">email</option>
-				<option ng-value="phone_number">Phone number</option>
+			<input type="text" ng-model="admin_search_ctrl.searchInput" class="form-control">
+			<select ng-model="admin_search_ctrl.searchParameter" name="seachInputAndParameter" class="form-control">
+				<option disabled ng-selected="true" value=""> -- Select an Input -- </option>
+				<option value="name">Name</option>
+				<option value="email">email</option>
+				<option value="phone_number">Phone number</option>
 			</select>
 			<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
 		</form>
@@ -38,59 +39,64 @@
 			</table>
 		</div>
 	</div>
-	<div class="col-md-5" ng-if="admin_search_ctrl.message">
+	<div class="col-md-6" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
 	</div>
-	<div class="col-md-5" ng-if="admin_search_ctrl.showFullDetail" ng-controller="adminModifyController as admin_modify_ctrl">
+	<div class="col-md-6" ng-if="admin_search_ctrl.showFullDetail" ng-controller="adminModifyController as admin_modify_ctrl">
 		<div>
-			Student name: {{ admin_search_ctrl.studentDetail.name }}
-			<input type="text" name="name" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['name']" placeholder="Modify Name">
+			Student name: {{ admin_search_ctrl.studentDetail.name }}	<!-- COULD ADD IN A FUNCTIONALITY WHERE YOU CAN CHANGE FIRST OR LAST NAME -->
+			<input type="text" name="name" ng-if="admin_modify_ctrl.editNameOn" ng-model="admin_modify_ctrl.putData['name']" placeholder="Modify Full Name">
 			<hr>
+			<button class="btn" ng-click="admin_modify_ctrl.editNameOn">Modify Name</button>>
 		</div>
 		<div>
 			Student phone number: {{ admin_search_ctrl.studentDetail.phoneNumber }}
-			<input type="text" name="phoneNumber" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['phoneNumber']" placeholder="Modify Number">
+			<input type="text" name="phoneNumber" ng-if="admin_modify_ctrl.editPhoneOn" ng-model="admin_modify_ctrl.putData['phoneNumber']" placeholder="Modify Number">
 			<hr>
+			<button class="btn" ng-click="admin_modify_ctrl.editPhoneOn">Modify Phone Number</button>
 		</div>
 		<div>
 			Student social security number: {{ admin_search_ctrl.studentDetail.ssn }}
-			<input type="text" name="ssn" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['ssn']" placeholder="Modify SSN">
+			<input type="text" name="ssn" ng-if="admin_modify_ctrl.editSsnOn" ng-model="admin_modify_ctrl.putData['ssn']" placeholder="Modify SSN">
 			<hr>
+			<button class="btn" ng-click="admin_modify_ctrl.editSsnOn">Modify SSN</button>
 		</div>
 		<div>
 			Student address: {{ admin_search_ctrl.studentDetail.address }}
-			<input type="text" name="address" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['address']" placeholder="Modify Address">
+			<input type="text" name="address" ng-if="admin_modify_ctrl.editAddressOn" ng-model="admin_modify_ctrl.putData['address']" placeholder="Modify Address">
 			<hr>
+			<button class="btn" ng-click="admin_modify_ctrl.editAddressOn"></button>
 		</div>
 		<div>
 			Student email: {{ admin_search_ctrl.studentDetail.email }}
-			<input type="text" name="email" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['email']" placeholder="Modify Email">
+			<input type="text" name="email" ng-if="admin_modify_ctrl.editEmailOn" ng-model="admin_modify_ctrl.putData['email']" placeholder="Modify Email">
 			<hr>
+			<button class="btn" ng-click="admin_modify_ctrl.editEmailOn"></button>
 		</div>
 		<div>
 			<span>Student program:</span>
 			<!-- The if condition is for the button to only appear when there is programs to edit -->
 			<button class="btn" ng-if="admin_search_ctrl.studentDetail.program[0]['programName']" 
-							ng-click="admin_search_ctrl.editCurrentProgramBtn = true; 
-							admin_search_ctrl.deleteProgramBtn = false;
-							admin_search_ctrl.showSubmitChanges = false;
-							admin_search_ctrl.editOn = false;
-							admin_search_ctrl.showEditBtn = false">
+							ng-click="admin_modify_ctrl.editCurrentProgramBtn = true; 
+							admin_modify_ctrl.deleteProgramBtn = false;
+							admin_modify_ctrl.showSubmitChanges = false;
+							admin_modify_ctrl.showEditBtn = false;
+							admin_modify_ctrl.turnEditOff()">
 				Edit Current Programs
 			</button>
-			<button class="btn" ng-click="admin_search_ctrl.addNewProgram = true; 
-							admin_search_ctrl.deleteProgramBtn = false;
-							admin_search_ctrl.showSubmitChanges = false;
-							admin_search_ctrl.editOn = false;
-							admin_search_ctrl.showEditBtn = false">
+			<button class="btn" ng-click="admin_modify_ctrl.addNewProgram = true; 
+							admin_modify_ctrl.deleteProgramBtn = false;
+							admin_modify_ctrl.showSubmitChanges = false;
+							admin_modify_ctrl.showEditBtn = false;
+							admin_modify_ctrl.turnEditOff()">
 				Add New Program
 			</button>
-			<button class="btn" ng-click="admin_search_ctrl.deleteProgramBtn = true; 
-							admin_search_ctrl.addNewProgram = false; 
-							admin_search_ctrl.editCurrentProgram = false;
-							admin_search_ctrl.showSubmitChanges = false;
-							admin_search_ctrl.editOn = false;
-							admin_search_ctrl.showEditBtn = false">
+			<button class="btn" ng-click="admin_modify_ctrl.deleteProgramBtn = true; 
+							admin_modify_ctrl.addNewProgram = false; 
+							admin_modify_ctrl.editCurrentProgram = false;
+							admin_modify_ctrl.showSubmitChanges = false;
+							admin_modify_ctrl.showEditBtn = false;
+							admin_modify_ctrl.turnEditOff()">
 				Delete Program
 			</button>
 			<table>

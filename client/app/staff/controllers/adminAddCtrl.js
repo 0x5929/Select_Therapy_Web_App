@@ -13,7 +13,7 @@
 
 			admin_add_ctrl.programInputCount = 0
 			
-			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	
+			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
 				if (!isNaN(dataTobeChecked.name)){
 					toastFactory.errorToast("please check the student's first and last name input");
