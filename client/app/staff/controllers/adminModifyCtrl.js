@@ -7,6 +7,7 @@
 		function adminModifyControllerHandler($rootScope, $scope, ajaxService, toastFactory) {
 			//admin modify controller code
 			var admin_modify_ctrl = this;
+			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;
 			admin_modify_ctrl.editOn = false;
 			admin_modify_ctrl.showEditBtn = true;
 			admin_modify_ctrl.putData = {
@@ -25,7 +26,7 @@
 			};
 
 			admin_modify_ctrl.turnEditOff = function() {
-				var target = [	//all the edit fields
+				var turnOff = [	//all the edit fields
 					'editNameOn',
 					'editPhoneOn',
 					'editSsnOn',
@@ -33,14 +34,106 @@
 					'editEmailOn'
 				];
 
-				target.forEach(function(eachTarget) {	//turning each edit to false
+				turnOff.forEach(function(eachTarget) {	//turning each edit to false
 					admin_modify_ctrl[eachTarget] = false;
 				});
 			};
 
+			admin_modify_ctrl.editProgram = function() {
+				var turnOn = [
+					'editCurrentProgramBtn'
+				];
+				var turnOff = [
+					'deleteProgramBtn',
+					'showSubmitChangesBtn',
+					'showEditBtn'
+				];
+
+				//turning on attribute
+				turnOn.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = true;
+				});
+				//turning off attributes
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+
+				admin_modify_ctrl.turnEditOff();
+			};
+
+			admin_modify_ctrl.addProgram = function() {
+				var turnOn = [
+					'addNewProgram'
+				];
+				var turnOff = [
+					'deleteProgramBtn',
+					'showSubmitChangesBtn',
+					'showEditBtn'
+				];
+
+				//turning on attribute
+				turnOn.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = true;
+				});
+				//turning off attributes
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+
+				admin_modify_ctrl.turnEditOff();
+			};
+
+			admin_modify_ctrl.removeProgram = function() {	//this function is activated when the delete program is first pressed, initializing the delete btns for each program
+				var turnOn = [
+					'deleteProgramBtn'
+				];
+				var turnOff = [
+					'addNewProgram',
+					'editCurrentProgram',
+					'showSubmitChangesBtn',
+					'showEditBtn'
+				];
+
+				//turning on attribute
+				turnOn.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = true;
+				});
+				//turning off attributes
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+
+				admin_modify_ctrl.turnEditOff();
+
+			};
+
+			admin_modify_ctrl.modifyThisProgramBtn = function(eachProgram) {
+				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(eachProgram);
+				var turnOff = [
+					'editCurrentProgramBtn',
+					'showFinalCancel',
+					'showSubmitChangesBtn'
+				];
+
+				//turning on attribute
+				admin_modify_ctrl.modifyCurrentProgramInputNBtn[originalProgramIndex] = true;
+				//turning off attributes
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+			};
+
+			admin_modify_ctrl.submitModificationBtn = function(programToBeModified) {
+				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(programToBeModified);
+				//modify program
+				admin_modify_ctrl.modifyProgram(programToBeModified);
+				//turn modify current program input and btn off
+				admin_modify_ctrl.modifyCurrentProgramInputNBtn[originalProgramIndex] = false;
+			};
+
 			admin_modify_ctrl.deleteProgram = function(programObj) {	//this wont work because it depends on adminSeachController data such as programs. need to find a way to access it
 				//delete program
-				var originalProgram = $scope.admin_search_ctrl.studentDetail.program;	//accessing parent controller
+				var originalProgram = admin_modify_ctrl.parentScope.studentDetail.program;	//accessing parent controller
 				console.log(originalProgram);
 				originalProgram = originalProgram.filter(function(eachProgram) {
 					return eachProgram.programName !== programObj.programName;	//returning only obj that dont match with parameter obj, thus deleting that from array
@@ -49,7 +142,7 @@
 			};
 
 			admin_modify_ctrl.modifyProgram = function(programObj) {
-				var originalProgram = $scope.admin_search_ctrl.studentDetail.program;
+				var originalProgram = admin_modify_ctrl.parentScope.studentDetail.program;
 				originalProgram.forEach(function(eachProgram) {
 				if (eachProgram.programName !== programObj.programName)	return;	//skip to next program obj if its not matched
 				else{	//once matched update the program name and rotation field with ng-model in view
@@ -68,7 +161,7 @@
 			admin_modify_ctrl.edit = function() {
 				admin_modify_ctrl.editOn = true;
 				admin_modify_ctrl.showFinalCancel = true;
-				admin_modify_ctrl.showSubmitChanges = true;
+				admin_modify_ctrl.showSubmitChangesBtn = true;
 			};
 
 			admin_modify_ctrl.isAdmin = function() {
@@ -79,7 +172,7 @@
 			admin_modify_ctrl.programModifyCancel = function() {
 				admin_modify_ctrl.showFinalCancel = true;
 				admin_modify_ctrl.showEditBtn = true;
-				admin_modify_ctrl.showSubmitChanges = true;	//turn submit changes btn back on.
+				admin_modify_ctrl.showSubmitChangesBtn = true;	//turn submit changes btn back on.
 				admin_modify_ctrl.editCurrentProgramBtn = false;	//turning all program edits off
 				admin_modify_ctrl.addNewProgram = false;
 				admin_modify_ctrl.deleteProgramBtn = false
@@ -99,7 +192,7 @@
 				var putDataAfterFilter = {};
 				var newDataForProgram = {};
 				var putDataForProgram;
-				var originalProgram = $scope.admin_search_ctrl.studentDetail.program;
+				var originalProgram = admin_modify_ctrl.parentScope.studentDetail.program;
 				var originalName = $scope.admin_search_ctrl.studentDetail.name;
 				for (var inputField in data) {	//first we filter through the fields that is being editted
 					if (inputField === 'program'){//if putData.program:
