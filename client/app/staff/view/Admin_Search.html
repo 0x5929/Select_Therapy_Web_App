@@ -120,7 +120,7 @@
 						<td> <!-- FIRST COLUMN => PROGRAM NAME  WITH EDIT FIELDS -->
 							{{ programDetails.programName }}
 <!-- 							<input type="text" name="editCurrentProgramName" placeholder="Modify Program Name" ng-if="admin_search_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-model="admin_search_ctrl.modifyProgramName"> -->
-							<select ng-if="admin_modify_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]"	ng-model="admin_modify_ctrl.modifyProgramName" name="editCurrentProgramName" class="form-control">
+							<select ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]"	ng-model="admin_modify_ctrl.modifyProgramName" name="editCurrentProgramName" class="form-control">
 								<option disabled ng-selected="true" value=""> -- Select a Program -- </option>
 								<option value="CNA">Certified Nurse Assistant</option>
 								<option value="HHA">Home Health Aide</option>
@@ -131,7 +131,7 @@
 						</td>
 						<td>	<!-- SECOND COLUMN => PROGRAM ROTATION WITH EDIT FIELDS -->
 							{{ programDetails.programRotation }}
-							<input type="text" name="editCurrentProgramRotation" placeholder="Modify Program Rotation" ng-if="admin_modify_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-model="admin_modify_ctrl.modifyProgramRotation">
+							<input type="text" name="editCurrentProgramRotation" placeholder="Modify Program Rotation" ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-model="admin_modify_ctrl.modifyProgramRotation">
 						</td>
 						<td>	<!-- THIRD COLUMN => ACTION BUTTONS -->
 <!-- 							<button class="btn" ng-if="admin_search_ctrl.editCurrentProgramBtn" ng-click="admin_modify_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)] = true; admin_modify_ctrl.editCurrentProgramBtn = false; admin_modify_ctrl.showFinalCancel = false; admin_modify_ctrl.showSubmitChangesBtn = false"> -->
@@ -140,7 +140,7 @@
 								Modify this Program
 							</button>
 <!-- 							<button class="btn" ng-if="admin_search_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-click="admin_search_ctrl.modifyProgram(programDetails); admin_search_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)] = false"> -->
-							<button class="btn" ng-if="admin_search_ctrl.modifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-click="admin_modify_ctrl.submitModificationBtn()">
+							<button class="btn" ng-if="admin_search_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-click="admin_modify_ctrl.submitModificationBtn()">
 								Submit Modification
 							</button>
 							<button class="btn" ng-if="admin_modify_ctrl.showDeleteProgramBtn" 
@@ -245,7 +245,7 @@
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin() && admin_search_ctrl.showEditBtn" ng-click="admin_search_ctrl.edit()">Edit</button>
 			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.delete()">Delete</button>
 			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showSubmitChangesBtn" ng-click="admin_search_ctrl.submitChanges()">Submit Changes</button>
-			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showFinalCancel" 
+			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showFinalCancelBtn" 
 								ng-click="admin_search_ctrl.editOn=false; 
 								admin_search_ctrl.editCurrentProgram=false; 
 								admin_search_ctrl.showDeleteProgramBtn = false; 

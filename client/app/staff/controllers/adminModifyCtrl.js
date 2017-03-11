@@ -27,7 +27,7 @@
 
 			admin_modify_ctrl.cancelProgramEditCondition = function() {	//ngif in the view for cancel Program Edit condition
 				if (admin_modify_ctrl.showModifyThisProgramBtn || 
-					admin_modify_ctrl.modifyCurrentProgramInputNBtn[0] ||
+					admin_modify_ctrl.showModifyCurrentProgramInputNBtn[0] ||
 					 admin_modify_ctrl.showAddNewProgramField || 
 					 admin_modify_ctrl.showDeleteProgramBtn)
 					return true;
@@ -97,7 +97,7 @@
 					'showDeleteProgramBtn'
 				];
 				var turnOff = [
-					'addNewProgram',
+					'showAddNewProgramField',
 					'showModifyThisProgramBtn',
 					'showSubmitChangesBtn',
 					'showEditBtn'
@@ -119,13 +119,13 @@
 			admin_modify_ctrl.modifyThisProgramBtn = function(eachProgram) {
 				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(eachProgram);
 				var turnOff = [
-					'editCurrentProgramBtn',
-					'showFinalCancel',
+					'showModifyThisProgramBtn',
+					'showFinalCancelBtn',
 					'showSubmitChangesBtn'
 				];
 
 				//turning on attribute
-				admin_modify_ctrl.modifyCurrentProgramInputNBtn[originalProgramIndex] = true;
+				admin_modify_ctrl.showModifyCurrentProgramInputNBtn[originalProgramIndex] = true;
 				//turning off attributes
 				turnOff.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = false;
@@ -137,7 +137,7 @@
 				//modify program
 				admin_modify_ctrl.modifyProgram(programToBeModified);
 				//turn modify current program input and btn off
-				admin_modify_ctrl.modifyCurrentProgramInputNBtn[originalProgramIndex] = false;
+				admin_modify_ctrl.showModifyCurrentProgramInputNBtn[originalProgramIndex] = false;
 			};
 
 			admin_modify_ctrl.deleteThisProgramBtn = function(programObj) {	//this wont work because it depends on adminSeachController data such as programs. need to find a way to access it
@@ -169,7 +169,7 @@
 
 			admin_modify_ctrl.edit = function() {
 				admin_modify_ctrl.editOn = true;
-				admin_modify_ctrl.showFinalCancel = true;
+				admin_modify_ctrl.showFinalCancelBtn = true;
 				admin_modify_ctrl.showSubmitChangesBtn = true;
 			};
 
@@ -179,20 +179,33 @@
 			};
 
 			admin_modify_ctrl.programModifyCancel = function() {
-				admin_modify_ctrl.showFinalCancel = true;
-				admin_modify_ctrl.showEditBtn = true;
-				admin_modify_ctrl.showSubmitChangesBtn = true;	//turn submit changes btn back on.
-				admin_modify_ctrl.editCurrentProgramBtn = false;	//turning all program edits off
-				admin_modify_ctrl.addNewProgram = false;
-				admin_modify_ctrl.deleteProgramBtn = false
+				var turnOn = [
+					'showFinalCancelBtn',
+					'showEditBtn'
+				];
+				var turnOff = [
+					'showModifyThisProgramBtn',
+					'showAddNewProgramField',
+					'showDeleteProgramBtn'
+				];
 
-				if (Array.isArray(admin_modify_ctrl.modifyCurrentProgramInputNBtn)){	//if evaluated as array
-					admin_modify_ctrl.modifyCurrentProgramInputNBtn.forEach(function(value) {
+				//turning on attribute
+				turnOn.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = true;
+				});
+				//turning off attributes
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+
+				//turning off show modify current program input and button, either as an arr or as an obj
+				if (Array.isArray(admin_modify_ctrl.showModifyCurrentProgramInputNBtn)){	//if evaluated as array
+					admin_modify_ctrl.showModifyCurrentProgramInputNBtn.forEach(function(value) {
 						value = false;
 					});
 				}else{	//if evaluated as obj
-					for (var key in admin_modify_ctrl.modifyCurrentProgramInputNBtn){
-						admin_modify_ctrl.modifyCurrentProgramInputNBtn[key] = false;
+					for (var key in admin_modify_ctrl.showModifyCurrentProgramInputNBtn){
+						admin_modify_ctrl.showModifyCurrentProgramInputNBtn[key] = false;
 					}
 				}
 			};
