@@ -132,7 +132,7 @@
 			return putDataAfterFilter;
 		};
 
-		admin_search_ctrl.submit = function () {
+		admin_search_ctrl.submitBtn = function () {
 			var config = {
 				params: {
 					parameter: admin_search_ctrl.searchParameter,

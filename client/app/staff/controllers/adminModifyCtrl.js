@@ -25,13 +25,22 @@
 				passedOn3rd: ''
 			};
 
+			admin_modify_ctrl.cancelProgramEditCondition = function() {	//ngif in the view for cancel Program Edit condition
+				if (admin_modify_ctrl.showModifyThisProgramBtn || 
+					admin_modify_ctrl.modifyCurrentProgramInputNBtn[0] ||
+					 admin_modify_ctrl.showAddNewProgramField || 
+					 admin_modify_ctrl.showDeleteProgramBtn)
+					return true;
+				else return false;
+			};
+
 			admin_modify_ctrl.turnEditOff = function() {
 				var turnOff = [	//all the edit fields
-					'editNameOn',
-					'editPhoneOn',
-					'editSsnOn',
-					'editAddressOn',
-					'editEmailOn'
+					'editNameFieldOn',
+					'editPhoneFieldOn',
+					'editSsnFieldOn',
+					'editAddressFieldOn',
+					'editEmailFieldOn'
 				];
 
 				turnOff.forEach(function(eachTarget) {	//turning each edit to false
@@ -39,12 +48,12 @@
 				});
 			};
 
-			admin_modify_ctrl.editProgram = function() {
+			admin_modify_ctrl.editCurrentProgramBtn = function() {
 				var turnOn = [
-					'editCurrentProgramBtn'
+					'showModifyThisProgramBtn'
 				];
 				var turnOff = [
-					'deleteProgramBtn',
+					'showDeleteProgramBtn',
 					'showSubmitChangesBtn',
 					'showEditBtn'
 				];
@@ -61,12 +70,12 @@
 				admin_modify_ctrl.turnEditOff();
 			};
 
-			admin_modify_ctrl.addProgram = function() {
+			admin_modify_ctrl.addNewProgramBtn = function() {
 				var turnOn = [
-					'addNewProgram'
+					'showAddNewProgramField'
 				];
 				var turnOff = [
-					'deleteProgramBtn',
+					'showDeleteProgramBtn',
 					'showSubmitChangesBtn',
 					'showEditBtn'
 				];
@@ -83,13 +92,13 @@
 				admin_modify_ctrl.turnEditOff();
 			};
 
-			admin_modify_ctrl.removeProgram = function() {	//this function is activated when the delete program is first pressed, initializing the delete btns for each program
+			admin_modify_ctrl.deleteProgramBtn = function() {	//this function is activated when the delete program is first pressed, initializing the delete btns for each program
 				var turnOn = [
-					'deleteProgramBtn'
+					'showDeleteProgramBtn'
 				];
 				var turnOff = [
 					'addNewProgram',
-					'editCurrentProgram',
+					'showModifyThisProgramBtn',
 					'showSubmitChangesBtn',
 					'showEditBtn'
 				];
@@ -131,7 +140,7 @@
 				admin_modify_ctrl.modifyCurrentProgramInputNBtn[originalProgramIndex] = false;
 			};
 
-			admin_modify_ctrl.deleteProgram = function(programObj) {	//this wont work because it depends on adminSeachController data such as programs. need to find a way to access it
+			admin_modify_ctrl.deleteThisProgramBtn = function(programObj) {	//this wont work because it depends on adminSeachController data such as programs. need to find a way to access it
 				//delete program
 				var originalProgram = admin_modify_ctrl.parentScope.studentDetail.program;	//accessing parent controller
 				console.log(originalProgram);
@@ -154,7 +163,7 @@
 			});
 			};
 
-			admin_modify_ctrl.submitNewProgram = function() {
+			admin_modify_ctrl.submitNewProgramBtn = function() {
 				admin_modify_ctrl.submitChanges();	
 			};
 
