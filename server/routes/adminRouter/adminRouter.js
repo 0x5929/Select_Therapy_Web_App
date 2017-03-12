@@ -22,7 +22,7 @@
 			console.log(searchInput);
 
 			if (!searchInput || !searchParameter)
-				return res.status(400).send('invalid entry');
+				return res.status(400).send('invalid entry').end();
 			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
 													hha program rotation, esol program rotation number, 
 													and sg program rotation */
@@ -31,21 +31,21 @@
 					console.log(err);
 					console.log(user);
 					if (err) return next(err);
-					if (user) return res.send(user);
-					if (!user) return res.status(400).send('nope no user here');
+					if (user) return res.status(200).send(user).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}else if (searchParameter === 'email') {
 					STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
 					if (err) return next(err);
-					if (user) return res.send(user);
-					if (!user) return res.status(400).send('nope no user here');
+					if (user) return res.status(200).send(user).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}else if (searchParameter === 'Phone number'){
 					STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
 					console.log(users);
 					if (err) return next(err);
-					if (users) return res.send(users);
-					if (!user) return res.status(400).send('nope no user here');
+					if (users) return res.send(users).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}
 		}
@@ -73,7 +73,7 @@
 			console.log(req.body);
 			STIDbStudentCollection.findOne({'name': req.body.name}, function(err, user) {
 				if (err) return next(err);
-				if (user) return res.status(400).send('This user already exists!');
+				if (user) return res.status(400).send('This user already exists!').end();
 				if (!user) {	//if no user, then save all the creditials from client side
 					var newStudent = new STIDbStudentCollection();
 					newStudent.name = req.body.name;
@@ -105,26 +105,30 @@
 					});
 				}
 			})
-			return res.status(200).send('newStudent added');
+			return res.status(200).send('newStudent added').end();
 		}
 
 		function adminModifyPutHandler(req, res, next) {
+			console.log('start of the request, at line 112, signal is strong');
 			console.log(req.body);
 			var requestBody = req.body;
 			var modifyingKeys = Object.keys(requestBody);
+			console.log('right before the database query, at line 116, signal is strong');
 			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
-				if (err) return next(err);
-				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db");
+				if (err){ console.log('signal is strong at line 118, if err: ', err); return next(err);}
+				if (!user){console.log('signal is strong at line 119, if no user'); return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();}
 				if (user) {
+				console.log('signal is strong at line 121, there is a user: ', user);
 					modifyingKeys.forEach(function(key) {
 						if (key === "originalName") return;	//skipping the original name key
 						user[key] = requestBody[key];	//updating the keys
+						console.log('signal is strong at 125, and user should be updated', user);
 						user.save(function(err, updatedUser) {
-							if (err) return next(err);
+							if (err){console.log('signal is strong at line 127, and user should be saving creditials, but there is an err: ', err); return next(err);}
 						});
 					});
-
-					return res.status(200).send('updatedUser');			
+					console.log('testing the code is still good right before the res.status');
+					return res.send('updatedUser').end();			
 				}
 			});
 		}

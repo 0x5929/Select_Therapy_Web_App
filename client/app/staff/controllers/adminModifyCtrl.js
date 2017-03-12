@@ -8,8 +8,6 @@
 			//admin modify controller code
 			var admin_modify_ctrl = this;
 			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;
-			admin_modify_ctrl.editOn = false;	//this is edit function which turns all show edit fields off
-			admin_modify_ctrl.showEditBtn = true;
 			admin_modify_ctrl.showModifyCurrentProgramInputNBtn = []; //inititalized empty arr for program edit
 			admin_modify_ctrl.putData = {
 				name: '',
@@ -89,6 +87,34 @@
 				else return false;
 			};
 
+			admin_modify_ctrl.turnShowModifyBtnOn = function() {
+				var turnOn = [
+					'showModifyNameBtn',
+					'showModifyNumberBtn',
+					'showModifySsnBtn',
+					'showModifyAddressBtn',
+					'showModifyEmailBtn',
+					'showModifyTuitionPaidBtn',
+					'showModifyMarketingSurveyBtn',
+					'showModifyGraduateBtn',
+					'showModifyPassedExamBtn',
+					'showModifyNumberofTriesBtn',
+					'showModifyNoPassReasonBtn',
+					'showModifyJobPlacedBtn',
+					'showModifyWeeklyWorkHoursBtn',
+					'showModifyPayRateBtn',
+					'showModifyJobDescriptionBtn',
+					'showModifyNoJobReasonBtn',
+					'showModifyNotGraduatingReasonBtn'
+
+				];
+
+				//turning on attribute
+				turnOn.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = true;
+				});
+			};
+
 			admin_modify_ctrl.turnEditOff = function() {
 				var turnOff = [	//all the edit fields except programs
 					'editNameFieldOn',
@@ -115,18 +141,21 @@
 				});
 			};
 
+			//INITIALIZE THE NECESSARY FUNCTIONS FOR VIEW CONDITIONS
+			admin_modify_ctrl.turnEditOff();	//this is edit function which turns all show edit fields off
+			admin_modify_ctrl.turnShowModifyBtnOn();	//this turns all modify btn on if admin
+
 			admin_modify_ctrl.editCurrentProgramBtn = function() {
 				var turnOn = [
 					'showModifyThisProgramBtn'
 				];
 				var turnOff = [
 					'showDeleteProgramBtn',
-					'showSubmitChangesBtn',
-					'showEditBtn'
+					'showSubmitChangesBtn'
 				];
 
-				//turning off attributes
-				admin_modify_ctrl.turnEditOff();
+				// //turning off attributes
+				// admin_modify_ctrl.turnEditOff();
 				
 				turnOff.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = false;
@@ -135,7 +164,6 @@
 				turnOn.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = true;
 				});
-				console.log(admin_modify_ctrl.showModifyThisProgramBtn);
 
 			};
 
@@ -145,8 +173,7 @@
 				];
 				var turnOff = [
 					'showDeleteProgramBtn',
-					'showSubmitChangesBtn',
-					'showEditBtn'
+					'showSubmitChangesBtn'
 				];
 
 				//turning on attribute
@@ -168,8 +195,7 @@
 				var turnOff = [
 					'showAddNewProgramField',
 					'showModifyThisProgramBtn',
-					'showSubmitChangesBtn',
-					'showEditBtn'
+					'showSubmitChangesBtn'
 				];
 
 				//turning on attribute
@@ -265,8 +291,7 @@
 
 			admin_modify_ctrl.programModifyCancel = function() {
 				var turnOn = [
-					'showFinalCancelBtn',
-					'showEditBtn'
+					'showFinalCancelBtn'
 				];
 				var turnOff = [
 					'showModifyThisProgramBtn',
@@ -278,21 +303,17 @@
 				turnOn.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = true;
 				});
+				admin_modify_ctrl.turnShowModifyBtnOn();
 				//turning off attributes
 				turnOff.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = false;
 				});
 
-				//turning off show modify current program input and button, either as an arr or as an obj
-				if (Array.isArray(admin_modify_ctrl.showModifyCurrentProgramInputNBtn)){	//if evaluated as array
-					admin_modify_ctrl.showModifyCurrentProgramInputNBtn.forEach(function(value) {
-						value = false;
-					});
-				}
-				// }else{	//if evaluated as obj
-				// 	for (var key in admin_modify_ctrl.showModifyCurrentProgramInputNBtn){
-				// 		admin_modify_ctrl.showModifyCurrentProgramInputNBtn[key] = false;
-				// 	}
+				//turning off show modify current program input and button
+				admin_modify_ctrl.showModifyCurrentProgramInputNBtn.forEach(function(value) {
+					value = false;
+				});
+
 				
 			};
 
@@ -325,42 +346,44 @@
 						if (!putDataAfterFilter[inputField])	//this checks if the two above condidtions: edit or add are not met, 
 							putDataAfterFilter[inputField] = originalProgram;	//if they arent met, the puDataAFterFilter[inputField] part of the obj should be undefined, 
 																//so lets equate the student details array, so we update programs every edit, and account for deleted programs 
-					}
-					else if (data[inputField] !== '' || data[inputField] !== 'noneSelected')	//for the rest of the fields, we filter through the ones that is editted
-						putDataAfterFilter[inputField] = data[inputField];
+					}	//for the rest of the fields, we filter through the ones that is editted
+					else if (data[inputField] !== '' && data[inputField] !== 'noneSelected')	putDataAfterFilter[inputField] = data[inputField];		
 				}
-				//TECHNICALLY DONT NEED THIS BECAUSE AS AN OPTION YOU CAN HAVE EMPTY STRINGS TO BE SENT TO THE SERVER TO BE EVALUATED AS FALSE ANYWAYS
+				//NEEDED TO BE EVLUATED FROM FALSE TO '', BC IF ITS EMPTY STRING, IT WILL BE IGNORE GOING INTO THE SERVER BY THE ABOVE LOGIC
 				//this will convert false to empty string to be converted to boolean false or 0 value in the server side.
-	//			if (putDataAfterFilter.program && putDataAfterFilter.program.toLowerCase() === 'false')	putDataAfterFilter.program = '';
 				if (putDataAfterFilter.tuitionPaid && putDataAfterFilter.tuitionPaid === 'false')	putDataAfterFilter.tuitionPaid = '';
 				if (putDataAfterFilter.graduate && putDataAfterFilter.graduate === 'false')	putDataAfterFilter.graduate = '';
 				if (putDataAfterFilter.jobPlaced && putDataAfterFilter.jobPlaced === 'false')	putDataAfterFilter.jobPlaced = '';
-				if (putDataAfterFilter.passedExam && putDataAfterFilter.passedExam.toLowerCase() === 'false')	putDataAfterFilter.passedExam = '';
-				// if (putDataAfterFilter.passedOn1st && putDataAfterFilter.passedOn1st.toLowerCase() === 'false')	putDataAfterFilter.passedOn1st = '';
-				// if (putDataAfterFilter.passedOn2nd && putDataAfterFilter.passedOn2nd.toLowerCase() === 'false')	putDataAfterFilter.passedOn2nd = '';
-				// if (putDataAfterFilter.passedOn3rd && putDataAfterFilter.passedOn3rd.toLowerCase() === 'false')	putDataAfterFilter.passedOn3rd = '';
+				if (putDataAfterFilter.passedExam && putDataAfterFilter.passedExam === 'false')	putDataAfterFilter.passedExam = '';
+
 				//need to attach the original name so the server can look it up and edit its contents
 				putDataAfterFilter.originalName = originalName;
 				//returning the filtered through obj
+
 				return putDataAfterFilter;
 			};
 
 			admin_modify_ctrl.submitChangesBtn = function() {
 				var data = admin_modify_ctrl.putChangesFilter(admin_modify_ctrl.putData);
-				
-				admin_modify_ctrl.editOn = false;	//after clicking submit changes, edit and the rest of ng-ifs are off
-				admin_modify_ctrl.editCurrentProgram = false;
-				admin_modify_ctrl.addNewProgram = false;
-				admin_modify_ctrl.deleteProgramBtn = false;
+				var turnOff = [
+					'showModifyThisProgramBtn',
+					'showAddNewProgramField',
+					'showDeleteProgramBtn'
+				];
 
 				console.log(data);
 				ajaxService.put('/admin/modify/', data)
-					.then(function(successResponse) {	//could add a success toast
-						for (var key in admin_modify_ctrl.putData) {	//clears all fields when submit is pressed
+					.then(function(successResponse) {
+						for (var key in admin_modify_ctrl.putData) {	//clears all data fields when submit is pressed
 							admin_modify_ctrl.putData[key] = '';
 						}
 						admin_modify_ctrl.newProgramName = admin_modify_ctrl.newProgramRotation = '';	//clears new program addition field
 						admin_modify_ctrl.modifyProgramName = admin_modify_ctrl.modifyProgramRotation = ''; //clears modify program fields
+						admin_modify_ctrl.turnShowModifyBtnOn();
+						admin_modify_ctrl.turnEditOff();	//after success submit changes, edit and the rest of ng-ifs are off
+						turnOff.forEach(function(eachTarget) {
+							admin_modify_ctrl[eachTarget] = false;
+						});
 						toastFactory.sucessEdit();
 						console.log(successResponse);
 					}, function(failureResponse) {	//could add a failure toast
