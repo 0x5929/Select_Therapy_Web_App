@@ -10,6 +10,7 @@
 			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;
 			admin_modify_ctrl.editOn = false;	//this is edit function which turns all show edit fields off
 			admin_modify_ctrl.showEditBtn = true;
+			admin_modify_ctrl.showModifyCurrentProgramInputNBtn = []; //inititalized empty arr for program edit
 			admin_modify_ctrl.putData = {
 				name: '',
 				phoneNumber: '',
@@ -33,7 +34,7 @@
 
 			admin_modify_ctrl.cancelProgramEditCondition = function() {	//ngif in the view for cancel Program Edit condition
 				if (admin_modify_ctrl.showModifyThisProgramBtn || 
-					admin_modify_ctrl.showModifyCurrentProgramInputNBtn[0] ||
+					(admin_modify_ctrl.showModifyCurrentProgramInputNBtn && admin_modify_ctrl.showModifyCurrentProgramInputNBtn[0]) ||
 					 admin_modify_ctrl.showAddNewProgramField || 
 					 admin_modify_ctrl.showDeleteProgramBtn)
 					return true;
@@ -124,16 +125,18 @@
 					'showEditBtn'
 				];
 
+				//turning off attributes
+				admin_modify_ctrl.turnEditOff();
+				
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
 				//turning on attribute
 				turnOn.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = true;
 				});
-				//turning off attributes
-				turnOff.forEach(function(eachTarget) {
-					admin_modify_ctrl[eachTarget] = false;
-				});
+				console.log(admin_modify_ctrl.showModifyThisProgramBtn);
 
-				admin_modify_ctrl.turnEditOff();
 			};
 
 			admin_modify_ctrl.addNewProgramBtn = function() {
@@ -191,7 +194,9 @@
 				];
 
 				//turning on attribute
+				console.log(admin_modify_ctrl.showModifyCurrentProgramInputNBtn);
 				admin_modify_ctrl.showModifyCurrentProgramInputNBtn[originalProgramIndex] = true;
+				console.log(admin_modify_ctrl.showModifyCurrentProgramInputNBtn);
 				//turning off attributes
 				turnOff.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = false;
@@ -199,7 +204,7 @@
 			};
 
 			admin_modify_ctrl.finalCancelBtn = function() {
-				turnOff = [
+				var turnOff = [
 					'showModifyThisProgramBtn',
 					'showDeleteProgramBtn',
 					'showAddNewProgramField',
@@ -283,11 +288,12 @@
 					admin_modify_ctrl.showModifyCurrentProgramInputNBtn.forEach(function(value) {
 						value = false;
 					});
-				}else{	//if evaluated as obj
-					for (var key in admin_modify_ctrl.showModifyCurrentProgramInputNBtn){
-						admin_modify_ctrl.showModifyCurrentProgramInputNBtn[key] = false;
-					}
 				}
+				// }else{	//if evaluated as obj
+				// 	for (var key in admin_modify_ctrl.showModifyCurrentProgramInputNBtn){
+				// 		admin_modify_ctrl.showModifyCurrentProgramInputNBtn[key] = false;
+				// 	}
+				
 			};
 
 			admin_modify_ctrl.putChangesFilter = function(data) {
