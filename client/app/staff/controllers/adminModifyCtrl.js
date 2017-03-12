@@ -8,7 +8,7 @@
 			//admin modify controller code
 			var admin_modify_ctrl = this;
 			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;
-			admin_modify_ctrl.editOn = false;
+			admin_modify_ctrl.editOn = false;	//this is edit function which turns all show edit fields off
 			admin_modify_ctrl.showEditBtn = true;
 			admin_modify_ctrl.putData = {
 				name: '',
@@ -18,11 +18,17 @@
 				email: '',
 				program: [],
 				tuitionPaid: '',
+				marketingSurvey: '',
 				graduate: '',
 				passedExam: '',
-				passedOn1st: '',
-				passedOn2nd: '',
-				passedOn3rd: ''
+				numberOfTries: '',
+				noPassReason: '',
+				jobPlaced: '',
+				weeklyWorkHours: '',
+				payRate: '',
+				jobDescription: '',
+				noJobReason: '',
+				notGraduatingReason: ''
 			};
 
 			admin_modify_ctrl.cancelProgramEditCondition = function() {	//ngif in the view for cancel Program Edit condition
@@ -34,13 +40,73 @@
 				else return false;
 			};
 
+			admin_modify_ctrl.showSubmitChangesCondition = function() {	//ngif in the view for show submit changes condition
+
+				if (admin_modify_ctrl.editNameFieldOn ||
+					admin_modify_ctrl.editPhoneFieldOn ||
+					admin_modify_ctrl.editSsnFieldOn ||
+					admin_modify_ctrl.editAddressFieldOn ||
+					admin_modify_ctrl.editEmailFieldOn ||
+					admin_modify_ctrl.editTuitionPaidFieldOn ||
+					admin_modify_ctrl.editMarketingSurveyFieldOn ||
+					admin_modify_ctrl.editGraduateFieldOn ||
+					admin_modify_ctrl.editPassedExamFieldOn ||
+					admin_modify_ctrl.editNumberOfTriesFieldOn ||
+					admin_modify_ctrl.editNoPassReasonFieldOn ||
+					admin_modify_ctrl.editJobPlacedFieldOn ||
+					admin_modify_ctrl.editWeeklyWorkingHoursFieldOn ||
+					admin_modify_ctrl.editPayRateFieldOn ||
+					admin_modify_ctrl.editJobPlacedFieldOn ||
+					admin_modify_ctrl.editNoJobReasonFieldOn ||
+					admin_modify_ctrl.editNotGraduatingReasonFieldOn ||
+					admin_modify_ctrl.showSubmitChangesBtn)
+					return true;
+				else return false;
+			};
+
+			admin_modify_ctrl.showFinalCancelCondition = function() {	//ngif in the view for show final cancel condition
+
+				if (admin_modify_ctrl.editNameFieldOn ||
+					admin_modify_ctrl.editPhoneFieldOn ||
+					admin_modify_ctrl.editSsnFieldOn ||
+					admin_modify_ctrl.editAddressFieldOn ||
+					admin_modify_ctrl.editEmailFieldOn ||
+					admin_modify_ctrl.editTuitionPaidFieldOn ||
+					admin_modify_ctrl.editMarketingSurveyFieldOn ||
+					admin_modify_ctrl.editGraduateFieldOn ||
+					admin_modify_ctrl.editPassedExamFieldOn ||
+					admin_modify_ctrl.editNumberOfTriesFieldOn ||
+					admin_modify_ctrl.editNoPassReasonFieldOn ||
+					admin_modify_ctrl.editJobPlacedFieldOn ||
+					admin_modify_ctrl.editWeeklyWorkingHoursFieldOn ||
+					admin_modify_ctrl.editPayRateFieldOn ||
+					admin_modify_ctrl.editJobPlacedFieldOn ||
+					admin_modify_ctrl.editNoJobReasonFieldOn ||
+					admin_modify_ctrl.editNotGraduatingReasonFieldOn ||
+					admin_modify_ctrl.showFinalCancelBtn)
+					return true;
+				else return false;
+			};
+
 			admin_modify_ctrl.turnEditOff = function() {
-				var turnOff = [	//all the edit fields
+				var turnOff = [	//all the edit fields except programs
 					'editNameFieldOn',
 					'editPhoneFieldOn',
 					'editSsnFieldOn',
 					'editAddressFieldOn',
-					'editEmailFieldOn'
+					'editEmailFieldOn',
+					'editTuitionPaidFieldOn',
+					'editMarketingSurveyFieldOn',
+					'editGraduateFieldOn',
+					'editPassedExamFieldOn',
+					'editNumberOfTriesFieldOn',
+					'editNoPassReasonFieldOn',
+					'editJobPlacedFieldOn',
+					'editWeeklyWorkingHoursFieldOn',
+					'editPayRateFieldOn',
+					'editJobDescriptionFieldOn',
+					'editNoJobReasonFieldOn',
+					'editNotGraduatingReasonFieldOn'
 				];
 
 				turnOff.forEach(function(eachTarget) {	//turning each edit to false
@@ -132,6 +198,20 @@
 				});
 			};
 
+			admin_modify_ctrl.finalCancelBtn = function() {
+				turnOff = [
+					'showModifyThisProgramBtn',
+					'showDeleteProgramBtn',
+					'showAddNewProgramField',
+					'showModifyThisProgramBtn'
+				];
+				turnOff.forEach(function(eachTarget) {
+					admin_modify_ctrl[eachTarget] = false;
+				});
+
+				admin_modify_ctrl.turnEditOff();
+			};
+
 			admin_modify_ctrl.submitModificationBtn = function(programToBeModified) {
 				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(programToBeModified);
 				//modify program
@@ -147,7 +227,7 @@
 				originalProgram = originalProgram.filter(function(eachProgram) {
 					return eachProgram.programName !== programObj.programName;	//returning only obj that dont match with parameter obj, thus deleting that from array
 				});
-				admin_modify_ctrl.submitChanges();	//calling submitChanges so changes can be submmited to database
+				admin_modify_ctrl.submitChangesBtn();	//calling submitChanges so changes can be submmited to database
 			};
 
 			admin_modify_ctrl.modifyProgram = function(programObj) {
@@ -158,13 +238,13 @@
 					if (admin_modify_ctrl.modifyProgramName)	eachProgram.programName = admin_modify_ctrl.modifyProgramName;
 					if (admin_modify_ctrl.modifyProgramRotation)	eachProgram.programRotation = admin_modify_ctrl.modifyProgramRotation;
 				}
-				admin_modify_ctrl.submitChanges();	//finally call submit changes again for data to be saved in db, meaning one modification can happen per time.
+				admin_modify_ctrl.submitChangesBtn();	//finally call submit changes again for data to be saved in db, meaning one modification can happen per time.
 
 			});
 			};
 
 			admin_modify_ctrl.submitNewProgramBtn = function() {
-				admin_modify_ctrl.submitChanges();	
+				admin_modify_ctrl.submitChangesBtn();	
 			};
 
 			admin_modify_ctrl.edit = function() {
@@ -240,24 +320,26 @@
 							putDataAfterFilter[inputField] = originalProgram;	//if they arent met, the puDataAFterFilter[inputField] part of the obj should be undefined, 
 																//so lets equate the student details array, so we update programs every edit, and account for deleted programs 
 					}
-					else if (data[inputField] !== '')	//for the rest of the fields, we filter through the ones that is editted
+					else if (data[inputField] !== '' || data[inputField] !== 'noneSelected')	//for the rest of the fields, we filter through the ones that is editted
 						putDataAfterFilter[inputField] = data[inputField];
 				}
+				//TECHNICALLY DONT NEED THIS BECAUSE AS AN OPTION YOU CAN HAVE EMPTY STRINGS TO BE SENT TO THE SERVER TO BE EVALUATED AS FALSE ANYWAYS
 				//this will convert false to empty string to be converted to boolean false or 0 value in the server side.
 	//			if (putDataAfterFilter.program && putDataAfterFilter.program.toLowerCase() === 'false')	putDataAfterFilter.program = '';
-				if (putDataAfterFilter.tuitionPaid && putDataAfterFilter.tuitionPaid.toLowerCase() === 'false')	putDataAfterFilter.tuitionPaid = '';
-				if (putDataAfterFilter.graduate && putDataAfterFilter.graduate.toLowerCase() === 'false')	putDataAfterFilter.graduate = '';
+				if (putDataAfterFilter.tuitionPaid && putDataAfterFilter.tuitionPaid === 'false')	putDataAfterFilter.tuitionPaid = '';
+				if (putDataAfterFilter.graduate && putDataAfterFilter.graduate === 'false')	putDataAfterFilter.graduate = '';
+				if (putDataAfterFilter.jobPlaced && putDataAfterFilter.jobPlaced === 'false')	putDataAfterFilter.jobPlaced = '';
 				if (putDataAfterFilter.passedExam && putDataAfterFilter.passedExam.toLowerCase() === 'false')	putDataAfterFilter.passedExam = '';
-				if (putDataAfterFilter.passedOn1st && putDataAfterFilter.passedOn1st.toLowerCase() === 'false')	putDataAfterFilter.passedOn1st = '';
-				if (putDataAfterFilter.passedOn2nd && putDataAfterFilter.passedOn2nd.toLowerCase() === 'false')	putDataAfterFilter.passedOn2nd = '';
-				if (putDataAfterFilter.passedOn3rd && putDataAfterFilter.passedOn3rd.toLowerCase() === 'false')	putDataAfterFilter.passedOn3rd = '';
+				// if (putDataAfterFilter.passedOn1st && putDataAfterFilter.passedOn1st.toLowerCase() === 'false')	putDataAfterFilter.passedOn1st = '';
+				// if (putDataAfterFilter.passedOn2nd && putDataAfterFilter.passedOn2nd.toLowerCase() === 'false')	putDataAfterFilter.passedOn2nd = '';
+				// if (putDataAfterFilter.passedOn3rd && putDataAfterFilter.passedOn3rd.toLowerCase() === 'false')	putDataAfterFilter.passedOn3rd = '';
 				//need to attach the original name so the server can look it up and edit its contents
 				putDataAfterFilter.originalName = originalName;
 				//returning the filtered through obj
 				return putDataAfterFilter;
 			};
 
-			admin_modify_ctrl.submitChanges = function() {
+			admin_modify_ctrl.submitChangesBtn = function() {
 				var data = admin_modify_ctrl.putChangesFilter(admin_modify_ctrl.putData);
 				
 				admin_modify_ctrl.editOn = false;	//after clicking submit changes, edit and the rest of ng-ifs are off

@@ -142,6 +142,7 @@
 
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
+					console.log(successResponse);
 					admin_search_ctrl.showFullDetail = false;
 					if (Array.isArray(successResponse.data)){	//need to account for when an array of users is returned from server for findAll method in db
 						successResponse.data.forEach(function(student) {	//each student from the response will map their program to only its name
@@ -164,6 +165,7 @@
 						admin_search_ctrl.showResultTable = true;	//turning on the results table
 					}
 				}, function(failureResponse) {
+					console.log(failureResponse);
 					admin_search_ctrl.data = [];	//failed response, ensure data is empty, so previous results wont show
 					admin_search_ctrl.showFullDetail = false;	//turning off full detail view
 					admin_search_ctrl.message = failureResponse.data;	//setting error message to the failure response data message

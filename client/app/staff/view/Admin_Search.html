@@ -47,31 +47,31 @@
 			Student name: {{ admin_search_ctrl.studentDetail.name }}	<!-- COULD ADD IN A FUNCTIONALITY WHERE YOU CAN CHANGE FIRST OR LAST NAME -->
 			<input type="text" name="name" ng-if="admin_modify_ctrl.editNameFieldOn" ng-model="admin_modify_ctrl.putData['name']" placeholder="Modify Full Name">
 			<hr>
-			<button class="btn" ng-click="admin_modify_ctrl.editNameFieldOn = true">Modify Name</button>>
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editNameFieldOn = true">Modify Name</button>>
 		</div>
 		<div>
 			Student phone number: {{ admin_search_ctrl.studentDetail.phoneNumber }}
 			<input type="text" name="phoneNumber" ng-if="admin_modify_ctrl.editPhoneFieldOn" ng-model="admin_modify_ctrl.putData['phoneNumber']" placeholder="Modify Number">
 			<hr>
-			<button class="btn" ng-click="admin_modify_ctrl.editPhoneFieldOn = true">Modify Phone Number</button>
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editPhoneFieldOn = true">Modify Phone Number</button>
 		</div>
 		<div>
 			Student social security number: {{ admin_search_ctrl.studentDetail.ssn }}
 			<input type="text" name="ssn" ng-if="admin_modify_ctrl.editSsnFieldOn" ng-model="admin_modify_ctrl.putData['ssn']" placeholder="Modify SSN">
 			<hr>
-			<button class="btn" ng-click="admin_modify_ctrl.editSsnFieldOn = true">Modify SSN</button>
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editSsnFieldOn = true">Modify SSN</button>
 		</div>
 		<div>
 			Student address: {{ admin_search_ctrl.studentDetail.address }}
 			<input type="text" name="address" ng-if="admin_modify_ctrl.editAddressFieldOn" ng-model="admin_modify_ctrl.putData['address']" placeholder="Modify Address">
 			<hr>
-			<button class="btn" ng-click="admin_modify_ctrl.editAddressFieldOn = true"></button>
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editAddressFieldOn = true">Modify Address</button>
 		</div>
 		<div>
 			Student email: {{ admin_search_ctrl.studentDetail.email }}
 			<input type="text" name="email" ng-if="admin_modify_ctrl.editEmailFieldOn" ng-model="admin_modify_ctrl.putData['email']" placeholder="Modify Email">
 			<hr>
-			<button class="btn" ng-click="admin_modify_ctrl.editEmailFieldOn = true"></button>
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editEmailFieldOn = true">Modify Email</button>
 		</div>
 		<div>
 			<span>Student program:</span>	<!-- SHOULD PUT ALL THE LOGIC INTO CONTROLLER  -->
@@ -84,7 +84,7 @@
 							admin_modify_ctrl.turnEditOff()">
 				Edit Current Programs
 			</button> -->
-			<button class="btn" ng-if="admin_search_ctrl.studentDetail.program[0]['programName']" 
+			<button class="btn" ng-if="admin_search_ctrl.studentDetail.program[0]['programName'] && admin_modify_ctrl.isAdmin()" 
 								ng-click="admin_modify_ctrl.editCurrentProgramBtn()">
 				Edit Current Programs
 			</button>
@@ -95,7 +95,7 @@
 							admin_modify_ctrl.turnEditOff()">
 				Add New Program
 			</button> -->
-			<button class="btn" ng-click="admin_modify_ctrl.addNewProgramBtn()">
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.addNewProgramBtn()">
 				Add New Program
 			</button>
 <!-- 			<button class="btn" ng-click="admin_modify_ctrl.deleteProgramBtn = true; 
@@ -106,7 +106,7 @@
 							admin_modify_ctrl.turnEditOff()">
 				Delete Program
 			</button> -->
-			<button class="btn" ng-click="admin_modify_ctrl.deleteProgramBtn()">
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.deleteProgramBtn()">
 				Delete Program
 			</button>
 			<table>
@@ -177,21 +177,93 @@
 			<hr>
 		</div>
 		<div>
-			Student job tuition paid: {{ admin_search_ctrl.studentDetail.tuitionPaid }}
-			<input type="text" name="tuitionPaid" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['tuitionPaid']" placeholder="True of False">
+			Student job tuition paid: 
+			<span ng-if="admin_search_ctrl.studentDetail.tuitionPaid">Tuition Paid</span>
+			<span ng-if="!(admin_search_ctrl.studentDetail.tuitionPaid)">Payment Pending, please check Payment Tracker</span>
+			<select ng-if="admin_modify_ctrl.editTuitionPaidFieldOn" ng-model="admin_modify_ctrl.putData['tuitionPaid']" name="tuitionPaid" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="true">Tuition Paid</option>
+				<option value="false">Payment Pending</option>
+			</select>
+<!-- 			<input type="text" name="tuitionPaid" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['tuitionPaid']" placeholder="True of False">
+ -->	
+ 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editTuitionPaidFieldOn = true">Modify Payment Status</button>
 			<hr>
 		</div>
 		<div>
-			Student graduate: {{ admin_search_ctrl.studentDetail.graduate }}
-			<input type="text" name="graduate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['graduate']" placeholder="True or False">
+			Student Marketing Survey: {{ admin_search_ctrl.studentDetail.marketingSurvey }}
+			<select ng-if="admin_modify_ctrl.editMarketingSurveyFieldOn" ng-model="admin_modify_ctrl.putData['marketingSurvey']" name="marketingSurvey" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="Chinese_In_LA">Chinese In LA</option>
+				<option value="World_Journal">World Journal</option>
+				<option value="Craigslist">Craigslist</option>
+				<option value="Referred_By_Friend">Referred by friend</option>
+				<option value="None">None of the above</option>
+			</select>
+<!-- 			<input type="text" name="tuitionPaid" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['tuitionPaid']" placeholder="True of False">
+ -->		
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editMarketingSurveyFieldOn = true">Modify Marketing Survey</button>
+ 			<hr>
+		</div>
+<!-- IF GRADUATED, THEN CHECK 1. IF PASSED EXAM, 2. IF JOBPLACED -->
+	<!-- IF PASSED EXAM, THEN SHOW 1. NUMBER OF TRIES; 
+		 IF DID NOT PASS EXAM, THEN SHOW 1. NO PASS REASON -->
+	<!-- IF JOB PLACED, THEN SHOW 1. WEEKLY WORKING HOURS, 2. PAY RATE, 3. JOB DESCRIPTION 
+		 IF DOES NOT HAVE JOB THEN SHOW 1. NO JOB REASON-->
+<!-- IF DID NOT GRADUATE, THEN SHOW 1. NOT GRADUATING REASON -->
+
+<!-- FOR ALL OPTIONS, CAN TECHNICALLY REMOVE FALSE, BC AN EMPTY STRING CAN BE SENT TO SERVER EVALUATED AS FALSE ANYWAYS, 
+	SO NO NEED TO HAVE IT CONVERTED FROM FALSE TO EMPTY STRING IN THE PUTDATA FILTER IN THE ADMIN MODIFY CONTROLLER
+-->
+		<div ng-if="admin_search_ctrl.studentDetail.graduate">
+			Student graduate status:
+			<span ng-if="admin_search_ctrl.studentDetail.graduate">Alumni</span>
+			<span ng-if="!(admin_search_ctrl.studentDetail.graduate)">Student</span>
+			<select ng-if="admin_modify_ctrl.editGraduateFieldOn" ng-model="admin_modify_ctrl.putData['graduate']" name="graduate" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="true">Alumni</option>
+				<option value="false">Student</option>
+			</select>
+<!-- 			<input type="text" name="graduate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['graduate']" placeholder="True or False"> -->
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editGraduateFieldOn = true">Modify Graduate Status</button>
 			<hr>
 		</div>
-		<div>
-			Student passed exam: {{ admin_search_ctrl.studentDetail.passedExam }}
-			<input type="text" name="passedExam" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedExam']" placeholder="True or False">
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.passedExam">
+			Student passed exam:
+			<span ng-if="admin_search_ctrl.studentDetail.passedExam">Passed</span>
+			<span ng-if="!(admin_search_ctrl.studentDetail.passedExam)">Did not pass</span>
+			<select ng-if="admin_modify_ctrl.editPassedExamFieldOn" ng-model="admin_modify_ctrl.putData['passedExam']" name="passedExam" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="true">Passed</option>
+				<option value="false">Did not pass</option>
+			</select>
+<!-- 			<input type="text" name="passedExam" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedExam']" placeholder="True or False"> -->
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editPassedExamFieldOn = true">Modify Exam pass Status</button>
 			<hr>
 		</div>
-		<div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.passedExam">
+			Number of Tries: {{ admin_search_ctrl.studentDetail.numberOfTries }}
+			<select ng-if="admin_modify_ctrl.editNumberOfTriesFieldOn" ng-model="admin_modify_ctrl.putData['numberOfTries']" name="numberOfTries" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="1">1st Try</option>
+				<option value="2">2nd Try</option>
+				<option value="3">3rd Try</option>
+			</select>
+<!-- 			<input type="text" name="passedExam" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedExam']" placeholder="True or False"> -->
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editNumberOfTriesFieldOn = true">Modify Number of Tries</button>
+			<hr>
+		</div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && !(admin_search_ctrl.studentDetail.passedExam)">
+			Reason for not passing: {{ admin_search_ctrl.studentDetail.noPassReason }}
+			<select ng-if="admin_modify_ctrl.editNoPassReasonFieldOn" ng-model="admin_modify_ctrl.putData['noPassReason']" name="noPassReason" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="Have_not_taken_the_exam">Have not taken the exam yet</option>
+				<option value="Failed_theory">Failed Theory</option>
+				<option value="Failed_skills">Failed Skills</option>
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editNoPassReasonFieldOn = true">Modify Reason for not Passing</button>
+			<hr>
+		</div>
+<!-- 		<div>
 			Student passed on 1st try: {{ admin_search_ctrl.studentDetail.passedOn1st }}
 			<input type="text" name="passedOn1st" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedOn1st']" placeholder="True or False">
 			<hr>
@@ -205,23 +277,65 @@
 			Student passed on 3rd try: {{ admin_search_ctrl.studentDetail.passedOn3rd }}
 			<input type="text" name="passedOn3rd" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['passedOn3rd']" placeholder="True or False">
 			<hr>
-		</div>
-		<div>
-			Student job Placed: {{ admin_search_ctrl.studentDetail.jobPlaced }}
-			<input type="text" name="jobPlaced" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['jobPlaced']" placeholder="True or False">
+		</div> -->
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
+			Student job Placed:
+			<span ng-if="admin_search_ctrl.studentDetail.jobPlaced">Employed</span>
+			<span ng-if="!(admin_search_ctrl.studentDetail.jobPlaced)">Unemployed</span>
+			<select ng-if="admin_modify_ctrl.editJobPlacedFieldOn" ng-model="admin_modify_ctrl.putData['jobPlaced']" name="jobPlaced" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="true">Employed</option>
+				<option value="false">Unemployed</option>
+			</select>
+<!-- 			<input type="text" name="jobPlaced" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['jobPlaced']" placeholder="True or False"> -->
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editJobPlacedFieldOn = true">Modify Employment Status</button>
 			<hr>
 		</div>
-		<div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
+			Full-time/Part-time:
+			<span ng-if="admin_search_ctrl.studentDetail.weeklyWorkHours === 'fullTimePos'">Full Time</span>
+			<span ng-if="admin_search_ctrl.studentDetail.weeklyWorkHours === 'partTimePos'">Part Time</span>
+			<select ng-if="admin_modify_ctrl.editWeeklyWorkingHoursFieldOn" ng-model="admin_modify_ctrl.putData['weeklyWorkHours']" name="weeklyWorkHours" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+				<option value="fullTimePos">Full Time</option>
+				<option value="partTimePos">Part Time</option>
+			</select>
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editWeeklyWorkingHoursFieldOn = true">Modify Type of Employee</button>
+			<hr>
+		</div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
+			Student pay rate: {{ admin_search_ctrl.studentDetail.payRate }}
+			<input type="text" class="form-control" name="payRate" ng-if="admin_search_ctrl.editPayRateFieldOn" ng-model="admin_modify_ctrl.putData['payRate']" placeholder="Please Enter a new Pay Rate">
+  			<button class="btn" ng-click="admin_modify_ctrl.editPayRateFieldOn = true">Modify Pay Rate</button>
+			<hr>
+		</div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
 			Student job description: {{ admin_search_ctrl.studentDetail.jobDescription }}
-			<input type="text" name="jobDescription" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['jobDescription']" placeholder="Modify Job Description">
+			<input type="text" name="jobDescription" ng-if="admin_search_ctrl.editJobDescriptionFieldOn" ng-model="admin_modify_ctrl.putData['jobDescription']" placeholder="Modify Job Description">
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editJobDescriptionFieldOn = true">Modify Job Description</button>
 			<hr>
 		</div>
-		<div>
+		<div ng-if="admin_search_ctrl.studentDetail.graduate && !(admin_search_ctrl.studentDetail.jobPlaced)">
 			Student Reason for Unemployment: {{ admin_search_ctrl.studentDetail.noJobReason }}
-			<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['noJobReason']" placeholder="Modify No Job Reason">
+			<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editNoJobReasonFieldOn" ng-model="admin_modify_ctrl.putData['noJobReason']" placeholder="Modify Unemployment Reason">
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editNoJobReasonFieldOn = true">Modify Job Description</button>
 			<hr>
 		</div>
-		<div>
+		<div ng-if="!(admin_search_ctrl.studentDetail.graduate)">
+			Student Reason for not Graduating: {{ admin_search_ctrl.studentDetail.notGraduatingReason }}
+			<select ng-if="admin_modify_ctrl.editNotGraduatingReasonFieldOn" ng-model="admin_modify_ctrl.putData['notGraduatingReason']" name="notGraduatingReason" class="form-control">
+				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+				<option value="Still_in_program">Still in the program</option>
+				<option value="Dropped_the_program">Dropped</option>
+				<option value="Missing_clinical_hours">Did not finish clinical</option>
+				<option value="Missing_theory_hours">Did not finish theory</option>
+				<option value="Did_not_finish_payment">Did not finish payment</option>
+			</select>
+<!-- 			<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editNoJobReasonFieldOn" ng-model="admin_search_ctrl.putData['noJobReason']" placeholder="Modify Unemployment Reason"> -->
+  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" ng-click="admin_modify_ctrl.editNotGraduatingReasonFieldOn = true">Modify Job Description</button>
+			<hr>
+		</div>
+<!-- 		<div>
 			Student part time pos: {{ admin_search_ctrl.studentDetail.partTimePos }}
 			<input type="text" name="partTimePos" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['partTimePos']" placeholder="True or False">
 			<hr>
@@ -230,27 +344,24 @@
 			Student full time pos: {{ admin_search_ctrl.studentDetail.fullTimePos }}
 			<input type="text" name="fullTimePos" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['fullTimePos']" placeholder="True or False">
 			<hr>
-		</div>
-		<div>
-			Student pay rate: {{ admin_search_ctrl.studentDetail.payRate }}
-			<input type="text" name="payRate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['payRate']" placeholder="True or False">
-			<hr>
-		</div>
-		<div>
+		</div> -->
+<!-- 		<div>
 			How did the student hear about us: {{ admin_search_ctrl.studentDetail.marketingSurvey }}
 			<input type="text" name="payRate" ng-if="admin_search_ctrl.editOn" ng-model="admin_search_ctrl.putData['payRate']" placeholder="True or False">
 			<hr>
-		</div>
+		</div> -->
 		<div>
-			<button class="btn" ng-if="admin_search_ctrl.isAdmin() && admin_search_ctrl.showEditBtn" ng-click="admin_search_ctrl.edit()">Edit</button>
-			<button class="btn" ng-if="admin_search_ctrl.isAdmin()" ng-click="admin_search_ctrl.delete()">Delete</button>
-			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showSubmitChangesBtn" ng-click="admin_search_ctrl.submitChanges()">Submit Changes</button>
-			<button class="btn" ng-if="admin_search_ctrl.editOn && admin_search_ctrl.showFinalCancelBtn" 
-								ng-click="admin_search_ctrl.editOn=false; 
-								admin_search_ctrl.editCurrentProgram=false; 
-								admin_search_ctrl.showDeleteProgramBtn = false; 
-								admin_search_ctrl.showAddNewProgramField = false;
-								admin_search_ctrl.editCurrentProgramBtn = false">
+<!-- 			<button class="btn" ng-if="admin_search_ctrl.isAdmin() && admin_search_ctrl.showEditBtn" ng-click="admin_search_ctrl.edit()">Edit</button> -->
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" 
+								ng-click="admin_modify_ctrl.delete()">
+				Delete
+			</button>
+			<button class="btn" ng-if="admin_modify_ctrl.showSubmitChangesCondition()" 
+								ng-click="admin_modify_ctrl.submitChangesBtn()">
+				Submit Changes
+			</button>
+			<button class="btn" ng-if="admin_modify_ctrl.showFinalCancelCondition()" 
+								ng-click="admin_modify_ctrl.finalCancelBtn()">
 				Cancel
 			</button>
 		</div>
