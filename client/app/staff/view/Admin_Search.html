@@ -12,6 +12,7 @@
 			</select>
 			<button class="btn" ng-click="admin_search_ctrl.submitBtn()">Search</button>
 		</form>
+<!--/END OF SEARCH INPUT -->
 		<div style="width: 100%; height: 75px; overflow: auto;">
 			<table ng-if="admin_search_ctrl.showResultTable">
 				<thead>
@@ -37,10 +38,13 @@
 			</table>
 		</div>
 	</div>
+<!--/END OF SEARCH RESULTS TABLE -->
 	<div class="col-md-6" ng-if="admin_search_ctrl.message">
 		{{ admin_search_ctrl.message }}
 	</div>
+<!--/END OF SEARCH ERROR MESSAGE RESULT, IF ANY -->
 	<div class="col-md-6" ng-if="admin_search_ctrl.showFullDetail" ng-controller="adminModifyController as admin_modify_ctrl">
+<!-- ONCE A STUDENT IS CLICKED, THIS WILL POPULATE NG VIEW WITH FULL DETAIL OF STUDENT, ALSO INITIALZED ADMIN MODIFY CONTROLLER -->
 		<div>
 			Student name: {{ admin_search_ctrl.studentDetail.name }}	<!-- COULD ADD IN A FUNCTIONALITY WHERE YOU CAN CHANGE FIRST OR LAST NAME -->
 			<input class="form-control" type="text" name="name" ng-if="admin_modify_ctrl.editNameFieldOn" ng-model="admin_modify_ctrl.putData['name']" placeholder="Modify Full Name">
@@ -58,6 +62,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF NAME DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student phone number: {{ admin_search_ctrl.studentDetail.phoneNumber }}
 			<input class="form-control" type="text" name="phoneNumber" ng-if="admin_modify_ctrl.editPhoneFieldOn" ng-model="admin_modify_ctrl.putData['phoneNumber']" placeholder="Modify Number">
@@ -75,6 +80,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF PHONE NUMBER DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student social security number: {{ admin_search_ctrl.studentDetail.ssn }}
 			<input class="form-control" type="text" name="ssn" ng-if="admin_modify_ctrl.editSsnFieldOn" ng-model="admin_modify_ctrl.putData['ssn']" placeholder="Modify SSN">
@@ -92,6 +98,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF SSN DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student address: {{ admin_search_ctrl.studentDetail.address }}
 			<input class="form-control" type="text" name="address" ng-if="admin_modify_ctrl.editAddressFieldOn" ng-model="admin_modify_ctrl.putData['address']" placeholder="Modify Address">
@@ -109,6 +116,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF ADDRESS DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student email: {{ admin_search_ctrl.studentDetail.email }}
 			<input class="form-control" type="text" name="email" ng-if="admin_modify_ctrl.editEmailFieldOn" ng-model="admin_modify_ctrl.putData['email']" placeholder="Modify Email">
@@ -126,6 +134,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF EMAIL DETAIL AND MODIFICATION METHODS -->
 		<div>
 			<span>Student program:</span>
 			<!-- The if condition is for the button to only appear when there is programs to edit -->
@@ -141,6 +150,7 @@
 								ng-click="admin_modify_ctrl.deleteProgramBtn()">
 				Delete Program
 			</button>
+<!--/END OF INITIAL PROGRAM EDIT ACTION BUTTONS, STARTING PROGRAM VIEW TABLE BELOW -->
 			<table>
 				<thead>
 					<th>Program Name |</th>
@@ -160,11 +170,11 @@
 								<option value="ESOL">ESOL</option>
 							</select>
 						</td>
-						<td>	<!-- SECOND COLUMN => PROGRAM ROTATION WITH EDIT FIELDS -->
+						<td>	<!-- SECOND COLUMN => PROGRAM ROTATION -->
 							{{ programDetails.programRotation }}
 							<input type="text" class="form-control" name="editCurrentProgramRotation" placeholder="Modify Program Rotation" ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-model="admin_modify_ctrl.modifyProgramRotation">
 						</td>
-						<td>
+						<td> <!-- THIRD COLUMN => PROGRAM EDIT ACTION BUTTONS -->
 							<button class="btn" ng-if="admin_modify_ctrl.showModifyThisProgramBtn" 
 												ng-click="admin_modify_ctrl.modifyThisProgramBtn(programDetails)">
 								Modify this Program
@@ -180,7 +190,7 @@
 						</td>
 					</tr>
 					<tr><!-- SECOND ROW IS FOR ADDING NEW PROGRAMS -->
-						<td>
+						<td> <!-- FIRST COLUMN IS FOR NEW PROGRAM NAME INPUT FIELD -->
 							<select ng-if="admin_modify_ctrl.showAddNewProgramField" ng-model="admin_modify_ctrl.newProgramName" name="addNewProgramField" class="form-control">
 								<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 								<option value="CNA">Certified Nurse Assistant</option>
@@ -190,10 +200,10 @@
 								<option value="ESOL">ESOL</option>
 							</select>
 						</td>
-						<td>
+						<td> <!-- SECOND COLUMN IS FOR NEW PROGRAM ROTATION INPUT FIELD -->
 							<input type="text" class="form-control" name="addNewProgramField" placeholder="New Program Rotation" ng-if="admin_modify_ctrl.showAddNewProgramField" ng-model="admin_modify_ctrl.newProgramRotation">
 						</td>
-						<td>
+						<td> <!-- THIRD COLUMN IS AGAIN FOR THE NEW PROGRAM ADDITION ACTION BUTTONS -->
 							<button class="btn" ng-if="admin_modify_ctrl.showAddNewProgramField" 
 												ng-click="admin_modify_ctrl.submitNewProgramBtn()">
 								Submit New Program
@@ -231,6 +241,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF TUITION STATUS DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student Marketing Survey: {{ admin_search_ctrl.studentDetail.marketingSurvey }}
 			<select ng-if="admin_modify_ctrl.editMarketingSurveyFieldOn" ng-model="admin_modify_ctrl.putData['marketingSurvey']" name="marketingSurvey" class="form-control">
@@ -255,7 +266,10 @@
 			</button>
  			<hr>
 		</div>
-<!-- IF GRADUATED, THEN CHECK 1. IF PASSED EXAM, 2. IF JOBPLACED -->
+<!--/END OF MARKETING SURVEY DETAIL AND MODIFICATION METHODS -->
+
+<!-- FOLLOWING LOGIC RULES THE REST OF THE PAGE 
+	IF GRADUATED, THEN CHECK 1. IF PASSED EXAM, 2. IF JOBPLACED -->
 	<!-- IF PASSED EXAM, THEN SHOW 1. NUMBER OF TRIES; 
 		 IF DID NOT PASS EXAM, THEN SHOW 1. NO PASS REASON -->
 	<!-- IF JOB PLACED, THEN SHOW 1. WEEKLY WORKING HOURS, 2. PAY RATE, 3. JOB DESCRIPTION 
@@ -282,6 +296,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF GRADAUTE DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.passedExam">
 			<p>Student exam status: Passed</p>
 			<select ng-if="admin_modify_ctrl.editPassedExamFieldOn" ng-model="admin_modify_ctrl.putData['passedExam']" name="passedExam" class="form-control">
@@ -303,6 +318,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF EXAM STATUS DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.passedExam">
 			Number of Tries: {{ admin_search_ctrl.studentDetail.numberOfTries }}
 			<select ng-if="admin_modify_ctrl.editNumberOfTriesFieldOn" ng-model="admin_modify_ctrl.putData['numberOfTries']" name="numberOfTries" class="form-control">
@@ -325,6 +341,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF NUMBER OF TRIES DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && !(admin_search_ctrl.studentDetail.passedExam)">
 			<p>Student exam status: Did not Pass</p>
 			<p>Reason for not passing: {{ admin_search_ctrl.studentDetail.noPassReason }}</p>
@@ -348,6 +365,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF REASON FOR NOT PASSING DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
 			<p>Student job Placed: Employed</p>
 			<select ng-if="admin_modify_ctrl.editJobPlacedFieldOn" ng-model="admin_modify_ctrl.putData['jobPlaced']" name="jobPlaced" class="form-control">
@@ -369,6 +387,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF EMPLOYMENT DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
 			Full-time/Part-time:
 			<span ng-if="admin_search_ctrl.studentDetail.weeklyWorkHours === 'fullTimePos'">Full Time</span>
@@ -392,6 +411,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF FULLTIME/PARTTIME DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
 			Student pay rate: {{ admin_search_ctrl.studentDetail.payRate }}
 			<input type="text" class="form-control" name="payRate" ng-if="admin_search_ctrl.editPayRateFieldOn" ng-model="admin_modify_ctrl.putData['payRate']" placeholder="Please Enter a new Pay Rate">
@@ -409,6 +429,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF PAYRATE DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && admin_search_ctrl.studentDetail.jobPlaced">
 			Student job description: {{ admin_search_ctrl.studentDetail.jobDescription }}
 			<input type="text" name="jobDescription" ng-if="admin_search_ctrl.editJobDescriptionFieldOn" ng-model="admin_modify_ctrl.putData['jobDescription']" placeholder="Modify Job Description">
@@ -426,6 +447,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF JOB DESCRIPTION DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate && !(admin_search_ctrl.studentDetail.jobPlaced)">
 			<p>Student Employment Status: Unemployed</p>
 			<p>Student Reason for Unemployment: {{ admin_search_ctrl.studentDetail.noJobReason }}</p>
@@ -444,6 +466,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF REASON FOR UNEMPLOYMENT DETAIL AND MODIFICATION METHODS -->
 		<div ng-if="!(admin_search_ctrl.studentDetail.graduate)">
 			<p>Student Graduate Status: Student</p>
 			<span>
@@ -465,6 +488,7 @@
 					Cancel
 				</button>
 			</span>
+<!--/END OF GRADUATE STATUS MODIFICATION (ONLY FOR STUDENTS THAT HAVENT GRADUATED YET) -->
 			<span ng-if="admin_modify_ctrl.putData['graduate'] === 'true'">
 				<p>Student Exam Status:
 					<select ng-model="admin_modify_ctrl.putData['passedExam']" name="passedExam" class="form-control">
@@ -479,6 +503,7 @@
 					</select>
 				</p>		
 			</span>
+<!--/END OF EXAM/EMPLOYMENT STATUS MODIFICATION (ONLY FOR STUDENTS THAT ARE BEING MODIFIED TO GRADUATED OR ALUM STATUS) -->
 			<span ng-if="admin_modify_ctrl.putData['passedExam'] === 'true'">
 				<p>Number of Tries:
 					<select ng-model="admin_modify_ctrl.putData['numberOfTries']" name="numberOfTries" class="form-control">
@@ -489,6 +514,7 @@
 					</select>
 				</p>		
 			</span>
+<!--/END OF EXAM STATUS NUMBER OF TRIES MODIFICATION (ONLY FOR STUDENTS THAT ARE BEING MODIFIED TO GRADUATED OR ALUM STATUS, AND ARE BEING MODIFIED AS PASSED EXAM) -->
 			<span ng-if="admin_modify_ctrl.putData['passedExam'] === 'false'">
 				<p>Reason for not passing:
 					<select ng-model="admin_modify_ctrl.putData['noPassReason']" name="noPassReason" class="form-control">
@@ -499,6 +525,7 @@
 					</select>
 				</p>			
 			</span>
+<!--/END OF EXAM NO PASS REASON MODIFICATION (ONLY FOR STUDENTS THAT ARE BEING MODIFIED TO GRADUATED OR ALUM STATUS, AND BEING MODIFIED AS FAILED EXAM) -->
 			<span ng-if="admin_modify_ctrl.putData['jobPlaced'] === 'true'">
 				<p>Full-time/Part-time:
 					<select ng-model="admin_modify_ctrl.putData['weeklyWorkHours']" name="weeklyWorkHours" class="form-control">
@@ -514,8 +541,10 @@
 					<input type="text" name="jobDescription" class="form-control" ng-model="admin_modify_ctrl.putData['jobDescription']" placeholder="Modify Job Description">		
 				</p>			
 			</span>
+<!--/END OF EMPLOYMENT PARTTIME/FULLTIME; PAYRATE; DESCRIPTION MODIFICATION (ONLY FOR STUDENTS THAT ARE BEING MODIFIED TO GRADUATED OR ALUM STATUS, AND BEING MODIFIED AS EMPLOYED) -->
 			<span ng-if="admin_modify_ctrl.putData['jobPlaced'] === 'false'">	
 				<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editNoJobReasonFieldOn" ng-model="admin_modify_ctrl.putData['noJobReason']" placeholder="Modify Unemployment Reason">
+<!--/END OF REASON FOR UNEMPLOYMENT MODIFICATION (ONLY FOR STUDENTS THAT ARE BEING MODIFIED TO GRADUATED OR ALUM STATUS, AND BEING MODIFIED AS UNEMPLOYED) -->
 			</span>
 			<p>Student Reason for not Graduating: {{ admin_search_ctrl.studentDetail.notGraduatingReason }}</p> <!-- NEED TO BETTER ERR CHECK, IF IS ALUM, MAKE SURE NOT GRADUATIN REASON IS EMPTY -->
 			<select ng-if="admin_modify_ctrl.editNotGraduatingReasonFieldOn" ng-model="admin_modify_ctrl.putData['notGraduatingReason']" name="notGraduatingReason" class="form-control">
@@ -540,6 +569,7 @@
 			</button>
 			<hr>
 		</div>
+<!--/END OF REASON FOR NOT GRADUATING DETAILS AND MODIFICATION METHOD (ONLY FOR STUDENTS THAT ARE NOT GRADUATED) -->
 		<div>
 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" 
 								ng-click="admin_modify_ctrl.delete()">
@@ -553,6 +583,7 @@
 								ng-click="admin_modify_ctrl.finalCancelBtn()">
 				Cancel
 			</button>
+<!--/END OF FINAL ACTION BUTTONS, STILL NEED TO DO DELETE ROUTE -->
 		</div>
 	</div>
 	<br>
