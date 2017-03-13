@@ -262,7 +262,7 @@
 		 IF DOES NOT HAVE JOB THEN SHOW 1. NO JOB REASON-->
 <!-- IF DID NOT GRADUATE, THEN SHOW 1. NOT GRADUATING REASON -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate">
-			<p>Student graduate status:	Alumni</p>>
+			<p>Student graduate status:	Alumni</p>
 			<select ng-if="admin_modify_ctrl.editGraduateFieldOn" ng-model="admin_modify_ctrl.putData['graduate']" name="graduate" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
 				<option value="true">Alumni</option>
@@ -445,8 +445,79 @@
 			<hr>
 		</div>
 		<div ng-if="!(admin_search_ctrl.studentDetail.graduate)">
-			<p>Student Graduate Status: Student</p> 
-			<p>Student Reason for not Graduating: {{ admin_search_ctrl.studentDetail.notGraduatingReason }}</p>
+			<p>Student Graduate Status: Student</p>
+			<span>
+				<select ng-if="admin_modify_ctrl.editGraduateFieldOn" ng-model="admin_modify_ctrl.putData['graduate']" name="graduate" class="form-control">
+					<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+					<option value="true">Alumni</option>
+					<option value="false">Student</option>
+				</select>
+	  			<button class="btn" ng-if="admin_modify_ctrl.isAdmin() &&
+	  										admin_modify_ctrl.showModifyGraduateBtn" 
+	  								ng-click="admin_modify_ctrl.editGraduateFieldOn = true;
+	  											admin_modify_ctrl.showModifyGraduateBtn = false">
+	  				Modify
+	  			</button>
+	 			<button class="btn" ng-if="admin_modify_ctrl.editGraduateFieldOn" 
+									ng-click="admin_modify_ctrl.editGraduateFieldOn = false; 
+												admin_modify_ctrl.putData['graduate'] = 'noneSelected';
+												admin_modify_ctrl.showModifyGraduateBtn = true">
+					Cancel
+				</button>
+			</span>
+			<span ng-if="admin_modify_ctrl.putData['graduate'] === 'true'">
+				<p>Student Exam Status:
+					<select ng-model="admin_modify_ctrl.putData['passedExam']" name="passedExam" class="form-control">
+						<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+						<option value="true">Passed</option>
+						<option value="false">Did not pass</option>
+					</select>
+					<select ng-model="admin_modify_ctrl.putData['jobPlaced']" name="jobPlaced" class="form-control">
+						<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+						<option value="true">Employed</option>
+						<option value="false">Unemployed</option>
+					</select>
+				</p>		
+			</span>
+			<span ng-if="admin_modify_ctrl.putData['passedExam'] === 'true'">
+				<p>Number of Tries:
+					<select ng-model="admin_modify_ctrl.putData['numberOfTries']" name="numberOfTries" class="form-control">
+						<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+						<option value="1">1st Try</option>
+						<option value="2">2nd Try</option>
+						<option value="3">3rd Try</option>
+					</select>
+				</p>		
+			</span>
+			<span ng-if="admin_modify_ctrl.putData['passedExam'] === 'false'">
+				<p>Reason for not passing:
+					<select ng-model="admin_modify_ctrl.putData['noPassReason']" name="noPassReason" class="form-control">
+						<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+						<option value="Have_not_taken_the_exam">Have not taken the exam yet</option>
+						<option value="Failed_theory">Failed Theory</option>
+						<option value="Failed_skills">Failed Skills</option>
+					</select>
+				</p>			
+			</span>
+			<span ng-if="admin_modify_ctrl.putData['jobPlaced'] === 'true'">
+				<p>Full-time/Part-time:
+					<select ng-model="admin_modify_ctrl.putData['weeklyWorkHours']" name="weeklyWorkHours" class="form-control">
+						<option disabled ng-selected="true" value="noneSelected"> -- Select an Input -- </option>
+						<option value="fullTimePos">Full Time</option>
+						<option value="partTimePos">Part Time</option>
+					</select>
+				</p>
+				<p>Student pay rate:
+					<input type="text" class="form-control" name="payRate" ng-model="admin_modify_ctrl.putData['payRate']" placeholder="Please Enter a new Pay Rate">
+				</p>
+				<p>Student job description: 
+					<input type="text" name="jobDescription" class="form-control" ng-model="admin_modify_ctrl.putData['jobDescription']" placeholder="Modify Job Description">		
+				</p>			
+			</span>
+			<span ng-if="admin_modify_ctrl.putData['jobPlaced'] === 'false'">	
+				<input type="text" name="noJobReason" ng-if="admin_search_ctrl.editNoJobReasonFieldOn" ng-model="admin_modify_ctrl.putData['noJobReason']" placeholder="Modify Unemployment Reason">
+			</span>
+			<p>Student Reason for not Graduating: {{ admin_search_ctrl.studentDetail.notGraduatingReason }}</p> <!-- NEED TO BETTER ERR CHECK, IF IS ALUM, MAKE SURE NOT GRADUATIN REASON IS EMPTY -->
 			<select ng-if="admin_modify_ctrl.editNotGraduatingReasonFieldOn" ng-model="admin_modify_ctrl.putData['notGraduatingReason']" name="notGraduatingReason" class="form-control">
 				<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
 				<option value="Still_in_program">Still in the program</option>
