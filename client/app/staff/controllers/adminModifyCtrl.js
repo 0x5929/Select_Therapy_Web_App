@@ -44,6 +44,19 @@
 	and successfully manipulates program edit
 */
 			
+
+/*
+	NEW LOGIC FOR MODIFYING/ADDING/DELETING PROGRAMS: [{PROGRAM 1 DETAILS}, {PROGRAM 2 DETAILS}]
+		1. have a edit button shown only if admin
+		2. if edit button is clicked => shows individual edit/delete button and add program button and also a cancel edit button
+			2a. once edit button is clicked, contruct a new program obj and copy the old original programs ready for modification. 
+				2aa. if modifying individual program => find the matching program and edit
+				2ab. if adding new program => add the program details to the new program obj (for edit in step 2a)
+				2ac. if deleting program => delete the matching program in the new program obj
+			2b. push the new program obj into putData
+		3. clicking cancel will remove the new program obj and all of its properties, kind of like a refresh
+		4. also need a check for error, make sure there is no matching programs in the new contructed program arr, if there is, make sure data dont get sent to server!!
+*/
 			admin_modify_ctrl.putChangesFilter = function(data) {
 				var putDataForProgram;
 				var putDataAfterFilter = {};
