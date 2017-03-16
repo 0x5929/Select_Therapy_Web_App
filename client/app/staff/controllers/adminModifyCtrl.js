@@ -55,7 +55,7 @@
 				2ac. if deleting program => delete the matching program in the new program obj
 			2b. push the new program obj into putData
 		3. clicking cancel will remove the new program obj and all of its properties, kind of like a refresh
-		4. also need a check for error, make sure there is no matching programs in the new contructed program arr, if there is, make sure data dont get sent to server!!
+		4. also need a check for error, make sure there is no matching programs, and no empty programs (noneSelected as name) in the new contructed program arr, if there is, make sure data dont get sent to server!!
 */
 			admin_modify_ctrl.putChangesFilter = function(data) {
 				var putDataForProgram;
@@ -355,7 +355,7 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 
 			admin_modify_ctrl.editCurrentProgramBtn = function() {
 				var turnOn = [
-					'showModifyThisProgramBtn'
+					'showModifyThisProgramBtn'	//need to add show delete button, and add button.	//after those buttons are pressed, show a submit changes button, and turn off final submit changes button
 				];
 				var turnOff = [
 					'showDeleteProgramBtn',
@@ -478,16 +478,16 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 /*
 	Other action button functionalities. 
 */
-
+//this functionality needs to be changed, where we modify the new program array with each program obj, and returning that array, and never touching the original program arr
 			admin_modify_ctrl.modifyProgram = function(programObj) {	//to be used by submit modification button; controller function logic below
 				var originalProgram = admin_modify_ctrl.parentScope.studentDetail.program;
 				originalProgram.forEach(function(eachProgram) {
-				if (eachProgram.programName !== programObj.programName)	return;	//skip to next program obj if its not matched
-				else{	//once matched update the program name and rotation field with ng-model in view
-					if (admin_modify_ctrl.modifyProgramName)	eachProgram.programName = admin_modify_ctrl.modifyProgramName;
-					if (admin_modify_ctrl.modifyProgramRotation)	eachProgram.programRotation = admin_modify_ctrl.modifyProgramRotation;
-				}
-				admin_modify_ctrl.submitChangesBtn();	//finally call submit changes again for data to be saved in db, meaning one modification can happen per time.
+					if (eachProgram.programName !== programObj.programName)	return;	//skip to next program obj if its not matched
+					else{	//once matched update the program name and rotation field with ng-model in view
+						if (admin_modify_ctrl.modifyProgramName)	eachProgram.programName = admin_modify_ctrl.modifyProgramName;
+						if (admin_modify_ctrl.modifyProgramRotation)	eachProgram.programRotation = admin_modify_ctrl.modifyProgramRotation;
+					}
+					admin_modify_ctrl.submitChangesBtn();	//finally call submit changes again for data to be saved in db, meaning one modification can happen per time.
 
 				});
 			};

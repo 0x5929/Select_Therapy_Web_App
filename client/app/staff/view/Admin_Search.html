@@ -143,14 +143,14 @@
 								ng-click="admin_modify_ctrl.editCurrentProgramBtn()">
 				Edit Current Programs
 			</button>
-			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" 
+<!-- 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" 
 								ng-click="admin_modify_ctrl.addNewProgramBtn()">
 				Add New Program
 			</button>
 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin()" 
 								ng-click="admin_modify_ctrl.deleteProgramBtn()">
 				Delete Program
-			</button>
+			</button> -->
 <!--/END OF INITIAL PROGRAM EDIT ACTION BUTTONS, STARTING PROGRAM VIEW TABLE BELOW -->
 			<table>
 				<thead>
@@ -162,6 +162,9 @@
 					<tr ng-repeat="programDetails in admin_search_ctrl.studentDetail.program">
 						<td> <!-- FIRST COLUMN => PROGRAM NAME  WITH EDIT FIELDS -->
 							{{ programDetails.programName }}
+<!-- once edit button is clicked, create an program obj in an arr and copy current program object/objects into it -->
+<!-- could run a for loop for all the index of the program array, and show individual edit program buttons -->
+<!-- -->
 							<select ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]"	ng-model="admin_modify_ctrl.modifyProgramName" name="editCurrentProgramName" class="form-control">
 								<option disabled ng-selected="true" value=""> -- Select a Program -- </option>
 								<option value="CNA">Certified Nurse Assistant</option>
