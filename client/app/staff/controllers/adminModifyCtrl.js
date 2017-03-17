@@ -7,7 +7,8 @@
 		function adminModifyControllerHandler($rootScope, $scope, ajaxService, toastFactory) {
 			var admin_modify_ctrl = this;
 			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;	//accessing admin_search_ctrl
-			admin_modify_ctrl.showModifyCurrentProgramInputNBtn = []; //inititalize empty arr for program input edit
+			admin_modify_ctrl.showModifyCurrentProgramInput = []; //inititalize empty arr for program input edit				
+			admin_modify_ctrl.editProgramArr = [];	////need to initialize program edit array obj
 			admin_modify_ctrl.putData = {	//initialize data object and all necessary keys for PUT request in submitChangesBtn()
 				name: '',
 				phoneNumber: '',
@@ -67,22 +68,23 @@
 				var originalName = $scope.admin_search_ctrl.studentDetail.name;
 				for (var inputField in data) {	//first we filter through the fields that is being editted
 					if (inputField === 'program'){//if putData.program:
-						if (admin_modify_ctrl.modifyProgramName || admin_modify_ctrl.modifyProgramRotation)	//if modifying program
-							putDataAfterFilter[inputField] = originalProgram;	//original program had been editted in the modify program btn function
-						if (admin_modify_ctrl.newProgramName && admin_modify_ctrl.newProgramRotation){	//if adding new program
-							newDataForProgram.programName = admin_modify_ctrl.newProgramName;	//setting newDataForProgram obj
-							newDataForProgram.programRotation = admin_modify_ctrl.newProgramRotation;
-							if (admin_modify_ctrl.modifyProgramName || admin_modify_ctrl.modifyProgramRotation){	//if programs are being added and editted at the same time
-								putDataAfterFilter[inputField].push(newDataForProgram);	//pushing the new one is the already editted data obj from earlier condition
-							}
-							else{	//tightly coupled, maybe think of another logic for editted programs
-								originalProgram.push(newDataForProgram);	//pushing this object into the original, which should not be editted because it is hasnt gone through the modify program function
-								putDataAfterFilter[inputField] = originalProgram;	//setting original to the filtered through data obj
-							}
-						}
-						if (!putDataAfterFilter[inputField])	//this checks if the two above condidtions: edit or add are not met, 
-							putDataAfterFilter[inputField] = originalProgram;	//if they arent met, the puDataAFterFilter[inputField] part of the obj should be undefined, 
-																//so lets equate the student details array, so we update programs every edit, and account for deleted programs 
+						// if (admin_modify_ctrl.modifyProgramName || admin_modify_ctrl.modifyProgramRotation)	//if modifying program
+						// 	putDataAfterFilter[inputField] = originalProgram;	//original program had been editted in the modify program btn function
+						// if (admin_modify_ctrl.newProgramName && admin_modify_ctrl.newProgramRotation){	//if adding new program
+						// 	newDataForProgram.programName = admin_modify_ctrl.newProgramName;	//setting newDataForProgram obj
+						// 	newDataForProgram.programRotation = admin_modify_ctrl.newProgramRotation;
+						// 	if (admin_modify_ctrl.modifyProgramName || admin_modify_ctrl.modifyProgramRotation){	//if programs are being added and editted at the same time
+						// 		putDataAfterFilter[inputField].push(newDataForProgram);	//pushing the new one is the already editted data obj from earlier condition
+						// 	}
+						// 	else{	//tightly coupled, maybe think of another logic for editted programs
+						// 		originalProgram.push(newDataForProgram);	//pushing this object into the original, which should not be editted because it is hasnt gone through the modify program function
+						// 		putDataAfterFilter[inputField] = originalProgram;	//setting original to the filtered through data obj
+						// 	}
+						// }
+						// if (!putDataAfterFilter[inputField])	//this checks if the two above condidtions: edit or add are not met, 
+						// 	putDataAfterFilter[inputField] = originalProgram;	//if they arent met, the puDataAFterFilter[inputField] part of the obj should be undefined, 
+						// 										//so lets equate the student details array, so we update programs every edit, and account for deleted programs
+						putDataAfterFilter[inputField] = admin_modify_ctrl.editProgramArr; //equating the two, makes all code above simplified
 					}	//for the rest of the fields, we filter through the ones that is editted
 					else if (data[inputField] !== '' && data[inputField] !== 'noneSelected')	putDataAfterFilter[inputField] = data[inputField];		
 				}
@@ -355,10 +357,13 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 
 			admin_modify_ctrl.editCurrentProgramBtn = function() {
 				var turnOn = [
-					'showModifyThisProgramBtn'	//need to add show delete button, and add button.	//after those buttons are pressed, show a submit changes button, and turn off final submit changes button
+					'showModifyThisProgramBtn',
+					'showDeleteProgramBtn',
+					'showSubmitProgramModificationBtn',
+					'showAddProgramBtn'	//need to add show delete button, and add button.	//after those buttons are pressed, show a submit changes button, and turn off final submit changes button
 				];
 				var turnOff = [
-					'showDeleteProgramBtn',
+					// 'showDeleteProgramBtn',
 					'showSubmitChangesBtn'
 				];
 
@@ -369,6 +374,10 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 				//turning on attribute
 				turnOn.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = true;
+				});
+
+				admin_modify_ctrl.parentScope.studentDetail.program.forEach(function(eachProgram) {
+					admin_modify_ctrl.editProgramArr.push(eachProgram);	//copying the original program into edit array.
 				});
 
 			};
@@ -417,8 +426,8 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 
 			};
 
-			admin_modify_ctrl.modifyThisProgramBtn = function(eachProgram) {
-				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(eachProgram);
+			admin_modify_ctrl.modifyThisProgramBtn = function(selectedProgram) {
+				var programIndex = admin_modify_ctrl.editProgramArr.indexOf(selectedProgram);
 				var turnOff = [
 					'showModifyThisProgramBtn',
 					'showFinalCancelBtn',
@@ -426,7 +435,7 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 				];
 
 				//turning on attribute
-				admin_modify_ctrl.showModifyCurrentProgramInputNBtn[originalProgramIndex] = true;
+				admin_modify_ctrl.showModifyCurrentProgramInput[programIndex] = true;
 				//turning off attributes
 				turnOff.forEach(function(eachTarget) {
 					admin_modify_ctrl[eachTarget] = false;
@@ -440,7 +449,8 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 				var turnOff = [
 					'showModifyThisProgramBtn',
 					'showAddNewProgramField',
-					'showDeleteProgramBtn'
+					'showDeleteProgramBtn',
+					'showAddProgramBtn'
 				];
 
 				//turning on attribute
@@ -454,7 +464,7 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 				});
 
 				//turning off show modify current program input and button
-				admin_modify_ctrl.showModifyCurrentProgramInputNBtn.forEach(function(value) {
+				admin_modify_ctrl.showModifyCurrentProgramInput.forEach(function(value) {
 					value = false;
 				});
 
@@ -493,11 +503,12 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 			};
 
 			admin_modify_ctrl.submitModificationBtn = function(programToBeModified) {
-				var originalProgramIndex = admin_modify_ctrl.parentScope.studentDetail.program.indexOf(programToBeModified);
-				//modify program
-				admin_modify_ctrl.modifyProgram(programToBeModified);
+				var programIndex = admin_modify_ctrl.editProgramArr.indexOf(programToBeModified);
+				// //modify program
+				// admin_modify_ctrl.modifyProgram(programToBeModified);
+				admin_modify_ctrl.submitChangesBtn();
 				//turn modify current program input and btn off
-				admin_modify_ctrl.showModifyCurrentProgramInputNBtn[originalProgramIndex] = false;
+				admin_modify_ctrl.showModifyCurrentProgramInput[programIndex] = false;
 			};
 
 			admin_modify_ctrl.deleteThisProgramBtn = function(programObj) {

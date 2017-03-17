@@ -165,7 +165,10 @@
 <!-- once edit button is clicked, create an program obj in an arr and copy current program object/objects into it -->
 <!-- could run a for loop for all the index of the program array, and show individual edit program buttons -->
 <!-- -->
-							<select ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]"	ng-model="admin_modify_ctrl.modifyProgramName" name="editCurrentProgramName" class="form-control">
+							<select ng-if="admin_modify_ctrl.showModifyCurrentProgramInput[admin_modify_ctrl.editProgramArr.indexOf(programDetails)]"	
+									ng-model="admin_modify_ctrl.editProgramArr[admin_modify_ctrl.editProgramArr.indexOf(programDetails)]['programName']"
+									name="editCurrentProgramName" 
+									class="form-control">
 								<option disabled ng-selected="true" value=""> -- Select a Program -- </option>
 								<option value="CNA">Certified Nurse Assistant</option>
 								<option value="HHA">Home Health Aide</option>
@@ -176,20 +179,29 @@
 						</td>
 						<td>	<!-- SECOND COLUMN => PROGRAM ROTATION -->
 							{{ programDetails.programRotation }}
-							<input type="text" class="form-control" name="editCurrentProgramRotation" placeholder="Modify Program Rotation" ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" ng-model="admin_modify_ctrl.modifyProgramRotation">
+							<input type="text" 
+									class="form-control" 
+									name="editCurrentProgramRotation" 
+									placeholder="Modify Program Rotation" 
+									ng-if="admin_modify_ctrl.showModifyCurrentProgramInput[admin_modify_ctrl.editProgramArr.indexOf(programDetails)]" 
+									ng-model="admin_modify_ctrl.editProgramArr[admin_modify_ctrl.editProgramArr.indexOf(programDetails)]['programRotation']">
 						</td>
 						<td> <!-- THIRD COLUMN => PROGRAM EDIT ACTION BUTTONS -->
 							<button class="btn" ng-if="admin_modify_ctrl.showModifyThisProgramBtn" 
 												ng-click="admin_modify_ctrl.modifyThisProgramBtn(programDetails)">
-								Modify this Program
+								Modify
 							</button>
-							<button class="btn" ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" 
+<!-- 							<button class="btn" ng-if="admin_modify_ctrl.showModifyCurrentProgramInputNBtn[admin_search_ctrl.studentDetail.program.indexOf(programDetails)]" 
 												ng-click="admin_modify_ctrl.submitModificationBtn(programDetails)">
+								Submit Modification
+							</button> -->
+							<button class="btn" ng-if="admin_modify_ctrl.showSubmitProgramModificationBtn"
+												ng-click="admin_modify_ctrl.submitModificationBtn(programDetails)"> <!-- could make it not show up until modifications are made -->
 								Submit Modification
 							</button>
 							<button class="btn" ng-if="admin_modify_ctrl.showDeleteProgramBtn" 
 												ng-click="admin_modify_ctrl.deleteThisProgramBtn(programDetails)">
-								Delete Program
+								Delete
 							</button>
 						</td>
 					</tr>
@@ -208,9 +220,13 @@
 							<input type="text" class="form-control" name="addNewProgramField" placeholder="New Program Rotation" ng-if="admin_modify_ctrl.showAddNewProgramField" ng-model="admin_modify_ctrl.newProgramRotation">
 						</td>
 						<td> <!-- THIRD COLUMN IS AGAIN FOR THE NEW PROGRAM ADDITION ACTION BUTTONS -->
-							<button class="btn" ng-if="admin_modify_ctrl.showAddNewProgramField" 
+<!-- 							<button class="btn" ng-if="admin_modify_ctrl.showAddNewProgramField" 
 												ng-click="admin_modify_ctrl.submitNewProgramBtn()">
 								Submit New Program
+							</button> -->
+							<button class="btn" ng-if="admin_modify_ctrl.showAddProgramBtn" 
+												ng-click="admin_modify_ctrl.showAddNewProgramField = true">
+								Add
 							</button>
 							<button class="btn" ng-if="admin_modify_ctrl.cancelProgramEditCondition()" 
 												ng-click="admin_modify_ctrl.programModifyCancel()">
