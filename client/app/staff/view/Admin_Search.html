@@ -272,14 +272,6 @@
  			<hr>
 		</div>
 <!--/END OF MARKETING SURVEY DETAIL AND MODIFICATION METHODS -->
-
-<!-- FOLLOWING LOGIC RULES THE REST OF THE PAGE 
-	IF GRADUATED, THEN CHECK 1. IF PASSED EXAM, 2. IF JOBPLACED -->
-	<!-- IF PASSED EXAM, THEN SHOW 1. NUMBER OF TRIES; 
-		 IF DID NOT PASS EXAM, THEN SHOW 1. NO PASS REASON -->
-	<!-- IF JOB PLACED, THEN SHOW 1. WEEKLY WORKING HOURS, 2. PAY RATE, 3. JOB DESCRIPTION 
-		 IF DOES NOT HAVE JOB THEN SHOW 1. NO JOB REASON-->
-<!-- IF DID NOT GRADUATE, THEN SHOW 1. NOT GRADUATING REASON -->
 		<div ng-if="admin_search_ctrl.studentDetail.graduate">
 			<p>Student graduate status:	Alumni</p>
 			<select ng-if="admin_modify_ctrl.editGraduateFieldOn" ng-model="admin_modify_ctrl.putData['graduate']" name="graduate" class="form-control">
