@@ -192,6 +192,28 @@
 			};
 
 /*
+	User Delete Button
+*/
+
+			admin_modify_ctrl.delete = function() {
+				//grab user id
+				var id = admin_modify_ctrl.parentScope.studentDetail._id;
+				//delete request ajax call
+				//confirmation
+				var confirmation = confirm('Are you sure you want to delete this user?');
+				if (confirmation) {
+					//ajax
+					ajaxService.delete('/admin/delete/' + id)
+						.then(function(successResponse) {
+							console.log('delete success: ', successResponse);
+					}, 
+						function(failureResponse) {
+							console.log('delete failed: ', failureResponse);
+					});
+				}
+			};
+
+/*
 SHOWING THE MODIFY BUTTON IN VIEW
 AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY 
 */			

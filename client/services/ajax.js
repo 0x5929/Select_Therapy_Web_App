@@ -48,7 +48,21 @@
 						deferred.resolve(success);
 					}, 
 					function(failure) {
-						deferred.resolve(failure);
+						deferred.reject(failure);
+					});
+				return deferred.promise;
+			};
+
+			this.delete = function(route) {
+				//ajax delete
+				var deferred = $q.defer();
+
+				$http.delete(route)
+					.then(function(success) {
+						deferred.resolve(success);
+				}, 
+					function(failure) {
+						deferred.reject();
 					});
 				return deferred.promise;
 			};

@@ -13,6 +13,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
+		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
 		function adminSearchGetHandler(req, res, next) {
@@ -115,22 +116,29 @@
 			var modifyingKeys = Object.keys(requestBody);
 			console.log('right before the database query, at line 116, signal is strong');
 			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
-				if (err){ console.log('signal is strong at line 118, if err: ', err); return next(err);}
-				if (!user){console.log('signal is strong at line 119, if no user'); return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();}
+				if (err) return next(err);
+				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();
 				if (user) {
-				console.log('signal is strong at line 121, there is a user: ', user);
 					modifyingKeys.forEach(function(key) {
 						if (key === "originalName") return;	//skipping the original name key
 						user[key] = requestBody[key];	//updating the keys
-						console.log('signal is strong at 125, and user should be updated', user);
 						user.save(function(err, updatedUser) {
-							if (err){console.log('signal is strong at line 127, and user should be saving creditials, but there is an err: ', err); return next(err);}
+							if (err) return next(err);
 						});
 					});
-					console.log('testing the code is still good right before the res.status');
 					return res.send('updatedUser').end();			
 				}
 			});
+		}
+
+		function adminModifyDeleteHandler(req, res, next) {
+			var deleteID = req.params.id;
+			
+			STIDbStudentCollection.findByIdAndRemove(deleteID, function(err) {
+				if (err)	return next(err);
+				res.status(200).send('testing signal success').end();
+			});
+
 		}
 
 		return adminRoute;
