@@ -59,6 +59,17 @@
 	BUT HIDES CERTAIN THE CPR PICTURE CONTENT AND ABOUT US BUTTON, 
 	NEED ANOTHER SOLUTION FOR THE OVER FLOWN ELEMENTS */
 }
+
+#mainWrapperForAdmin{
+	top: 284px;
+	position: relative;
+	z-index: 2;
+	width: 100%;
+	background-color: white;
+	overflow-x: hidden; /* THIS MADE THE HORIZONTAL PROBLEM GO AWAY, 
+	BUT HIDES CERTAIN THE CPR PICTURE CONTENT AND ABOUT US BUTTON, 
+	NEED ANOTHER SOLUTION FOR THE OVER FLOWN ELEMENTS */
+}
 /* for visual affects to know where this element is
 #leftContent{
 	background-color: #800000;

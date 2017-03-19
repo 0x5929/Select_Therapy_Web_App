@@ -14,7 +14,7 @@
 	}
 
 	function finalErrHandler(err, req, res, next) {
-		return res.status(500).send(err.msg)
+		return res.status(500).send(err.msg).end();
 	}
 
 	module.exports = Errservices;

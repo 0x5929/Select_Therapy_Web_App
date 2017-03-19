@@ -9,10 +9,11 @@
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: false }));
 
-		//mainm Routes and Methods
+		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
+		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
 		function adminSearchGetHandler(req, res, next) {
@@ -22,29 +23,30 @@
 			console.log(searchInput);
 
 			if (!searchInput || !searchParameter)
-				return res.status(400).send('invalid entry');
-			if (searchParameter === 'Name') {	//	we could add a couple more such as ssn, cna program rotation, 
-												//	hha program rotation, esol program rotation number, 
-												//	and sg program rotation 
+				return res.status(400).send('invalid entry').end();
+			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
+													hha program rotation, esol program rotation number, 
+													and sg program rotation */
+				searchInput = searchInput.toLowerCase();
 				STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
 					console.log(err);
 					console.log(user);
 					if (err) return next(err);
-					if (user) return res.send(user);
-					if (!user) return res.status(400).send('nope no user here');
+					if (user) return res.status(200).send(user).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}else if (searchParameter === 'email') {
 					STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
 					if (err) return next(err);
-					if (user) return res.send(user);
-					if (!user) return res.status(400).send('nope no user here');
+					if (user) return res.status(200).send(user).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}else if (searchParameter === 'Phone number'){
 					STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
 					console.log(users);
 					if (err) return next(err);
-					if (users) return res.send(users);
-					if (!user) return res.status(400).send('nope no user here');
+					if (users) return res.send(users).end();
+					if (!user) return res.status(400).send('nope no user here').end();
 				});
 			}
 		}
@@ -52,39 +54,27 @@
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;
 			//parse all neccessary fields to be correctly input into db
+			requestBody.name = requestBody.name.toLowerCase();	//make sure the input names are lowercase into the database
 			requestBody.phoneNumber = Number(requestBody.phoneNumber);
 			requestBody.ssn = Number(requestBody.ssn);
 			requestBody.payRate = Number(requestBody.payRate);
+			requestBody.numberOfTries = Number(requestBody.numberOfTries);
 			requestBody.graduate = Boolean(requestBody.graduate);
 			requestBody.tuitionPaid = Boolean(requestBody.tuitionPaid);
 			requestBody.jobPlaced = Boolean(requestBody.jobPlaced);
-			requestBody.fullTimePos = Boolean(requestBody.fullTimePos);
-			requestBody.partTimePos = Boolean(requestBody.partTimePos);
 			requestBody.passedExam = Boolean(requestBody.passedExam);
-			requestBody.passedOn1st = Boolean(requestBody.passedOn1st);
-			requestBody.passedOn2nd = Boolean(requestBody.passedOn2nd);
-			requestBody.passedOn3rd = Boolean(requestBody.passedOn3rd);
+			requestBody.program.forEach(function(eachProgram) {	//this is to ensure all programs entered into db is capitalized
+				eachProgram.programName = eachProgram.programName.toUpperCase();
+			});
 			//calling next to further handle request
 			next();
 		}
 
-		/*
-		DEV: MODIFYING AADMIN ADD MATERIAL 
-			when adding user detail, could include the following:
-			first:
-			last:
-			program:
-			how did they hear about us:
-
-			ALso, make sure all program going into db is CAPITAL letters, 
-			so make the appropriate changes into the search query on server end as well
-			do the same with all names, first  and last, seperated by a space
-		*/
 		function adminAddPostHandler(req, res, next) {
 			console.log(req.body);
 			STIDbStudentCollection.findOne({'name': req.body.name}, function(err, user) {
 				if (err) return next(err);
-				if (user) return res.status(400).send('This user already exists!');
+				if (user) return res.status(400).send('This user already exists!').end();
 				if (!user) {	//if no user, then save all the creditials from client side
 					var newStudent = new STIDbStudentCollection();
 					newStudent.name = req.body.name;
@@ -95,32 +85,39 @@
 					newStudent.program = req.body.program;
 					newStudent.graduate = req.body.graduate;
 					newStudent.tuitionPaid = req.body.tuitionPaid;
-					newStudent.jobPlaced = req.body.jobPlaced;
-					newStudent.fullTimePos = req.body.fullTimePos;
-					newStudent.partTimePos = req.body.partTimePos;
-					newStudent.payRate = req.body.payRate;
-					newStudent.jobDescription = req.body.jobDescription;
-					newStudent.noJobReason = req.body.noJobReason;
-					newStudent.passedExam = req.body.passedExam;
-					newStudent.passedOn1st = req.body.passedOn1st;
-					newStudent.passedOn2nd = req.body.passedOn2nd;
-					newStudent.passedOn3rd = req.body.passedOn3rd;
+					newStudent.marketingSurvey = req.body.marketingSurvey;		
+//depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
+//and depending on those conditions we save the necessary data into db	
+					if (req.body.graduate){	//graduate condition
+						newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
+						newStudent.jobPlaced = req.body.jobPlaced;	//saving necesasry properties
+						if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
+						else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
+						if (req.body.jobPlaced){
+							newStudent.weeklyWorkHours = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
+							newStudent.payRate = req.body.payRate;
+							newStudent.jobDescription = req.body.jobDescription;
+						}else	newStudent.noJobReason = req.body.noJobReason;	
+					}
+					else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
 					//save the new student
 					newStudent.save(function(err) {
 						if (err) return next(err);
 					});
 				}
 			})
-			return res.status(200).send('newStudent added');
+			return res.status(200).send('newStudent added').end();
 		}
 
 		function adminModifyPutHandler(req, res, next) {
+			console.log('start of the request, at line 112, signal is strong');
 			console.log(req.body);
 			var requestBody = req.body;
 			var modifyingKeys = Object.keys(requestBody);
+			console.log('right before the database query, at line 116, signal is strong');
 			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
 				if (err) return next(err);
-				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db");
+				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();
 				if (user) {
 					modifyingKeys.forEach(function(key) {
 						if (key === "originalName") return;	//skipping the original name key
@@ -129,10 +126,19 @@
 							if (err) return next(err);
 						});
 					});
-
-					return res.status(200).send('updatedUser');			
+					return res.send('updatedUser').end();			
 				}
 			});
+		}
+
+		function adminModifyDeleteHandler(req, res, next) {
+			var deleteID = req.params.id;
+			
+			STIDbStudentCollection.findByIdAndRemove(deleteID, function(err) {
+				if (err)	return next(err);
+				res.status(200).send('testing signal success').end();
+			});
+
 		}
 
 		return adminRoute;

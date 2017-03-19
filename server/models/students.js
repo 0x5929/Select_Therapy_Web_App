@@ -5,24 +5,26 @@
 	var mongoose = require('mongoose');
 	//define Schema
 	var studentSchema = mongoose.Schema({
-		name: String,
-		phoneNumber: Number,
-		ssn: Number,
-		address: String,
-		email: String,
-		program: [{}],
-		graduate: Boolean,
-		tuitionPaid: Boolean,
+		//required fields
+		name: {type: String, required: true},
+		phoneNumber: {type: Number, required: true},
+		ssn: {type: Number, required: true},
+		address: {type: String, required: true},
+		email: {type: String, required: true},
+		program: {type: [{}], required: true},
+		tuitionPaid: {type: Boolean, required: true},
+		graduate: {type: Boolean, required: true},
+		marketingSurvey: {type: String, required: true},
+		//dependent fields, which depends on certain boolean value from above required fields
+		notGraduatingReason: String,
 		jobPlaced: Boolean,
-		fullTimePos: Boolean,
-		partTimePos: Boolean,
+		weeklyWorkHours: String,
 		payRate: Number,
 		jobDescription: String,
 		noJobReason: String,
 		passedExam: Boolean,
-		passedOn1st: Boolean,
-		passedOn2nd: Boolean,
-		passedOn3rd: Boolean
+		numberOfTries: Number,
+		noPassReason: String
 	});
 	
 	module.exports = mongoose.model('students', studentSchema);
