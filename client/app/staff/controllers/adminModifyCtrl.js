@@ -205,6 +205,7 @@
 					//ajax
 					ajaxService.delete('/admin/delete/' + id)
 						.then(function(successResponse) {
+							toastFactory.sucessDelete();	//toast
 							console.log('delete success: ', successResponse);
 					}, 
 						function(failureResponse) {

@@ -8,11 +8,12 @@ var fs = require('fs'),
 	express = require('express'),
 	app = express(),
 	port = process.env.PORT || 8080,
-	mongoose = require('mongoose'),
-	passport = require('passport'),
-	nodemailer = require('nodemailer'),
-	helmet = require('helmet'),
-	csrf = require('csurf'),
+	mongoose = require('mongoose'),	//db
+	passport = require('passport'),	//user authentication
+	nodemailer = require('nodemailer'),	//email
+	helmet = require('helmet'),	//security
+	csrf = require('csurf'),	//security
+	officeGenerator = require('officegen');
 	//middleware
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
@@ -27,6 +28,7 @@ var fs = require('fs'),
 	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
 	configCV = require(path.join(__dirname, 'config/customValidator.js')),
 	configNM = require(path.join(__dirname, 'config/nodemail.js')),
+	configOG = require(path.join(__dirname, 'config/officegen.js')),
 	//fetching services
 	nodemailerService = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
 

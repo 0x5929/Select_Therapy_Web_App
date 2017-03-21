@@ -110,11 +110,9 @@
 		}
 
 		function adminModifyPutHandler(req, res, next) {
-			console.log('start of the request, at line 112, signal is strong');
 			console.log(req.body);
 			var requestBody = req.body;
 			var modifyingKeys = Object.keys(requestBody);
-			console.log('right before the database query, at line 116, signal is strong');
 			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
 				if (err) return next(err);
 				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();

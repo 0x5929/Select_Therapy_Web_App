@@ -13,6 +13,7 @@
 				promoEmail: promoEmail,
 				successAdd: successAdd,
 				sucessEdit: successEdit,
+				sucessDelete: sucessDelete,
 				thankYouMessage: thankYouMessage,
 				errorToast: errorToast
 			};
@@ -23,7 +24,7 @@
 						.textContent('Congrats! You have successfully registered, and now logged in!!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 			}
 
@@ -33,7 +34,7 @@
 						.textContent('Welcome! You have successfully signed in!!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 			}
 
@@ -43,7 +44,7 @@
 						.textContent('You have successfully signed out!!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 			}
 
@@ -53,7 +54,7 @@
 						.textContent('Many incredible offers coming your way!!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 			}
 
@@ -63,7 +64,7 @@
 						.textContent(' ' + name + ' has been added to the database, thank you!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 			}
 
@@ -73,9 +74,19 @@
 						.textContent('This user has been modified and saved, thank you!')
 						.position('top right')
 						.parent('#header')
-						.hideDelay(1000)
+						.hideDelay(3000)
 					);
 
+			}
+
+			function sucessDelete() {
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent('This user has been deleted, and will never be found again')
+						.position('top right')
+						.parent('#header')
+						.hideDelay(3000)
+					);				
 			}
 
 			function thankYouMessage(name) {

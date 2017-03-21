@@ -8,7 +8,7 @@
 		    auth: {
 		        user: 'work.kevin.ren@gmail.com',
 		        pass: 'jordan45'
-		    	}
+		    }
 	};
 
 
