@@ -1,36 +1,35 @@
 (function() {
 	'use strict';
 //Set Up Application
-// need to read more about express and its functions. 10/01/2016
 //fetching all tools
-var fs = require('fs'),
-	path = require('path'),
-	express = require('express'),
-	app = express(),
-	port = process.env.PORT || 8080,
-	mongoose = require('mongoose'),	//db
-	passport = require('passport'),	//user authentication
-	nodemailer = require('nodemailer'),	//email
-	helmet = require('helmet'),	//security
-	csrf = require('csurf'),	//security
-	officeGenerator = require('officegen');
+var fs                 = require('fs'),
+	path               = require('path'),
+	express            = require('express'),
+	app                = express(),
+	port               = process.env.PORT || 8080,
+	mongoose           = require('mongoose'),	//db
+	passport           = require('passport'),	//user authentication
+	nodemailer         = require('nodemailer'),	//email
+	helmet             = require('helmet'),	//security
+	csrf               = require('csurf'),	//security
+	officeGenerator    = require('officegen');
 	//middleware
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	logger = require('morgan'),
-	validator = require('express-validator'),
-	session = require('express-session'),
-	mongoStore = require('connect-mongo')(session),
-	errHandling = require(path.join(__dirname, 'services/errHandling.js')),
-	csrfTokenMiddleware = require(path.join(__dirname, 'services/csrfToken.js')),
+	bodyParser         = require('body-parser'),
+	cookieParser       = require('cookie-parser'),
+	logger             = require('morgan'),
+	validator          = require('express-validator'),
+	session            = require('express-session'),
+	mongoStore         = require('connect-mongo')(session),
+	errHandling        = require(path.join(__dirname, 'services/errHandling.js')),
+	csrfTokenMiddleware= require(path.join(__dirname, 'services/csrfToken.js')),
 
 	//fetching configuration material
-	configDB = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
-	configCV = require(path.join(__dirname, 'config/customValidator.js')),
-	configNM = require(path.join(__dirname, 'config/nodemail.js')),
-	configOG = require(path.join(__dirname, 'config/officegen.js')),
+	configDB           = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
+	configCV           = require(path.join(__dirname, 'config/customValidator.js')),
+	configNM           = require(path.join(__dirname, 'config/nodemail.js')),
+	configOG           = require(path.join(__dirname, 'config/officegen.js')),
 	//fetching services
-	nodemailerService = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
+	nodemailerService  = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
 
 //configuration
 

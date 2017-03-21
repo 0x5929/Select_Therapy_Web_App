@@ -5,28 +5,28 @@
 		.controller('adminModifyController', ['$rootScope', '$scope', 'ajaxService', 'toastFactory', adminModifyControllerHandler]);
 
 		function adminModifyControllerHandler($rootScope, $scope, ajaxService, toastFactory) {
-			var admin_modify_ctrl = this;
-			admin_modify_ctrl.parentScope = $scope.admin_search_ctrl;	//accessing admin_search_ctrl
-			admin_modify_ctrl.showModifyCurrentProgramInput = []; //inititalize empty arr for program input edit				
-			admin_modify_ctrl.editProgramArr = [];	////need to initialize program edit array obj
-			admin_modify_ctrl.putData = {	//initialize data object and all necessary keys for PUT request in submitChangesBtn()
-				name: '',
-				phoneNumber: '',
-				ssn: '',
-				address: '',
-				email: '',
-				program: [],
-				tuitionPaid: '',
-				marketingSurvey: '',
-				graduate: '',
-				passedExam: '',
-				numberOfTries: '',
-				noPassReason: '',
-				jobPlaced: '',
-				weeklyWorkHours: '',
-				payRate: '',
-				jobDescription: '',
-				noJobReason: '',
+			var admin_modify_ctrl                          = this;
+			admin_modify_ctrl.parentScope                  = $scope.admin_search_ctrl;	//accessing admin_search_ctrl
+			admin_modify_ctrl.showModifyCurrentProgramInput= []; //inititalize empty arr for program input edit				
+			admin_modify_ctrl.editProgramArr               = [];	////need to initialize program edit array obj
+			admin_modify_ctrl.putData                      = {	//initialize data object and all necessary keys for PUT request in submitChangesBtn()
+				name               : '',
+				phoneNumber        : '',
+				ssn                : '',
+				address            : '',
+				email              : '',
+				program            : [],
+				tuitionPaid        : '',
+				marketingSurvey    : '',
+				graduate           : '',
+				passedExam         : '',
+				numberOfTries      : '',
+				noPassReason       : '',
+				jobPlaced          : '',
+				weeklyWorkHours    : '',
+				payRate            : '',
+				jobDescription     : '',
+				noJobReason        : '',
 				notGraduatingReason: ''
 			};
 
@@ -219,43 +219,43 @@ SHOWING THE MODIFY BUTTON IN VIEW
 AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY 
 */			
 			admin_modify_ctrl.turnShowModifyBtnOn = function() {
-				admin_modify_ctrl.showModifyNameBtn = true;
-				admin_modify_ctrl.showModifyNumberBtn = true;
-				admin_modify_ctrl.showModifySsnBtn = true;
-				admin_modify_ctrl.showModifyAddressBtn = true;
-				admin_modify_ctrl.showModifyEmailBtn = true;
-				admin_modify_ctrl.showModifyTuitionPaidBtn = true;
-				admin_modify_ctrl.showModifyMarketingSurveyBtn = true;
-				admin_modify_ctrl.showModifyGraduateBtn = true;
-				admin_modify_ctrl.showModifyPassedExamBtn = true;
-				admin_modify_ctrl.showModifyNumberofTriesBtn = true;
-				admin_modify_ctrl.showModifyNoPassReasonBtn = true;
-				admin_modify_ctrl.showModifyJobPlacedBtn = true;
-				admin_modify_ctrl.showModifyWeeklyWorkHoursBtn = true;
-				admin_modify_ctrl.showModifyPayRateBtn = true;
-				admin_modify_ctrl.showModifyJobDescriptionBtn = true;
-				admin_modify_ctrl.showModifyNoJobReasonBtn = true;
-				admin_modify_ctrl.showModifyNotGraduatingReasonBtn = true;
+				admin_modify_ctrl.showModifyNameBtn               = true;
+				admin_modify_ctrl.showModifyNumberBtn             = true;
+				admin_modify_ctrl.showModifySsnBtn                = true;
+				admin_modify_ctrl.showModifyAddressBtn            = true;
+				admin_modify_ctrl.showModifyEmailBtn              = true;
+				admin_modify_ctrl.showModifyTuitionPaidBtn        = true;
+				admin_modify_ctrl.showModifyMarketingSurveyBtn    = true;
+				admin_modify_ctrl.showModifyGraduateBtn           = true;
+				admin_modify_ctrl.showModifyPassedExamBtn         = true;
+				admin_modify_ctrl.showModifyNumberofTriesBtn      = true;
+				admin_modify_ctrl.showModifyNoPassReasonBtn       = true;
+				admin_modify_ctrl.showModifyJobPlacedBtn          = true;
+				admin_modify_ctrl.showModifyWeeklyWorkHoursBtn    = true;
+				admin_modify_ctrl.showModifyPayRateBtn            = true;
+				admin_modify_ctrl.showModifyJobDescriptionBtn     = true;
+				admin_modify_ctrl.showModifyNoJobReasonBtn        = true;
+				admin_modify_ctrl.showModifyNotGraduatingReasonBtn= true;
 			};
 
 			admin_modify_ctrl.turnEditOff = function() {
-				admin_modify_ctrl.editNameFieldOn = false;
-				admin_modify_ctrl.editPhoneFieldOn = false;
-				admin_modify_ctrl.editSsnFieldOn = false;
-				admin_modify_ctrl.editAddressFieldOn = false;
-				admin_modify_ctrl.editEmailFieldOn = false;
-				admin_modify_ctrl.editTuitionPaidFieldOn = false;
-				admin_modify_ctrl.editMarketingSurveyFieldOn = false;
-				admin_modify_ctrl.editGraduateFieldOn = false;
-				admin_modify_ctrl.editPassedExamFieldOn = false;
-				admin_modify_ctrl.editNumberOfTriesFieldOn = false;
-				admin_modify_ctrl.editNoPassReasonFieldOn = false;
-				admin_modify_ctrl.editJobPlacedFieldOn = false;
+				admin_modify_ctrl.editNameFieldOn               = false;
+				admin_modify_ctrl.editPhoneFieldOn              = false;
+				admin_modify_ctrl.editSsnFieldOn                = false;
+				admin_modify_ctrl.editAddressFieldOn            = false;
+				admin_modify_ctrl.editEmailFieldOn              = false;
+				admin_modify_ctrl.editTuitionPaidFieldOn        = false;
+				admin_modify_ctrl.editMarketingSurveyFieldOn    = false;
+				admin_modify_ctrl.editGraduateFieldOn           = false;
+				admin_modify_ctrl.editPassedExamFieldOn         = false;
+				admin_modify_ctrl.editNumberOfTriesFieldOn      = false;
+				admin_modify_ctrl.editNoPassReasonFieldOn       = false;
+				admin_modify_ctrl.editJobPlacedFieldOn          = false;
 				admin_modify_ctrl.editWeeklyWorkingHoursFieldOn = false;
-				admin_modify_ctrl.editPayRateFieldOn = false;
-				admin_modify_ctrl.editJobDescriptionFieldOn = false;
-				admin_modify_ctrl.editNoJobReasonFieldOn = false;
-				admin_modify_ctrl.editNotGraduatingReasonFieldOn = false;
+				admin_modify_ctrl.editPayRateFieldOn            = false;
+				admin_modify_ctrl.editJobDescriptionFieldOn     = false;
+				admin_modify_ctrl.editNoJobReasonFieldOn        = false;
+				admin_modify_ctrl.editNotGraduatingReasonFieldOn= false;
 			};
 
 //RUNNING THE NECESSARY FUNCTIONS FOR VIEW 
@@ -332,12 +332,12 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 
 			admin_modify_ctrl.editCurrentProgramBtn = function() {
 				// //turning off attribute	
-				admin_modify_ctrl.showSubmitChangesBtn = false;
+				admin_modify_ctrl.showSubmitChangesBtn            = false;
 				//turning on attribute
-				admin_modify_ctrl.showModifyThisProgramBtn = true;
-				admin_modify_ctrl.showDeleteProgramBtn = true;
-				admin_modify_ctrl.showSubmitProgramModificationBtn = true;
-				admin_modify_ctrl.showAddProgramBtn = true;
+				admin_modify_ctrl.showModifyThisProgramBtn        = true;
+				admin_modify_ctrl.showDeleteProgramBtn            = true;
+				admin_modify_ctrl.showSubmitProgramModificationBtn= true;
+				admin_modify_ctrl.showAddProgramBtn               = true;
 				// copying the original program array into the the edit program array
 				admin_modify_ctrl.parentScope.studentDetail.program.forEach(function(eachProgram) {
 					admin_modify_ctrl.editProgramArr.push(eachProgram);	//copying the original program into edit array.
@@ -348,24 +348,24 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 			admin_modify_ctrl.modifyThisProgramBtn = function(selectedProgram) {
 				var programIndex = admin_modify_ctrl.editProgramArr.indexOf(selectedProgram);
 				//turning on attribute
-				admin_modify_ctrl.showModifyCurrentProgramInput[programIndex] = true;
+				admin_modify_ctrl.showModifyCurrentProgramInput[programIndex]= true;
 				//turning off attributes
-				admin_modify_ctrl.showModifyThisProgramBtn = false;
-				admin_modify_ctrl.showFinalCancelBtn = false;
-				admin_modify_ctrl.showSubmitChangesBtn = false;
+				admin_modify_ctrl.showModifyThisProgramBtn                   = false;
+				admin_modify_ctrl.showFinalCancelBtn                         = false;
+				admin_modify_ctrl.showSubmitChangesBtn                       = false;
 			};
 
 			admin_modify_ctrl.programModifyCancel = function() {
 
 				// //turning on attribute
-				admin_modify_ctrl.showFinalCancelBtn = true;
+				admin_modify_ctrl.showFinalCancelBtn              = true;
 				admin_modify_ctrl.turnShowModifyBtnOn();
 				//turning off attributes
-				admin_modify_ctrl.showModifyThisProgramBtn = false;
-				admin_modify_ctrl.showSubmitProgramModificationBtn = false;
-				admin_modify_ctrl.showAddNewProgramField = false;
-				admin_modify_ctrl.showDeleteProgramBtn = false;
-				admin_modify_ctrl.showAddProgramBtn = false;
+				admin_modify_ctrl.showModifyThisProgramBtn        = false;
+				admin_modify_ctrl.showSubmitProgramModificationBtn= false;
+				admin_modify_ctrl.showAddNewProgramField          = false;
+				admin_modify_ctrl.showDeleteProgramBtn            = false;
+				admin_modify_ctrl.showAddProgramBtn               = false;
 
 				//turning off show modify current program input and button
 				for (var i = 0; i <= admin_modify_ctrl.showModifyCurrentProgramInput.length - 1; i++){
@@ -376,10 +376,10 @@ AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY
 
 			admin_modify_ctrl.finalCancelBtn = function() {
 				//turning off attributes
-				admin_modify_ctrl.showModifyThisProgramBtn = false;
-				admin_modify_ctrl.showDeleteProgramBtn = false;
-				admin_modify_ctrl.showAddNewProgramField = false;
-				admin_modify_ctrl.showModifyThisProgramBtn = false;
+				admin_modify_ctrl.showModifyThisProgramBtn= false;
+				admin_modify_ctrl.showDeleteProgramBtn    = false;
+				admin_modify_ctrl.showAddNewProgramField  = false;
+				admin_modify_ctrl.showModifyThisProgramBtn= false;
 				//turn all edit field off
 				admin_modify_ctrl.turnEditOff();
 			};
