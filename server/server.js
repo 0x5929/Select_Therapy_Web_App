@@ -12,7 +12,7 @@ var fs                 = require('fs'),
 	nodemailer         = require('nodemailer'),	//email
 	helmet             = require('helmet'),	//security
 	csrf               = require('csurf'),	//security
-	officeGenerator    = require('officegen');
+	officeGenerator    = require('officegen'),
 	//middleware
 	bodyParser         = require('body-parser'),
 	cookieParser       = require('cookie-parser'),
