@@ -7,7 +7,9 @@
 		var directive = {
 			restrict: 'A',
 			link: function(scope, element, attribute) {
-				element.mask("(777) 777-7777");
+				var targetMask = attribute.targetMask;
+				var options = {placeholder: '*'};
+				element.mask(targetMask, options);
 			}
 		};
 		return directive;
