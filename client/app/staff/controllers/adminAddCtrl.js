@@ -4,9 +4,9 @@
 
 	'use strict';
 	angular.module('myApp.admin')
-		.controller('adminAddController', ['$scope', 'ajaxService', 'toastFactory', adminAddControllerHandler]);
+		.controller('adminAddController', ['$scope', 'ajaxService', 'toastFactory', 'deviceDetector', adminAddControllerHandler]);
 
-		function adminAddControllerHandler($scope, ajaxService, toastFactory) {
+		function adminAddControllerHandler($scope, ajaxService, toastFactory, deviceDetector) {
 
 			var admin_add_ctrl = this;
 			var postData = null;

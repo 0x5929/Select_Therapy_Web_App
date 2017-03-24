@@ -6,13 +6,21 @@
 				<br>
 			</div>
 		</div>
-<!-- 		<div class="form-group row">
+		<div class="form-group row">
 			<label class="control-label col-md-3" for="enrollmentDate">Enrollment Date:</label>
 			<div class="col-md-9">
-				<input type="text" ng-model="admin_add_ctrl.enrollmentDate" class="form-control" name="enrollmentDate" placeholder="Enter Student's Enrollment Date"> -->
-			<!-- COULD BE A DROPDOWN CALENDAR-->
-<!-- 			</div>
-		</div>  -->
+				<input 	type="text" 
+						masked-input
+						target-mask="99/99/9999"
+						mask-options='{"placeholder": "mm/dd/yyyy"}'
+						ng-model="admin_add_ctrl.enrollmentDate" 
+						class="form-control" 
+						name="enrollmentDate" 
+						placeholder="Enter Student's Enrollment Date">
+			
+			</div> <!-- JUST NEED TO CONVERT THE STRING INTO DATE OBJECT BEFORE SENDING TO SERVER -->
+		</div> 
+
 		<div class="form-group row">
 			<label class="control-label col-md-3" for="name">First Name:</label>
 			<div class="col-md-9">
@@ -31,6 +39,7 @@
 				<input type="text" 
 						masked-input 
 						target-mask="9999999999" 
+						mask-options='{"placeholder": "*"}'
 						ng-model="admin_add_ctrl.phoneNumber" 
 						class="form-control" 
 						name="phoneNumber" 
@@ -43,6 +52,7 @@
 				<input type="text" 
 						masked-input
 						target-mask="999999999"
+						mask-options='{"placeholder": "*"}'
 						ng-model="admin_add_ctrl.ssn" 
 						class="form-control" 
 						name="ssn" 

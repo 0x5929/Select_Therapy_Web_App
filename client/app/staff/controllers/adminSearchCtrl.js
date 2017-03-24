@@ -1,7 +1,8 @@
 (function() {
 	'use strict';
 
-	angular.module('myApp.admin', ['services.ajaxService', 'services.toastFactory'])
+	angular.module('myApp.admin', ['services.ajaxService', 'services.toastFactory', 
+		'ng.deviceDetector'])
 		.controller('adminSearchController', ['$scope', 'ajaxService', adminSearchCtrlHandler]);
 
 	function adminSearchCtrlHandler($scope, ajaxService) {

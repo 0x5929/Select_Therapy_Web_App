@@ -8,7 +8,8 @@
 			restrict: 'A',
 			link: function(scope, element, attribute) {
 				var targetMask = attribute.targetMask;
-				var options = {placeholder: '*'};
+				var options = attribute.maskOptions;
+				options = JSON.parse(options);
 				element.mask(targetMask, options);
 			}
 		};
