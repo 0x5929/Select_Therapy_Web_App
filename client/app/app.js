@@ -7,7 +7,6 @@
 		'ui.calendar',
 		'ngMaterial',
 		'ngCookies',
-		'ng.deviceDetector',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
 		'services.toastFactory',

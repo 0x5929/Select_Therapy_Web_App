@@ -4,9 +4,9 @@
 
 	'use strict';
 	angular.module('myApp.admin')
-		.controller('adminAddController', ['$scope', 'ajaxService', 'toastFactory', 'deviceDetector', adminAddControllerHandler]);
+		.controller('adminAddController', ['$scope', '$filter', 'ajaxService', 'toastFactory', adminAddControllerHandler]);
 
-		function adminAddControllerHandler($scope, ajaxService, toastFactory, deviceDetector) {
+		function adminAddControllerHandler($scope, $filter, ajaxService, toastFactory) {
 
 			var admin_add_ctrl = this;
 			var postData = null;
@@ -15,6 +15,8 @@
 			
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
+
+					console.log(new Date(admin_add_ctrl.enrollmentDate));
 				if (!isNaN(dataTobeChecked.name)){
 					toastFactory.errorToast("please check the student's first and last name input");
 					return false;
@@ -104,6 +106,7 @@
 			admin_add_ctrl.submit = function() {
 				
 				postData = {
+				enrollmentDate: new Date(admin_add_ctrl.enrollmentDate),	//need to add for the rest
 				name: admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
 				phoneNumber: admin_add_ctrl.phoneNumber,
 				ssn: admin_add_ctrl.ssn,
