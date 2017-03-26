@@ -392,3 +392,17 @@ form textarea {
 #performanceFacts button {
   white-space: normal;
 }
+
+/*
+	ADMIN SEARCH RESULTS STYLING ASSETS
+*/
+#adminSearchResults {
+	border: 2px solid black;
+	border-radius: 3px;
+	text-align: center;
+}
+
+#adminSearchProgramResultTable {
+	margin-left: auto;
+	margin-right: auto;
+}
