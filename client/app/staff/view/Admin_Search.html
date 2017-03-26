@@ -47,6 +47,31 @@
 	<div class="col-md-6" ng-if="admin_search_ctrl.showFullDetail" ng-controller="adminModifyController as admin_modify_ctrl">
 <!-- ONCE A STUDENT IS CLICKED, THIS WILL POPULATE NG VIEW WITH FULL DETAIL OF STUDENT, ALSO INITIALZED ADMIN MODIFY CONTROLLER -->
 		<div>
+			Student Enrollment Date: {{ admin_search_ctrl.studentDetail.enrollmentDate }}	<!-- COULD ADD IN A FUNCTIONALITY WHERE YOU CAN CHANGE FIRST OR LAST NAME -->
+			<input class="form-control" 
+					type="text" 
+					masked-input
+					target-mask="99/99/9999"
+					mask-options='{"placeholder": "mm/dd/yyyy"}'
+					name="enrollmentDate" 
+					ng-if="admin_modify_ctrl.editEnrollmentFieldOn" 
+					ng-model="admin_modify_ctrl.putData['enrollmentDate']" 
+					placeholder="Modify Enrollment Date">
+			<button class="btn" ng-if="admin_modify_ctrl.isAdmin() &&
+										admin_modify_ctrl.showModifyEnrollmentDateBtn" 
+								ng-click="admin_modify_ctrl.editEnrollmentFieldOn = true;
+											admin_modify_ctrl.showModifyEnrollmentDateBtn = false">
+				Modify
+			</button>
+			<button class="btn" ng-if="admin_modify_ctrl.editEnrollmentFieldOn" 
+								ng-click="admin_modify_ctrl.editEnrollmentFieldOn = false; 
+											admin_modify_ctrl.putData['enrollmentDate'] = '';
+											 admin_modify_ctrl.showModifyEnrollmentDateBtn = true">
+				Cancel
+			</button>
+			<hr>
+		</div>
+		<div>
 			Student name: {{ admin_search_ctrl.studentDetail.name }}	<!-- COULD ADD IN A FUNCTIONALITY WHERE YOU CAN CHANGE FIRST OR LAST NAME -->
 			<input class="form-control" type="text" name="name" ng-if="admin_modify_ctrl.editNameFieldOn" ng-model="admin_modify_ctrl.putData['name']" placeholder="Modify Full Name">
 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin() &&
@@ -66,7 +91,15 @@
 <!--/END OF NAME DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student phone number: {{ admin_search_ctrl.studentDetail.phoneNumber }}
-			<input class="form-control" type="text" name="phoneNumber" ng-if="admin_modify_ctrl.editPhoneFieldOn" ng-model="admin_modify_ctrl.putData['phoneNumber']" placeholder="Modify Number">
+			<input class="form-control" 
+					type="text" 
+					masked-input
+					target-mask="9999999999"
+					mask-options='{"placeholder": "*"}'
+					name="phoneNumber" 
+					ng-if="admin_modify_ctrl.editPhoneFieldOn" 
+					ng-model="admin_modify_ctrl.putData['phoneNumber']" 
+					placeholder="Modify Number">
 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin() &&
 										admin_modify_ctrl.showModifyNumberBtn" 
 								ng-click="admin_modify_ctrl.editPhoneFieldOn = true;
@@ -84,7 +117,15 @@
 <!--/END OF PHONE NUMBER DETAIL AND MODIFICATION METHODS -->
 		<div>
 			Student social security number: {{ admin_search_ctrl.studentDetail.ssn }}
-			<input class="form-control" type="text" name="ssn" ng-if="admin_modify_ctrl.editSsnFieldOn" ng-model="admin_modify_ctrl.putData['ssn']" placeholder="Modify SSN">
+			<input class="form-control" 
+					type="text" 
+					masked-input
+					target-mask="999999999"
+					mask-options='{"placeholder": "*"}'
+					name="ssn" 
+					ng-if="admin_modify_ctrl.editSsnFieldOn" 
+					ng-model="admin_modify_ctrl.putData['ssn']" 
+					placeholder="Modify SSN">
 			<button class="btn" ng-if="admin_modify_ctrl.isAdmin() &&
 										admin_modify_ctrl.showModifySsnBtn" 
 								ng-click="admin_modify_ctrl.editSsnFieldOn = true;

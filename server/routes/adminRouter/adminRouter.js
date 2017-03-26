@@ -71,12 +71,12 @@
 		}
 
 		function adminAddPostHandler(req, res, next) {
-			console.log(req.body);
 			STIDbStudentCollection.findOne({'name': req.body.name}, function(err, user) {
 				if (err) return next(err);
 				if (user) return res.status(400).send('This user already exists!').end();
 				if (!user) {	//if no user, then save all the creditials from client side
 					var newStudent = new STIDbStudentCollection();
+					newStudent.enrollmentDate = req.body.enrollmentDate;
 					newStudent.name = req.body.name;
 					newStudent.phoneNumber = req.body.phoneNumber;
 					newStudent.ssn = req.body.ssn;

@@ -16,7 +16,6 @@
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
 
-					console.log(new Date(admin_add_ctrl.enrollmentDate));
 				if (!isNaN(dataTobeChecked.name)){
 					toastFactory.errorToast("please check the student's first and last name input");
 					return false;
@@ -173,6 +172,7 @@
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
+				admin_add_ctrl.enrollmentDate = '';
 				admin_add_ctrl.firstName = '';
 				admin_add_ctrl.lastName = '';
 				admin_add_ctrl.phoneNumber = '';

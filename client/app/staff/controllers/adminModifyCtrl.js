@@ -10,6 +10,7 @@
 			admin_modify_ctrl.showModifyCurrentProgramInput= []; //inititalize empty arr for program input edit				
 			admin_modify_ctrl.editProgramArr               = [];	////need to initialize program edit array obj
 			admin_modify_ctrl.putData                      = {	//initialize data object and all necessary keys for PUT request in submitChangesBtn()
+				enrollmentDate     : '',
 				name               : '',
 				phoneNumber        : '',
 				ssn                : '',
@@ -55,7 +56,8 @@
 					}	//for the rest of the fields, we filter through the ones that is editted
 					else if (data[inputField] !== '' && data[inputField] !== 'noneSelected')	putDataAfterFilter[inputField] = data[inputField];		
 				}
-
+				//this will convert date to date object
+				if (putDataAfterFilter.enrollmentDate)	putDataAfterFilter.enrollmentDate = new Date(putDataAfterFilter.enrollmentDate);
 				//this will convert false to empty string to be converted to boolean false or 0 value in the server side.
 				if (putDataAfterFilter.tuitionPaid && putDataAfterFilter.tuitionPaid === 'false')	putDataAfterFilter.tuitionPaid = '';
 				if (putDataAfterFilter.graduate && putDataAfterFilter.graduate === 'false')	putDataAfterFilter.graduate = '';
@@ -219,26 +221,28 @@ SHOWING THE MODIFY BUTTON IN VIEW
 AND TURNING OFF THE EDIT FIELD FOR EACH INDIVIDUAL CATEGORY 
 */			
 			admin_modify_ctrl.turnShowModifyBtnOn = function() {
-				admin_modify_ctrl.showModifyNameBtn               = true;
-				admin_modify_ctrl.showModifyNumberBtn             = true;
-				admin_modify_ctrl.showModifySsnBtn                = true;
-				admin_modify_ctrl.showModifyAddressBtn            = true;
-				admin_modify_ctrl.showModifyEmailBtn              = true;
-				admin_modify_ctrl.showModifyTuitionPaidBtn        = true;
-				admin_modify_ctrl.showModifyMarketingSurveyBtn    = true;
-				admin_modify_ctrl.showModifyGraduateBtn           = true;
-				admin_modify_ctrl.showModifyPassedExamBtn         = true;
-				admin_modify_ctrl.showModifyNumberofTriesBtn      = true;
-				admin_modify_ctrl.showModifyNoPassReasonBtn       = true;
-				admin_modify_ctrl.showModifyJobPlacedBtn          = true;
-				admin_modify_ctrl.showModifyWeeklyWorkHoursBtn    = true;
-				admin_modify_ctrl.showModifyPayRateBtn            = true;
-				admin_modify_ctrl.showModifyJobDescriptionBtn     = true;
-				admin_modify_ctrl.showModifyNoJobReasonBtn        = true;
-				admin_modify_ctrl.showModifyNotGraduatingReasonBtn= true;
+				admin_modify_ctrl.showModifyEnrollmentDateBtn      = true;
+				admin_modify_ctrl.showModifyNameBtn                = true;
+				admin_modify_ctrl.showModifyNumberBtn              = true;
+				admin_modify_ctrl.showModifySsnBtn                 = true;
+				admin_modify_ctrl.showModifyAddressBtn             = true;
+				admin_modify_ctrl.showModifyEmailBtn               = true;
+				admin_modify_ctrl.showModifyTuitionPaidBtn         = true;
+				admin_modify_ctrl.showModifyMarketingSurveyBtn     = true;
+				admin_modify_ctrl.showModifyGraduateBtn            = true;
+				admin_modify_ctrl.showModifyPassedExamBtn          = true;
+				admin_modify_ctrl.showModifyNumberofTriesBtn       = true;
+				admin_modify_ctrl.showModifyNoPassReasonBtn        = true;
+				admin_modify_ctrl.showModifyJobPlacedBtn           = true;
+				admin_modify_ctrl.showModifyWeeklyWorkHoursBtn     = true;
+				admin_modify_ctrl.showModifyPayRateBtn             = true;
+				admin_modify_ctrl.showModifyJobDescriptionBtn      = true;
+				admin_modify_ctrl.showModifyNoJobReasonBtn         = true;
+				admin_modify_ctrl.showModifyNotGraduatingReasonBtn = true;
 			};
 
 			admin_modify_ctrl.turnEditOff = function() {
+				admin_modify_ctrl.editEnrollmentFieldOn			= false;
 				admin_modify_ctrl.editNameFieldOn               = false;
 				admin_modify_ctrl.editPhoneFieldOn              = false;
 				admin_modify_ctrl.editSsnFieldOn                = false;

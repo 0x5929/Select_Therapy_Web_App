@@ -6,6 +6,7 @@
 	//define Schema
 	var studentSchema = mongoose.Schema({
 		//required fields
+		enrollmentDate: {type: Date, required: true},
 		name: {type: String, required: true},
 		phoneNumber: {type: Number, required: true},
 		ssn: {type: Number, required: true},
