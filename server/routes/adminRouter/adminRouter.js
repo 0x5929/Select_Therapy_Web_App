@@ -22,7 +22,7 @@
 			console.log(searchParameter);
 			console.log(searchInput);
 
-			if (!searchInput || !searchParameter)
+			if (!searchInput ||  (req.query.searchProgram && req.query.searchRotation) || !searchParameter)
 				return res.status(400).send('invalid entry').end();
 			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
 													hha program rotation, esol program rotation number, 
@@ -48,6 +48,9 @@
 					if (users) return res.send(users).end();
 					if (!user) return res.status(400).send('nope no user here').end();
 				});
+			}else if (searchParameter === 'ByRotation') {
+					// STIDbStudentCollection.find({'program'})
+					//need to find a way to query all the programs first, then find the correct rotation number
 			}
 		}
 

@@ -18,7 +18,9 @@
 			var config = {
 				params: {
 					parameter: admin_search_ctrl.searchParameter,
-					input: admin_search_ctrl.searchInput
+					input: admin_search_ctrl.searchInput,
+					program: admin_search_ctrl.searchProgram,
+					rotation: admin_search_ctrl.searchRotation
 				}
 			};
 

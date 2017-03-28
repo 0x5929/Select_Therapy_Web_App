@@ -10,6 +10,16 @@
 					<option value="Name">Name</option>
 					<option value="email">email</option>
 					<option value="Phone number">Phone number</option>
+					<option value="ByRotation">By Rotation</option>
+				</select>
+				<input type="text" class="form-control" ng-if="admin_search_ctrl.searchParameter === 'By Rotation'" ng-model="admin_search_ctrl.searchRotation">
+				<select ng-model="admin_search_ctrl.searchProgram" name="searchProgram" class="form-control">
+					<option disabled ng-selected="true" value=""> -- Select an Input -- </option>
+					<option value="CNA">CNA</option>
+					<option value="HHA">HHA</option>
+					<option value="SG">Security Guard</option>
+					<option value="Caregiver">Caregiver</option>
+					<option value="ESOL">ESOL</option>
 				</select>
 				<button class="btn" ng-click="admin_search_ctrl.submitBtn()">Search</button>
 			</form>
