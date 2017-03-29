@@ -50,7 +50,8 @@
 				});
 			}else if (searchParameter === 'ByRotation') {
 					// STIDbStudentCollection.find({'program'})
-					//need to find a way to query all the programs first, then find the correct rotation number
+					//need to find a way to query all the programs first, 
+					//then find the correct rotation number
 			}
 		}
 
