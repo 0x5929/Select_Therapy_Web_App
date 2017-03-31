@@ -19,10 +19,14 @@
 		function adminSearchGetHandler(req, res, next) {
 			var searchParameter = req.query.parameter;
 			var searchInput = req.query.input;
+			var searchProgram = req.query.program;
+			var searchRotation = req.query.rotation;
 			console.log(searchParameter);
 			console.log(searchInput);
+			console.log(searchProgram);
+			console.log(searchRotation);
 
-			if (!searchInput ||  (req.query.searchProgram && req.query.searchRotation) || !searchParameter)
+			if ((!searchInput && !searchProgram && !searchRotation) || !searchParameter)
 				return res.status(400).send('invalid entry').end();
 			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
 													hha program rotation, esol program rotation number, 
@@ -52,6 +56,13 @@
 					// STIDbStudentCollection.find({'program'})
 					//need to find a way to query all the programs first, 
 					//then find the correct rotation number
+					STIDbStudentCollection.find()
+						.elemMatch('program', {'programName': searchProgram, 'programRotation': searchRotation})
+							.exec(function(err, results) {
+								if (err) return next(err);
+								console.log('testing @ adminRouter, for searching by program rotations: ', results);
+								//awesome, result sends an arr [obj] for programs, need to send it back to client
+							});
 			}
 		}
 
