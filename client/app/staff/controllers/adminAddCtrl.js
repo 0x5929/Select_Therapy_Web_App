@@ -11,7 +11,7 @@
 			var admin_add_ctrl = this;
 			var postData = null;
 
-			admin_add_ctrl.programInputCount = 0
+			admin_add_ctrl.programInputCount = 0;
 			
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
