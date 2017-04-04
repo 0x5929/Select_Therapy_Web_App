@@ -2,18 +2,24 @@
 	<div class="row" id="adminSearch">
 		<div class="col-md-6">
 			<h3 class="text-center">  Search By:</h3>
-			<br>
 			<form class="text-center">
+				<input type="radio" name="searchBy" ng-model="admin_search_ctrl.searchBy" value="Student_Info" >Student Info<br>
+				<input type="radio" name="searchBy" ng-model="admin_search_ctrl.searchBy" value="Program_Info">Program Info<br>
+			</form>
+			<br>
+			<form class="text-center" ng-if="admin_search_ctrl.searchBy === 'Student_Info'">
 				<input type="text" ng-model="admin_search_ctrl.searchInput" class="form-control">
 				<select ng-model="admin_search_ctrl.searchParameter" name="seachInputAndParameter" class="form-control">
 					<option disabled ng-selected="true" value=""> -- Select an Input -- </option>
 					<option value="Name">Name</option>
 					<option value="email">email</option>
-					<option value="Phone number">Phone number</option>
-					<option value="ByRotation">By Rotation</option>
+					<option value="Phone number">Phone number</option><!-- 
+					<option value="ByRotation">By Rotation</option> -->
 				</select>
-				<input type="text" class="form-control" ng-if="admin_search_ctrl.searchParameter === 'ByRotation'" ng-model="admin_search_ctrl.searchRotation">
-				<select ng-model="admin_search_ctrl.searchProgram" ng-if="admin_search_ctrl.searchParameter === 'ByRotation'" name="searchProgram" class="form-control">
+			</form>
+			<form ng-if="admin_search_ctrl.searchBy === 'Program_Info'">
+				<input type="text" class="form-control" ng-model="admin_search_ctrl.searchRotation">
+				<select ng-model="admin_search_ctrl.searchProgram" name="searchProgram" class="form-control">
 					<option disabled ng-selected="true" value=""> -- Select an Input -- </option>
 					<option value="CNA">CNA</option>
 					<option value="HHA">HHA</option>
@@ -21,8 +27,10 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<button class="btn" ng-click="admin_search_ctrl.submitBtn()">Search</button>
 			</form>
+			<div class="text-center">
+				<button class="btn " ng-click="admin_search_ctrl.submitBtn()">Search</button>
+			</div>
 		</div>
 <!-- add another search input, from rotation, and use ng if to show another input dropdown of programs, and rotation number -->
 <!-- add another button if there are more than 1 student in results, can add name in docx or google sheets 

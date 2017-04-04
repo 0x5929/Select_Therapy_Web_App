@@ -15,14 +15,18 @@
 		};
 
 		admin_search_ctrl.submitBtn = function () {
-			var config = {
-				params: {
-					parameter: admin_search_ctrl.searchParameter,
-					input: admin_search_ctrl.searchInput,
-					program: admin_search_ctrl.searchProgram,
-					rotation: admin_search_ctrl.searchRotation
-				}
-			};
+			var config = {};
+			if (admin_search_ctrl.searchBy === 'Student_Info'){
+				config.params = {
+						parameter: admin_search_ctrl.searchParameter,
+						input: admin_search_ctrl.searchInput
+					};
+			}else if (admin_search_ctrl.searchBy === 'Program_Info'){
+				config.params = {
+						program: admin_search_ctrl.searchProgram,
+						rotation: admin_search_ctrl.searchRotation
+					};
+			}
 
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
