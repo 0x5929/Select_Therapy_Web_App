@@ -21,50 +21,38 @@
 			var searchInput = req.query.input;
 			var searchProgram = req.query.program;
 			var searchRotation = req.query.rotation;
-			console.log(searchParameter);
-			console.log(searchInput);
-			console.log(searchProgram);
-			console.log(searchRotation);
 
-			if ((!searchInput && !searchProgram && !searchRotation) || !searchParameter)
-				return res.status(400).send('invalid entry').end();
-			if (searchParameter === 'Name') {	/*	we could add a couple more such as ssn, cna program rotation, 
-													hha program rotation, esol program rotation number, 
-													and sg program rotation */
-				searchInput = searchInput.toLowerCase();
-				STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
-					console.log(err);
-					console.log(user);
-					if (err) return next(err);
-					if (user) return res.status(200).send(user).end();
-					if (!user) return res.status(400).send('nope no user here').end();
-				});
-			}else if (searchParameter === 'email') {
-					STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
-					if (err) return next(err);
-					if (user) return res.status(200).send(user).end();
-					if (!user) return res.status(400).send('nope no user here').end();
-				});
-			}else if (searchParameter === 'Phone number'){
-					STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
-					console.log(users);
-					if (err) return next(err);
-					if (users) return res.send(users).end();
-					if (!user) return res.status(400).send('nope no user here').end();
-				});
-			}else if (searchParameter === 'ByRotation') {
-					// STIDbStudentCollection.find({'program'})
-					//need to find a way to query all the programs first, 
-					//then find the correct rotation number
-					STIDbStudentCollection.find()
-						.elemMatch('program', {'programName': searchProgram, 'programRotation': searchRotation})
-							.exec(function(err, results) {
-								if (err) return next(err);
-								console.log('testing @ adminRouter, for searching by program rotations: ', results);
-								//awesome, result sends an arr [obj] for programs, need to send it back to client
-							});
-			}
-		}
+			if (searchParameter && searchInput){	//if searching by student info
+				if (searchParameter === 'Name') {
+					searchInput = searchInput.toLowerCase();
+					STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
+						if (err) return next(err);
+						if (user) return res.status(200).send(user).end();
+						if (!user) return res.status(400).send('nope no user here').end();
+					});
+				}else if (searchParameter === 'email') {
+						STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
+						if (err) return next(err);
+						if (user) return res.status(200).send(user).end();
+						if (!user) return res.status(400).send('nope no user here').end();
+					});
+				}else if (searchParameter === 'Phone number'){
+						STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
+						if (err) return next(err);
+						if (users) return res.status(200).send(users).end();
+						if (!user) return res.status(400).send('nope no user here').end();
+					});
+				}				
+			}else if (searchProgram && searchRotation){	//if searching by program info
+				STIDbStudentCollection.find()
+					.elemMatch('program', {'programName': searchProgram, 'programRotation': searchRotation})
+						.exec(function(err, results) {
+							if (err) return next(err);
+							if (results) return res.status(200).send(results).end();
+							console.log('testing @ adminRouter, for searching by program rotations: ', results);
+						});				
+			}else return res.status(400).send('invalid entry').end();	//last condition for err handle
+	}
 
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;

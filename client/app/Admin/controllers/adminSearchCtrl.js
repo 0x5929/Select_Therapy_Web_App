@@ -16,7 +16,7 @@
 
 		admin_search_ctrl.submitBtn = function () {
 			var config = {};
-			if (admin_search_ctrl.searchBy === 'Student_Info'){
+			if (admin_search_ctrl.searchBy === 'Student_Info'){	//depending on searching by student info or program info
 				config.params = {
 						parameter: admin_search_ctrl.searchParameter,
 						input: admin_search_ctrl.searchInput
@@ -31,7 +31,7 @@
 			ajaxService.get('/admin/search/', config)
 				.then(function(successResponse) {
 					console.log(successResponse);
-					admin_search_ctrl.showFullDetail = false;
+					admin_search_ctrl.showFullDetail = false;	//turning off visuals for full detail
 					if (Array.isArray(successResponse.data)){	//need to account for when an array of users is returned from server for findAll method in db
 						successResponse.data.forEach(function(student) {	//each student from the response will map their program to only its name
 																			//then having the array of mapped results to be joined so it returns strings of names only

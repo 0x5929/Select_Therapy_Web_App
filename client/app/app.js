@@ -36,41 +36,41 @@
 					url: '/homePage',
 					templateUrl: 'app/Home/view/Home.html'
 				})
-				.state('school', {
-					templateUrl: 'app/school/view/english/school.html',
+				.state('Student', {
+					templateUrl: 'app/Student/view/english/student.html',
 					data: { securityLevel: 'Student' },
 					authenticate: true
 				})
-				.state('staff', {
-					templateUrl: 'app/staff/view/staff.html',
+				.state('Admin', {
+					templateUrl: 'app/Admin/view/admin.html',
 					data: { securityLevel: 'Staff' },
 					authenticate: true
 				})
-				.state('staff.Admin_Search', {
+				.state('Admin.Admin_Search', {
 					views: {
-						'AdminView@staff': {
-							templateUrl: 'app/staff/view/Admin_Search.html'
+						'AdminView@Admin': {
+							templateUrl: 'app/Admin/view/Admin_Search.html'
 						}
 					},
-					data: { securityLevel: 'staff' },
+					data: { securityLevel: 'Staff' },
 					authenticate: true
 				})
-				.state('staff.Admin_Add', {
+				.state('Admin.Admin_Add', {
 					views: {
-						'AdminView@staff': {
-							templateUrl: 'app/staff/view/Admin_Add.html'
+						'AdminView@Admin': {
+							templateUrl: 'app/Admin/view/Admin_Add.html'
 						}
 					},
 					data: { securityLevel: 'Admin' },
 					authenticate: true
 				})
-				.state('staff.Admin_Recruit', {
+				.state('Admin.Admin_Recruit', {
 					views: {
-						'AdminView@staff': {
-							templateUrl: 'app/school/view/english/school.html'
+						'AdminView@Admin': {
+							templateUrl: 'app/Student/view/english/student.html'
 						}
 					},
-					data: { securityLevel: 'staff' },
+					data: { securityLevel: 'Staff' },
 					authenticate: true
 				});
 		}
@@ -125,7 +125,7 @@
 					if (typeof currentUser === 'undefined'){	//if no user signed in
 						event.preventDefault();
 						modalFactory.loginModalService().then(function(user) {	//success student login will redirect user to school for students
-							$state.go('school');
+							$state.go('Student');
 						}).catch(function(failureResponse) {	//if somehow log in fails, user is redirected back to home.
 							$state.go('Home');
 						});
@@ -139,9 +139,9 @@
 							//if user security is admin, add staff access as well
 							if (securityAccess.indexOf('Admin') > -1)	securityAccess.push('Staff');
 							//if after log in you have enough access
-							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('staff');
+							if (securityAccess.indexOf(securityLevel) > -1)	$state.go('Admin');
 							//if not enough access, then user is redirected to home
-							else $state.go('school');
+							else $state.go('Student');
 						})
 						.catch(function(failureResponse) {	//if login failed, redirect user to home
 							$state.go('Home');

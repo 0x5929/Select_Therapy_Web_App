@@ -1,0 +1,79 @@
+/* header ID styles */
+#header{
+	/*height: 120px;*/
+	position: fixed;
+	overflow: visible !important;
+	width: 100%;
+	z-index: 150;
+	right: 0;
+	background-color: white;
+}
+
+#headerS {
+	color: #4198D3;
+}
+/* navigation styling */
+.mainNavEl {
+ 	background-color: white;
+ }
+ .mainNavEl a {
+ 	color: black;
+ }
+
+.nav>li>a:focus, .nav>li>a:hover {
+  background-color: #4198D3;
+  color: white;
+}
+/* with help of stackoverflowquestion http://stackoverflow.com/questions/30142687/nav-pills-hover-background-color-change-bootstrap-3*/
+.nav>li>ul>li>a:focus, .nav>li>ul>li>a:hover {
+  background-color: #4198D3;
+  color: white;
+}
+
+.user-dropdown-menu>li>a:focus, .user-dropdown-menu>li>a:hover {
+  background-color: #4198D3;
+  color: white;
+}
+
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#ClassScheduleChinese{
+	padding-left: 22px;
+	padding-right: 22px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#homeChinese{
+	padding-left: 10px;
+	padding-right: 10px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#programChinese{
+	padding-right: 4px;
+	padding-left: 4px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#aboutUsChinese{
+	padding-right: 5px;
+	padding-left: 5px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#contactUsChinese{
+	padding-right: 10px;
+	padding-left: 10px
+}
+/* chinese flip translation tab on nav styles, made to ensure translations are fliped b/c of size of element */
+#programCPRCh{
+	padding-right: 143px;
+}
+/* fix program dropdownmenu to have no margin at top so mouse cannot unhover while lookin at menu */
+.dropdown-menu{
+	margin-top: 0;
+}
+/* fix user dropdownmenus to have no margin at top so mouse cannot unhover while lookin at menu */
+.user-dropdown-menu{
+	margin-top: 0;
+}
+/* user button style */
+#userButton{
+	border-radius: 5px;
+	background-color: #4198D3
+}
