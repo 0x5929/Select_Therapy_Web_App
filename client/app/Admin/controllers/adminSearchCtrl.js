@@ -15,6 +15,7 @@
 		};
 
 		admin_search_ctrl.submitBtn = function () {
+
 			var config = {};
 			if (admin_search_ctrl.searchBy === 'Student_Info'){	//depending on searching by student info or program info
 				config.params = {
@@ -58,6 +59,25 @@
 					admin_search_ctrl.showFullDetail = false;	//turning off full detail view
 					admin_search_ctrl.message = failureResponse.data;	//setting error message to the failure response data message
 				});
+		};
+
+		admin_search_ctrl.generateSignInSheet = function() {
+			//ajax call to server
+			//server gon use office generator
+			//server will then gon send the doc to be downloadable in client
+			var config = {};
+			//also need to collect all names from data object to be put into configs
+			config.params = {
+				//list of student names to be sent to server to be generated with a sign in sheet
+				studentNames: []; 	//	need to check if we can pass an arr to a get config param
+			};
+			
+			ajaxService.get('/admin/search/generateSignIn', config)
+				.then(function(successResponse) {
+					console.log(successResponse);
+				}, function(failureResponse) {
+					console.log(failureResponse);
+			});
 		};
 
 	}
