@@ -11,6 +11,7 @@
 
 		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
+		adminRoute.get('/search/generateSignIn', generateSignInHdlr);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -52,7 +53,12 @@
 							console.log('testing @ adminRouter, for searching by program rotations: ', results);
 						});				
 			}else return res.status(400).send('invalid entry').end();	//last condition for err handle
-	}
+		}
+
+		function generateSignInHdlr(req, res, next) {
+			var studentNames = req.query.studentNames;
+			console.log('testing in server to see if array came thru: ', studentNames);	//test success, it did came thru
+		}
 
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;

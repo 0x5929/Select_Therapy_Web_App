@@ -77,7 +77,7 @@
 				studentNames: studentNames 	//	need to check if we can pass an arr to a get config param
 			};
 			
-			ajaxService.get('/admin/search/generateSignIn', config)
+			ajaxService.get('/admin/search/generateSignIn/', config)
 				.then(function(successResponse) {
 					console.log(successResponse);
 				}, function(failureResponse) {
