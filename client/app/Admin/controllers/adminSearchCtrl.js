@@ -65,11 +65,16 @@
 			//ajax call to server
 			//server gon use office generator
 			//server will then gon send the doc to be downloadable in client
+			var studentNames = [];
+			admin_search_ctrl.data.forEach(function(student) {
+				studentNames.push(student.name);
+			});
+			console.log(studentNames);
 			var config = {};
 			//also need to collect all names from data object to be put into configs
 			config.params = {
 				//list of student names to be sent to server to be generated with a sign in sheet
-				studentNames: []; 	//	need to check if we can pass an arr to a get config param
+				studentNames: [] 	//	need to check if we can pass an arr to a get config param
 			};
 			
 			ajaxService.get('/admin/search/generateSignIn', config)
