@@ -74,7 +74,7 @@
 			//also need to collect all names from data object to be put into configs
 			config.params = {
 				//list of student names to be sent to server to be generated with a sign in sheet
-				studentNames: [] 	//	need to check if we can pass an arr to a get config param
+				studentNames: studentNames 	//	need to check if we can pass an arr to a get config param
 			};
 			
 			ajaxService.get('/admin/search/generateSignIn', config)
