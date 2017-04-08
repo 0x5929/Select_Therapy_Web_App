@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser) {
+	function adminRouterHandler (express, app, fs, async, path, bodyParser, officeGenDocx) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -58,6 +58,10 @@
 		function generateSignInHdlr(req, res, next) {
 			var studentNames = req.query.studentNames;
 			console.log('testing in server to see if array came thru: ', studentNames);	//test success, it did came thru
+			//need to test if officeGenDocx works
+			//need fs module to createWriteStream, 
+			//need async module to run parallel callbacks, with sucess, and failure (err) functions
+
 		}
 
 		function adminAddPostParseMiddleware(req, res, next) {

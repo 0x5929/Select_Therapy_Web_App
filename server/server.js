@@ -3,6 +3,7 @@
 //Set Up Application
 //fetching all tools
 var fs                 = require('fs'),
+	async			   = require('async'),
 	path               = require('path'),
 	express            = require('express'),
 	app                = express(),
@@ -27,7 +28,7 @@ var fs                 = require('fs'),
 	configDB           = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
 	configCV           = require(path.join(__dirname, 'config/customValidator.js')),
 	configNM           = require(path.join(__dirname, 'config/nodemail.js')),
-	configOG           = require(path.join(__dirname, 'config/officegen.js')),
+	configOG           = require(path.join(__dirname, 'config/officegen.js'))(officeGenerator),
 	//fetching services
 	nodemailerService  = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig);	//pass in neccessary configs
 
@@ -35,6 +36,7 @@ var fs                 = require('fs'),
 
 configDB.databaseConnectionConfig();	//database configuration
 mongoose.connect(configDB.url);
+configOG.officeGenSetup();	//office generator configuration set up
 require(path.join(__dirname, '/config/passport.js'))(passport, path);	//passport configuration
 
 
@@ -65,7 +67,7 @@ app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angul
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objs
-require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware);
+require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, async, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, configOG.officeGenSetup.myDoc);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

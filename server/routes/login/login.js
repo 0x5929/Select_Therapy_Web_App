@@ -30,7 +30,7 @@
 							return next(err);
 						return res.status(200).send(req.user);
 					});
-				})(req);	//passing in request object for passport
+				})(req);	//passing in request object for passport.authenticate in the local-signin method
 			});
 			//expose router and all of its configed routes back to routesjs to be used in serverjs
 			return loginRoute;
