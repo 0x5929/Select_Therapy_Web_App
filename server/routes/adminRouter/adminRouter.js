@@ -61,6 +61,29 @@
 			//need to test if officeGenDocx works
 			//need fs module to createWriteStream, 
 			//need async module to run parallel callbacks, with sucess, and failure (err) functions
+			// var docOutputStream = fs.createWriteStream(res);
+			// async.parallel([
+			// 	function(done) {
+			// 		docOutputStream.on('error', function(err) {
+			// 			console.log('WARNING, ERROR HAS OCCURRED: ', err);
+			// 			done(err);
+			// 		});
+			// },	function(done) {
+			// 		docOutputStream.on('close', function() {
+			// 			console.log('Finished creating microsoft docx file.');
+			// 			done(null);
+			// 		});
+			// 		officeGenDocx.generate(res);
+
+			
+			// }], function(err) {
+			// 	if (err)	console.log('ERROR: ', err);
+
+			// });
+			res.setHeader('Content-disposition', 'attachment; filename="Sign_In_Sheet.docx"');	//setting the header, content disposition, and open new tab option with inline, or download option with attachment
+			res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
+			officeGenDocx.generate(res);
+			res.end();
 
 		}
 

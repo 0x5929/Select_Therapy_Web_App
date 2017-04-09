@@ -77,8 +77,11 @@
 				studentNames: studentNames 	//	need to check if we can pass an arr to a get config param
 			};
 			
-			ajaxService.get('/admin/search/generateSignIn/', config)
+			ajaxService.get('/admin/search/generateSignIn/', config, {responseType: 'arrayBuffer'})
 				.then(function(successResponse) {
+					var file = new Blob([successResponse], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+					var fileURL = URL.createObjectURL(file);
+					window.open(fileURL);
 					console.log(successResponse);
 				}, function(failureResponse) {
 					console.log(failureResponse);
