@@ -1,10 +1,10 @@
 (function() {
 	'use strict';
 
-	angular.module('myApp.admin', ['services.ajaxService', 'services.toastFactory'])
-		.controller('adminSearchController', ['$scope', 'ajaxService', adminSearchCtrlHandler]);
+	angular.module('myApp.admin', ['ngFileSaver', 'services.ajaxService', 'services.toastFactory'])
+		.controller('adminSearchController', ['$scope', 'FileSaver', 'Blob', 'ajaxService', adminSearchCtrlHandler]);
 
-	function adminSearchCtrlHandler($scope, ajaxService) {
+	function adminSearchCtrlHandler($scope, FileSaver, Blob, ajaxService) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
@@ -69,7 +69,6 @@
 			admin_search_ctrl.data.forEach(function(student) {
 				studentNames.push(student.name);
 			});
-			console.log(studentNames);
 			var config = {};
 			//also need to collect all names from data object to be put into configs
 			config.params = {
@@ -77,12 +76,16 @@
 				studentNames: studentNames 	//	need to check if we can pass an arr to a get config param
 			};
 			
-			ajaxService.get('/admin/search/generateSignIn/', config, {responseType: 'arrayBuffer'})
+			config.dataType = 'binary';
+			config.processData = false;
+			config.responseType = 'arraybuffer';
+			ajaxService.get('/admin/search/generateSignIn/', config)
 				.then(function(successResponse) {
-					var file = new Blob([successResponse], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-					var fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
-					console.log(successResponse);
+					var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+					// var fileURL = URL.createObjectURL(file);
+					// console.log(fileURL);	//this is getting the download to be corrupted, need to include filesaver function
+					// window.open(fileURL);
+					FileSaver.saveAs(file, 'signinsheet.docx');
 				}, function(failureResponse) {
 					console.log(failureResponse);
 			});

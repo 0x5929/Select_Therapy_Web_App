@@ -7,6 +7,7 @@
 		'ui.calendar',
 		'ngMaterial',
 		'ngCookies',
+		'ngFileSaver',
 		'services.looksIntegrationByUIB',
 		'services.AuthenticationFactory',
 		'services.toastFactory',
