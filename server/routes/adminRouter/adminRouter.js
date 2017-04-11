@@ -18,6 +18,14 @@
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
+
+
+
+
+/**********************************************************
+ADMIN SEARCH GET HANDLER
+REST: GET
+***********************************************************/
 		function adminSearchGetHandler(req, res, next) {
 			var searchParameter = req.query.parameter;
 			var searchInput = req.query.input;
@@ -55,6 +63,14 @@
 						});				
 			}else return res.status(400).send('invalid entry').end();	//last condition for err handle
 		}
+
+
+
+
+/*********************************************************************************
+ADMIN SEARCH GET SIGN IN SHEET HANDLER + HEADER MIDDLEWARE + OFFICEGEN MIDDLEWARE
+REST: GET
+**********************************************************************************/
 
 		function headerMiddleware(req, res, next) {
 			//setting the content type, and content disposition
@@ -128,6 +144,13 @@
 												//and the doc will be corrupted in the front end b/c of that
 		}
 
+
+
+/**********************************************************
+ADMIN ADD HANDLER + PARSE MIDDLEWARE
+REST: ADD
+***********************************************************/
+
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody = req.body;
 			//parse all neccessary fields to be correctly input into db
@@ -186,6 +209,14 @@
 			return res.status(200).send('newStudent added').end();
 		}
 
+
+
+
+/********************************************************************************************
+ADMIN MODIFY MODIFY HANDLER
+REST: PUT..........................** NEED TO SEE IF WE NEED TO CHANGE THAT TO PATCH INSTEAD
+*********************************************************************************************/
+
 		function adminModifyPutHandler(req, res, next) {
 			console.log(req.body);
 			var requestBody = req.body;
@@ -205,6 +236,13 @@
 				}
 			});
 		}
+
+
+
+/**********************************************************
+ADMIN MODIFY DELETE HANDLER
+REST: DELETE
+***********************************************************/
 
 		function adminModifyDeleteHandler(req, res, next) {
 			var deleteID = req.params.id;
