@@ -68,12 +68,33 @@
 			var studentNames = req.query.studentNames;
 			console.log('testing in server to see if array came thru: ', studentNames);	//test success, it did came thru
 			//using officeGenDocx to add paragraphs, and tables for sign in sheet
+			officeGenDocx.setDocSubject('Sign_In_Sheet');
+			officeGenDocx.setDocKeywords('Sign_In_Sheet');
+			officeGenDocx.setDescription('Sign_In_Sheet');
+			//header paragraph
+			var headerParagraph = officeGenDocx.createP();
+			headerParagraph.options.align = 'center';
+			headerParagraph.addText('Select Therapy Institute, INC', {bold: true, font_face: 'Times New Roman', font_size: 20});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('2209 N. San Gabriel Blvd., Suite C ', {font_face: 'Times New Roman', font_size: 16});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('Rosemead, CA 91770', {font_face: 'Times New Roman', font_size: 16});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('Tel: 626-572-7231 Fax: 626-572-7377', {font_face: 'Times New Roman', font_size: 16});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('E-mail: selecttherapyinstitute@gmail.com', {font_face: 'Times New Roman', font_size: 16});
+			headerParagraph.addLineBreak();
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('Sign-In Sheet for Nurse Assitant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
+			// need to make two tables
 			next();
 		}
 
 		function finalHandler(req, res, next) {
 			officeGenDocx.generate(res);
-			res.end();	//ending signal
+			// res.end();	//ending signal ** note, cannot call res.end() because it will 
+												//end the signal before doc is created, 
+												//and the doc will be corrupted in the front end b/c of that
 		}
 
 		function adminAddPostParseMiddleware(req, res, next) {
