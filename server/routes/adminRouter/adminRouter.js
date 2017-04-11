@@ -1,5 +1,6 @@
 (function() {
 	'use strict';
+	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
 	function adminRouterHandler (express, app, fs, async, path, bodyParser, officeGenDocx) {
 
@@ -11,7 +12,7 @@
 
 		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
-		adminRoute.get('/search/generateSignIn', generateSignInHdlr);
+		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenMiddleware, finalHandler);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -55,37 +56,24 @@
 			}else return res.status(400).send('invalid entry').end();	//last condition for err handle
 		}
 
-		function generateSignInHdlr(req, res, next) {
+		function headerMiddleware(req, res, next) {
+			//setting the content type, and content disposition
+			res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
+			res.setHeader('Content-disposition', 'attachment; filename=Sign_In_Sheet.docx');
+			next();			
+		}
+
+		function officeGenMiddleware(req, res, next) {
+			//this is the middleware to do all the work with officegen
 			var studentNames = req.query.studentNames;
 			console.log('testing in server to see if array came thru: ', studentNames);	//test success, it did came thru
-			//need to test if officeGenDocx works
-			//need fs module to createWriteStream, 
-			//need async module to run parallel callbacks, with sucess, and failure (err) functions
-			// var docOutputStream = fs.createWriteStream('signin.docx');
-			// async.parallel([
-			// 	function(done) {
-			// 		docOutputStream.on('error', function(err) {
-			// 			console.log('WARNING, ERROR HAS OCCURRED: ', err);
-			// 			done(err);
-			// 		});
-			// },	function(done) {
-			// 		docOutputStream.on('close', function() {
-			// 			console.log('Finished creating microsoft docx file.');
-			// 			done(null);
-			// 		});
-			// 		officeGenDocx.generate(res);
+			//using officeGenDocx to add paragraphs, and tables for sign in sheet
+			next();
+		}
 
-			
-			// }], function(err) {
-			// 	if (err)	console.log('ERROR: ', err);
-
-			// });
-			res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
-			res.setHeader('Content-disposition', 'attachment; filename=Sign_In_Sheet.docx');	//setting the header, content disposition, and open new tab option with inline, or download option with attachment
-			
+		function finalHandler(req, res, next) {
 			officeGenDocx.generate(res);
-			// res.end();
-
+			res.end();	//ending signal
 		}
 
 		function adminAddPostParseMiddleware(req, res, next) {

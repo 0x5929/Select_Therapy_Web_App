@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 	
-	function contactUsMessengerHandler(nodemailer, config) {
+	function nodemailerServiceHandler(nodemailer, config) {
 		var services = {
 			contactUsMessengerHandler: contactUsMessengerHandler
 		};
@@ -16,5 +16,5 @@
 
 		return services;
 	}
-	module.exports = contactUsMessengerHandler;
+	module.exports = nodemailerServiceHandler;
 }());
