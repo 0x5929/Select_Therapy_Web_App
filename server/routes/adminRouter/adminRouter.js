@@ -89,22 +89,26 @@
 			headerParagraph.addLineBreak();
 			headerParagraph.addLineBreak();
 			// need to make two tables
-			var headerTable = [[{
-				val: 'Date',
-				opts: {
-					cellColWidth: 4261,	//need to adjust accordingly
-					b: true,	//need to toggle to figure out what it is
-					sz: 14,	//font size?
-					fontFamily: "Arial",
-					align: 'right'
-				}
-			}, {
-				val: '',
-				opts: {
-					b: true,
-					align: 'left'
-				}
-			}], ['Class', 'Nurse Assitant'], ['Time Schedule', ''], ['Instructor', ''],];
+			var headerTable = [
+				[{
+					val: 'Date',
+					opts: {
+						cellColWidth: 4261,	//need to adjust accordingly
+						b: true,	//need to toggle to figure out what it is
+						sz: 14,	//font size?
+						fontFamily: "Arial",
+						align: 'right'
+					}
+				}, {
+					val: '',
+					opts: {
+						b: true,
+						align: 'left'
+					}
+				}], 
+				['Class', 'Nurse Assitant'], 
+				['Time Schedule', ''], 
+				['Instructor', '']];
 
 			var headerTableStyle = {
 				tableColWidth: 4261,
