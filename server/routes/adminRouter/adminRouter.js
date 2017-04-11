@@ -86,7 +86,34 @@
 			headerParagraph.addLineBreak();
 			headerParagraph.addLineBreak();
 			headerParagraph.addText('Sign-In Sheet for Nurse Assitant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
+			headerParagraph.addLineBreak();
+			headerParagraph.addLineBreak();
 			// need to make two tables
+			var headerTable = [[{
+				val: 'Date',
+				opts: {
+					cellColWidth: 4261,	//need to adjust accordingly
+					b: true,	//need to toggle to figure out what it is
+					sz: 14,	//font size?
+					fontFamily: "Arial",
+					align: 'right'
+				}
+			}, {
+				val: '',
+				opts: {
+					b: true,
+					align: 'left'
+				}
+			}], ['Class', 'Nurse Assitant'], ['Time Schedule', ''], ['Instructor', ''],];
+
+			var headerTableStyle = {
+				tableColWidth: 4261,
+				tableSize: 24,
+				tableAlight: "left",
+				borders: true
+			};
+
+			officeGenDocx.createTable(headerTable, headerTableStyle);
 			next();
 		}
 
