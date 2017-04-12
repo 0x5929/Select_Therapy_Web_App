@@ -7,6 +7,7 @@
 	function adminSearchCtrlHandler($scope, FileSaver, Blob, ajaxService) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
+		admin_search_ctrl.isDisabled = false;	//setting button disabled to initially to be false
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
 
 		admin_search_ctrl.showDetail = function(student) {
@@ -66,6 +67,7 @@
 			//server gon use office generator
 			//server will then gon send the doc to be downloadable in client
 			var studentNames = [];
+			admin_search_ctrl.isDisabled = true;
 			admin_search_ctrl.data.forEach(function(student) {
 				studentNames.push(student.name);
 			});

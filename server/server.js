@@ -67,7 +67,7 @@ app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angul
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objects
-require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, async, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocxService.myDoc);
+require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocxService.myDoc);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

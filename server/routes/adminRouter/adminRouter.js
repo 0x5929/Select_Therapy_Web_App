@@ -2,7 +2,7 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, fs, async, path, bodyParser, officeGenDocx) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -101,7 +101,7 @@ REST: GET
 			headerParagraph.addText('E-mail: selecttherapyinstitute@gmail.com', {font_face: 'Times New Roman', font_size: 16});
 			headerParagraph.addLineBreak();
 			headerParagraph.addLineBreak();
-			headerParagraph.addText('Sign-In Sheet for Nurse Assitant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
+			headerParagraph.addText('Sign-In Sheet for Nurse Assistant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
 			headerParagraph.addLineBreak();
 			headerParagraph.addLineBreak();
 			// need to make two tables
@@ -109,9 +109,9 @@ REST: GET
 				[{
 					val: 'Date',
 					opts: {
-						cellColWidth: 4261,	//need to adjust accordingly
+						cellColWidth: 2500,	//need to adjust accordingly
 						b: true,	//need to toggle to figure out what it is
-						sz: 14,	//font size?
+						sz: 28,	//font size?
 						fontFamily: "Arial",
 						align: 'right'
 					}
@@ -127,9 +127,9 @@ REST: GET
 				['Instructor', '']];
 
 			var headerTableStyle = {
-				tableColWidth: 4261,
-				tableSize: 24,
-				tableAlight: "left",
+				tableColWidth: 2500,
+				tableSize: 20,
+				tableAlign: "left",
 				borders: true
 			};
 
@@ -138,7 +138,9 @@ REST: GET
 		}
 
 		function finalHandler(req, res, next) {
-			officeGenDocx.generate(res);
+
+			officeGenDocx.generate(res);	
+	
 			// res.end();	//ending signal ** note, cannot call res.end() because it will 
 												//end the signal before doc is created, 
 												//and the doc will be corrupted in the front end b/c of that

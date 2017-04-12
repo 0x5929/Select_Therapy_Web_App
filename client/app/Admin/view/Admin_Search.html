@@ -60,7 +60,7 @@
 			</div>
 			<br>
 			<div class="text-center" ng-if="admin_search_ctrl.searchBy === 'Program_Info' && admin_search_ctrl.showResultTable">
-				<button class="btn" ng-click="admin_search_ctrl.generateSignInSheet()">Generate Sign In Sheet</button>
+				<button class="btn" ng-disabled="admin_search_ctrl.isDisabled" ng-click="admin_search_ctrl.generateSignInSheet()">Generate Sign In Sheet</button>
 				<button class="btn">Generate Contact List</button>
 				<button class="btn">Generate Exam/Employment Sheet</button>
 				<button class="btn">Generate Clinical Checklist</button>
