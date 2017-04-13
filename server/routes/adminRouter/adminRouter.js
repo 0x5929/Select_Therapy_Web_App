@@ -139,9 +139,15 @@ REST: GET
 
 		function finalHandler(req, res, next) {
 
+
+
 			officeGenDocx.generate(res);	
-	
-			// res.end();	//ending signal ** note, cannot call res.end() because it will 
+
+			setTimeout(function() {	//setting timeout for res signal to end after 3 seconds, 
+									//so the document can be finished building and wont be corrupted sending to client
+				res.end();
+			}, 3000);	
+			// res.end();	//ending signal ** note, cannot call res.end() right away because it will 
 												//end the signal before doc is created, 
 												//and the doc will be corrupted in the front end b/c of that
 		}
