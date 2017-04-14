@@ -110,16 +110,16 @@ REST: GET
 					val: 'Date',
 					opts: {
 						cellColWidth: 2500,	//need to adjust accordingly
-						b: true,	//need to toggle to figure out what it is
+						// b: true,	//need to toggle to figure out what it is
 						sz: 28,	//font size?
 						fontFamily: "Arial",
-						align: 'right'
+						align: 'left'
 					}
 				}, {
 					val: '',
 					opts: {
-						b: true,
-						align: 'left'
+						// b: true,
+						align: 'right'
 					}
 				}], 
 				['Class', 'Nurse Assitant'], 
@@ -128,7 +128,7 @@ REST: GET
 
 			var headerTableStyle = {
 				tableColWidth: 2500,
-				tableSize: 20,
+				tableSize: 28,
 				tableAlign: "left",
 				borders: true
 			};
