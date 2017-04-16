@@ -121,7 +121,7 @@ REST: GET
 						align: 'right'
 					}
 				}], 
-				['Class', 'Nurse Assistant'], 
+				[{val: 'Class', opts: {sz: 48}}, 'Nurse Assistant'],
 				['Time Schedule', ''], 
 				['Instructor', '']];
 
