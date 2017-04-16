@@ -90,28 +90,27 @@ REST: GET
 			//header paragraph
 			var headerParagraph = officeGenDocx.createP();
 			headerParagraph.options.align = 'center';
-			headerParagraph.addText('Select Therapy Institute, INC', {bold: true, font_face: 'Times New Roman', font_size: 20});
+			headerParagraph.addText('Select Therapy Institute, Inc', {bold: true, font_face: 'Times New Roman', font_size: 20});
 			headerParagraph.addLineBreak();
-			headerParagraph.addText('2209 N. San Gabriel Blvd., Suite C ', {font_face: 'Times New Roman', font_size: 16});
-			headerParagraph.addLineBreak();
-			headerParagraph.addText('Rosemead, CA 91770', {font_face: 'Times New Roman', font_size: 16});
-			headerParagraph.addLineBreak();
-			headerParagraph.addText('Tel: 626-572-7231 Fax: 626-572-7377', {font_face: 'Times New Roman', font_size: 16});
-			headerParagraph.addLineBreak();
-			headerParagraph.addText('E-mail: selecttherapyinstitute@gmail.com', {font_face: 'Times New Roman', font_size: 16});
-			headerParagraph.addLineBreak();
-			headerParagraph.addLineBreak();
+			// headerParagraph.addText('2209 N. San Gabriel Blvd., Suite C ', {font_face: 'Times New Roman', font_size: 16});
+			// headerParagraph.addLineBreak();
+			// headerParagraph.addText('Rosemead, CA 91770', {font_face: 'Times New Roman', font_size: 16});
+			// headerParagraph.addLineBreak();
+			// headerParagraph.addText('Tel: 626-572-7231 Fax: 626-572-7377', {font_face: 'Times New Roman', font_size: 16});
+			// headerParagraph.addLineBreak();
+			// headerParagraph.addText('E-mail: selecttherapyinstitute@gmail.com', {font_face: 'Times New Roman', font_size: 16});
+			// headerParagraph.addLineBreak();
+			// headerParagraph.addLineBreak();
 			headerParagraph.addText('Sign-In Sheet for Nurse Assistant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
 			headerParagraph.addLineBreak();
-			headerParagraph.addLineBreak();
 			// need to make two tables
-			var headerTable = [
+			var headerTable = [	//header table content
 				[{
 					val: 'Date',
 					opts: {
-						cellColWidth: 2500,	//need to adjust accordingly
+						// cellColWidth: 2500,	//need to adjust accordingly
 						// b: true,	//need to toggle to figure out what it is
-						sz: 28,	//font size?
+						sz: 22,	//font size
 						fontFamily: "Arial",
 						align: 'left'
 					}
@@ -122,20 +121,100 @@ REST: GET
 						align: 'right'
 					}
 				}], 
-				['Class', 'Nurse Assitant'], 
+				['Class', 'Nurse Assistant'], 
 				['Time Schedule', ''], 
 				['Instructor', '']];
 
-			var headerTableStyle = {
+			var headerTableStyle = {	//header table style
 				tableColWidth: 2500,
-				tableSize: 28,
 				tableAlign: "left",
 				borders: true
 			};
 
-			officeGenDocx.createTable(headerTable, headerTableStyle);
+			officeGenDocx.createTable(headerTable, headerTableStyle);	//header table generate
+
+			var bodyTable = [	//body tables
+				[{
+					val: '',
+					opts: {
+						// cellColWidth: 100,
+						sz: 12,
+						fontFamily: 'Arial'
+					}
+				},{
+					val: "Student's Name",
+					opts: {
+						cellColWidth: 2000,
+						sz: 18,
+						fontFamily: 'Arial'
+					}
+				},{
+					val: "Student's Signature",
+					opts: {
+						cellColWidth: 2000,
+						sz: 18,
+						fontFamily: 'Arial'
+					}
+				},{
+					val: "Time In",
+					opts: {
+						cellColWidth: 1000,
+						sz: 18,
+						fontFamily: 'Arial'
+					}
+				},{
+					val: "Student's Signature",
+					opts: {
+						cellColWidth: 2000,
+						sz: 18,
+						fontFamily: 'Arial'
+					}
+				},{
+					val: "Time Out",
+					opts: {
+						cellColWidth: 1000,
+						sz: 18,
+						fontFamily: 'Arial'
+					}
+				}
+				],['1', '', '', '', '', ''],
+				['2', '', '', '', '', ''],
+				['3', '', '', '', '', ''],
+				['4', '', '', '', '', ''],
+				['5', '', '', '', '', ''],
+				['6', '', '', '', '', ''],
+				['7', '', '', '', '', ''],
+				['8', '', '', '', '', ''],
+				['9', '', '', '', '', ''],
+				['10', '', '', '', '', ''],
+				['11', '', '', '', '', ''],
+				['12', '', '', '', '', ''],
+				['13', '', '', '', '', ''],
+				['14', '', '', '', '', ''],
+				['15', '', '', '', '', ''],
+				['16', '', '', '', '', '']];
+
+			var bodyTableStyle = {	//body table styles
+				tableColWidth: 500,
+				tableAlign: "center",
+				borders: true
+			};
+		/**
+		Table styles: 
+		the table colwidth is evaluated first,
+		then put specific cell colwidth for specific columns for custom width
+		*/
+
+
+			var spacingParagraph = officeGenDocx.createP();
+
+			// spacingParagraph.addLineBreak();
+
+			officeGenDocx.createTable(bodyTable, bodyTableStyle);	//body table generate
 			next();
 		}
+
+
 
 		function finalHandler(req, res, next) {
 
