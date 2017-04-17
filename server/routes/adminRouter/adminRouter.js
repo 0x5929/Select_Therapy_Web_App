@@ -104,29 +104,90 @@ REST: GET
 			headerParagraph.addText('Sign-In Sheet for Nurse Assistant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
 			headerParagraph.addLineBreak();
 			// need to make two tables
+
+			/******************************************************************************
+				OFFICE GEN DOCX TABLE RULE
+				[
+					[
+						{FIRST ROW FIRST CELL}, {FIRST ROW SECOND CELL}
+					],[
+						{SECOND ROW FIRST CELL}, {SECOND ROW SECOND CELL}
+					],[
+						{THIRD ROW FIRST CELL}, {THIRD ROW SECOND CELL}
+					]... ETC
+				]
+
+				EACH CONTENT OBJ HAVE VAL, AND OPT PROPERTIES
+
+				EACH TABLE STYLE OBJ IS FIRST EVALUATED WITH ITS TABLE COLUMN WIDTH,
+				THEN IF THERE ARE SPECIAL WIDTH, IT NEEDS TO BE SPECIFIED IN THE CONTENT OBJ
+			*********************************************************************************/
+
+
 			var headerTable = [	//header table content
-				[{
+				[{	//first row first cell
 					val: 'Date',
 					opts: {
-						// cellColWidth: 2500,	//need to adjust accordingly
+						cellColWidth: 1800,	
+						rowHeight: 10000,
 						// b: true,	//need to toggle to figure out what it is
-						sz: 22,	//font size
+						sz: 21,	//font size
 						fontFamily: "Arial",
-						align: 'left'
-					}
-				}, {
-					val: '',
-					opts: {
-						// b: true,
 						align: 'right'
 					}
+				}, {	//first row second cell
+					val: '',
+					opts: {
+						cellColWidth: 3000
+					}
 				}], 
-				[{val: 'Class', opts: {sz: 48}}, 'Nurse Assistant'],
-				['Time Schedule', ''], 
-				['Instructor', '']];
+				[{	//second row first cell
+					val: 'Class', 
+					opts: {
+						cellColWidth: 1800,
+						sz: 21,
+						fontFamily: "Arial",
+						align: "right"
+					}
+				}, {	//second row second cell
+					val: '',
+					opts: {
+						cellColWidth: 3000
+					}
+				}],	
+				[{	//third row first cell
+					val: 'Time Schedule',
+					opts: {
+						cellColWidth: 1800,
+						sz: 21,
+						fontFamily: "Arial",
+						align: "right"
+					}
+				}, {	//third row second cell
+					val: '',
+					opts: {
+						cellColWidth: 3000
+					}
+				}], 
+				[{	//fourth row first cell
+					val: 'Instructor',
+					opts: {
+						cellColWidth: 1800,
+						sz: 21,
+						fontFamily: "Arial",
+						align: "right"
+					}
+				}, {	//fourth row second cell
+					val: '',
+					opts: {
+						cellColWidth: 3000
+					}
+				}]];
 
 			var headerTableStyle = {	//header table style
-				tableColWidth: 2500,
+				// tableColWidth: 2500,	//commented this out so lets see if it affects the table style
+				rowHeight: "1000",
+				tableSize: 500,
 				tableAlign: "left",
 				borders: true
 			};
@@ -134,25 +195,24 @@ REST: GET
 			officeGenDocx.createTable(headerTable, headerTableStyle);	//header table generate
 
 			var bodyTable = [	//body tables
-				[{
+				[{	//first row first cell
 					val: '',
 					opts: {
-						// cellColWidth: 100,
-						sz: 12,
-						fontFamily: 'Arial'
+						cellColWidth: 100
 					}
-				},{
+				},{	//first row second cell
 					val: "Student's Name",
 					opts: {
+						cy: 0,
 						cellColWidth: 2000,
-						sz: 18,
+						sz: 21,
 						fontFamily: 'Arial'
-					}
-				},{
+					},
+				},{	//first row third cell
 					val: "Student's Signature",
 					opts: {
-						cellColWidth: 2000,
-						sz: 18,
+						cellColWidth: 2500,
+						sz: 21,
 						fontFamily: 'Arial'
 					}
 				},{
@@ -195,7 +255,7 @@ REST: GET
 				['16', '', '', '', '', '']];
 
 			var bodyTableStyle = {	//body table styles
-				tableColWidth: 500,
+				// tableColWidth: 500,
 				tableAlign: "center",
 				borders: true
 			};
