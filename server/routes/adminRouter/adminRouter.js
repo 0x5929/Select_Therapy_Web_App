@@ -88,7 +88,7 @@ REST: GET
 			officeGenDocx.setDocKeywords('Sign_In_Sheet');
 			officeGenDocx.setDescription('Sign_In_Sheet');
 			//header paragraph
-			var headerParagraph = officeGenDocx.createP();
+			var headerParagraph = officeGenDocx.getHeader().createP();
 			headerParagraph.options.align = 'center';
 			headerParagraph.addText('Select Therapy Institute, Inc', {bold: true, font_face: 'Times New Roman', font_size: 20});
 			headerParagraph.addLineBreak();
@@ -102,7 +102,7 @@ REST: GET
 			// headerParagraph.addLineBreak();
 			// headerParagraph.addLineBreak();
 			headerParagraph.addText('Sign-In Sheet for Nurse Assistant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
-			headerParagraph.addLineBreak();
+			// headerParagraph.addLineBreak();
 			// need to make two tables
 
 			/******************************************************************************
@@ -129,7 +129,7 @@ REST: GET
 					val: 'Date',
 					opts: {
 						cellColWidth: 1800,	
-						rowHeight: 10000,
+						rowHeight: "10000",
 						// b: true,	//need to toggle to figure out what it is
 						sz: 21,	//font size
 						fontFamily: "Arial",
@@ -251,8 +251,7 @@ REST: GET
 				['12', '', '', '', '', ''],
 				['13', '', '', '', '', ''],
 				['14', '', '', '', '', ''],
-				['15', '', '', '', '', ''],
-				['16', '', '', '', '', '']];
+				['15', '', '', '', '', '']];
 
 			var bodyTableStyle = {	//body table styles
 				// tableColWidth: 500,
