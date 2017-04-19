@@ -129,7 +129,6 @@ REST: GET
 					val: 'Date',
 					opts: {
 						cellColWidth: 1800,	
-						rowHeight: "10000",
 						// b: true,	//need to toggle to figure out what it is
 						sz: 21,	//font size
 						fontFamily: "Arial",
@@ -203,7 +202,6 @@ REST: GET
 				},{	//first row second cell
 					val: "Student's Name",
 					opts: {
-						cy: 0,
 						cellColWidth: 2000,
 						sz: 21,
 						fontFamily: 'Arial'
@@ -215,43 +213,256 @@ REST: GET
 						sz: 21,
 						fontFamily: 'Arial'
 					}
-				},{
+				},{	//first row forth cell
 					val: "Time In",
 					opts: {
 						cellColWidth: 1000,
-						sz: 18,
+						sz: 21,
 						fontFamily: 'Arial'
 					}
-				},{
+				},{	//first row fifth cell
 					val: "Student's Signature",
 					opts: {
 						cellColWidth: 2000,
-						sz: 18,
+						sz: 21,
 						fontFamily: 'Arial'
 					}
-				},{
+				},{	//first row sixth cell
 					val: "Time Out",
 					opts: {
 						cellColWidth: 1000,
-						sz: 18,
+						sz: 21,
 						fontFamily: 'Arial'
 					}
-				}
-				],['1', studentNames[0], '', '', '', ''],
-				['2', '', '', '', '', ''],
-				['3', '', '', '', '', ''],
-				['4', '', '', '', '', ''],
-				['5', '', '', '', '', ''],
-				['6', '', '', '', '', ''],
-				['7', '', '', '', '', ''],
-				['8', '', '', '', '', ''],
-				['9', '', '', '', '', ''],
-				['10', '', '', '', '', ''],
-				['11', '', '', '', '', ''],
-				['12', '', '', '', '', ''],
-				['13', '', '', '', '', ''],
-				['14', '', '', '', '', ''],
-				['15', '', '', '', '', '']];
+				}],
+				[{	//second row first cell
+					val: '1', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//second row second cell
+					val: studentNames[0] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of second row
+				[{	//third row first cell
+					val: '2', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//third row second cell
+					val: studentNames[1] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of third row
+				[{	//fourth row first cell
+					val: '3', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//fourth row second cell
+					val: studentNames[2] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of fourth row
+				[{	//fifth row first cell
+					val: '4', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//fifth row second cell
+					val: studentNames[3] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of fifth row
+				[{	//sixth row first cell
+					val: '5', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//sixth row second cell
+					val: studentNames[4] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of sixth row
+				[{	//seventh row first cell
+					val: '6', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//seventh row second cell
+					val: studentNames[5] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of seventh row
+				[{	//eighth row first cell
+					val: '7', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//eighth row second cell
+					val: studentNames[6] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of eigth row
+				[{	//ninth row first cell
+					val: '8', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//ninth row second cell
+					val: studentNames[7] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of ninth row
+				[{	//tenth row first cell
+					val: '9', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//tenth row second cell
+					val: studentNames[8] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of tenth row
+				[{	//eleventh row first cell
+					val: '10', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//eleventh row second cell
+					val: studentNames[9] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of eleventh row
+				[{	//twelveth row first cell
+					val: '11', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//twelveth row second cell
+					val: studentNames[10] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of twelveth row
+				[{	//thirteenth row first cell
+					val: '12', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//thirteenth row second cell
+					val: studentNames[11] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of thirteenth row
+				[{	//forteenth row first cell
+					val: '13', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//forteenth row second cell
+					val: studentNames[12] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of forteenth row
+				[{	//fifteenth row first cell
+					val: '14', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//fifteenth row second cell
+					val: studentNames[13] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', ''],	//end of fifteenth row
+				[{	//sixteenth row first cell
+					val: '15', 
+					opts: {
+						cellColWidth: 100,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, {	//sixteenth row second cell
+					val: studentNames[14] || '',
+					opts: {
+						cellColWidth: 2000,
+						sz: 21,
+						fontFamily: 'Arial'
+					}
+				}, '', '', '', '']
+			];	//end of sixteenth row
+				//need to do an err check for arrays bigger than 15 elements
+				//aka classes with more than 15 students
 
 			var bodyTableStyle = {	//body table styles
 				// tableColWidth: 500,
