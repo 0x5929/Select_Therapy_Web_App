@@ -481,6 +481,11 @@ REST: GET
 			// spacingParagraph.addLineBreak();
 
 			officeGenDocx.createTable(bodyTable, bodyTableStyle);	//body table generate
+
+			//student list overload check
+			//could also think of a way to use the array length as the number in the first value of the table, and if it exceeds the limit, it will just print out the second page
+			if (studentNames.length >= 15)
+				res.send('warning, there are more than 15 students in this class rotation, please also print out a second page of the sign in sheet');
 			next();
 		}
 
@@ -494,7 +499,8 @@ REST: GET
 
 			setTimeout(function() {	//setting timeout for res signal to end after 3 seconds, 
 									//so the document can be finished building and wont be corrupted sending to client
-				res.end();
+
+				res.status(200).end();
 			}, 3000);	
 			// res.end();	//ending signal ** note, cannot call res.end() right away because it will 
 												//end the signal before doc is created, 
