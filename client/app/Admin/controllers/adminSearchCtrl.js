@@ -7,8 +7,10 @@
 	function adminSearchCtrlHandler($scope, FileSaver, Blob, ajaxService) {
 		var admin_search_ctrl = this;
 		admin_search_ctrl.message = '';
-		admin_search_ctrl.isDisabled = false;	//setting button disabled to initially to be false
 		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
+		//setting button disabled to initially to be false
+		admin_search_ctrl.isSignInDisabled = false;	
+		admin_search_ctrl.isContactListDisabled = false;
 
 		admin_search_ctrl.showDetail = function(student) {
 			admin_search_ctrl.showFullDetail = true;	//turning on showing full detail
@@ -62,25 +64,34 @@
 				});
 		};
 
-		admin_search_ctrl.generateSignInSheet = function() {
-			//ajax call to server
+		admin_search_ctrl.adminFunctions = function(func) {
+			//setting the the arr of student names for server to process
 			var studentNames = [];
-			admin_search_ctrl.isDisabled = true;
 			admin_search_ctrl.data.forEach(function(student) {
 				studentNames.push(student.name);
 			});
-			
+			//turning on button disabled after click (could be placed in the success promise)
+			switch (func) {
+				case 'signInSheet' : 
+					admin_search_ctrl.isSignInDisabled = true;
+					break;
+				case 'contactList' :
+					admin_search_ctrl.isContactListDisabled = true;
+					break;
+			}
+
 			var config = {
 				dataType    : 'binary',
 				processData : false,
 				responseType: 'arraybuffer',
 				params      : {
-
 					studentNames   : studentNames, 	//list of student names in the rotation class
 					programName    : admin_search_ctrl.searchProgram,	//program name     (all of these will be used in the sign in sheet)
-					programRotation: admin_search_ctrl.searchRotation	//program rotation
+					programRotation: admin_search_ctrl.searchRotation,	//program rotation
+					func           : func 	//target function
 				}
-			}
+			};
+			//ajax call to server
 			ajaxService.get('/admin/search/generateSignIn/', config)
 				.then(function(successResponse) {
 					var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
