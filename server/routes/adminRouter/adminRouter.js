@@ -2,7 +2,7 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx, tableService) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx, signInSheetService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -81,23 +81,67 @@ REST: GET
 
 		function officeGenMiddleware(req, res, next) {
 			//this is the middleware to do all the work with officegen
-			var studentNames = req.query.studentNames;	//grabbing the student names arr
-			//using officeGenDocx to add paragraphs, and tables for sign in sheet
-			officeGenDocx.setDocSubject('Sign_In_Sheet');
-			officeGenDocx.setDocKeywords('Sign_In_Sheet');
-			officeGenDocx.setDescription('Sign_In_Sheet');
-			//header paragraph
-			var headerParagraph = officeGenDocx.getHeader().createP();
-			headerParagraph.options.align = 'center';
-			headerParagraph.addText('Select Therapy Institute, Inc', {bold: true, font_face: 'Times New Roman', font_size: 20});
-			headerParagraph.addLineBreak();
-			headerParagraph.addText('Sign-In Sheet for Nurse Assistant Program', {bold: true, font_face: 'Times New Roman', font_size: 18});
-			//fetch service:
-			var headerTable = tableService.signInSheetHeaderTable();
 
+			//grabbing all the necessary params from client
+			var studentNames    = req.query.studentNames;	
+			var programName     = req.query.programName;
+			var programRotation = req.query.programRotation;
+
+			//function to evaluate the program title 
+
+			function evaluateTitle(evaulatedProgramName) {
+				switch (evaulatedProgramName) {
+					case 'CNA' :	return 'Nurse Assistant Program';
+					case 'HHA' :	return 'Home Health Aide Program';
+					case 'SG'  :	return 'Security Guard Program';
+					case 'ESOL':	return 'ESOL Program';
+				}
+			}
+
+//using officeGenDocx to add paragraphs, and tables for sign in sheet
+				//document settings: 
+
+			var documentSetting = {
+				signInSheetDocDescription: 'Sign_In_Sheet',
+				signInSheetDocSubject    : 'Sign_In_Sheet',
+				signInSheetDocKeywords   : 'Sign_In_Sheet',
+				companyName              : 'Select Thearpy Instiute, Inc',
+				title                    : evaluateTitle
+			};
+				//headParagraph setting
+			var headerParagraphSetting = {
+				alignment  : 'center',
+				boldSetting: true,
+				fontFace   : 'Times New Roman',
+				fontSize   : 20	//MS Font size standard
+			};
+
+//BELOW CAN BE ROUTED FOR SIGN IN SHEETS AND CONTACT LISTS
+
+			officeGenDocx.setDocSubject(documentSetting.signInSheetDocDescription);
+			officeGenDocx.setDocKeywords(documentSetting.signInSheetDocSubject);
+			officeGenDocx.setDescription(documentSetting.signInSheetDocKeywords);
+			//header paragraph
+			var headerParagraph           = officeGenDocx.getHeader().createP();
+			headerParagraph.options.align = headerParagraphSetting.alignment;
+			headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
+				{
+					bold: headerParagraphSetting.boldSetting, 
+					font_face: headerParagraphSetting.fontFace, 
+					font_size: headerParagraphSetting.fontSize
+				});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('Sign-In Sheet for ' + documentSetting.title(programName), 
+				{
+					bold: headerParagraphSetting.boldSetting, 
+					font_face: headerParagraphSetting.fontFace, 
+					font_size: headerParagraphSetting.fontSize
+				});
+			//fetch service:
+			var headerTable      = signInSheetService.signInSheetHeaderTable();			
 			officeGenDocx.createTable(headerTable.tableContent, headerTable.tableStyle);	//header table generate
 			var spacingParagraph = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
-			var bodyTable = tableService.signInSheetBodyTable(studentNames);
+			var bodyTable        = signInSheetService.signInSheetBodyTable(studentNames);
 			officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);	//body table generate
 			next();
 		}
@@ -106,15 +150,14 @@ REST: GET
 
 		function finalHandler(req, res, next) {
 
-
-
 			officeGenDocx.generate(res);	
 
-			setTimeout(function() {	//setting timeout for res signal to end after 3 seconds, 
+			setTimeout(function() {	//setting timeout for res signal to end after 3 seconds
+							//changed to 5 seconds, because it takes longer for all the encapsulation to route, and 3 second was currupting the file
 									//so the document can be finished building and wont be corrupted sending to client
 
 				res.status(200).end();
-			}, 3000);	
+			}, 5000);	
 			// res.end();	//ending signal ** note, cannot call res.end() right away because it will 
 												//end the signal before doc is created, 
 												//and the doc will be corrupted in the front end b/c of that

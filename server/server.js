@@ -32,7 +32,7 @@ var fs                    	  = require('fs'),
 	//fetching services
 	nodemailerService         = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smtpConfig),	//pass in neccessary configs
 	officeGenDocxService      = require(path.join(__dirname, 'services/officeGenDocx.js'))(officeGenerator, configOG.docxConfig),
-	officeGenDocxTableService = require(path.join(__dirname, 'services/officeGenDocxTableService.js'));
+	signInSheetGenerateService = require(path.join(__dirname, 'services/signInSheetGen.js'));
 
 //configuration
 
@@ -68,7 +68,7 @@ app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angul
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objects
-require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocxService.myDoc, officeGenDocxTableService);
+require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocxService.myDoc, signInSheetGenerateService);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

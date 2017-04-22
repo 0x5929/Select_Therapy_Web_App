@@ -64,29 +64,26 @@
 
 		admin_search_ctrl.generateSignInSheet = function() {
 			//ajax call to server
-			//server gon use office generator
-			//server will then gon send the doc to be downloadable in client
 			var studentNames = [];
 			admin_search_ctrl.isDisabled = true;
 			admin_search_ctrl.data.forEach(function(student) {
 				studentNames.push(student.name);
 			});
-			var config = {};
-			//also need to collect all names from data object to be put into configs
-			config.params = {
-				//list of student names to be sent to server to be generated with a sign in sheet
-				studentNames: studentNames 	//	need to check if we can pass an arr to a get config param
-			};
 			
-			config.dataType = 'binary';
-			config.processData = false;
-			config.responseType = 'arraybuffer';
+			var config = {
+				dataType    : 'binary',
+				processData : false,
+				responseType: 'arraybuffer',
+				params      : {
+
+					studentNames   : studentNames, 	//list of student names in the rotation class
+					programName    : admin_search_ctrl.searchProgram,	//program name     (all of these will be used in the sign in sheet)
+					programRotation: admin_search_ctrl.searchRotation	//program rotation
+				}
+			}
 			ajaxService.get('/admin/search/generateSignIn/', config)
 				.then(function(successResponse) {
 					var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-					// var fileURL = URL.createObjectURL(file);
-					// console.log(fileURL);	//this is getting the download to be corrupted, need to include filesaver function
-					// window.open(fileURL);
 					FileSaver.saveAs(file, 'signinsheet.docx');
 				}, function(failureResponse) {
 					console.log(failureResponse);

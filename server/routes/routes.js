@@ -4,9 +4,9 @@
 
 	module.exports = routeHandler;
 
-	function routeHandler(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocx, tableService) {	//exposing this file to server, all necessary objs passed in
+	function routeHandler(express, app, fs, path, bodyParser, validator, nodemailerService, passport, csrfTokenMiddleware, officeGenDocx, signInSheetService) {	//exposing this file to server, all necessary objs passed in
 		//fetching all routers with its configueration from their seperate file modules
-		var adminRouter = require(path.join(__dirname, 'adminRouter/adminRouter.js'))(express, app, path, bodyParser, officeGenDocx, tableService);
+		var adminRouter = require(path.join(__dirname, 'adminRouter/adminRouter.js'))(express, app, path, bodyParser, officeGenDocx, signInSheetService);
 		var contactUsMessageRouter = require(path.join(__dirname, 'sendMessage/sendMessage.js'))(express, app, bodyParser, nodemailerService);
 		var aboutUsDownloadRouter = require(path.join(__dirname, 'aboutUsPDFDownload/aboutUsPDFDownload.js'))(express, fs, path);
 		var promoEmailRouter = require(path.join(__dirname, 'promoEmail/promoEmail.js'))(express, app, validator, bodyParser, path);
