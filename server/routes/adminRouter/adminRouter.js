@@ -2,7 +2,7 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx, signInSheetService) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx, signInSheetService, contactListService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -123,6 +123,9 @@ REST: GET
 //BELOW CAN BE ROUTED FOR SIGN IN SHEETS AND CONTACT LISTS
 
 //FUNCTIONALITY ROUTES 
+//		WARNING:
+
+// CANNOT BE ROUTED LIKE THIS BECAUSE THE SAME SIGNAL CAN COME IN TWICE, AND CORRUPT THE FILE, NEED ITS OWN SIGNAL FROM FRONT END
 			
 			if (functionality === 'signInSheet') {
 
@@ -146,11 +149,11 @@ REST: GET
 						font_size: headerParagraphSetting.fontSize
 					});
 				//fetch table service:
-				var headerTable      = signInSheetService.signInSheetHeaderTable();			
-				officeGenDocx.createTable(headerTable.tableContent, headerTable.tableStyle);	//header table generate
-				var spacingParagraph = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
-				var bodyTable        = signInSheetService.signInSheetBodyTable(studentNames);
-				officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);	//body table generate
+				var signInSheetHeaderTable = signInSheetService.signInSheetHeaderTable();			
+				officeGenDocx.createTable(signInSheetHeaderTable.tableContent, signInSheetHeaderTable.tableStyle);	//header table generate
+				var spacingParagraph       = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
+				var signInSheetBodyTable   = signInSheetService.signInSheetBodyTable(studentNames);
+				officeGenDocx.createTable(signInSheetBodyTable.tableContent, signInSheetBodyTable.tableStyle);	//body table generate
 			}
 			if (functionality === 'contactList') {
 
@@ -167,13 +170,15 @@ REST: GET
 						font_size: headerParagraphSetting.fontSize
 					});
 				headerParagraph.addLineBreak();
-				headerParagraph.addText('Contact list for ' + documentSetting.title(programName), 
+				headerParagraph.addText('Rotation #' + programRotation + ' Contact List', 
 					{
 						bold: headerParagraphSetting.boldSetting, 
 						font_face: headerParagraphSetting.fontFace, 
 						font_size: headerParagraphSetting.fontSize
 					});	
 				//fetch table service:	
+				var bodyTable = contactListService.contactListBodyTable(studentNames);
+				officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);
 			}
 			if (functionality === 'examEmploymentSheet') {
 

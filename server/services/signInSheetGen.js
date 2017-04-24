@@ -30,7 +30,7 @@
 
 	**************************************************/
 
-	var officeGenDocxTableService = {	//table of contents for this service object
+	var signInSheetTableService = {	//table of contents for this service object
 
 		signInSheetHeaderTable: signInSheetHeaderTable,
 		signInSheetBodyTable  : signInSheetBodyTable
@@ -638,6 +638,6 @@
 	}
 
 	//exposing the necessary service object
-	module.exports = officeGenDocxTableService;
+	module.exports = signInSheetTableService;
 
 }());
