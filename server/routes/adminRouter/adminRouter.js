@@ -12,7 +12,7 @@
 
 		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
-		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenMiddleware, finalHandler);
+		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenMiddleware, finalHandler);	//need to add multiple other routes for contact list etc..
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -102,7 +102,7 @@ REST: GET
 //using officeGenDocx to add paragraphs, and tables for sign in sheet
 				//document settings: 
 
-			var documentSetting = {
+			var documentSetting = {	//this could be taken out into the outter function so other routes can share the same scope of this obj
 				signInSheetDocDescription: 'Sign_In_Sheet',
 				signInSheetDocSubject    : 'Sign_In_Sheet',
 				signInSheetDocKeywords   : 'Sign_In_Sheet',
@@ -126,6 +126,7 @@ REST: GET
 //		WARNING:
 
 // CANNOT BE ROUTED LIKE THIS BECAUSE THE SAME SIGNAL CAN COME IN TWICE, AND CORRUPT THE FILE, NEED ITS OWN SIGNAL FROM FRONT END
+// SINCE ALL FUNCTIONAILITIES WILL HAVE ITS OWN ROUTE, THIS WILL NEGLECT THE IF STATEMENT, AND JUST HAVE ONLY ONE FUNCTIONALITY PER ROUTE
 			
 			if (functionality === 'signInSheet') {
 
