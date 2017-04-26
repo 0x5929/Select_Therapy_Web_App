@@ -87,8 +87,7 @@
 				params      : {
 					studentNames   : studentNames, 	//list of student names in the rotation class
 					programName    : admin_search_ctrl.searchProgram,	//program name     (all of these will be used in the sign in sheet)
-					programRotation: admin_search_ctrl.searchRotation,	//program rotation
-					func           : func 	//target function//this also needs to taken out?
+					programRotation: admin_search_ctrl.searchRotation	//program rotation
 				}
 			};
 			//ajax call to server
@@ -97,13 +96,15 @@
 			/*if (func === 'signInSheet') {ajax to server with sign in as route}
 			  if (func === ''contactList) {ajax to server with contact list as route}
 			*/
-			ajaxService.get('/admin/search/generateSignIn/', config)
-				.then(function(successResponse) {
-					var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-					FileSaver.saveAs(file, 'signinsheet.docx');
-				}, function(failureResponse) {
-					console.log(failureResponse);
-			});
+			if (func === 'signInSheet') {
+				ajaxService.get('/admin/search/generateSignIn/', config)
+					.then(function(successResponse) {
+						var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+						FileSaver.saveAs(file, 'signinsheet.docx');
+					}, function(failureResponse) {
+						console.log(failureResponse);
+				});
+			}
 		};
 
 	}

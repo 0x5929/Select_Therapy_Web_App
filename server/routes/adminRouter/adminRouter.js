@@ -86,7 +86,6 @@ REST: GET
 			var studentNames    = req.query.studentNames;	
 			var programName     = req.query.programName;
 			var programRotation = req.query.programRotation;
-			var functionality   = req.query.func;
 
 			//function to evaluate the program title 
 
@@ -128,65 +127,68 @@ REST: GET
 // CANNOT BE ROUTED LIKE THIS BECAUSE THE SAME SIGNAL CAN COME IN TWICE, AND CORRUPT THE FILE, NEED ITS OWN SIGNAL FROM FRONT END
 // SINCE ALL FUNCTIONAILITIES WILL HAVE ITS OWN ROUTE, THIS WILL NEGLECT THE IF STATEMENT, AND JUST HAVE ONLY ONE FUNCTIONALITY PER ROUTE
 			
-			if (functionality === 'signInSheet') {
 
-				officeGenDocx.setDocSubject(documentSetting.signInSheetDocDescription);
-				officeGenDocx.setDocKeywords(documentSetting.signInSheetDocSubject);
-				officeGenDocx.setDescription(documentSetting.signInSheetDocKeywords);
-				//header paragraph
-				var headerParagraph           = officeGenDocx.getHeader().createP();
-				headerParagraph.options.align = headerParagraphSetting.alignment;
-				headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
-					{
-						bold: headerParagraphSetting.boldSetting, 
-						font_face: headerParagraphSetting.fontFace, 
-						font_size: headerParagraphSetting.fontSize
-					});
-				headerParagraph.addLineBreak();
-				headerParagraph.addText('Sign-In Sheet for ' + documentSetting.title(programName), 
-					{
-						bold: headerParagraphSetting.boldSetting, 
-						font_face: headerParagraphSetting.fontFace, 
-						font_size: headerParagraphSetting.fontSize
-					});
-				//fetch table service:
-				var signInSheetHeaderTable = signInSheetService.signInSheetHeaderTable();			
-				officeGenDocx.createTable(signInSheetHeaderTable.tableContent, signInSheetHeaderTable.tableStyle);	//header table generate
-				var spacingParagraph       = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
-				var signInSheetBodyTable   = signInSheetService.signInSheetBodyTable(studentNames);
-				officeGenDocx.createTable(signInSheetBodyTable.tableContent, signInSheetBodyTable.tableStyle);	//body table generate
-			}
-			if (functionality === 'contactList') {
 
-				officeGenDocx.setDocSubject(documentSetting.contactListDocDescription);
-				officeGenDocx.setDocKeywords(documentSetting.contactListDocSubject);
-				officeGenDocx.setDescription(documentSetting.contactListDocDescription);	
-				//header paragraph
-				var headerParagraph           = officeGenDocx.getHeader().createP();
-				headerParagraph.options.align = headerParagraphSetting.alignment;
-				headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
-					{
-						bold: headerParagraphSetting.boldSetting, 
-						font_face: headerParagraphSetting.fontFace, 
-						font_size: headerParagraphSetting.fontSize
-					});
-				headerParagraph.addLineBreak();
-				headerParagraph.addText('Rotation #' + programRotation + ' Contact List', 
-					{
-						bold: headerParagraphSetting.boldSetting, 
-						font_face: headerParagraphSetting.fontFace, 
-						font_size: headerParagraphSetting.fontSize
-					});	
-				//fetch table service:	
-				var bodyTable = contactListService.contactListBodyTable(studentNames);
-				officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);
-			}
-			if (functionality === 'examEmploymentSheet') {
+			officeGenDocx.setDocSubject(documentSetting.signInSheetDocDescription);
+			officeGenDocx.setDocKeywords(documentSetting.signInSheetDocSubject);
+			officeGenDocx.setDescription(documentSetting.signInSheetDocKeywords);
+			//header paragraph
+			var headerParagraph           = officeGenDocx.getHeader().createP();
+			headerParagraph.options.align = headerParagraphSetting.alignment;
+			headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
+				{
+					bold: headerParagraphSetting.boldSetting, 
+					font_face: headerParagraphSetting.fontFace, 
+					font_size: headerParagraphSetting.fontSize
+				});
+			headerParagraph.addLineBreak();
+			headerParagraph.addText('Sign-In Sheet for ' + documentSetting.title(programName), 
+				{
+					bold: headerParagraphSetting.boldSetting, 
+					font_face: headerParagraphSetting.fontFace, 
+					font_size: headerParagraphSetting.fontSize
+				});
+			//fetch table service:
+			var signInSheetHeaderTable = signInSheetService.signInSheetHeaderTable();			
+			officeGenDocx.createTable(signInSheetHeaderTable.tableContent, signInSheetHeaderTable.tableStyle);	//header table generate
+			var spacingParagraph       = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
+			var signInSheetBodyTable   = signInSheetService.signInSheetBodyTable(studentNames);
+			officeGenDocx.createTable(signInSheetBodyTable.tableContent, signInSheetBodyTable.tableStyle);	//body table generate
 
-			}
-			if (functionality === 'clinicalChecklist') {
+/*
+ BELOW IS TEMPORARILY COMMENTED OUT, NEED TO BE USED IN ITS OWN ROUTE OF CONTACT LIST, AJAX SIGNAL FROM CLIENT
+*/
+			// if (functionality === 'contactList') {
 
-			}
+			// 	officeGenDocx.setDocSubject(documentSetting.contactListDocDescription);
+			// 	officeGenDocx.setDocKeywords(documentSetting.contactListDocSubject);
+			// 	officeGenDocx.setDescription(documentSetting.contactListDocDescription);	
+			// 	//header paragraph
+			// 	var headerParagraph           = officeGenDocx.getHeader().createP();
+			// 	headerParagraph.options.align = headerParagraphSetting.alignment;
+			// 	headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
+			// 		{
+			// 			bold: headerParagraphSetting.boldSetting, 
+			// 			font_face: headerParagraphSetting.fontFace, 
+			// 			font_size: headerParagraphSetting.fontSize
+			// 		});
+			// 	headerParagraph.addLineBreak();
+			// 	headerParagraph.addText('Rotation #' + programRotation + ' Contact List', 
+			// 		{
+			// 			bold: headerParagraphSetting.boldSetting, 
+			// 			font_face: headerParagraphSetting.fontFace, 
+			// 			font_size: headerParagraphSetting.fontSize
+			// 		});	
+			// 	//fetch table service:	
+			// 	var bodyTable = contactListService.contactListBodyTable(studentNames);
+			// 	officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);
+			// }
+			// if (functionality === 'examEmploymentSheet') {
+
+			// }
+			// if (functionality === 'clinicalChecklist') {
+
+			// }
 			next();
 		}
 
