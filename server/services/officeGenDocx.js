@@ -1,17 +1,15 @@
 (function() {
 	'use strict';
-	module.exports = officeGenDocxServiceHandler; //doesnt matter whether its at the top of the bottom of script
+	module.exports = officeGenDocxServiceConstructHandler; //doesnt matter whether its at the top of the bottom of script
 
-	function officeGenDocxServiceHandler(officeGenerator, configuration) {
-		
-		var myDoc = officeGenerator(configuration);		
+	function officeGenDocxServiceConstructHandler(officeGenerator, configuration) {
 
-		var service = {
-			myDoc: myDoc
-		};
-		
+		this.myDoc = myMethod;
 
-		return service;
+		function myMethod() {
+			return officeGenerator(configuration);		//returns a new document object when constructed and ran with method	
+		}
+
 	}
 
 }());

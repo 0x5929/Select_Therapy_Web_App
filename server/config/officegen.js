@@ -1,46 +1,35 @@
 (function() {
 	'use strict';
 
-	
 
 
-	// function officeGenConfigHandler(officeGenerator){
+	function officeGenConfigHandler(officeGenModule) {
+		//docx configurations
+		var docxConfig = {
+			'type': 'docx',
+			'onend': onEndHandler,
+			'onerr': onErrorHandler
+		}
 
+		//hander functions
+		function onEndHandler(written) {
+			console.log('Congrats, finished creating docx, total bytes created: ', written);
+		} 
 
-	// 	//exposed to server.js
+		function onErrorHandler(err) {
+			console.log('Oops, an error had occured: ', err);
+		}
 
-	// 	var configs = {
+		var configs = {
+			officeGen : officeGenModule,
+			docxConfig: docxConfig
+		};		
 
-	// 		docxConfig: docxConfig,
-	// 		officeGenSetup : officeGenSetup
-	// 	};
-
-	// 	return configs;
-
-	// }
-	//docx configurations
-	var docxConfig = {
-		'type': 'docx',
-		'onend': onEndHandler,
-		'onerr': onErrorHandler
+		return configs;
 	}
 
-	//the config object exposed to server
-	//could also include, powerpoint, excel configs as well
-	var configs = {
-		docxConfig: docxConfig
-	};
-
-	//hander functions
-	function onEndHandler(written) {
-		console.log('Congrats, finished creating docx, total bytes created: ', written);
-	} 
-
-	function onErrorHandler(err) {
-		console.log('Oops, an error had occured: ', err);
-	}
 
 	//exposing configurations to serverjs
-	module.exports = configs;
+	module.exports = officeGenConfigHandler;
 
 }());

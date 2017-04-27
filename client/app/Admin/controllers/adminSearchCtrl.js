@@ -87,7 +87,8 @@
 				params      : {
 					studentNames   : studentNames, 	//list of student names in the rotation class
 					programName    : admin_search_ctrl.searchProgram,	//program name     (all of these will be used in the sign in sheet)
-					programRotation: admin_search_ctrl.searchRotation	//program rotation
+					programRotation: admin_search_ctrl.searchRotation,	//program rotation
+					functionality: func
 				}
 			};
 			//ajax call to server
@@ -104,6 +105,14 @@
 					}, function(failureResponse) {
 						console.log(failureResponse);
 				});
+			}else if (func === 'contactList') {
+				ajaxService.get('/admin/search/generateContactList/', config)
+					.then(function(successResponse) {
+						var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+						FileSaver.saveAs(file, 'contactList.docx');
+					}, function(failureResponse) {
+						console.log(failureResponse);
+				});				
 			}
 		};
 

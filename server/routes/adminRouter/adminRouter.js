@@ -2,7 +2,7 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser, officeGenDocx, signInSheetService, contactListService) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocxConstruct, configOG, signInSheetService, contactListService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -12,7 +12,8 @@
 
 		//main Routes and Methods
 		adminRoute.get('/search', adminSearchGetHandler);
-		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenMiddleware, finalHandler);	//need to add multiple other routes for contact list etc..
+		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
+		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -79,15 +80,33 @@ REST: GET
 			next();			
 		}
 
-		function officeGenMiddleware(req, res, next) {
-			//this is the middleware to do all the work with officegen
 
-			//grabbing all the necessary params from client
+		function officeGenGetHandlerMiddleware(req, res, next) {
+			//grabbing all params from client
 			var studentNames    = req.query.studentNames;	
 			var programName     = req.query.programName;
 			var programRotation = req.query.programRotation;
+			var functionality = req.query.functionality;
+			
+			//document settings: 
+			var documentSetting = {
+				signInSheetDocDescription: 'Sign_In_Sheet',
+				signInSheetDocSubject    : 'Sign_In_Sheet',
+				signInSheetDocKeywords   : 'Sign_In_Sheet',
+				contactListDocDescription: 'Contact_List',
+				contactListDocSubject    : 'Contact_List',
+				contactListDocDescription: 'Contact_List'
+			};
 
-			//function to evaluate the program title 
+			//headParagraph setting
+			var headerParagraphSetting = {
+				alignment  : 'center',
+				boldSetting: true,
+				fontFace   : 'Times New Roman',
+				fontSize   : 20,	//MS Font size standard,,
+				companyName: 'Select Thearpy Instiute, Inc',
+				title      : evaluateTitle
+			};
 
 			function evaluateTitle(evaulatedProgramName) {
 				switch (evaulatedProgramName) {
@@ -96,118 +115,77 @@ REST: GET
 					case 'SG'  :	return 'Security Guard Program';
 					case 'ESOL':	return 'ESOL Program';
 				}
+			}			
+
+			if (functionality === 'signInSheet') {
+				var signInSheetDoc = new officeGenDocxConstruct(configOG.officeGen, configOG.docxConfig).myDoc();
+				signInSheetDoc.setDocSubject(documentSetting.signInSheetDocDescription);
+				signInSheetDoc.setDocKeywords(documentSetting.signInSheetDocSubject);
+				signInSheetDoc.setDescription(documentSetting.signInSheetDocKeywords);	
+
+				var headerParagraph           = signInSheetDoc.getHeader().createP();
+				headerParagraph.options.align = headerParagraphSetting.alignment;
+				headerParagraph.addText(headerParagraphSetting.companyName, //select therapy institute, inc
+					{
+						bold: headerParagraphSetting.boldSetting, 
+						font_face: headerParagraphSetting.fontFace, 
+						font_size: headerParagraphSetting.fontSize
+					});
+				headerParagraph.addLineBreak();
+				headerParagraph.addText('Sign-In Sheet for ' + headerParagraphSetting.title(programName), 
+					{
+						bold: headerParagraphSetting.boldSetting, 
+						font_face: headerParagraphSetting.fontFace, 
+						font_size: headerParagraphSetting.fontSize
+					});
+
+				//fetch table service:
+				var signInSheetHeaderTable = signInSheetService.signInSheetHeaderTable();			
+				signInSheetDoc.createTable(signInSheetHeaderTable.tableContent, signInSheetHeaderTable.tableStyle);	//header table generate
+				var spacingParagraph       = signInSheetDoc.createP();		// spacingParagraph.addLineBreak();
+				var signInSheetBodyTable   = signInSheetService.signInSheetBodyTable(studentNames);
+				signInSheetDoc.createTable(signInSheetBodyTable.tableContent, signInSheetBodyTable.tableStyle);	//body table generate'			
+			
+				signInSheetDoc.generate(res);	
+
+				setTimeout(function() {	
+					res.status(200).end();
+				}, 3000);	
+			}else if (functionality === 'contactList') {
+				var contactListDoc = new officeGenDocxConstruct(configOG.officeGen, configOG.docxConfig).myDoc();
+				contactListDoc.setDocSubject(documentSetting.contactListDocDescription);
+				contactListDoc.setDocKeywords(documentSetting.contactListDocSubject);
+				contactListDoc.setDescription(documentSetting.contactListDocDescription);
+
+				//header paragraph
+				var headerParagraph           = contactListDoc.getHeader().createP();
+				headerParagraph.options.align = headerParagraphSetting.alignment;
+				headerParagraph.addText(headerParagraphSetting.companyName, //select therapy institute, inc
+					{
+						bold: headerParagraphSetting.boldSetting, 
+						font_face: headerParagraphSetting.fontFace, 
+						font_size: headerParagraphSetting.fontSize
+					});
+				headerParagraph.addLineBreak();
+				headerParagraph.addText('Rotation #' + programRotation + ' Contact List', 
+					{
+						bold: headerParagraphSetting.boldSetting, 
+						font_face: headerParagraphSetting.fontFace, 
+						font_size: headerParagraphSetting.fontSize
+					});	
+				//fetch table service:	
+				var bodyTable = contactListService.contactListBodyTable(studentNames);
+				contactListDoc.createTable(bodyTable.tableContent, bodyTable.tableStyle);
+				contactListDoc.generate(res);	
+
+				setTimeout(function() {	
+					res.status(200).end();
+				}, 3000);	
 			}
-
-//using officeGenDocx to add paragraphs, and tables for sign in sheet
-				//document settings: 
-
-			var documentSetting = {	//this could be taken out into the outter function so other routes can share the same scope of this obj
-				signInSheetDocDescription: 'Sign_In_Sheet',
-				signInSheetDocSubject    : 'Sign_In_Sheet',
-				signInSheetDocKeywords   : 'Sign_In_Sheet',
-				contactListDocDescription: 'Contact_List',
-				contactListDocSubject    : 'Contact_List',
-				contactListDocDescription: 'Contact_List',
-				companyName              : 'Select Thearpy Instiute, Inc',
-				title                    : evaluateTitle
-			};
-				//headParagraph setting
-			var headerParagraphSetting = {
-				alignment  : 'center',
-				boldSetting: true,
-				fontFace   : 'Times New Roman',
-				fontSize   : 20	//MS Font size standard
-			};
-
-//BELOW CAN BE ROUTED FOR SIGN IN SHEETS AND CONTACT LISTS
-
-//FUNCTIONALITY ROUTES 
-//		WARNING:
-
-// CANNOT BE ROUTED LIKE THIS BECAUSE THE SAME SIGNAL CAN COME IN TWICE, AND CORRUPT THE FILE, NEED ITS OWN SIGNAL FROM FRONT END
-// SINCE ALL FUNCTIONAILITIES WILL HAVE ITS OWN ROUTE, THIS WILL NEGLECT THE IF STATEMENT, AND JUST HAVE ONLY ONE FUNCTIONALITY PER ROUTE
 			
 
-
-			officeGenDocx.setDocSubject(documentSetting.signInSheetDocDescription);
-			officeGenDocx.setDocKeywords(documentSetting.signInSheetDocSubject);
-			officeGenDocx.setDescription(documentSetting.signInSheetDocKeywords);
-			//header paragraph
-			var headerParagraph           = officeGenDocx.getHeader().createP();
-			headerParagraph.options.align = headerParagraphSetting.alignment;
-			headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
-				{
-					bold: headerParagraphSetting.boldSetting, 
-					font_face: headerParagraphSetting.fontFace, 
-					font_size: headerParagraphSetting.fontSize
-				});
-			headerParagraph.addLineBreak();
-			headerParagraph.addText('Sign-In Sheet for ' + documentSetting.title(programName), 
-				{
-					bold: headerParagraphSetting.boldSetting, 
-					font_face: headerParagraphSetting.fontFace, 
-					font_size: headerParagraphSetting.fontSize
-				});
-			//fetch table service:
-			var signInSheetHeaderTable = signInSheetService.signInSheetHeaderTable();			
-			officeGenDocx.createTable(signInSheetHeaderTable.tableContent, signInSheetHeaderTable.tableStyle);	//header table generate
-			var spacingParagraph       = officeGenDocx.createP();		// spacingParagraph.addLineBreak();
-			var signInSheetBodyTable   = signInSheetService.signInSheetBodyTable(studentNames);
-			officeGenDocx.createTable(signInSheetBodyTable.tableContent, signInSheetBodyTable.tableStyle);	//body table generate
-
-/*
- BELOW IS TEMPORARILY COMMENTED OUT, NEED TO BE USED IN ITS OWN ROUTE OF CONTACT LIST, AJAX SIGNAL FROM CLIENT
-*/
-			// if (functionality === 'contactList') {
-
-			// 	officeGenDocx.setDocSubject(documentSetting.contactListDocDescription);
-			// 	officeGenDocx.setDocKeywords(documentSetting.contactListDocSubject);
-			// 	officeGenDocx.setDescription(documentSetting.contactListDocDescription);	
-			// 	//header paragraph
-			// 	var headerParagraph           = officeGenDocx.getHeader().createP();
-			// 	headerParagraph.options.align = headerParagraphSetting.alignment;
-			// 	headerParagraph.addText(documentSetting.companyName, //select therapy institute, inc
-			// 		{
-			// 			bold: headerParagraphSetting.boldSetting, 
-			// 			font_face: headerParagraphSetting.fontFace, 
-			// 			font_size: headerParagraphSetting.fontSize
-			// 		});
-			// 	headerParagraph.addLineBreak();
-			// 	headerParagraph.addText('Rotation #' + programRotation + ' Contact List', 
-			// 		{
-			// 			bold: headerParagraphSetting.boldSetting, 
-			// 			font_face: headerParagraphSetting.fontFace, 
-			// 			font_size: headerParagraphSetting.fontSize
-			// 		});	
-			// 	//fetch table service:	
-			// 	var bodyTable = contactListService.contactListBodyTable(studentNames);
-			// 	officeGenDocx.createTable(bodyTable.tableContent, bodyTable.tableStyle);
-			// }
-			// if (functionality === 'examEmploymentSheet') {
-
-			// }
-			// if (functionality === 'clinicalChecklist') {
-
-			// }
-			next();
 		}
 
-
-
-		function finalHandler(req, res, next) {
-
-			officeGenDocx.generate(res);	
-
-			setTimeout(function() {	//setting timeout for res signal to end after 3 seconds
-							//changed to 5 seconds, because it takes longer for all the encapsulation to route, and 3 second was currupting the file
-									//so the document can be finished building and wont be corrupted sending to client
-
-				res.status(200).end();
-			}, 5000);	
-			// res.end();	//ending signal ** note, cannot call res.end() right away because it will 
-												//end the signal before doc is created, 
-												//and the doc will be corrupted in the front end b/c of that
-		}
 
 
 
