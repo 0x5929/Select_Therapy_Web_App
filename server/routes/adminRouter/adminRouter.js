@@ -149,6 +149,7 @@ REST: GET
 				setTimeout(function() {	
 					res.status(200).end();
 				}, 3000);	
+
 			}else if (functionality === 'contactList') {
 				var contactListDoc = new officeGenDocxConstruct(configOG.officeGen, configOG.docxConfig).myDoc();
 				contactListDoc.setDocSubject(documentSetting.contactListDocDescription);
@@ -179,9 +180,12 @@ REST: GET
 				setTimeout(function() {	
 					res.status(200).end();
 				}, 3000);	
+			}else if (functionality === 'examEmploymentSheet') {
+				//office gen material for exam employment sheet
+			}else if (functionality === 'clinicalChecklist') {
+				//office gen material for clinical checklist
 			}
 			
-
 		}
 
 
