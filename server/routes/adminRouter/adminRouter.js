@@ -21,8 +21,6 @@
 		//handler and middleware functions used in routes
 
 
-
-
 /**********************************************************
 ADMIN SEARCH GET HANDLER
 REST: GET
@@ -86,7 +84,7 @@ REST: GET
 			var studentNames    = req.query.studentNames;	
 			var programName     = req.query.programName;
 			var programRotation = req.query.programRotation;
-			var functionality = req.query.functionality;
+			var functionality   = req.query.functionality;
 			
 			//document settings: 
 			var documentSetting = {

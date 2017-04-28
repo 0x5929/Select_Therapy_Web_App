@@ -113,6 +113,10 @@
 					}, function(failureResponse) {
 						console.log(failureResponse);
 				});				
+			}else if (func === 'examEmploymentSheet') {
+				//ajax call for exam employment sheet
+			}else if (func === 'clinicalCheckList') {
+				//ajax call for clinical check list
 			}
 		};
 
