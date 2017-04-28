@@ -14,6 +14,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
+		adminRoute.get('search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -72,9 +73,23 @@ REST: GET
 **********************************************************************************/
 
 		function headerMiddleware(req, res, next) {
-			//setting the content type, and content disposition
-			res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
-			res.setHeader('Content-disposition', 'attachment; filename=Sign_In_Sheet.docx');
+			//grabbing functionality params
+			var functionality = req.query.functionality;
+			//route check
+			if (functionality === 'signInSheet') {
+				//setting the content type, and content disposition
+				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
+				res.setHeader('Content-disposition', 'attachment; filename=Sign_In_Sheet.docx');				
+			}else if (functionality === 'contactList') {
+				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
+				res.setHeader('Content-disposition', 'attachment; filename=Contact_List.docx');				
+			}
+			else if (functionality === 'examEmploymentSheet') {
+				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');	//setting the content type to header 
+				res.setHeader('Content-disposition', 'attachment; filename=Exam_Employment.xlsx');		
+			}
+			
+
 			next();			
 		}
 
@@ -93,7 +108,8 @@ REST: GET
 				signInSheetDocKeywords   : 'Sign_In_Sheet',
 				contactListDocDescription: 'Contact_List',
 				contactListDocSubject    : 'Contact_List',
-				contactListDocDescription: 'Contact_List'
+				contactListDocDescription: 'Contact_List',
+				examEmploymentSheetName  : 'Exam_Employment'
 			};
 
 			//headParagraph setting
@@ -182,6 +198,10 @@ REST: GET
 				}, 3000);	
 			}else if (functionality === 'examEmploymentSheet') {
 				//office gen material for exam employment sheet
+				var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
+				var currentSheet = examEmploymentSheet.makeNewSheet();	//two dimensional array currentSheet[0] = []
+				//currentSheet[0][0] = ...
+				//create a service that encapsulate the data in the sheet making process, and pass in student names
 			}else if (functionality === 'clinicalChecklist') {
 				//office gen material for clinical checklist
 			}

@@ -5,12 +5,13 @@
 		.controller('adminSearchController', ['$scope', 'FileSaver', 'Blob', 'ajaxService', adminSearchCtrlHandler]);
 
 	function adminSearchCtrlHandler($scope, FileSaver, Blob, ajaxService) {
-		var admin_search_ctrl = this;
-		admin_search_ctrl.message = '';
-		admin_search_ctrl.data = [];	//this gets passed in to the view, need to be updated as data comes back from server
+		var admin_search_ctrl                       = this;
+		admin_search_ctrl.message                   = '';
+		admin_search_ctrl.data                      = [];	//this gets passed in to the view, need to be updated as data comes back from server
 		//setting button disabled to initially to be false
-		admin_search_ctrl.isSignInDisabled = false;	
-		admin_search_ctrl.isContactListDisabled = false;
+		admin_search_ctrl.isSignInDisabled          = false;	
+		admin_search_ctrl.isContactListDisabled     = false;
+		admin_search_ctrl.isExamEmploySheetDisabled = false;
 
 		admin_search_ctrl.showDetail = function(student) {
 			admin_search_ctrl.showFullDetail = true;	//turning on showing full detail
@@ -78,6 +79,9 @@
 				case 'contactList' :
 					admin_search_ctrl.isContactListDisabled = true;
 					break;
+				case 'examEmploymentSheet' : 
+					admin_search_ctrl.isExamEmploySheetDisabled = true;
+					break;
 			}
 
 			var config = {
@@ -91,12 +95,7 @@
 					functionality: func
 				}
 			};
-			//ajax call to server
-			//this needs to be routed according to the functionality of each functions.
-			//for example: 
-			/*if (func === 'signInSheet') {ajax to server with sign in as route}
-			  if (func === ''contactList) {ajax to server with contact list as route}
-			*/
+
 			if (func === 'signInSheet') {
 				ajaxService.get('/admin/search/generateSignIn/', config)
 					.then(function(successResponse) {
@@ -115,6 +114,13 @@
 				});				
 			}else if (func === 'examEmploymentSheet') {
 				//ajax call for exam employment sheet
+				ajaxService.get('/admin/search/generateExamEmploymentSheet/', config)
+					.then(function(successResponse) {
+						var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+						FileSaver.saveAs(file, 'studentExamEmploymentSheet.xlsx');
+					}, function(failureResponse) {
+						console.log(failureResponse);
+				});	
 			}else if (func === 'clinicalCheckList') {
 				//ajax call for clinical check list
 			}
