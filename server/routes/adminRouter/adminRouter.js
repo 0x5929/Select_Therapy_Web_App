@@ -2,7 +2,8 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser, officeGenDocxConstruct, configOG, signInSheetService, contactListService) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
+								signInSheetService, contactListService, examEmploymentService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -196,12 +197,18 @@ REST: GET
 				setTimeout(function() {	
 					res.status(200).end();
 				}, 3000);	
+
 			}else if (functionality === 'examEmploymentSheet') {
 				//office gen material for exam employment sheet
 				var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
-				var currentSheet = examEmploymentSheet.makeNewSheet();	//two dimensional array currentSheet[0] = []
-				//currentSheet[0][0] = ...
+				var currentSheet = examEmploymentSheet.makeNewSheet();	
+				//two dimensional array currentSheet[0] = [] init
+				//currentSheet[0][0] = ...setting each cells 
 				//create a service that encapsulate the data in the sheet making process, and pass in student names
+				setTimeout(function() {	
+					res.status(200).end();
+				}, 3000);	
+				examEmploymentSheet.generate(res);
 			}else if (functionality === 'clinicalChecklist') {
 				//office gen material for clinical checklist
 			}
