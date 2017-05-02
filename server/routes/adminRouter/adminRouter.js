@@ -2,7 +2,7 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
+	function adminRouterHandler (fs, express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
 								signInSheetService, contactListService, examEmploymentService) {
 
 		var adminRoute = express.Router();	//initialize router
@@ -15,7 +15,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.get('search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
+		adminRoute.get('/search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -202,13 +202,18 @@ REST: GET
 				//office gen material for exam employment sheet
 				var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
 				var currentSheet = examEmploymentSheet.makeNewSheet();	
-				//two dimensional array currentSheet[0] = [] init
-				//currentSheet[0][0] = ...setting each cells 
-				//create a service that encapsulate the data in the sheet making process, and pass in student names
+				currentSheet.name = documentSetting.examEmploymentSheetName;
+				//calling emxam employment service
+				console.log(studentNames);
+				examEmploymentService.examEmploymentSheetGenHandler(currentSheet, studentNames);
+
+				examEmploymentSheet.generate(res);
+
 				setTimeout(function() {	
 					res.status(200).end();
-				}, 3000);	
-				examEmploymentSheet.generate(res);
+				}, 3000);
+
+			
 			}else if (functionality === 'clinicalChecklist') {
 				//office gen material for clinical checklist
 			}
