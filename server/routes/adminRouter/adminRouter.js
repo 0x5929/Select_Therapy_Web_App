@@ -3,7 +3,7 @@
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
 	function adminRouterHandler (fs, express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
-								signInSheetService, contactListService, examEmploymentService) {
+								signInSheetService, contactListService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -198,25 +198,29 @@ REST: GET
 					res.status(200).end();
 				}, 3000);	
 
-			}else if (functionality === 'examEmploymentSheet') {
-				//office gen material for exam employment sheet
-				var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
-				var currentSheet = examEmploymentSheet.makeNewSheet();	
-				currentSheet.name = documentSetting.examEmploymentSheetName;
-				//calling emxam employment service
-				console.log(studentNames);
-				examEmploymentService.examEmploymentSheetGenHandler(currentSheet, studentNames);
+			}	// FUNCTIONAILITIES BELOW NEEDS TO BE IMPLEMENTED WITH THE ADMIN FOLDER
+				//NEXT FUNCTIONALITIES:
+				//	-ADMIN FOLDER DOC GENERATE
+				// 	-GOOGLE SHEETS PUSH DATA
+			// else if (functionality === 'examEmploymentSheet') {
+			// 	//office gen material for exam employment sheet
+			// 	var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
+			// 	var currentSheet = examEmploymentSheet.makeNewSheet();	
+			// 	currentSheet.name = documentSetting.examEmploymentSheetName;
+			// 	//calling emxam employment service
+			// 	console.log(studentNames);
+			// 	examEmploymentService.examEmploymentSheetGenHandler(currentSheet, studentNames);
 
-				examEmploymentSheet.generate(res);
+			// 	examEmploymentSheet.generate(res);
 
-				setTimeout(function() {	
-					res.status(200).end();
-				}, 3000);
+			// 	setTimeout(function() {	
+			// 		res.status(200).end();
+			// 	}, 3000);
 
 			
-			}else if (functionality === 'clinicalChecklist') {
-				//office gen material for clinical checklist
-			}
+			// }else if (functionality === 'clinicalChecklist') {
+			// 	//office gen material for clinical checklist
+			// }
 			
 		}
 

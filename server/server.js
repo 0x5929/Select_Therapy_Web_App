@@ -34,7 +34,6 @@ var fs                       	  = require('fs'),
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
 	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
-	examEmploymentGenerateService = require(path.join(__dirname, 'services/examEmploymentSheetGen.js'));
 
 //configuration
 
@@ -72,7 +71,7 @@ app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up t
 //routes, passing in all the necessary module objects and also the office generator config for the construction of document obj in routes
 require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, 
 													csrfTokenMiddleware, officeGenDocxServiceConstruct, configOG, 
-													signInSheetGenerateService, contactListGenerateService, examEmploymentGenerateService);
+													signInSheetGenerateService, contactListGenerateService);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

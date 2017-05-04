@@ -79,9 +79,9 @@
 				case 'contactList' :
 					admin_search_ctrl.isContactListDisabled = true;
 					break;
-				case 'examEmploymentSheet' : 
-					admin_search_ctrl.isExamEmploySheetDisabled = true;
-					break;
+				// case 'examEmploymentSheet' : 	//COMMENTED OUT BECAUSE THE NEXT FUNC SHOULD BE ADMIN FOLDER DOC 
+				// 	admin_search_ctrl.isExamEmploySheetDisabled = true;
+				// 	break;
 			}
 
 			var config = {
@@ -112,18 +112,23 @@
 					}, function(failureResponse) {
 						console.log(failureResponse);
 				});				
-			}else if (func === 'examEmploymentSheet') {
-				//ajax call for exam employment sheet
-				ajaxService.get('/admin/search/generateExamEmploymentSheet/', config)
-					.then(function(successResponse) {
-						var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-						FileSaver.saveAs(file, 'studentExamEmploymentSheet.xlsx');
-					}, function(failureResponse) {
-						console.log(failureResponse);
-				});	
-			}else if (func === 'clinicalCheckList') {
-				//ajax call for clinical check list
 			}
+			//NEXT FUNC: ADMIN FOLDER DOC PER STUDENT SHOULD HAVE EXAM EMPLOYMNENT CLINICAL INFO ON IT
+			else if (func === 'adminFolderStudentDoc') {
+				//ajax call for admin folder student doc
+			}
+			// else if (func === 'examEmploymentSheet') {
+			// 	//ajax call for exam employment sheet
+			// 	ajaxService.get('/admin/search/generateExamEmploymentSheet/', config)
+			// 		.then(function(successResponse) {
+			// 			var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+			// 			FileSaver.saveAs(file, 'studentExamEmploymentSheet.xlsx');
+			// 		}, function(failureResponse) {
+			// 			console.log(failureResponse);
+			// 	});	
+			// }else if (func === 'clinicalCheckList') {
+			// 	//ajax call for clinical check list
+			// }
 		};
 
 	}
