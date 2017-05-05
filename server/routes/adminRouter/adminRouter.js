@@ -3,7 +3,7 @@
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
 	function adminRouterHandler (fs, express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
-								signInSheetService, contactListService) {
+								signInSheetService, contactListService, adminFolderDocGenerate) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -226,8 +226,8 @@ REST: GET
 		}
 
 		function testSignalMiddleware (req, res, next) {
-			var html = "<!DOCTYPE html><html xmlns:office='urn:schemas-microsoft-com:office:office' xmlns:word='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><xml><word:WordDocument><word:View>Print</word:View><word:Zoom>90</word:Zoom><word:DoNotOptimizeForBrowswer/></word:WordDocument></xml></head><body><h1>HELLO WORLD TEST SIGNAL</h1></body></html>";
-			res.send(html);
+			var resposne = adminFolderDocGenerate.adminFolderDocService();
+			res.status(200).send(resposne).end();
 		}
 
 

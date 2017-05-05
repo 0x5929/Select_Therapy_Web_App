@@ -33,7 +33,8 @@ var fs                       	  = require('fs'),
 	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in eccessary configs
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
-	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js'));
+	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
+	adminFolderGenService    	  = require(path.join(__dirname, 'services/adminFolderDocGen.js'));
 
 //configuration
 
@@ -71,7 +72,7 @@ app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up t
 //routes, passing in all the necessary module objects and also the office generator config for the construction of document obj in routes
 require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, 
 													csrfTokenMiddleware, officeGenDocxServiceConstruct, configOG, 
-													signInSheetGenerateService, contactListGenerateService);
+													signInSheetGenerateService, contactListGenerateService, adminFolderGenService);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err
