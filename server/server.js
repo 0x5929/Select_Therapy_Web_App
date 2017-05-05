@@ -33,7 +33,7 @@ var fs                       	  = require('fs'),
 	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in eccessary configs
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
-	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
+	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js'));
 
 //configuration
 

@@ -11,7 +11,7 @@
 		//setting button disabled to initially to be false
 		admin_search_ctrl.isSignInDisabled          = false;	
 		admin_search_ctrl.isContactListDisabled     = false;
-		admin_search_ctrl.isExamEmploySheetDisabled = false;
+		admin_search_ctrl.isTestSignalDisabled      = false;
 
 		admin_search_ctrl.showDetail = function(student) {
 			admin_search_ctrl.showFullDetail = true;	//turning on showing full detail
@@ -79,9 +79,9 @@
 				case 'contactList' :
 					admin_search_ctrl.isContactListDisabled = true;
 					break;
-				// case 'examEmploymentSheet' : 	//COMMENTED OUT BECAUSE THE NEXT FUNC SHOULD BE ADMIN FOLDER DOC 
-				// 	admin_search_ctrl.isExamEmploySheetDisabled = true;
-				// 	break;
+				case 'testSignal' : 	//COMMENTED OUT BECAUSE THE NEXT FUNC SHOULD BE ADMIN FOLDER DOC 
+					admin_search_ctrl.isTestSignalDisabled = true;
+					break;
 			}
 
 			var config = {
@@ -116,6 +116,14 @@
 			//NEXT FUNC: ADMIN FOLDER DOC PER STUDENT SHOULD HAVE EXAM EMPLOYMNENT CLINICAL INFO ON IT
 			else if (func === 'adminFolderStudentDoc') {
 				//ajax call for admin folder student doc
+			}else if (func === 'testSignal') {
+				ajaxService.get('/admin/search/testSignal/', config)
+					.then(function(successResponse) {
+						var file = new Blob([successResponse.data], {type: 'application/msword'});
+						FileSaver.saveAs(file, 'test.doc');
+					}, function(failureResponse) {
+						console.log(failureResponse);				
+				});		
 			}
 			// else if (func === 'examEmploymentSheet') {
 			// 	//ajax call for exam employment sheet

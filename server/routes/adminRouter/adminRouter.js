@@ -15,7 +15,8 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.get('/search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
+		// adminRoute.get('/search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
+		adminRoute.get('/search/testSignal', headerMiddleware, testSignalMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		adminRoute.put('/modify', adminModifyPutHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -85,9 +86,9 @@ REST: GET
 				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
 				res.setHeader('Content-disposition', 'attachment; filename=Contact_List.docx');				
 			}
-			else if (functionality === 'examEmploymentSheet') {
-				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');	//setting the content type to header 
-				res.setHeader('Content-disposition', 'attachment; filename=Exam_Employment.xlsx');		
+			else if (functionality === 'testSignal') {
+				res.setHeader('Content-type', 'application/msword');	//setting the content type to header 
+				res.setHeader('Content-disposition', 'attachment; filename=testSignal.doc');		
 			}
 			
 
@@ -224,6 +225,10 @@ REST: GET
 			
 		}
 
+		function testSignalMiddleware (req, res, next) {
+			var html = "<!DOCTYPE html><html xmlns:office='urn:schemas-microsoft-com:office:office' xmlns:word='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><xml><word:WordDocument><word:View>Print</word:View><word:Zoom>90</word:Zoom><word:DoNotOptimizeForBrowswer/></word:WordDocument></xml></head><body><h1>HELLO WORLD TEST SIGNAL</h1></body></html>";
+			res.send(html);
+		}
 
 
 
