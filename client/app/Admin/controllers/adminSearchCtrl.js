@@ -114,16 +114,23 @@
 				});				
 			}
 			//NEXT FUNC: ADMIN FOLDER DOC PER STUDENT SHOULD HAVE EXAM EMPLOYMNENT CLINICAL INFO ON IT
-			else if (func === 'adminFolderStudentDoc') {
-				//ajax call for admin folder student doc
-			}else if (func === 'testSignal') {
-				ajaxService.get('/admin/search/testSignal/', config)
-					.then(function(successResponse) {
-						var file = new Blob([successResponse.data], {type: 'application/msword'});
-						FileSaver.saveAs(file, 'test.doc');
-					}, function(failureResponse) {
-						console.log(failureResponse);				
-				});		
+			// else if (func === 'adminFolderStudentDoc') {
+			// 	//ajax call for admin folder student doc
+			// }else if (func === 'testSignal') {
+			// 	ajaxService.get('/admin/search/testSignal/', config)
+			// 		.then(function(successResponse) {
+			// 			var file = new Blob([successResponse.data], {type: 'application/msword'});
+			// 			FileSaver.saveAs(file, 'test.doc');
+			// 		}, function(failureResponse) {
+			// 			console.log(failureResponse);				
+			// 	});		
+			// }
+			else if (func === 'pushDataToSTRF') {
+				//check if data had been sent before
+				//push data to an already sent arr
+				//ajax call to google sheets with address, sheet page number, and cell 
+				//each student needs to have one more property with an arr of values that had been pushed to google 
+
 			}
 			// else if (func === 'examEmploymentSheet') {
 			// 	//ajax call for exam employment sheet
