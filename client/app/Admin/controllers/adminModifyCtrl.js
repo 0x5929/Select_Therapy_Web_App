@@ -1,6 +1,20 @@
 (function() {
 	'use strict';
 
+
+/*
+
+	in order to fully use the google api, need to also add google auth modal for it to fully to be accessed in the back end. 
+	then sending the data the server 
+	where server will generate two rows (two arrays for two seperate sheets), these rows, along with a function to create
+	sheet range in A1 notation will be stored within user data in mongoldb, also properties such as sheet name will also be stored
+	then using the sheet name range, and the value arrays, we will push the data into google sheets, 
+
+	then for admin modify, we will find the user, and its sheet name and range to use google sheets api to update new data
+*/
+
+
+
 	angular.module('myApp.admin')
 		.controller('adminModifyController', ['$rootScope', '$scope', 'ajaxService', 'toastFactory', adminModifyControllerHandler]);
 

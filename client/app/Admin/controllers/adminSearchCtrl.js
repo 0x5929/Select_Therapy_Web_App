@@ -65,9 +65,11 @@
 				});
 		};
 
+
 		admin_search_ctrl.adminFunctions = function(func) {
 			//setting the the arr of student names for server to process
 			var studentNames = [];
+			// console.log(JSON.stringify(admin_search_ctrl.data));
 			admin_search_ctrl.data.forEach(function(student) {
 				studentNames.push(student.name);
 			});
