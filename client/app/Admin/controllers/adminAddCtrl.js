@@ -255,5 +255,14 @@
 
 			};
 
+			//google sign in:
+			
+			admin_add_ctrl.googleSigninBtnID = 'g-signin2';
+			admin_add_ctrl.googleSigninOptions = {
+				'onsuccess': function(successResponse) {
+					console.log(successResponse);
+				}
+			};			
+
 		}
 }());
