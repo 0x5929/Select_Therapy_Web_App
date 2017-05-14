@@ -20,7 +20,20 @@
 			
 			</div> <!-- JUST NEED TO CONVERT THE STRING INTO DATE OBJECT BEFORE SENDING TO SERVER -->
 		</div> 
-
+		<div class="form-group row">
+			<label class="control-label col-md-3" for="studentID">Student ID:</label>
+			<div class="col-md-9">
+				<input 	type="text" 
+						masked-input
+						target-mask="99-9999aa"
+						mask-options='{"placeholder": "R#-ddmmFL"}'
+						ng-model="admin_add_ctrl.studentID" 
+						class="form-control" 
+						name="enrollmentDate" 
+						placeholder="Enter Student ID">
+			
+			</div>
+		</div>
 		<div class="form-group row">
 			<label class="control-label col-md-3" for="name">First Name:</label>
 			<div class="col-md-9">
@@ -135,8 +148,14 @@
 				</select>
 				<input type="text" ng-model="admin_add_ctrl.FifthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
 			</div>
-		</div>
+		</div>		
 	<!-- /END OF PROGRAM INPUTS -->
+		<div class="form-group row">
+			<label class="control-label col-md-3" for="tuition">Tuition:</label>
+			<div class="col-md-9">
+				<input 	type="number" ng-model="admin_add_ctrl.tuition" class="form-control" name="Tuition" placeholder="Enter Student's Tuition'">
+			</div>
+		</div>
 		<div class="form-group row">
 			<label class="control-label col-md-3" for="tuitionPaid">Payment Status:</label>
 			<div class="col-md-9">
@@ -259,7 +278,11 @@
 		<div class="text-center">
 			<button class="btn" ng-click="admin_add_ctrl.submit()">Submit</button>
 			<button class="btn" ng-click="admin_add_ctrl.refresh()">Cancel</button>
-			<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
+			<button class="btn" ng-click="admin_add_ctrl.googleSync = true">Sync With Google</button>
+			<div ng-if="admin_add_ctrl.googleSync">
+				<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
+				<!-- next step in the google sync processs -->
+			</div>
 <!-- 			this button should have the functionaility to load a modal with google auth, and send signal to server 
 			for data to be organized in a way to be synced with google -->
 			<br>

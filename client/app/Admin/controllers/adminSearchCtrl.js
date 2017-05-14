@@ -66,11 +66,14 @@
 		};
 
 
+//IF MODIFYING:
+//pass student data to add controller
+
 		admin_search_ctrl.adminFunctions = function(func) {
 			//setting the the arr of student names for server to process
 			var studentNames = [];
 			// console.log(JSON.stringify(admin_search_ctrl.data));
-			admin_search_ctrl.data.forEach(function(student) {
+			admin_search_ctrl.data.forEach(function(student) {	//might as well change the system to first and last names
 				studentNames.push(student.name);
 			});
 			//turning on button disabled after click (could be placed in the success promise)

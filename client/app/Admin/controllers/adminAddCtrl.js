@@ -12,6 +12,7 @@
 			var postData = null;
 
 			admin_add_ctrl.programInputCount = 0;
+			admin_add_ctrl.googleSync = false;
 			
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
@@ -20,7 +21,7 @@
 					toastFactory.errorToast("please check the student's first and last name input");
 					return false;
 				}
-				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){
+				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){	//phone number and ssn is taken care of by masked input
 					toastFactory.errorToast("please check the student's phone number input");
 					return false;
 				}
@@ -106,7 +107,10 @@
 				
 				postData = {
 				enrollmentDate: new Date(admin_add_ctrl.enrollmentDate),	//need to add for the rest
-				name: admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
+				studentID: admin_add_ctrl.studentID,
+				firstName: admin_add_ctrl.firstName,
+				lastName: admin_add_ctrl.lastName,
+				// name: admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
 				phoneNumber: admin_add_ctrl.phoneNumber,
 				ssn: admin_add_ctrl.ssn,
 				address: admin_add_ctrl.address,
@@ -129,6 +133,7 @@
 				}],
 				graduate: admin_add_ctrl.graduate,
 				notGraduatingReason: admin_add_ctrl.notGraduatingReason,
+				tuition: admin_add_ctrl.tuition,
 				tuitionPaid: admin_add_ctrl.tuitionPaid,
 				jobPlaced: admin_add_ctrl.jobPlaced,
 				weeklyWorkHours: admin_add_ctrl.weeklyWorkHours,
@@ -255,8 +260,13 @@
 
 			};
 
-			//google sign in:
-			
+
+// IF ADMIN IS MODIFYING STUDENT INFO: 
+//add a modifying function that will populate all data from search to add
+
+
+//google sign in:
+
 			admin_add_ctrl.googleSigninBtnID = 'g-signin2';
 			admin_add_ctrl.googleSigninOptions = {
 				'onsuccess': function(successResponse) {

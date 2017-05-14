@@ -262,16 +262,18 @@ REST: ADD
 				if (err) return next(err);
 				if (user) return res.status(400).send('This user already exists!').end();
 				if (!user) {	//if no user, then save all the creditials from client side
-					var newStudent = new STIDbStudentCollection();
-					newStudent.enrollmentDate = req.body.enrollmentDate;
-					newStudent.name = req.body.name;
-					newStudent.phoneNumber = req.body.phoneNumber;
-					newStudent.ssn = req.body.ssn;
-					newStudent.address = req.body.address;
-					newStudent.email = req.body.email;
-					newStudent.program = req.body.program;
-					newStudent.graduate = req.body.graduate;
-					newStudent.tuitionPaid = req.body.tuitionPaid;
+					var newStudent             = new STIDbStudentCollection();
+					newStudent.enrollmentDate  = req.body.enrollmentDate;
+					newStudent.studentID       = req.body.studentID;
+					newStudent.name            = req.body.firstName + '' + req.body.lastName;
+					newStudent.phoneNumber     = req.body.phoneNumber;
+					newStudent.ssn             = req.body.ssn;
+					newStudent.address         = req.body.address;
+					newStudent.email           = req.body.email;
+					newStudent.program         = req.body.program;
+					newStudent.tuition         = req.body.tuition;
+					newStudent.graduate        = req.body.graduate;
+					newStudent.tuitionPaid     = req.body.tuitionPaid;
 					newStudent.marketingSurvey = req.body.marketingSurvey;		
 //depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
 //and depending on those conditions we save the necessary data into db	
