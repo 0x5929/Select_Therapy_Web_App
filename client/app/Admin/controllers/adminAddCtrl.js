@@ -3,16 +3,26 @@
 //NEED TO ADD ERROR HANDLING FOR THESE ADD FIELDS, CANCEL SUBMIT AND PROMPT ERR TOAST MESSAGE
 
 	'use strict';
-	angular.module('myApp.admin')
-		.controller('adminAddController', ['$scope', '$filter', 'ajaxService', 'toastFactory', adminAddControllerHandler]);
 
-		function adminAddControllerHandler($scope, $filter, ajaxService, toastFactory) {
+	angular.module('myApp.admin')
+		.controller('adminAddController', ['$scope', '$stateParams', '$filter', 'ajaxService', 'toastFactory', 'studentValue', adminAddControllerHandler]);
+
+		function adminAddControllerHandler($scope, $stateParams, $filter, ajaxService, toastFactory, studentValue) {	//may want to delete filter, it does nothin
 
 			var admin_add_ctrl = this;
 			var postData = null;
 
 			admin_add_ctrl.programInputCount = 0;
+			admin_add_ctrl.googleSync = false;
 			
+			//first check if state params is modifying
+			//if so we need to fill in all the ng models with studentvalue service
+
+			if ($stateParams.func && $stateParams.func === 'modify') {
+				console.log(studentValue);
+			}
+
+
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
 
@@ -20,7 +30,7 @@
 					toastFactory.errorToast("please check the student's first and last name input");
 					return false;
 				}
-				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){
+				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){	//phone number and ssn is taken care of by masked input
 					toastFactory.errorToast("please check the student's phone number input");
 					return false;
 				}
@@ -104,41 +114,45 @@
 
 			admin_add_ctrl.submit = function() {
 				
-				postData = {
-				enrollmentDate: new Date(admin_add_ctrl.enrollmentDate),	//need to add for the rest
-				name: admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
-				phoneNumber: admin_add_ctrl.phoneNumber,
-				ssn: admin_add_ctrl.ssn,
-				address: admin_add_ctrl.address,
-				email: admin_add_ctrl.email,
+				postData      = {
+				enrollmentDate: new Date(admin_add_ctrl.studentModel.enrollmentDate),	//need to add for the rest
+				studentID     : admin_add_ctrl.studentModel.studentID,
+				firstName     : admin_add_ctrl.studentModel.firstName,
+				lastName      : admin_add_ctrl.studentModel.lastName,
+				// name       : admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
+				phoneNumber   : admin_add_ctrl.studentModel.phoneNumber,
+				ssn           : admin_add_ctrl.studentModel.ssn,
+				address       : admin_add_ctrl.studentModel.address,
+				email         : admin_add_ctrl.studentModel.email,
 				program: [{
-					programName: admin_add_ctrl.FirstprogramName,
-					programRotation: admin_add_ctrl.FirstprogramRotation
+					programName    : admin_add_ctrl.studentModel.FirstprogramName,
+					programRotation: admin_add_ctrl.studentModel.FirstprogramRotation
 				}, {
-					programName: admin_add_ctrl.SecondprogramName,
-					programRotation: admin_add_ctrl.SecondprogramRotation
+					programName    : admin_add_ctrl.studentModel.SecondprogramName,
+					programRotation: admin_add_ctrl.studentModel.SecondprogramRotation
 				}, {
-					programName: admin_add_ctrl.ThirdprogramName,
-					programRotation: admin_add_ctrl.ThirdprogramRotation
+					programName    : admin_add_ctrl.studentModel.ThirdprogramName,
+					programRotation: admin_add_ctrl.studentModel.ThirdprogramRotation
 				}, {
-					programName: admin_add_ctrl.ForthprogramName,
-					programRotation: admin_add_ctrl.ForthprogramName
+					programName    : admin_add_ctrl.studentModel.ForthprogramName,
+					programRotation: admin_add_ctrl.studentModel.ForthprogramName
 				}, {
-					programName: admin_add_ctrl.FifthprogramName,
-					programRotation: admin_add_ctrl.FifthprogramRotation
+					programName    : admin_add_ctrl.studentModel.FifthprogramName,
+					programRotation: admin_add_ctrl.studentModel.FifthprogramRotation
 				}],
-				graduate: admin_add_ctrl.graduate,
-				notGraduatingReason: admin_add_ctrl.notGraduatingReason,
-				tuitionPaid: admin_add_ctrl.tuitionPaid,
-				jobPlaced: admin_add_ctrl.jobPlaced,
-				weeklyWorkHours: admin_add_ctrl.weeklyWorkHours,
-				payRate: admin_add_ctrl.payRate,
-				jobDescription: admin_add_ctrl.jobDescription,
-				noJobReason: admin_add_ctrl.noJobReason,
-				passedExam: admin_add_ctrl.passedExam,
-				numberOfTries: admin_add_ctrl.numberOfTries,
-				noPassReason: admin_add_ctrl.noPassReason,
-				marketingSurvey: admin_add_ctrl.marketingSurvey
+				graduate           : admin_add_ctrl.studentModel.graduate,
+				notGraduatingReason: admin_add_ctrl.studentModel.notGraduatingReason,
+				tuition            : admin_add_ctrl.studentModel.tuition,
+				tuitionPaid        : admin_add_ctrl.studentModel.tuitionPaid,
+				jobPlaced          : admin_add_ctrl.studentModel.jobPlaced,
+				weeklyWorkHours    : admin_add_ctrl.studentModel.weeklyWorkHours,
+				payRate            : admin_add_ctrl.studentModel.payRate,
+				jobDescription     : admin_add_ctrl.studentModel.jobDescription,
+				noJobReason        : admin_add_ctrl.studentModel.noJobReason,
+				passedExam         : admin_add_ctrl.studentModel.passedExam,
+				numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
+				noPassReason       : admin_add_ctrl.studentModel.noPassReason,
+				marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey
 			};
 			//below is to ensure only proper data gets passed into ajax service
 				postData.program = postData.program
@@ -150,7 +164,7 @@
 					console.log('testing before data is sent to server: ', postData);
 					ajaxService.post('/admin/add/', postData)
 					.then(function(successResponse) {
-						toastFactory.successAdd(postData.name);
+						toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
 						admin_add_ctrl.refresh();
 						console.log('success: ', successResponse);
 					}, 
@@ -172,21 +186,22 @@
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
-				admin_add_ctrl.enrollmentDate = '';
-				admin_add_ctrl.firstName = '';
-				admin_add_ctrl.lastName = '';
-				admin_add_ctrl.phoneNumber = '';
-				admin_add_ctrl.ssn = '';
-				admin_add_ctrl.address = '';
-				admin_add_ctrl.email = '';
-				admin_add_ctrl.payRate = '';
-				admin_add_ctrl.jobDescription = '';
-				admin_add_ctrl.noJobReason = '';
-				admin_add_ctrl.FirstprogramRotation = '';
-				admin_add_ctrl.SecondprogramRotation = '';
-				admin_add_ctrl.ThirdprogramRotation = '';
-				admin_add_ctrl.ForthprogramRotation = '';
-				admin_add_ctrl.FifthprogramRotation = '';
+				admin_add_ctrl.studentModel.enrollmentDate        = '';
+				admin_add_ctrl.studentModel.studentID             = '';
+				admin_add_ctrl.studentModel.firstName             = '';
+				admin_add_ctrl.studentModel.lastName              = '';
+				admin_add_ctrl.studentModel.phoneNumber           = '';
+				admin_add_ctrl.studentModel.ssn                   = '';
+				admin_add_ctrl.studentModel.address               = '';
+				admin_add_ctrl.studentModel.email                 = '';
+				admin_add_ctrl.studentModel.payRate               = '';
+				admin_add_ctrl.studentModel.jobDescription        = '';
+				admin_add_ctrl.studentModel.noJobReason           = '';
+				admin_add_ctrl.studentModel.FirstprogramRotation  = '';
+				admin_add_ctrl.studentModel.SecondprogramRotation = '';
+				admin_add_ctrl.studentModel.ThirdprogramRotation  = '';
+				admin_add_ctrl.studentModel.ForthprogramRotation  = '';
+				admin_add_ctrl.studentModel.FifthprogramRotation  = '';
 
 //setting the necessary ng-if to false	
 				admin_add_ctrl.showAddProgramInput1 = false;
@@ -196,20 +211,20 @@
 				admin_add_ctrl.showAddProgramInput5 = false;			
 
 //option value
-				admin_add_ctrl.marketingSurvey = 'noneSelected';
-				admin_add_ctrl.graduate = 'noneSelected';
-				admin_add_ctrl.notGraduatingReason = 'noneSelected';
-				admin_add_ctrl.tuitionPaid = 'noneSelected';
-				admin_add_ctrl.jobPlaced = 'noneSelected';
-				admin_add_ctrl.weeklyWorkHours = 'noneSelected';
-				admin_add_ctrl.passedExam = 'noneSelected';
-				admin_add_ctrl.numberOfTries = 'noneSelected';
-				admin_add_ctrl.noPassReason = 'noneSelected';
-				admin_add_ctrl.FirstprogramName = 'noneSelected';
-				admin_add_ctrl.SecondprogramName = 'noneSelected';
-				admin_add_ctrl.ThirdprogramName = 'noneSelected';
-				admin_add_ctrl.ForthprogramName = 'noneSelected';
-				admin_add_ctrl.FifthprogramName = 'noneSelected';
+				admin_add_ctrl.studentModel.marketingSurvey     = 'noneSelected';
+				admin_add_ctrl.studentModel.graduate            = 'noneSelected';
+				admin_add_ctrl.studentModel.notGraduatingReason = 'noneSelected';
+				admin_add_ctrl.studentModel.tuitionPaid         = 'noneSelected';
+				admin_add_ctrl.studentModel.jobPlaced           = 'noneSelected';
+				admin_add_ctrl.studentModel.weeklyWorkHours     = 'noneSelected';
+				admin_add_ctrl.studentModel.passedExam          = 'noneSelected';
+				admin_add_ctrl.studentModel.numberOfTries       = 'noneSelected';
+				admin_add_ctrl.studentModel.noPassReason        = 'noneSelected';
+				admin_add_ctrl.studentModel.FirstprogramName    = 'noneSelected';
+				admin_add_ctrl.studentModel.SecondprogramName   = 'noneSelected';
+				admin_add_ctrl.studentModel.ThirdprogramName    = 'noneSelected';
+				admin_add_ctrl.studentModel.ForthprogramName    = 'noneSelected';
+				admin_add_ctrl.studentModel.FifthprogramName    = 'noneSelected';
 			};
 
 
@@ -254,6 +269,20 @@
 				admin_add_ctrl.programInputCount = 0; 
 
 			};
+
+
+// IF ADMIN IS MODIFYING STUDENT INFO: 
+//add a modifying function that will populate all data from search to add
+
+
+//google sign in:
+
+			admin_add_ctrl.googleSigninBtnID = 'g-signin2';
+			admin_add_ctrl.googleSigninOptions = {
+				'onsuccess': function(successResponse) {
+					console.log(successResponse);
+				}
+			};			
 
 		}
 }());

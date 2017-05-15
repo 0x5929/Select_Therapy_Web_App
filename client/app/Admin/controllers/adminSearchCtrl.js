@@ -2,9 +2,9 @@
 	'use strict';
 
 	angular.module('myApp.admin', ['ngFileSaver', 'services.ajaxService', 'services.toastFactory'])
-		.controller('adminSearchController', ['$scope', 'FileSaver', 'Blob', 'ajaxService', adminSearchCtrlHandler]);
+		.controller('adminSearchController', ['$scope', '$state', 'FileSaver', 'Blob', 'ajaxService', 'studentValue', adminSearchCtrlHandler]);
 
-	function adminSearchCtrlHandler($scope, FileSaver, Blob, ajaxService) {
+	function adminSearchCtrlHandler($scope, $state, FileSaver, Blob, ajaxService, studentValue) {
 		var admin_search_ctrl                       = this;
 		admin_search_ctrl.message                   = '';
 		admin_search_ctrl.data                      = [];	//this gets passed in to the view, need to be updated as data comes back from server
@@ -53,7 +53,7 @@
 						successResponse.data.programViewForResultsTable = successResponse.data.program.map(function(program) {
 							return program.programName;
 						}).join();	//maping and joining program names for one student's program array property
-						admin_search_ctrl.data.push(successResponse.data);	//pushing the single student obj into the data arr
+						admin_search_ctrl.data.push(successResponse.data);	//pushing the single student obj into the data arr						
 						admin_search_ctrl.message = '';	//clearing mesesage
 						admin_search_ctrl.showResultTable = true;	//turning on the results table
 					}
@@ -66,11 +66,31 @@
 		};
 
 
+//IF MODIFYING:
+		admin_search_ctrl.newModifyFunction = function(modifyStudent) {
+			// update student value service
+			for (var studentValueKey in studentValue) {
+				for (var modifyStudentKey in modifyStudent) {
+					if (studentValueKey === modifyStudentKey)
+						// if keys are the same, then set the property the same
+						studentValue[studentValueKey] = modifyStudent[modifyStudentKey];
+				}
+			}
+			//transition to admin add
+			var params = {
+				func: 'modify'
+			};
+			$state.go('Admin.Admin_Add', params);
+			console.log('HELLO WORLD STUDENT VALUE: ', studentValue);
+			console.log('HELLO WORLD MODIFY STUDENT: ', modifyStudent);
+		}
+//pass student data to add controller
+
 		admin_search_ctrl.adminFunctions = function(func) {
 			//setting the the arr of student names for server to process
 			var studentNames = [];
 			// console.log(JSON.stringify(admin_search_ctrl.data));
-			admin_search_ctrl.data.forEach(function(student) {
+			admin_search_ctrl.data.forEach(function(student) {	//might as well change the system to first and last names
 				studentNames.push(student.name);
 			});
 			//turning on button disabled after click (could be placed in the success promise)

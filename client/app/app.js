@@ -63,6 +63,7 @@
 						}
 					},
 					data: { securityLevel: 'Admin' },
+					params: {func: null},
 					authenticate: true
 				})
 				.state('Admin.Admin_Recruit', {

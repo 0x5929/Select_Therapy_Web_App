@@ -83,6 +83,10 @@
 		</div>
 	</div>
 	<!--/END OF SEARCH RESULTS TABLE -->
+
+<!-- NEED TO ADD STUDENT ID, AND TUITION. SERIOUSLY THINKING ABOUT GETTING RID OF MODIFY AND STRICTLY PASSING ALL VALUES TO ADMIN ADD, AND JUST READD THE USER EACH TIME -->
+
+
 	<div class="row" id="adminSearchResults">
 		<div class="col-md-12" ng-if="admin_search_ctrl.message">
 			{{ admin_search_ctrl.message }}
@@ -665,7 +669,12 @@
 									ng-click="admin_modify_ctrl.finalCancelBtn()">
 					Cancel
 				</button>
-	<!--/END OF FINAL ACTION BUTTONS, STILL NEED TO DO DELETE ROUTE -->
+<!-- 				TESTING NEW MODIFY BUTTON -->
+				<button class="btn" 
+				ng-click="admin_search_ctrl.newModifyFunction(admin_search_ctrl.studentDetail)">
+					THE NEW MODIFY BTN
+				</button>
+	<!--/END OF FINAL ACTION BUTTONS -->
 			</div>
 		</div>
 		<br>
