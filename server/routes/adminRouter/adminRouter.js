@@ -239,17 +239,18 @@ REST: ADD
 ***********************************************************/
 
 		function adminAddPostParseMiddleware(req, res, next) {
-			var requestBody = req.body;
+			var requestBody           = req.body;
 			//parse all neccessary fields to be correctly input into db
-			requestBody.name = requestBody.name.toLowerCase();	//make sure the input names are lowercase into the database
-			requestBody.phoneNumber = Number(requestBody.phoneNumber);
-			requestBody.ssn = Number(requestBody.ssn);
-			requestBody.payRate = Number(requestBody.payRate);
+			requestBody.firstName     = requestBody.firstName.toLowerCase();	//make sure the input names are lowercase into the database
+			requestBody.lastName      = requestBody.lastName.toLowerCase();	
+			requestBody.phoneNumber   = Number(requestBody.phoneNumber);
+			requestBody.ssn           = Number(requestBody.ssn);
+			requestBody.payRate       = Number(requestBody.payRate);
 			requestBody.numberOfTries = Number(requestBody.numberOfTries);
-			requestBody.graduate = Boolean(requestBody.graduate);
-			requestBody.tuitionPaid = Boolean(requestBody.tuitionPaid);
-			requestBody.jobPlaced = Boolean(requestBody.jobPlaced);
-			requestBody.passedExam = Boolean(requestBody.passedExam);
+			requestBody.graduate      = Boolean(requestBody.graduate);
+			requestBody.tuitionPaid   = Boolean(requestBody.tuitionPaid);
+			requestBody.jobPlaced     = Boolean(requestBody.jobPlaced);
+			requestBody.passedExam    = Boolean(requestBody.passedExam);
 			requestBody.program.forEach(function(eachProgram) {	//this is to ensure all programs entered into db is capitalized
 				eachProgram.programName = eachProgram.programName.toUpperCase();
 			});
@@ -258,14 +259,17 @@ REST: ADD
 		}
 
 		function adminAddPostHandler(req, res, next) {
-			STIDbStudentCollection.findOne({'name': req.body.name}, function(err, user) {
+			STIDbStudentCollection.findOne({'name': req.body.firstName + ' ' + req.body.lastName}, function(err, user) {
 				if (err) return next(err);
 				if (user) return res.status(400).send('This user already exists!').end();
 				if (!user) {	//if no user, then save all the creditials from client side
 					var newStudent             = new STIDbStudentCollection();
 					newStudent.enrollmentDate  = req.body.enrollmentDate;
 					newStudent.studentID       = req.body.studentID;
-					newStudent.name            = req.body.firstName + '' + req.body.lastName;
+					newStudent.firstName       = req.body.firstName;
+					newStudent.lastName        = req.body.lastName;
+					newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
+					console.log('HELLLLLO WORLD, NEW STUDENTS NAME: ', newStudent.name);
 					newStudent.phoneNumber     = req.body.phoneNumber;
 					newStudent.ssn             = req.body.ssn;
 					newStudent.address         = req.body.address;

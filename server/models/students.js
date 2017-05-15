@@ -9,6 +9,8 @@
 		enrollmentDate     : {type: Date, required: true},
 		studentID          : {type: String, required: true},
 		name               : {type: String, required: true},
+		firstName          : {type: String, required: true},
+		lastName           : {type: String, required: true},
 		phoneNumber        : {type: Number, required: true},
 		ssn                : {type: Number, required: true},
 		address            : {type: String, required: true},
