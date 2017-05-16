@@ -14,7 +14,43 @@
 
 			admin_add_ctrl.programInputCount = 0;
 			admin_add_ctrl.googleSync = false;
-			
+			admin_add_ctrl.studentModel = {	//initialize student model with all the necessary required fields
+				firstName: '',
+				lastName: '',
+				studentID: '',
+				enrollmentDate: '',
+				phoneNumber: '',
+				ssn: '',
+				address: '',
+				email: '',
+				tuition: '',
+				tuitionPaid: 'noneSelected',
+				graduate: 'noneSelected',
+				notGraduatingReason: 'noneSelected',
+				marketingSurvey: 'noneSelected',
+				program: [
+					{
+						programName: 'noneSelected',
+						programRotation: ''
+					},
+					{
+						programName: 'noneSelected',
+						programRotation: ''
+					},
+					{
+						programName: 'noneSelected',
+						programRotation: ''
+					},
+					{
+						programName: 'noneSelected',
+						programRotation: ''
+					},
+					{
+						programName: 'noneSelected',
+						programRotation: ''
+					}
+				]
+			};	
 			//first check if state params is modifying
 			//if so we need to fill in all the ng models with studentvalue service
 
@@ -125,20 +161,20 @@
 				address       : admin_add_ctrl.studentModel.address,
 				email         : admin_add_ctrl.studentModel.email,
 				program: [{
-					programName    : admin_add_ctrl.studentModel.FirstprogramName,
-					programRotation: admin_add_ctrl.studentModel.FirstprogramRotation
+					programName    : admin_add_ctrl.studentModel.program[0][programName],
+					programRotation: admin_add_ctrl.studentModel.program[0][programRotation]
 				}, {
-					programName    : admin_add_ctrl.studentModel.SecondprogramName,
-					programRotation: admin_add_ctrl.studentModel.SecondprogramRotation
+					programName    : admin_add_ctrl.studentModel.program[1][programName],
+					programRotation: admin_add_ctrl.studentModel.program[1][programRotation]
 				}, {
-					programName    : admin_add_ctrl.studentModel.ThirdprogramName,
-					programRotation: admin_add_ctrl.studentModel.ThirdprogramRotation
+					programName    : admin_add_ctrl.studentModel.program[2][programName],
+					programRotation: admin_add_ctrl.studentModel.program[2][programRotation]
 				}, {
-					programName    : admin_add_ctrl.studentModel.ForthprogramName,
-					programRotation: admin_add_ctrl.studentModel.ForthprogramName
+					programName    : admin_add_ctrl.studentModel.program[3][programName],
+					programRotation: admin_add_ctrl.studentModel.program[3][programRotation]
 				}, {
-					programName    : admin_add_ctrl.studentModel.FifthprogramName,
-					programRotation: admin_add_ctrl.studentModel.FifthprogramRotation
+					programName    : admin_add_ctrl.studentModel.program[4][programName],
+					programRotation: admin_add_ctrl.studentModel.program[4][programRotation]
 				}],
 				graduate           : admin_add_ctrl.studentModel.graduate,
 				notGraduatingReason: admin_add_ctrl.studentModel.notGraduatingReason,

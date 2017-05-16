@@ -94,7 +94,7 @@
 			</button>
 			<label class="control-label col-md-3" for="program">Program:</label>
 			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput1">
-				<select ng-model="admin_add_ctrl.studentModel.FirstprogramName" name="programName" class="form-control">
+				<select ng-model="admin_add_ctrl.studentModel.program[0][programName]" name="programName" class="form-control">
 					<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 					<option value="CNA">Certified Nurse Assistant</option>
 					<option value="HHA">Home Health Aide</option>
@@ -102,10 +102,10 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<input type="text" ng-model="admin_add_ctrl.studentModel.FirstprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">	
+				<input type="text" ng-model="admin_add_ctrl.studentModel.program[0][programRotation]" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">	
 			</div>
 			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput2">
-				<select ng-model="admin_add_ctrl.studentModel.SecondprogramName" name="programName" class="form-control">
+				<select ng-model="admin_add_ctrl.studentModel.program[1][programName]" name="programName" class="form-control">
 					<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 					<option value="CNA">Certified Nurse Assistant</option>
 					<option value="HHA">Home Health Aide</option>
@@ -113,10 +113,10 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<input type="text" ng-model="admin_add_ctrl.studentModel.SecondprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
+				<input type="text" ng-model="admin_add_ctrl.studentModel.program[1][programRotation]" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
 			</div>
 			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput3">
-				<select ng-model="admin_add_ctrl.studentModel.ThirdprogramName" name="programName" class="form-control">
+				<select ng-model="admin_add_ctrl.studentModel.program[2][programName]" name="programName" class="form-control">
 					<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 					<option value="CNA">Certified Nurse Assistant</option>
 					<option value="HHA">Home Health Aide</option>
@@ -124,10 +124,10 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<input type="text" ng-model="admin_add_ctrl.studentModel.ThirdprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for the 3rd Program">
+				<input type="text" ng-model="admin_add_ctrl.studentModel.program[2][programRotation]" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for the 3rd Program">
 			</div>
 			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput4">
-				<select ng-model="admin_add_ctrl.studentModel.ForthprogramName" name="programName" class="form-control">
+				<select ng-model="admin_add_ctrl.studentModel.program[3][programName]" name="programName" class="form-control">
 					<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 					<option value="CNA">Certified Nurse Assistant</option>
 					<option value="HHA">Home Health Aide</option>
@@ -135,10 +135,10 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<input type="text" ng-model="admin_add_ctrl.studentModel.ForthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
+				<input type="text" ng-model="admin_add_ctrl.studentModel.program[3][programRotation]" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
 			</div>
 			<div class="col-md-9" ng-if="admin_add_ctrl.showAddProgramInput5">
-				<select ng-model="admin_add_ctrl.studentModel.FifthprogramName" name="programName" class="form-control">
+				<select ng-model="admin_add_ctrl.studentModel.program[4][programName]" name="programName" class="form-control">
 					<option disabled ng-selected="true" value="noneSelected"> -- Select a Program -- </option>
 					<option value="CNA">Certified Nurse Assistant</option>
 					<option value="HHA">Home Health Aide</option>
@@ -146,7 +146,7 @@
 					<option value="Caregiver">Caregiver</option>
 					<option value="ESOL">ESOL</option>
 				</select>
-				<input type="text" ng-model="admin_add_ctrl.studentModel.FifthprogramRotation" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
+				<input type="text" ng-model="admin_add_ctrl.studentModel.program[4][programRotation]" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 5th Program">
 			</div>
 		</div>		
 	<!-- /END OF PROGRAM INPUTS -->
