@@ -97,6 +97,9 @@
 		<div class="form-group row">
 			<div style="display: inline;">
 				<div class="col-md-2">
+<!-- in order to have ng model to reflect the option, we need to run a function on all values with ng selected, and default is noneSelected should be true, but if ngmodel reflects one of the values, then that value with be ng selected evaulated with true  
+	NEED TO FURTHER INVESTEGATE ngselected, with ng value maybe? and forms documentations
+-->
 					<select ng-model="admin_add_ctrl.studentModel.program[0][programName]" name="programName" class="form-control">
 						<option disabled ng-selected="true" value="noneSelected"> - Select 1st Program - </option>
 						<option value="CNA">Certified Nurse Assistant</option>
