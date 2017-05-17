@@ -28,6 +28,11 @@
 				graduate: 'noneSelected',
 				notGraduatingReason: 'noneSelected',
 				marketingSurvey: 'noneSelected',
+				jobPlaced: 'noneSelected',
+				weeklyWorkHours: 'noneSelected',
+				passedExam: 'noneSelected',
+				numberOfTries: 'noneSelected',
+				noPassReason: 'noneSelected',
 				program: [
 					{
 						programName: 'noneSelected',
@@ -56,6 +61,13 @@
 
 			if ($stateParams.func && $stateParams.func === 'modify') {
 				console.log(studentValue);
+				for (var studentModelKey in admin_add_ctrl.studentModel){
+					for (var studentValueKey in studentValue){
+						if (studentModelKey === studentValueKey)
+							admin_add_ctrl.studentModel[studentModelKey] = studentValue[studentValueKey];
+					}
+				}
+				console.log(admin_add_ctrl.studentModel);
 			}
 
 
@@ -247,20 +259,20 @@
 				admin_add_ctrl.showAddProgramInput5 = false;			
 
 //option value
-				admin_add_ctrl.studentModel.marketingSurvey     = 'noneSelected';
-				admin_add_ctrl.studentModel.graduate            = 'noneSelected';
-				admin_add_ctrl.studentModel.notGraduatingReason = 'noneSelected';
-				admin_add_ctrl.studentModel.tuitionPaid         = 'noneSelected';
-				admin_add_ctrl.studentModel.jobPlaced           = 'noneSelected';
-				admin_add_ctrl.studentModel.weeklyWorkHours     = 'noneSelected';
-				admin_add_ctrl.studentModel.passedExam          = 'noneSelected';
-				admin_add_ctrl.studentModel.numberOfTries       = 'noneSelected';
-				admin_add_ctrl.studentModel.noPassReason        = 'noneSelected';
-				admin_add_ctrl.studentModel.FirstprogramName    = 'noneSelected';
-				admin_add_ctrl.studentModel.SecondprogramName   = 'noneSelected';
-				admin_add_ctrl.studentModel.ThirdprogramName    = 'noneSelected';
-				admin_add_ctrl.studentModel.ForthprogramName    = 'noneSelected';
-				admin_add_ctrl.studentModel.FifthprogramName    = 'noneSelected';
+				admin_add_ctrl.studentModel.marketingSurvey  	       = 'noneSelected';
+				admin_add_ctrl.studentModel.graduate           		   = 'noneSelected';
+				admin_add_ctrl.studentModel.notGraduatingReason 	   = 'noneSelected';
+				admin_add_ctrl.studentModel.tuitionPaid       	       = 'noneSelected';
+				admin_add_ctrl.studentModel.jobPlaced          	 	   = 'noneSelected';
+				admin_add_ctrl.studentModel.weeklyWorkHours  	   	   = 'noneSelected';
+				admin_add_ctrl.studentModel.passedExam         	 	   = 'noneSelected';
+				admin_add_ctrl.studentModel.numberOfTries     	 	   = 'noneSelected';
+				admin_add_ctrl.studentModel.noPassReason       		   = 'noneSelected';
+				admin_add_ctrl.studentModel.program[0][programName]    = 'noneSelected';
+				admin_add_ctrl.studentModel.program[1][programName]    = 'noneSelected';
+				admin_add_ctrl.studentModel.program[2][programName]    = 'noneSelected';
+				admin_add_ctrl.studentModel.program[3][programName]    = 'noneSelected';
+				admin_add_ctrl.studentModel.program[4][programName]    = 'noneSelected';
 			};
 
 
