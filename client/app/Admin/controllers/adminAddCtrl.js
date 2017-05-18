@@ -56,6 +56,10 @@
 					}
 				]
 			};	
+
+			admin_add_ctrl.ngSelectOption = {	//initialize ng option obj, all propeties set to false at first
+				firstProgramCNA: false
+			};
 			//first check if state params is modifying
 			//if so we need to fill in all the ng models with studentvalue service
 
@@ -231,6 +235,17 @@
 				}
 				console.log('testing after data is filtered: ', dataToBeFiltered);
 			};
+
+
+			admin_add_ctrl.ngSelect = function() {
+				console.log('HELLO WORLD STUDENT MODEL: ', admin_add_ctrl.studentModel);
+
+				//bunch of if statements
+				if (admin_add_ctrl.studentModel.program[0]['programName'] === 'CNA')
+					admin_add_ctrl.ngSelectOption.firstProgramCNA = true;
+				else return true;
+			};
+
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
