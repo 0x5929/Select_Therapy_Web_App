@@ -47,16 +47,21 @@
 					ESOL     : false,
 					caregiver: false					
 				}],
-				tuitionPaidTrue    : false,
-				tuitionPaidFalse   : false,
-				graduate           : false,
-				notGraduatingReason: false,
-				marketingSurvey    : false,
-				jobPlaced          : false,
-				weeklyWorkHours    : false,
-				passedExam         : false,
-				numberOfTries      : false,
-				noPassReason       : false
+				tuitionPaidTrue     : false,
+				tuitionPaidFalse    : false,
+				graduateTrue        : false,
+				graduateFalse       : false,
+				stillInProgram      : false,
+				droppedTheProgram   : false,
+				missingClinical     : false,
+				missingTheroy       : false,
+				didnNotFinishPayment: false,
+				marketingSurvey     : false,
+				jobPlaced           : false,
+				weeklyWorkHours     : false,
+				passedExam          : false,
+				numberOfTries       : false,
+				noPassReason        : false
 			};
 
 
@@ -134,6 +139,18 @@
 						admin_add_ctrl.ngSelectOption.tuitionPaidTrue = true;
 					else admin_add_ctrl.ngSelectOption.tuitionPaidFalse = true;
 					if (admin_add_ctrl.studentModel.graduate == true)
+						admin_add_ctrl.ngSelectOption.graduateTrue = true;
+					else admin_add_ctrl.ngSelectOption.graduateFalse = true;
+					if (admin_add_ctrl.studentModel.notGraduatingReason === 'Still_in_program')
+						admin_add_ctrl.ngSelectOption.stillInProgram = true;
+					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Dropped_the_program')
+						admin_add_ctrl.ngSelectOption.droppedTheProgram = true;
+					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_clinical_hours')
+						admin_add_ctrl.ngSelectOption.missingClinical = true;
+					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_theory_hours')
+						admin_add_ctrl.ngSelectOption.missingTheroy = true;
+					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Did_not_finish_payment')
+						admin_add_ctrl.ngSelectOption.didnNotFinishPayment = true;
 				}else return true;
 			};
 
@@ -300,45 +317,45 @@
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
-				admin_add_ctrl.studentModel.enrollmentDate        = '';
-				admin_add_ctrl.studentModel.studentID             = '';
-				admin_add_ctrl.studentModel.firstName             = '';
-				admin_add_ctrl.studentModel.lastName              = '';
-				admin_add_ctrl.studentModel.phoneNumber           = '';
-				admin_add_ctrl.studentModel.ssn                   = '';
-				admin_add_ctrl.studentModel.address               = '';
-				admin_add_ctrl.studentModel.email                 = '';
-				admin_add_ctrl.studentModel.payRate               = '';
-				admin_add_ctrl.studentModel.jobDescription        = '';
-				admin_add_ctrl.studentModel.noJobReason           = '';
-				admin_add_ctrl.studentModel.FirstprogramRotation  = '';
-				admin_add_ctrl.studentModel.SecondprogramRotation = '';
-				admin_add_ctrl.studentModel.ThirdprogramRotation  = '';
-				admin_add_ctrl.studentModel.ForthprogramRotation  = '';
-				admin_add_ctrl.studentModel.FifthprogramRotation  = '';
-
-//setting the necessary ng-if to false	
-				admin_add_ctrl.showAddProgramInput1 = false;
-				admin_add_ctrl.showAddProgramInput2 = false;
-				admin_add_ctrl.showAddProgramInput3 = false;
-				admin_add_ctrl.showAddProgramInput4 = false;
-				admin_add_ctrl.showAddProgramInput5 = false;			
-
-//option value
-				admin_add_ctrl.studentModel.marketingSurvey          = 'noneSelected';
-				admin_add_ctrl.studentModel.graduate                 = 'noneSelected';
-				admin_add_ctrl.studentModel.notGraduatingReason      = 'noneSelected';
-				admin_add_ctrl.studentModel.tuitionPaid              = 'noneSelected';
-				admin_add_ctrl.studentModel.jobPlaced                = 'noneSelected';
-				admin_add_ctrl.studentModel.weeklyWorkHours          = 'noneSelected';
-				admin_add_ctrl.studentModel.passedExam               = 'noneSelected';
-				admin_add_ctrl.studentModel.numberOfTries            = 'noneSelected';
-				admin_add_ctrl.studentModel.noPassReason             = 'noneSelected';
-				admin_add_ctrl.studentModel.program[0]['programName']= 'noneSelected';
-				admin_add_ctrl.studentModel.program[1]['programName']= 'noneSelected';
-				admin_add_ctrl.studentModel.program[2]['programName']= 'noneSelected';
-				admin_add_ctrl.studentModel.program[3]['programName']= 'noneSelected';
-				admin_add_ctrl.studentModel.program[4]['programName']= 'noneSelected';
+				admin_add_ctrl.studentModel.enrollmentDate            = '';
+				admin_add_ctrl.studentModel.studentID                 = '';
+				admin_add_ctrl.studentModel.firstName                 = '';
+				admin_add_ctrl.studentModel.lastName                  = '';
+				admin_add_ctrl.studentModel.phoneNumber               = '';
+				admin_add_ctrl.studentModel.ssn                       = '';
+				admin_add_ctrl.studentModel.address                   = '';
+				admin_add_ctrl.studentModel.email                     = '';
+				admin_add_ctrl.studentModel.payRate                   = '';
+				admin_add_ctrl.studentModel.jobDescription            = '';
+				admin_add_ctrl.studentModel.noJobReason               = '';
+				admin_add_ctrl.studentModel.FirstprogramRotation      = '';
+				admin_add_ctrl.studentModel.SecondprogramRotation     = '';
+				admin_add_ctrl.studentModel.ThirdprogramRotation      = '';
+				admin_add_ctrl.studentModel.ForthprogramRotation      = '';
+				admin_add_ctrl.studentModel.FifthprogramRotation      = '';
+				
+				//setting the necessary ng-if to false	
+				admin_add_ctrl.showAddProgramInput1                   = false;
+				admin_add_ctrl.showAddProgramInput2                   = false;
+				admin_add_ctrl.showAddProgramInput3                   = false;
+				admin_add_ctrl.showAddProgramInput4                   = false;
+				admin_add_ctrl.showAddProgramInput5                   = false;			
+				
+				//option value
+				admin_add_ctrl.studentModel.marketingSurvey           = 'noneSelected';
+				admin_add_ctrl.studentModel.graduate                  = 'noneSelected';
+				admin_add_ctrl.studentModel.notGraduatingReason       = 'noneSelected';
+				admin_add_ctrl.studentModel.tuitionPaid               = 'noneSelected';
+				admin_add_ctrl.studentModel.jobPlaced                 = 'noneSelected';
+				admin_add_ctrl.studentModel.weeklyWorkHours           = 'noneSelected';
+				admin_add_ctrl.studentModel.passedExam                = 'noneSelected';
+				admin_add_ctrl.studentModel.numberOfTries             = 'noneSelected';
+				admin_add_ctrl.studentModel.noPassReason              = 'noneSelected';
+				admin_add_ctrl.studentModel.program[0]['programName'] = 'noneSelected';
+				admin_add_ctrl.studentModel.program[1]['programName'] = 'noneSelected';
+				admin_add_ctrl.studentModel.program[2]['programName'] = 'noneSelected';
+				admin_add_ctrl.studentModel.program[3]['programName'] = 'noneSelected';
+				admin_add_ctrl.studentModel.program[4]['programName'] = 'noneSelected';
 			};
 
 

@@ -237,9 +237,9 @@
 			<label class="control-label col-md-3" for="graduate">Graduate Status:</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.graduate" name="graduate" class="form-control">
-					<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-					<option value="">Student</option>
-					<option value="true">Alumni</option>
+					<option disabled ng-selected="admin_add_ctrl.ngSelect()" value="noneSelected"> -- Select an Option -- </option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.graduateFalse" value="">Student</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.graduateTrue" value="true">Alumni</option>
 				</select>
 			</div>
 		</div>
@@ -247,12 +247,12 @@
 			<label class="control-label col-md-3" for="notGraduatingReason">Reason for not graduating</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.notGraduatingReason" name="notGraduatingReason" class="form-control">
-					<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-					<option value="Still_in_program">Still in the program</option>
-					<option value="Dropped_the_program">Dropped</option>
-					<option value="Missing_clinical_hours">Did not finish clinical</option>
-					<option value="Missing_theory_hours">Did not finish theory</option>
-					<option value="Did_not_finish_payment">Did not finish payment</option>
+					<option disabled ng-selected="admin_add_ctrl.ngSelect()" value="noneSelected"> -- Select an Option -- </option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.stillInProgram" value="Still_in_program">Still in the program</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.droppedTheProgram" value="Dropped_the_program">Dropped</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.missingClinical" value="Missing_clinical_hours">Did not finish clinical</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.missingTheory" value="Missing_theory_hours">Did not finish theory</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.didNotFinishPayment" value="Did_not_finish_payment">Did not finish payment</option>
 				</select>
 			</div>
 		</div>
