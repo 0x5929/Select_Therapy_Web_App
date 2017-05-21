@@ -46,7 +46,7 @@
 					SG       : false,
 					ESOL     : false,
 					caregiver: false					
-				}],
+				}],	//rest of options
 				tuitionPaidTrue     : false,
 				tuitionPaidFalse    : false,
 				graduateTrue        : false,
@@ -64,7 +64,16 @@
 				firstTry            : false,
 				secondTry           : false,
 				thirdTry            : false,
-				noPassReason        : false
+				haveNotTakenExam    : false,
+				failedTheory        : false,
+				failedSkills        : false,
+				fullTime            : false,
+				partTime            : false,
+				chineseInLa         : false,
+				worldJournal        : false,
+				craigslist          : false,
+				referredByFriend    : false,
+				marketingNone       : false
 			};
 
 
@@ -139,49 +148,168 @@
 
 
 
-			admin_add_ctrl.ngSelect = function() {
+			admin_add_ctrl.ngSelect = function(params) {
 				if ($stateParams.func === 'modify'){	//program select options
-					for (var i = 0; i < admin_add_ctrl.studentModel.program.length; i ++){
-						if (admin_add_ctrl.studentModel.program[i]['programName'] === 'CNA')
-							admin_add_ctrl.ngSelectOption.programs[i]['CNA'] = true;
-						if (admin_add_ctrl.studentModel.program[i]['programName'] === 'HHA')
-							admin_add_ctrl.ngSelectOption.programs[i]['HHA'] = true;
-						if (admin_add_ctrl.studentModel.program[i]['programName'] === 'SG')
-							admin_add_ctrl.ngSelectOption.programs[i]['SG']  = true;
-						if (admin_add_ctrl.studentModel.program[i]['programName'] === 'ESOL')
-							admin_add_ctrl.ngSelectOption.programs[i]['ESOL']  = true;
-						if (admin_add_ctrl.studentModel.program[i]['programName'] === 'caregiver')
-							admin_add_ctrl.ngSelectOption.programs[i]['caregiver']  = true;
+					switch (params) 
+					{
+						case 'firstProgram':{
+							if (admin_add_ctrl.studentModel.program[0]){
+								if (admin_add_ctrl.studentModel.program[0]['programName'] === 'CNA')
+									return admin_add_ctrl.ngSelectOption.programs[0]['CNA'] = true;
+								else if (admin_add_ctrl.studentModel.program[0]['programName'] === 'HHA')
+									return admin_add_ctrl.ngSelectOption.programs[0]['HHA'] = true;
+								else if (admin_add_ctrl.studentModel.program[0]['programName'] === 'SG')
+									return admin_add_ctrl.ngSelectOption.programs[0]['SG']  = true;
+								else if (admin_add_ctrl.studentModel.program[0]['programName'] === 'ESOL')
+									return admin_add_ctrl.ngSelectOption.programs[0]['ESOL']  = true;
+								else if (admin_add_ctrl.studentModel.program[0]['programName'] === 'caregiver')
+									return admin_add_ctrl.ngSelectOption.programs[0]['caregiver']  = true;								
+							}else return true;
+						}
+						case 'secondProgram':{
+							if (admin_add_ctrl.studentModel.program[1]){
+								if (admin_add_ctrl.studentModel.program[1]['programName'] === 'CNA')
+									return admin_add_ctrl.ngSelectOption.programs[1]['CNA'] = true;
+								else if (admin_add_ctrl.studentModel.program[1]['programName'] === 'HHA')
+									return admin_add_ctrl.ngSelectOption.programs[1]['HHA'] = true;
+								else if (admin_add_ctrl.studentModel.program[1]['programName'] === 'SG')
+									return admin_add_ctrl.ngSelectOption.programs[1]['SG']  = true;
+								else if (admin_add_ctrl.studentModel.program[1]['programName'] === 'ESOL')
+									return admin_add_ctrl.ngSelectOption.programs[1]['ESOL']  = true;
+								else if (admin_add_ctrl.studentModel.program[1]['programName'] === 'caregiver')
+									return admin_add_ctrl.ngSelectOption.programs[1]['caregiver']  = true;								
+							}else return true;
+						}
+						case 'thirdProgram':{
+							if (admin_add_ctrl.studentModel.program[2]){
+								if (admin_add_ctrl.studentModel.program[2]['programName'] === 'CNA')
+									return admin_add_ctrl.ngSelectOption.programs[2]['CNA'] = true;
+								else if (admin_add_ctrl.studentModel.program[2]['programName'] === 'HHA')
+									return admin_add_ctrl.ngSelectOption.programs[2]['HHA'] = true;
+								else if (admin_add_ctrl.studentModel.program[2]['programName'] === 'SG')
+									return admin_add_ctrl.ngSelectOption.programs[2]['SG']  = true;
+								else if (admin_add_ctrl.studentModel.program[2]['programName'] === 'ESOL')
+									return admin_add_ctrl.ngSelectOption.programs[2]['ESOL']  = true;
+								else if (admin_add_ctrl.studentModel.program[2]['programName'] === 'caregiver')
+									return admin_add_ctrl.ngSelectOption.programs[2]['caregiver']  = true;								
+							}else return true;
+						}
+						case 'fourthProgram':{
+							if (admin_add_ctrl.studentModel.program[3]){
+								if (admin_add_ctrl.studentModel.program[3]['programName'] === 'CNA')
+									return admin_add_ctrl.ngSelectOption.programs[3]['CNA'] = true;
+								else if (admin_add_ctrl.studentModel.program[3]['programName'] === 'HHA')
+									return admin_add_ctrl.ngSelectOption.programs[3]['HHA'] = true;
+								else if (admin_add_ctrl.studentModel.program[3]['programName'] === 'SG')
+									return admin_add_ctrl.ngSelectOption.programs[3]['SG']  = true;
+								else if (admin_add_ctrl.studentModel.program[3]['programName'] === 'ESOL')
+									return admin_add_ctrl.ngSelectOption.programs[3]['ESOL']  = true;
+								else if (admin_add_ctrl.studentModel.program[3]['programName'] === 'caregiver')
+									return admin_add_ctrl.ngSelectOption.programs[3]['caregiver']  = true;								
+							}else return true;
+						}
+						case 'fifthProgram':{
+							if (admin_add_ctrl.studentModel.program[4]){
+								if (admin_add_ctrl.studentModel.program[4]['programName'] === 'CNA')
+									return admin_add_ctrl.ngSelectOption.programs[4]['CNA'] = true;
+								else if (admin_add_ctrl.studentModel.program[4]['programName'] === 'HHA')
+									return admin_add_ctrl.ngSelectOption.programs[4]['HHA'] = true;
+								else if (admin_add_ctrl.studentModel.program[4]['programName'] === 'SG')
+									return admin_add_ctrl.ngSelectOption.programs[4]['SG']  = true;
+								else if (admin_add_ctrl.studentModel.program[4]['programName'] === 'ESOL')
+									return admin_add_ctrl.ngSelectOption.programs[4]['ESOL']  = true;
+								else if (admin_add_ctrl.studentModel.program[4]['programName'] === 'caregiver')
+									return admin_add_ctrl.ngSelectOption.programs[4]['caregiver']  = true;								
+							}else return true;
+						}
+						case 'tuitionPaid':{
+							if (admin_add_ctrl.studentModel.tuitionPaid === true)
+								return admin_add_ctrl.ngSelectOption.tuitionPaidTrue = true;
+							else if (admin_add_ctrl.studentModel.tuitionPaid === false)
+								return admin_add_ctrl.ngSelectOption.tuitionPaidFalse = true;
+							else return true;
+						}
+						case 'graduate': {
+							if (admin_add_ctrl.studentModel.graduate === true)
+								return admin_add_ctrl.ngSelectOption.graduateTrue = true;
+							else if (admin_add_ctrl.studentModel.graduate === false)
+								return admin_add_ctrl.ngSelectOption.graduateFalse = true;	
+							else return true;						
+						}
+						case 'notGraduatingReason': {
+							if (admin_add_ctrl.studentModel.notGraduatingReason === 'Still_in_program')
+								return admin_add_ctrl.ngSelectOption.stillInProgram = true;
+							else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Dropped_the_program')
+								return admin_add_ctrl.ngSelectOption.droppedTheProgram = true;
+							else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_clinical_hours')
+								return admin_add_ctrl.ngSelectOption.missingClinical = true;
+							else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_theory_hours')
+								return admin_add_ctrl.ngSelectOption.missingTheroy = true;
+							else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Did_not_finish_payment')
+								return admin_add_ctrl.ngSelectOption.didnNotFinishPayment = true;	
+							else return true;						
+						}
+						case 'passedExam': {
+							if (admin_add_ctrl.studentModel.passedExam === true)
+								return admin_add_ctrl.ngSelectOption.passedExam = true;
+							else if (admin_add_ctrl.studentModel.passedExam === false) 
+								return admin_add_ctrl.ngSelectOption.didNotpassExam = true;		
+							else return true;					
+						}
+						case 'numberOfTries': {
+							if (admin_add_ctrl.studentModel.numberOfTries === 1)
+								return admin_add_ctrl.ngSelectOption.firstTry = true;
+							else if (admin_add_ctrl.studentModel.numberOfTries === 2)
+								return admin_add_ctrl.ngSelectOption.secondTry = true;
+							else if (admin_add_ctrl.studentModel.numberOfTries === 3)
+								return admin_add_ctrl.ngSelectOption.thirdTry = true;		
+							else return true;					
+						}
+						case 'noPassReason': {
+							if (admin_add_ctrl.studentModel.noPassReason === 'Have_not_taken_the_exam')
+								return admin_add_ctrl.ngSelectOption.haveNotTakenExam = true;
+							else if (admin_add_ctrl.studentModel.noPassReason === 'Failed_theory')	
+								return admin_add_ctrl.ngSelectOption.failedTheory = true;
+							else if (admin_add_ctrl.studentModel.noPassReason === 'Failed_skills')	
+								return admin_add_ctrl.ngSelectOption.failedSkills = true;	
+							else return true;			
+						}
+						case 'jobPlaced': {
+							if (admin_add_ctrl.studentModel.jobPlaced === true)
+								return admin_add_ctrl.ngSelectOption.employed = true;
+							else if (admin_add_ctrl.studentModel.jobPlaced === false)
+								return admin_add_ctrl.ngSelectOption.unemployed = true;
+							else return true;							
+						}
+						case 'weeklyWorkHours': {
+							if (admin_add_ctrl.studentModel.weeklyWorkHours === 'fullTimePos')
+								return admin_add_ctrl.ngSelectOption.fullTime = true;
+							else if (admin_add_ctrl.studentModel.weeklyWorkHours === 'partTimePos')
+								return admin_add_ctrl.ngSelectOption.partTime = true;
+							else return true;
+						}
+						case 'marketingSurvey': {
+							if (admin_add_ctrl.studentModel.marketingSurvey === 'Chinese_In_LA')
+								return admin_add_ctrl.ngSelectOption.chineseInLa = true;
+							else if (admin_add_ctrl.studentModel.marketingSurvey === 'World_Journal')
+								return admin_add_ctrl.ngSelectOption.worldJournal = true;
+							else if (admin_add_ctrl.studentModel.marketingSurvey === 'Craigslist')
+								return admin_add_ctrl.ngSelectOption.craigslist = true;
+							else if (admin_add_ctrl.studentModel.marketingSurvey === 'Referred_By_Friend')
+								return admin_add_ctrl.ngSelectOption.referredByFriend = true;
+							else if (admin_add_ctrl.studentModel.marketingSurvey === 'None')
+								return admin_add_ctrl.ngSelectOption.marketingNone = true;
+							else return true;
+						}
 					}
-					if (admin_add_ctrl.studentModel.tuitionPaid == true)
-						admin_add_ctrl.ngSelectOption.tuitionPaidTrue = true;
-					else admin_add_ctrl.ngSelectOption.tuitionPaidFalse = true;
-					if (admin_add_ctrl.studentModel.graduate == true)
-						admin_add_ctrl.ngSelectOption.graduateTrue = true;
-					else admin_add_ctrl.ngSelectOption.graduateFalse = true;
-					if (admin_add_ctrl.studentModel.notGraduatingReason === 'Still_in_program')
-						admin_add_ctrl.ngSelectOption.stillInProgram = true;
-					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Dropped_the_program')
-						admin_add_ctrl.ngSelectOption.droppedTheProgram = true;
-					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_clinical_hours')
-						admin_add_ctrl.ngSelectOption.missingClinical = true;
-					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Missing_theory_hours')
-						admin_add_ctrl.ngSelectOption.missingTheroy = true;
-					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Did_not_finish_payment')
-						admin_add_ctrl.ngSelectOption.didnNotFinishPayment = true;
-					if (admin_add_ctrl.studentModel.passedExam == true)
-						admin_add_ctrl.ngSelectOption.passedExam = true;
-					else admin_add_ctrl.ngSelectOption.didNotpassExam = true;
-					if (admin_add_ctrl.studentModel.numberOfTries == 1)
-						admin_add_ctrl.ngSelectOption.firstTry = true;
-					else if (admin_add_ctrl.studentModel.numberOfTries == 2)
-						admin_add_ctrl.ngSelectOption.secondTry = true;
-					else if (admin_add_ctrl.studentModel.numberOfTries == 3)
-						admin_add_ctrl.ngSelectOption.thirdTry = true;
-					if (admin_add_ctrl.studentModel.noPassReason === 'Have_not_taken_the_exam')
-						admin_add_ctrl.ngSelectOption.haveNotTakenExam
 				}else return true;
 			};
+
+
+
+
+
+
 
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
