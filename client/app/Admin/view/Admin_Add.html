@@ -243,7 +243,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.graduate === ''">
+		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.graduate === '' || admin_add_ctrl.studentModel.graduate == false">
 			<label class="control-label col-md-3" for="notGraduatingReason">Reason for not graduating</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.notGraduatingReason" name="notGraduatingReason" class="form-control">
@@ -256,35 +256,35 @@
 				</select>
 			</div>
 		</div>
-		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.graduate === 'true'">
+		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.graduate === 'true' || admin_add_ctrl.studentModel.graduate == true">
 			<label class="control-label col-md-3" for="passedExam">Passed State Exam?</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.passedExam" name="passedExam" class="form-control">
-					<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-					<option value="true">Passed</option>
-					<option value="">Did not pass</option>
+					<option disabled ng-selected="admin_add_ctrl.ngSelect()" value="noneSelected"> -- Select an Option -- </option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.passedExam" value="true">Passed</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.didNotpassExam" value="">Did not pass</option>
 				</select>
 			</div>
 		</div>
-		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.passedExam === 'true'">
+		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.passedExam === 'true'  || admin_add_ctrl.studentModel.passedExam == true">
 			<label class="control-label col-md-3" for="numberOfTries">How Many Tries?</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.numberOfTries" name="numberOfTries" class="form-control">
-					<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-					<option value="1">1st Try</option>
-					<option value="2">2nd Try</option>
-					<option value="3">3rd Try</option>
+					<option disabled ng-selected="admin_add_ctrl.ngSelect()" value="noneSelected"> -- Select an Option -- </option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.firstTry" value="1">1st Try</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.secondTry" value="2">2nd Try</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.thirdTry" value="3">3rd Try</option>
 				</select>
 			</div>
 		</div>
-		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.passedExam === ''">
+		<div class="form-group row" ng-if="admin_add_ctrl.studentModel.passedExam === '' || admin_add_ctrl.studentModel.passedExam == false">
 			<label class="control-label col-md-3" for="noPassReason">Reason for not passing</label>
 			<div class="col-md-9">
 				<select ng-model="admin_add_ctrl.studentModel.noPassReason" name="noPassReason" class="form-control">
-					<option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
-					<option value="Have_not_taken_the_exam">Have not taken the exam yet</option>
-					<option value="Failed_theory">Failed Theory</option>
-					<option value="Failed_skills">Failed Skills</option>
+					<option disabled ng-selected="admin_add_ctrl.ngSelect()" value="noneSelected"> -- Select an Option -- </option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.haveNotTakenExam" value="Have_not_taken_the_exam">Have not taken the exam yet</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.failedTheory" value="Failed_theory">Failed Theory</option>
+					<option ng-selected="admin_add_ctrl.ngSelectOption.failedSkills" value="Failed_skills">Failed Skills</option>
 				</select>
 			</div>
 		</div>

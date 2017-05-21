@@ -60,7 +60,10 @@
 				jobPlaced           : false,
 				weeklyWorkHours     : false,
 				passedExam          : false,
-				numberOfTries       : false,
+				didNotpassExam      : false,
+				firstTry            : false,
+				secondTry           : false,
+				thirdTry            : false,
 				noPassReason        : false
 			};
 
@@ -121,6 +124,21 @@
 				console.log(admin_add_ctrl.studentModel);
 			}
 
+/*
+		NG SELECT FUNCTION:
+		need to have a for in loop for all the keys in admin student model, 
+		and return true for each option depending on the student model value,
+		and final else needs to return true for the ng select function at each key
+		this way this function is evaluated at each key, and returning true for 
+		default nonselected or disabled value if there is no value at student model
+
+		ABOVE IS ONLY FOR MODIFY
+ 		
+*/
+
+
+
+
 			admin_add_ctrl.ngSelect = function() {
 				if ($stateParams.func === 'modify'){	//program select options
 					for (var i = 0; i < admin_add_ctrl.studentModel.program.length; i ++){
@@ -151,6 +169,17 @@
 						admin_add_ctrl.ngSelectOption.missingTheroy = true;
 					else if (admin_add_ctrl.studentModel.notGraduatingReason === 'Did_not_finish_payment')
 						admin_add_ctrl.ngSelectOption.didnNotFinishPayment = true;
+					if (admin_add_ctrl.studentModel.passedExam == true)
+						admin_add_ctrl.ngSelectOption.passedExam = true;
+					else admin_add_ctrl.ngSelectOption.didNotpassExam = true;
+					if (admin_add_ctrl.studentModel.numberOfTries == 1)
+						admin_add_ctrl.ngSelectOption.firstTry = true;
+					else if (admin_add_ctrl.studentModel.numberOfTries == 2)
+						admin_add_ctrl.ngSelectOption.secondTry = true;
+					else if (admin_add_ctrl.studentModel.numberOfTries == 3)
+						admin_add_ctrl.ngSelectOption.thirdTry = true;
+					if (admin_add_ctrl.studentModel.noPassReason === 'Have_not_taken_the_exam')
+						admin_add_ctrl.ngSelectOption.haveNotTakenExam
 				}else return true;
 			};
 
