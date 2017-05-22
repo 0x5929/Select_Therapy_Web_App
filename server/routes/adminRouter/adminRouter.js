@@ -251,6 +251,9 @@ REST: ADD
 			requestBody.tuitionPaid   = Boolean(requestBody.tuitionPaid);
 			requestBody.jobPlaced     = Boolean(requestBody.jobPlaced);
 			requestBody.passedExam    = Boolean(requestBody.passedExam);
+			if (requestBody.originalName)
+				requestBody.originalName = requestBody.originalName.toLowerCase();
+			else requestBody.originalName = requestBody.firstName + ' ' + requestBody.lastName;
 			requestBody.program.forEach(function(eachProgram) {	//this is to ensure all programs entered into db is capitalized
 				eachProgram.programName = eachProgram.programName.toUpperCase();
 			});
@@ -259,9 +262,28 @@ REST: ADD
 		}
 
 		function adminAddPostHandler(req, res, next) {
-			STIDbStudentCollection.findOne({'name': req.body.firstName + ' ' + req.body.lastName}, function(err, user) {
+			STIDbStudentCollection.findOne({'name': req.body.originalName}, function(err, user) {
 				if (err) return next(err);
-				if (user) return res.status(400).send('This user already exists!').end();
+				if (user) {
+					for (var userKey in user){	//update user
+						for (var requestKey in req.body){
+							if (userKey === requestKey)
+								user[userKey] = req.body[requestKey];
+						}
+						if (userKey === 'name')	//updating the name property
+							user[userKey] = req.body.firstName + ' ' + req.body.lastName;
+					}
+					console.log('REQ.BODY: ', req.body);
+					console.log('UPDATED USER: ', user);
+					user.save(function(err) {
+						console.log('HELLO WORLD ERR AT 276', err);
+						if (err)	return next(err);
+						else return res.status(200).send('STUDENT UPDATED').end();
+					});
+					console.log('HELLO WORLD ERR AT 278');
+					console.log('HELLO WORLD ERR AT 280');
+
+				}
 				if (!user) {	//if no user, then save all the creditials from client side
 					var newStudent             = new STIDbStudentCollection();
 					newStudent.enrollmentDate  = req.body.enrollmentDate;
@@ -269,7 +291,6 @@ REST: ADD
 					newStudent.firstName       = req.body.firstName;
 					newStudent.lastName        = req.body.lastName;
 					newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
-					console.log('HELLLLLO WORLD, NEW STUDENTS NAME: ', newStudent.name);
 					newStudent.phoneNumber     = req.body.phoneNumber;
 					newStudent.ssn             = req.body.ssn;
 					newStudent.address         = req.body.address;
@@ -296,10 +317,10 @@ REST: ADD
 					//save the new student
 					newStudent.save(function(err) {
 						if (err) return next(err);
+						else return res.status(200).send('newStudent added').end();
 					});
 				}
 			})
-			return res.status(200).send('newStudent added').end();
 		}
 
 

@@ -87,6 +87,7 @@
 				address            : '',
 				email              : '',
 				tuition            : '',
+				payRate		       : '',
 				tuitionPaid        : 'noneSelected',
 				graduate           : 'noneSelected',
 				notGraduatingReason: 'noneSelected',
@@ -119,6 +120,8 @@
 					}
 				]
 			};	
+
+
 			//first check if state params is modifying
 			//if so we need to fill in all the ng models with studentvalue service
 
@@ -130,22 +133,10 @@
 							admin_add_ctrl.studentModel[studentModelKey] = studentValue[studentValueKey];
 					}
 				}
+				//add in an original name key for modifying purposes
+				admin_add_ctrl.studentModel.originalName = admin_add_ctrl.studentModel.firstName + ' ' + admin_add_ctrl.studentModel.lastName;
 				console.log(admin_add_ctrl.studentModel);
 			}
-
-/*
-		NG SELECT FUNCTION:
-		need to have a for in loop for all the keys in admin student model, 
-		and return true for each option depending on the student model value,
-		and final else needs to return true for the ng select function at each key
-		this way this function is evaluated at each key, and returning true for 
-		default nonselected or disabled value if there is no value at student model
-
-		ABOVE IS ONLY FOR MODIFY
- 		
-*/
-
-
 
 
 			admin_add_ctrl.ngSelect = function(params) {
@@ -314,18 +305,22 @@
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
 
-				if (!isNaN(dataTobeChecked.name)){
-					toastFactory.errorToast("please check the student's first and last name input");
+				if (!isNaN(dataTobeChecked.firstName)){
+					toastFactory.errorToast("please check the student's first name input");
 					return false;
 				}
-				if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){	//phone number and ssn is taken care of by masked input
-					toastFactory.errorToast("please check the student's phone number input");
+				if (!isNaN(dataTobeChecked.lastName)){
+					toastFactory.errorToast("please check the student's last name input");
 					return false;
 				}
-				if (isNaN(dataTobeChecked.ssn) || dataTobeChecked.ssn.length !== 9){
-					toastFactory.errorToast("please check the student's ssn input");
-					return false;
-				}
+				// if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){	//phone number and ssn is taken care of by masked input
+				// 	toastFactory.errorToast("please check the student's phone number input");
+				// 	return false;
+				// }
+				// if (isNaN(dataTobeChecked.ssn) || dataTobeChecked.ssn.length !== 9){
+				// 	toastFactory.errorToast("please check the student's ssn input");
+				// 	return false;
+				// }
 				if (!isNaN(dataTobeChecked.address)){
 					toastFactory.errorToast("please check the student's address input");
 					return false;
@@ -400,6 +395,16 @@
 				return true;
 			};
 
+			admin_add_ctrl.dataFilter = function(dataToBeFiltered) {	//to filter through the noneSelected, and change it to empty string to be evaluated as false;
+				for (var key in dataToBeFiltered) {
+					if ((typeof dataToBeFiltered[key] === 'string' && dataToBeFiltered[key] === 'noneSelected') ||
+						typeof dataToBeFiltered[key] === 'undefined')
+						dataToBeFiltered[key] = '';
+				}
+				console.log('testing after data is filtered: ', typeof(dataToBeFiltered.payRate));
+			};
+
+
 			admin_add_ctrl.submit = function() {
 				
 				postData      = {
@@ -463,100 +468,93 @@
 				
 			};
 
-			admin_add_ctrl.dataFilter = function(dataToBeFiltered) {	//to filter through the noneSelected, and change it to empty string to be evaluated as false;
-				for (var key in dataToBeFiltered) {
-					if ((typeof dataToBeFiltered[key] === 'string' && dataToBeFiltered[key] === 'noneSelected') ||
-						typeof dataToBeFiltered[key] === 'undefined')
-						dataToBeFiltered[key] = '';
-				}
-				console.log('testing after data is filtered: ', dataToBeFiltered);
-			};
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
-				admin_add_ctrl.studentModel.enrollmentDate            = '';
-				admin_add_ctrl.studentModel.studentID                 = '';
-				admin_add_ctrl.studentModel.firstName                 = '';
-				admin_add_ctrl.studentModel.lastName                  = '';
-				admin_add_ctrl.studentModel.phoneNumber               = '';
-				admin_add_ctrl.studentModel.ssn                       = '';
-				admin_add_ctrl.studentModel.address                   = '';
-				admin_add_ctrl.studentModel.email                     = '';
-				admin_add_ctrl.studentModel.payRate                   = '';
-				admin_add_ctrl.studentModel.jobDescription            = '';
-				admin_add_ctrl.studentModel.noJobReason               = '';
-				admin_add_ctrl.studentModel.FirstprogramRotation      = '';
-				admin_add_ctrl.studentModel.SecondprogramRotation     = '';
-				admin_add_ctrl.studentModel.ThirdprogramRotation      = '';
-				admin_add_ctrl.studentModel.ForthprogramRotation      = '';
-				admin_add_ctrl.studentModel.FifthprogramRotation      = '';
+				admin_add_ctrl.studentModel.enrollmentDate                = '';
+				admin_add_ctrl.studentModel.studentID                     = '';
+				admin_add_ctrl.studentModel.firstName                     = '';
+				admin_add_ctrl.studentModel.lastName                      = '';
+				admin_add_ctrl.studentModel.phoneNumber                   = '';
+				admin_add_ctrl.studentModel.ssn                           = '';
+				admin_add_ctrl.studentModel.address                       = '';
+				admin_add_ctrl.studentModel.email                         = '';
+				admin_add_ctrl.studentModel.tuition 					  = '';
+				admin_add_ctrl.studentModel.payRate                       = '';
+				admin_add_ctrl.studentModel.jobDescription                = '';
+				admin_add_ctrl.studentModel.noJobReason                   = '';
+				admin_add_ctrl.studentModel.program[0]['programRotation'] = '';
+				admin_add_ctrl.studentModel.program[1]['programRotation'] = '';
+				admin_add_ctrl.studentModel.program[2]['programRotation'] = '';
+				admin_add_ctrl.studentModel.program[3]['programRotation'] = '';
+				admin_add_ctrl.studentModel.program[4]['programRotation'] = '';
 				
-				//setting the necessary ng-if to false	
-				admin_add_ctrl.showAddProgramInput1                   = false;
-				admin_add_ctrl.showAddProgramInput2                   = false;
-				admin_add_ctrl.showAddProgramInput3                   = false;
-				admin_add_ctrl.showAddProgramInput4                   = false;
-				admin_add_ctrl.showAddProgramInput5                   = false;			
+				// //setting the necessary ng-if to false	
+				// admin_add_ctrl.showAddProgramInput1                       = false;
+				// admin_add_ctrl.showAddProgramInput2                       = false;
+				// admin_add_ctrl.showAddProgramInput3                       = false;
+				// admin_add_ctrl.showAddProgramInput4                       = false;
+				// admin_add_ctrl.showAddProgramInput5                       = false;			
 				
 				//option value
-				admin_add_ctrl.studentModel.marketingSurvey           = 'noneSelected';
-				admin_add_ctrl.studentModel.graduate                  = 'noneSelected';
-				admin_add_ctrl.studentModel.notGraduatingReason       = 'noneSelected';
-				admin_add_ctrl.studentModel.tuitionPaid               = 'noneSelected';
-				admin_add_ctrl.studentModel.jobPlaced                 = 'noneSelected';
-				admin_add_ctrl.studentModel.weeklyWorkHours           = 'noneSelected';
-				admin_add_ctrl.studentModel.passedExam                = 'noneSelected';
-				admin_add_ctrl.studentModel.numberOfTries             = 'noneSelected';
-				admin_add_ctrl.studentModel.noPassReason              = 'noneSelected';
-				admin_add_ctrl.studentModel.program[0]['programName'] = 'noneSelected';
-				admin_add_ctrl.studentModel.program[1]['programName'] = 'noneSelected';
-				admin_add_ctrl.studentModel.program[2]['programName'] = 'noneSelected';
-				admin_add_ctrl.studentModel.program[3]['programName'] = 'noneSelected';
-				admin_add_ctrl.studentModel.program[4]['programName'] = 'noneSelected';
+				admin_add_ctrl.studentModel.marketingSurvey               = 'noneSelected';
+				admin_add_ctrl.studentModel.graduate                      = 'noneSelected';
+				admin_add_ctrl.studentModel.notGraduatingReason           = 'noneSelected';
+				admin_add_ctrl.studentModel.tuitionPaid                   = 'noneSelected';
+				admin_add_ctrl.studentModel.jobPlaced                     = 'noneSelected';
+				admin_add_ctrl.studentModel.weeklyWorkHours               = 'noneSelected';
+				admin_add_ctrl.studentModel.passedExam                    = 'noneSelected';
+				admin_add_ctrl.studentModel.numberOfTries                 = 'noneSelected';
+				admin_add_ctrl.studentModel.noPassReason                  = 'noneSelected';
+				admin_add_ctrl.studentModel.program[0]['programName']     = 'noneSelected';
+				admin_add_ctrl.studentModel.program[1]['programName']     = 'noneSelected';
+				admin_add_ctrl.studentModel.program[2]['programName']     = 'noneSelected';
+				admin_add_ctrl.studentModel.program[3]['programName']     = 'noneSelected';
+				admin_add_ctrl.studentModel.program[4]['programName']     = 'noneSelected';
 			};
 
 
-			admin_add_ctrl.addProgramInput = function(counter) {	/*admin_add_ctrl.programInputCount gets passed in from view
-																		admin_add_ctrl.programInputCount = 0 is initialized at the start 
-																		of the controller script, loaded once per reload.
-																	*/
-				var maxProgramCount = 4;
-				var humanCount = counter + 1;
+			// admin_add_ctrl.addProgramInput = function(counter) {	/*admin_add_ctrl.programInputCount gets passed in from view
+			// 															admin_add_ctrl.programInputCount = 0 is initialized at the start 
+			// 															of the controller script, loaded once per reload.
+			// 														*/
+			// 	var maxProgramCount = 4;
+			// 	var humanCount = counter + 1;
 
-				//update counter
-				if (counter < maxProgramCount)	admin_add_ctrl.programInputCount++;
-				//set visual to true
-				admin_add_ctrl['showAddProgramInput' + humanCount] = true;
-				//stopping condition with err message
-				if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
-			};
+			// 	//update counter
+			// 	if (counter < maxProgramCount)	admin_add_ctrl.programInputCount++;
+			// 	//set visual to true
+			// 	admin_add_ctrl['showAddProgramInput' + humanCount] = true;
+			// 	//stopping condition with err message
+			// 	if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
+			// };
 
-			admin_add_ctrl.clearProgramInput = function() {		//for the clear input button 
-				var maxProgramCount = 4;
+			// admin_add_ctrl.clearProgramInput = function() {		//for the clear input button 
+			// 	var maxProgramCount = 4;
 
-				var ngModels = [	//taken care of human counter
-					[ 'FirstprogramName', 'FirstprogramRotation' ],
-					[ 'SecondprogramName', 'SecondprogramRotation' ],
-					[ 'ThirdprogramName', 'ThirdprogramRotation' ],
-					[ 'ForthprogramName', 'ForthprogramRotation' ],
-					[ 'FifthprogramName', 'FifthprogramRotation' ]
-				];
+			// 	var ngModels = [	//taken care of human counter
+			// 		[ 'FirstprogramName', 'FirstprogramRotation' ],
+			// 		[ 'SecondprogramName', 'SecondprogramRotation' ],
+			// 		[ 'ThirdprogramName', 'ThirdprogramRotation' ],
+			// 		[ 'ForthprogramName', 'ForthprogramRotation' ],
+			// 		[ 'FifthprogramName', 'FifthprogramRotation' ]
+			// 	];
 
-				//clearing all fields
-				for (var i = 0; i <= maxProgramCount; i++) {
-				var specificNgModelProgramName = ngModels[i][0];
-				var specificNgModelProgramRotation = ngModels[i][1];
-					admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//clearing program name
-					admin_add_ctrl[specificNgModelProgramRotation] = '';	//clearing program rotation
-				}
-				//turn off all visuals
-				for (var j = 1; j <= maxProgramCount + 1; j++){	//adding 1 bc of the last program input (fifth) needs to be turned off as well
-					admin_add_ctrl[ 'showAddProgramInput' + j ] = false;
-				}
-				//update counter
-				admin_add_ctrl.programInputCount = 0; 
+			// 	//clearing all fields
+			// 	for (var i = 0; i <= maxProgramCount; i++) {
+			// 	var specificNgModelProgramName = ngModels[i][0];
+			// 	var specificNgModelProgramRotation = ngModels[i][1];
+			// 		admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//clearing program name
+			// 		admin_add_ctrl[specificNgModelProgramRotation] = '';	//clearing program rotation
+			// 	}
+			// 	//turn off all visuals
+			// 	for (var j = 1; j <= maxProgramCount + 1; j++){	//adding 1 bc of the last program input (fifth) needs to be turned off as well
+			// 		admin_add_ctrl[ 'showAddProgramInput' + j ] = false;
+			// 	}
+			// 	//update counter
+			// 	admin_add_ctrl.programInputCount = 0; 
 
-			};
+			// };
 
 
 // IF ADMIN IS MODIFYING STUDENT INFO: 
