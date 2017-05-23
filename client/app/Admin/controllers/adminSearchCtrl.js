@@ -81,8 +81,6 @@
 				func: 'modify'
 			};
 			$state.go('Admin.Admin_Add', params);
-			console.log('HELLO WORLD STUDENT VALUE: ', studentValue);
-			console.log('HELLO WORLD MODIFY STUDENT: ', modifyStudent);
 		}
 //pass student data to add controller
 
@@ -100,9 +98,6 @@
 					break;
 				case 'contactList' :
 					admin_search_ctrl.isContactListDisabled = true;
-					break;
-				case 'testSignal' : 	//COMMENTED OUT BECAUSE THE NEXT FUNC SHOULD BE ADMIN FOLDER DOC 
-					admin_search_ctrl.isTestSignalDisabled = true;
 					break;
 			}
 
@@ -135,37 +130,6 @@
 						console.log(failureResponse);
 				});				
 			}
-			//NEXT FUNC: ADMIN FOLDER DOC PER STUDENT SHOULD HAVE EXAM EMPLOYMNENT CLINICAL INFO ON IT
-			// else if (func === 'adminFolderStudentDoc') {
-			// 	//ajax call for admin folder student doc
-			// }else if (func === 'testSignal') {
-			// 	ajaxService.get('/admin/search/testSignal/', config)
-			// 		.then(function(successResponse) {
-			// 			var file = new Blob([successResponse.data], {type: 'application/msword'});
-			// 			FileSaver.saveAs(file, 'test.doc');
-			// 		}, function(failureResponse) {
-			// 			console.log(failureResponse);				
-			// 	});		
-			// }
-			else if (func === 'pushDataToSTRF') {
-				//check if data had been sent before
-				//push data to an already sent arr
-				//ajax call to google sheets with address, sheet page number, and cell 
-				//each student needs to have one more property with an arr of values that had been pushed to google 
-
-			}
-			// else if (func === 'examEmploymentSheet') {
-			// 	//ajax call for exam employment sheet
-			// 	ajaxService.get('/admin/search/generateExamEmploymentSheet/', config)
-			// 		.then(function(successResponse) {
-			// 			var file = new Blob([successResponse.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-			// 			FileSaver.saveAs(file, 'studentExamEmploymentSheet.xlsx');
-			// 		}, function(failureResponse) {
-			// 			console.log(failureResponse);
-			// 	});	
-			// }else if (func === 'clinicalCheckList') {
-			// 	//ajax call for clinical check list
-			// }
 		};
 
 	}

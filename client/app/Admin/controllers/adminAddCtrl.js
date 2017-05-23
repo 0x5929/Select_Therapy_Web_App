@@ -122,6 +122,10 @@
 			};	
 
 
+// IF ADMIN IS MODIFYING STUDENT INFO: 
+//add a modifying function that will populate all data from search to add
+
+
 			//first check if state params is modifying
 			//if so we need to fill in all the ng models with studentvalue service
 
@@ -305,7 +309,7 @@
 			admin_add_ctrl.noErrorCheck = function(dataTobeChecked) {	//possibly encapsulate this into a service to be used again in adminModify to check for errs
 			//err conditions
 
-				if (!isNaN(dataTobeChecked.firstName)){
+				if (!isNaN(dataTobeChecked.firstName)){	//could do a regex that there is no space
 					toastFactory.errorToast("please check the student's first name input");
 					return false;
 				}
@@ -313,14 +317,6 @@
 					toastFactory.errorToast("please check the student's last name input");
 					return false;
 				}
-				// if (isNaN(dataTobeChecked.phoneNumber) || dataTobeChecked.phoneNumber.length !== 10){	//phone number and ssn is taken care of by masked input
-				// 	toastFactory.errorToast("please check the student's phone number input");
-				// 	return false;
-				// }
-				// if (isNaN(dataTobeChecked.ssn) || dataTobeChecked.ssn.length !== 9){
-				// 	toastFactory.errorToast("please check the student's ssn input");
-				// 	return false;
-				// }
 				if (!isNaN(dataTobeChecked.address)){
 					toastFactory.errorToast("please check the student's address input");
 					return false;
@@ -489,13 +485,6 @@
 				admin_add_ctrl.studentModel.program[3]['programRotation'] = '';
 				admin_add_ctrl.studentModel.program[4]['programRotation'] = '';
 				
-				// //setting the necessary ng-if to false	
-				// admin_add_ctrl.showAddProgramInput1                       = false;
-				// admin_add_ctrl.showAddProgramInput2                       = false;
-				// admin_add_ctrl.showAddProgramInput3                       = false;
-				// admin_add_ctrl.showAddProgramInput4                       = false;
-				// admin_add_ctrl.showAddProgramInput5                       = false;			
-				
 				//option value
 				admin_add_ctrl.studentModel.marketingSurvey               = 'noneSelected';
 				admin_add_ctrl.studentModel.graduate                      = 'noneSelected';
@@ -513,52 +502,6 @@
 				admin_add_ctrl.studentModel.program[4]['programName']     = 'noneSelected';
 			};
 
-
-			// admin_add_ctrl.addProgramInput = function(counter) {	/*admin_add_ctrl.programInputCount gets passed in from view
-			// 															admin_add_ctrl.programInputCount = 0 is initialized at the start 
-			// 															of the controller script, loaded once per reload.
-			// 														*/
-			// 	var maxProgramCount = 4;
-			// 	var humanCount = counter + 1;
-
-			// 	//update counter
-			// 	if (counter < maxProgramCount)	admin_add_ctrl.programInputCount++;
-			// 	//set visual to true
-			// 	admin_add_ctrl['showAddProgramInput' + humanCount] = true;
-			// 	//stopping condition with err message
-			// 	if (counter == maxProgramCount)	toastFactory.errorToast("You can only enter up to 5 programs for now");
-			// };
-
-			// admin_add_ctrl.clearProgramInput = function() {		//for the clear input button 
-			// 	var maxProgramCount = 4;
-
-			// 	var ngModels = [	//taken care of human counter
-			// 		[ 'FirstprogramName', 'FirstprogramRotation' ],
-			// 		[ 'SecondprogramName', 'SecondprogramRotation' ],
-			// 		[ 'ThirdprogramName', 'ThirdprogramRotation' ],
-			// 		[ 'ForthprogramName', 'ForthprogramRotation' ],
-			// 		[ 'FifthprogramName', 'FifthprogramRotation' ]
-			// 	];
-
-			// 	//clearing all fields
-			// 	for (var i = 0; i <= maxProgramCount; i++) {
-			// 	var specificNgModelProgramName = ngModels[i][0];
-			// 	var specificNgModelProgramRotation = ngModels[i][1];
-			// 		admin_add_ctrl[specificNgModelProgramName] = 'noneSelected';	//clearing program name
-			// 		admin_add_ctrl[specificNgModelProgramRotation] = '';	//clearing program rotation
-			// 	}
-			// 	//turn off all visuals
-			// 	for (var j = 1; j <= maxProgramCount + 1; j++){	//adding 1 bc of the last program input (fifth) needs to be turned off as well
-			// 		admin_add_ctrl[ 'showAddProgramInput' + j ] = false;
-			// 	}
-			// 	//update counter
-			// 	admin_add_ctrl.programInputCount = 0; 
-
-			// };
-
-
-// IF ADMIN IS MODIFYING STUDENT INFO: 
-//add a modifying function that will populate all data from search to add
 
 
 //google sign in:

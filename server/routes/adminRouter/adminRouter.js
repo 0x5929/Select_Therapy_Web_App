@@ -15,10 +15,8 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		// adminRoute.get('/search/generateExamEmploymentSheet', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.get('/search/testSignal', headerMiddleware, testSignalMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
-		adminRoute.put('/modify', adminModifyPutHandler);
+		adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
@@ -85,10 +83,6 @@ REST: GET
 			}else if (functionality === 'contactList') {
 				res.setHeader('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');	//setting the content type to header 
 				res.setHeader('Content-disposition', 'attachment; filename=Contact_List.docx');				
-			}
-			else if (functionality === 'testSignal') {
-				res.setHeader('Content-type', 'application/msword');	//setting the content type to header 
-				res.setHeader('Content-disposition', 'attachment; filename=testSignal.doc');		
 			}
 			
 
@@ -199,37 +193,7 @@ REST: GET
 					res.status(200).end();
 				}, 3000);	
 
-			}	// FUNCTIONAILITIES BELOW NEEDS TO BE IMPLEMENTED WITH THE ADMIN FOLDER
-				//NEXT FUNCTIONALITIES:
-				//	-ADMIN FOLDER DOC GENERATE
-				// 	-GOOGLE SHEETS PUSH DATA
-			// else if (functionality === 'examEmploymentSheet') {
-			// 	//office gen material for exam employment sheet
-			// 	var examEmploymentSheet = new officeGenDocxConstruct(configOG.officeGen, configOG.xlsxConfig).myDoc();
-			// 	var currentSheet = examEmploymentSheet.makeNewSheet();	
-			// 	currentSheet.name = documentSetting.examEmploymentSheetName;
-			// 	//calling emxam employment service
-			// 	console.log(studentNames);
-			// 	examEmploymentService.examEmploymentSheetGenHandler(currentSheet, studentNames);
-
-			// 	examEmploymentSheet.generate(res);
-
-			// 	setTimeout(function() {	
-			// 		res.status(200).end();
-			// 	}, 3000);
-
-			
-			// }else if (functionality === 'clinicalChecklist') {
-			// 	//office gen material for clinical checklist
-			// }
-			
-		}
-
-		function testSignalMiddleware (req, res, next) {
-			// var resposne = adminFolderDocGenerate.adminFolderDocService();
-			var testhtml = "<!DOCTYPE html><html xmlns:office='urn:schemas-microsoft-com:office:office' xmlns:word='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head> <xml><word:WordDocument><word:View>Print</word:View><word:Zoom>90</word:Zoom><word:DoNotOptimizeForBrowswer/></word:WordDocument></xml></head><body><h3 style='font-weight: bold; line-height: 3%' align='center'> Select Therapy Institute</h3><h3 style='font-weight: bold;' align='center'> Nurse Assitant Program Rotation #</h3><table style='margin-right: auto; margin-left: auto;'><tr><td> Student Name:</td><td> Kevin Test</td></tr><tr><td> Uniform Size:</td><td> M</td></tr></table><table style='margin-right: auto; margin-left: auto;'><td valign='top'><table><tr><td style='font-weight: bold;'> Clinical Checklist</td></tr></table><table border='1' cellspacing='0' cellpadding='15'><tr><td></td><td> High school Diploma</td></tr><tr><td></td><td> English Evaluation</td></tr><tr><td></td><td> 283-1</td></tr><tr><td></td><td> 283-2</td></tr><tr><td></td><td> Fingerprint Scan</td></tr><tr><td></td><td> Physical Exam/TB</td></tr><tr><td></td><td> Liability Insurance</td></tr><tr><td></td><td> CPR</td></tr><tr><td></td><td> Theory Completion</td></tr></table></td><td valign='top'><table><tr><td style='font-weight: bold;'> Theory</td></tr><tr><td style='font-weight: bold;'> Attendance</td></tr></table><table border='1' cellspacing='0' cellpadding='15'><tr><td></td><td> 1</td></tr><tr><td></td><td> 2</td></tr><tr><td></td><td> 3</td></tr><tr><td></td><td> 4</td></tr><tr><td></td><td> 5</td></tr><tr><td></td><td> 6</td></tr><tr><td></td><td> 7</td></tr><tr><td></td><td> 8</td></tr><tr><td></td><td> 9</td></tr><tr><td></td><td> 10</td></tr><tr><td></td><td> 11</td></tr><tr><td></td><td> 12</td></tr><tr><td></td><td> 13</td></tr><tr><td></td><td> 14</td></tr></table></td><td valign='top'><table><tr><td style='font-weight: bold;'> Clinical</td></tr><tr><td style='font-weight: bold;'> Attendance</td></tr></table><table border='1' cellspacing='0' cellpadding='15'><tr><td></td><td> 1</td></tr><tr><td></td><td> 2</td></tr><tr><td></td><td> 3</td></tr><tr><td></td><td> 4</td></tr><tr><td></td><td> 5</td></tr><tr><td></td><td> 6</td></tr><tr><td></td><td> 7</td></tr><tr><td></td><td> 8</td></tr><tr><td></td><td> 9</td></tr><tr><td></td><td> 10</td></tr><tr><td></td><td> 11</td></tr><tr><td></td><td> 12</td></tr><tr><td></td><td> 13</td></tr></table></td><td><div style='word-wrap: break-word;width:10px'> *****************************************</div></td><td width='20' valign='top'><div style='text-decoration: underline;'> Students is eligible for the State Examination if <em>all sections are checked off on the left side of the page, and have a $0 balance with the accounting department</em></div><table style='margin-top: 20px'><tr><td style='font-weight: bold;'> CNA State Examination Info</td></tr></table><table border='1' cellspacing='0' cellpadding='10'><tr><td> Date</td><td> Location</td><td> Written</td><td> Skills</td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table><table style='margin-top: 20px'><tr><td style='font-weight: bold;'> Job Placement Info</td></tr></table><table><tr><td><table><tr><td> Facility Name:</td><td></td></tr><tr><td> Contact Name:</td><td></td></tr><tr><td> Phone:</td><td></td></tr><tr><td> Full/Part Time:</td><td></td></tr><tr><td> Pay:</td><td></td></tr></table><table><tr><td> *************************************</td></tr><tr><td> If no job placement, what is the reason:</td></tr><tr><td valign='bottom'> ______________________________________</td></tr></table></td></tr></table></td><td><table border='1' cellspacing='0' cellpadding='0'><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Enrollment Agreement</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Payment Tracker</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Theory Hours</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Clinical Checklist</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Clinical Hours</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Examination Info</div></td></tr><tr><td height='130' width='30' valign='center'><div style='transform: rotate(-90deg); font-weight: bold;'> Job Placement Info</div></td></tr></table></td><tr><td colspan='6'><table border='1' cellspacing='0' cellpadding='0'><tr><td colspan='10' style='font-weight: bold;'> Payment Tracker</td></tr><tr><td> Date</td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td><td width='70'></td></tr><tr><td> Balance</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td> Balance</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td> Payment Type</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td> Payment Amount</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td> Balance</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td> Notes</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></td></tr></table></body></html>";
-			res.status(200).send(testhtml).end();
-		}
+			}	
 
 
 
@@ -273,10 +237,7 @@ REST: ADD
 						if (userKey === 'name')	//updating the name property
 							user[userKey] = req.body.firstName + ' ' + req.body.lastName;
 					}
-					console.log('REQ.BODY: ', req.body);
-					console.log('UPDATED USER: ', user);
 					user.save(function(err) {
-						console.log('HELLO WORLD ERR AT 276', err);
 						if (err)	return next(err);
 						else return res.status(200).send('STUDENT UPDATED').end();
 					});
@@ -330,26 +291,27 @@ REST: ADD
 ADMIN MODIFY MODIFY HANDLER
 REST: PUT..........................** NEED TO SEE IF WE NEED TO CHANGE THAT TO PATCH INSTEAD
 *********************************************************************************************/
+//below could be deleted with the new modifying functionaity straight from admin search to admin add
 
-		function adminModifyPutHandler(req, res, next) {
-			console.log(req.body);
-			var requestBody = req.body;
-			var modifyingKeys = Object.keys(requestBody);
-			STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
-				if (err) return next(err);
-				if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();
-				if (user) {
-					modifyingKeys.forEach(function(key) {
-						if (key === "originalName") return;	//skipping the original name key
-						user[key] = requestBody[key];	//updating the keys
-						user.save(function(err, updatedUser) {
-							if (err) return next(err);
-						});
-					});
-					return res.send('updatedUser').end();			
-				}
-			});
-		}
+		// function adminModifyPutHandler(req, res, next) {
+		// 	console.log(req.body);
+		// 	var requestBody = req.body;
+		// 	var modifyingKeys = Object.keys(requestBody);
+		// 	STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
+		// 		if (err) return next(err);
+		// 		if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();
+		// 		if (user) {
+		// 			modifyingKeys.forEach(function(key) {
+		// 				if (key === "originalName") return;	//skipping the original name key
+		// 				user[key] = requestBody[key];	//updating the keys
+		// 				user.save(function(err, updatedUser) {
+		// 					if (err) return next(err);
+		// 				});
+		// 			});
+		// 			return res.send('updatedUser').end();			
+		// 		}
+		// 	});
+		// }
 
 
 
