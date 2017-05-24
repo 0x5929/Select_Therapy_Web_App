@@ -20,6 +20,12 @@
 		tuitionPaid        : {type: Boolean, required: true},
 		graduate           : {type: Boolean, required: true},
 		marketingSurvey    : {type: String, required: true},
+		googleData   	   : {
+								//google data properties
+								//sheet name
+								//row number
+								//data to be pushed []
+							},
 		//dependent fields, which depends on certain boolean value from above required fields
 		notGraduatingReason: String,
 		jobPlaced          : Boolean,
