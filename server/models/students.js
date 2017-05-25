@@ -21,10 +21,12 @@
 		graduate           : {type: Boolean, required: true},
 		marketingSurvey    : {type: String, required: true},
 		googleData   	   : {
-								//google data properties
-								//sheet name
-								//row number
-								//data to be pushed []
+								id: String,
+								sheetId: String,
+								name: String,
+								row: Number,
+								itemCheck: [String],
+								itemPushed: [String]
 							},
 		//dependent fields, which depends on certain boolean value from above required fields
 		notGraduatingReason: String,
