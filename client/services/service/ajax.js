@@ -5,10 +5,10 @@
 
 		function ajaxServiceHandler($http, $q) {
 
-			this.get = function(route, optObj) {
+			this.get = function(route, configObj) {
 				var deferred = $q.defer();
-				if (optObj){
-					$http.get(route, optObj)
+				if (configObj){
+					$http.get(route, configObj)
 						.then(function(success) {
 							deferred.resolve(success);
 						}, 
@@ -27,10 +27,10 @@
 				return deferred.promise;
 			};
 			
-			this.post = function(route, data) {
+			this.post = function(route, data, configObj) {
 				var deferred = $q.defer();
 				
-				$http.post(route, data)
+				$http.post(route, data, configObj)
 					.then(function(success) {
 						deferred.resolve(success);
 					}, 

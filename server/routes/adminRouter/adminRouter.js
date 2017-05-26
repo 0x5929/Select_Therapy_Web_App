@@ -16,7 +16,7 @@
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
-		adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
+		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
@@ -195,7 +195,7 @@ REST: GET
 
 			}	
 
-
+	}
 
 /**********************************************************
 ADMIN ADD HANDLER + PARSE MIDDLEWARE

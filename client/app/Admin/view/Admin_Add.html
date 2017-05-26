@@ -303,6 +303,7 @@
 			<div ng-if="admin_add_ctrl.googleSync">
 				<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
 				<!-- next step in the google sync processs -->
+				<button ng-if="admin_add_ctrl.turnOnSyncButton" class="btn" ng-click="admin_add_ctrl.letsSyncWitGoogle">SYNC</button>
 			</div>
 <!-- 			this button should have the functionaility to load a modal with google auth, and send signal to server 
 			for data to be organized in a way to be synced with google -->

@@ -8,12 +8,14 @@
 		.controller('adminAddController', ['$scope', '$stateParams', '$filter', 'ajaxService', 'toastFactory', 'studentValue', adminAddControllerHandler]);
 
 		function adminAddControllerHandler($scope, $stateParams, $filter, ajaxService, toastFactory, studentValue) {	//may want to delete filter, it does nothin
-
-			var admin_add_ctrl = this;
-			var postData = null;
-
+			
+			var admin_add_ctrl               = this;
+			var postData                     = null;
+			
 			admin_add_ctrl.programInputCount = 0;
-			admin_add_ctrl.googleSync = false;
+			admin_add_ctrl.googleSync        = false;
+			admin_add_ctrl.turnOnSyncButton  = false;
+
 
 			admin_add_ctrl.ngSelectOption = {	//initialize ng select option to be initially false
 				programs: [{	//1st program
@@ -510,8 +512,40 @@
 			admin_add_ctrl.googleSigninOptions = {
 				'onsuccess': function(successResponse) {
 					console.log(successResponse);
+					admin_add_ctrl.turnOnSyncButton = true;
 				}
-			};			
+			};	
+
+			admin_add_ctrl.letsSyncWitGoogle = function() {
+				var postData = {};	//also could be manipulated in the backend
+				makeRequest('/admin/GoogleSync', callbackFunc);
+				function callbackFunc(err, spreadsheet) {
+					if (err) toastFactory.errorToast(err);
+					//Do stuff with response in spreadsheet?
+				}
+				function makeRequest(URL, callback) {
+					//initialize google auth
+					var params = {
+						client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
+					}
+					gapi.auth2.init(params);
+					var auth = gapi.auth2.getAuthInstance();
+					if (!auth.isSignedIn.get())	return callback('there is an error', null);
+					var accessToken = auth.currentUser.get().getAuthResponse().access_token;
+					var configObj = {
+						headers: {
+							'Authorization': 'Bearer ' + accessToken 
+						}
+					}
+					ajaxService.post(URL, postData, configObj)
+						.then(function(successResponse) {
+							console.log(successResponse);
+						}, 
+							function(failureResposne) {
+								console.log(failureResposne);
+						});
+				}
+			};		
 
 		}
 }());
