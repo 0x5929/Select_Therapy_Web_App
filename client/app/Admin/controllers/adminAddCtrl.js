@@ -524,15 +524,19 @@
 					//Do stuff with response in spreadsheet?
 				}
 				function makeRequest(URL, callback) {
-					//initialize google auth
-					var params = {
+					var params,
+						auth,
+						accessToken,
+						configObj;
+					params = {
 						client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
-					}
-					gapi.auth2.init(params);
-					var auth = gapi.auth2.getAuthInstance();
-					if (!auth.isSignedIn.get())	return callback('there is an error', null);
-					var accessToken = auth.currentUser.get().getAuthResponse().access_token;
-					var configObj = {
+					};
+					gapi.auth2.init(params);	//initialize google auth
+					auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
+					//check if user is signed in
+					if (!auth.isSignedIn.get())	return callback('you need to sign in wit google', null);
+					accessToken = auth.currentUser.get().getAuthResponse().access_token;	//grabbing access token
+					configObj = {
 						headers: {
 							'Authorization': 'Bearer ' + accessToken 
 						}
@@ -540,9 +544,11 @@
 					ajaxService.post(URL, postData, configObj)
 						.then(function(successResponse) {
 							console.log(successResponse);
+							return callback(null, successResponse);
 						}, 
-							function(failureResposne) {
-								console.log(failureResposne);
+							function(failureResponse) {
+								console.log(failureResponse);
+								return callback(failureResponse.data);
 						});
 				}
 			};		
