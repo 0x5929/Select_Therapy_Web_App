@@ -99,7 +99,23 @@
 						<option ng-selected="admin_add_ctrl.ngSelectOption.programs[0]['caregiver']" value="Caregiver">Caregiver</option>
 						<option ng-selected="admin_add_ctrl.ngSelectOption.programs[0]['ESOL']" value="ESOL">ESOL</option>
 					</select>
-					<input type="text" ng-model="admin_add_ctrl.studentModel.program[0]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">	
+					<input type="text" ng-model="admin_add_ctrl.studentModel.program[0]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 1st Program">
+					<input type="text" 
+							masked-input
+							target-mask="99/99/9999"
+							mask-options='{"placeholder": "mm/dd/yyyy"}'
+							ng-model="admin_add_ctrl.studentModel.program[0]['programStartDate']" 
+							class="form-control" 
+							name="programStartDate" 
+							placeholder="Enter 1st Program's Start Date">	
+					<input type="text" 
+							masked-input
+							target-mask="99/99/9999"
+							mask-options='{"placeholder": "mm/dd/yyyy"}'
+							ng-model="admin_add_ctrl.studentModel.program[0]['programEndDate']" 
+							class="form-control" 
+							name="programEndDate" 
+							placeholder="Enter 1st Program's End Date">	
 				</div>
 			</div>
 				<div style="display: inline;">
@@ -112,7 +128,23 @@
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[1]['caregiver']" value="Caregiver">Caregiver</option>
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[1]['ESOL']" value="ESOL">ESOL</option>
 						</select>
-						<input type="text" ng-model="admin_add_ctrl.studentModel.program[1]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">	
+						<input type="text" ng-model="admin_add_ctrl.studentModel.program[1]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 2nd Program">
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[1]['programStartDate']" 
+								class="form-control" 
+								name="programStartDate" 
+								placeholder="Enter 2nd Program's Start Date">	
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[1]['programEndDate']" 
+								class="form-control" 
+								name="programEndDate" 
+								placeholder="Enter 2nd Program's End Date">		
 					</div>
 				</div>
 				<div style="display: inline;">
@@ -125,7 +157,23 @@
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[2]['caregiver']" value="Caregiver">Caregiver</option>
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[2]['ESOL']" value="ESOL">ESOL</option>
 						</select>
-						<input type="text" ng-model="admin_add_ctrl.studentModel.program[2]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 3rd Program">	
+						<input type="text" ng-model="admin_add_ctrl.studentModel.program[2]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 3rd Program">
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[2]['programStartDate']" 
+								class="form-control" 
+								name="programStartDate" 
+								placeholder="Enter 3rd Program's Start Date">	
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[2]['programEndDate']" 
+								class="form-control" 
+								name="programEndDate" 
+								placeholder="Enter 3rd Program's End Date">		
 					</div>
 				</div>			
 				<div style="display: inline;">
@@ -138,7 +186,23 @@
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[3]['caregiver']" value="Caregiver">Caregiver</option>
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[3]['ESOL']" value="ESOL">ESOL</option>
 						</select>
-						<input type="text" ng-model="admin_add_ctrl.studentModel.program[3]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">	
+						<input type="text" ng-model="admin_add_ctrl.studentModel.program[3]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[3]['programStartDate']" 
+								class="form-control" 
+								name="programStartDate" 
+								placeholder="Enter 4th Program's Start Date">	
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[3]['programEndDate']" 
+								class="form-control" 
+								name="programEndDate" 
+								placeholder="Enter 4th Program's End Date">		
 					</div>
 				</div>			
 				<div style="display: inline;">
@@ -151,7 +215,23 @@
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[4]['caregiver']" value="Caregiver">Caregiver</option>
 							<option ng-selected="admin_add_ctrl.ngSelectOption.programs[4]['ESOL']" value="ESOL">ESOL</option>
 						</select>
-						<input type="text" ng-model="admin_add_ctrl.studentModel.program[4]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">	
+						<input type="text" ng-model="admin_add_ctrl.studentModel.program[4]['programRotation']" class="form-control" name="programRotation" placeholder="Enter the Rotation Number for 4th Program">
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[4]['programStartDate']" 
+								class="form-control" 
+								name="programStartDate" 
+								placeholder="Enter 5th Program's Start Date">	
+						<input type="text" 
+								masked-input
+								target-mask="99/99/9999"
+								mask-options='{"placeholder": "mm/dd/yyyy"}'
+								ng-model="admin_add_ctrl.studentModel.program[4]['programEndDate']" 
+								class="form-control" 
+								name="programEndDate" 
+								placeholder="Enter 5th Program's End Date">		
 					</div>
 				</div>
 		</div>		
@@ -239,9 +319,21 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="control-label col-md-3" for="jobDescription">Job Description:</label>
+					<label class="control-label col-md-3" for="placeOfEmployment">EmloyerName:</label>
 					<div class="col-md-9">
-						<input type="text" ng-model="admin_add_ctrl.studentModel.jobDescription" class="form-control" name="jobDescription" placeholder="Enter Student's Job Description">
+						<input type="text" ng-model="admin_add_ctrl.studentModel.placeOfEmployment" class="form-control" name="placeOfEmployment" placeholder="Enter Student's Place of Employment">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-md-3" for="employmentAddress">Employment Address:</label>
+					<div class="col-md-9">
+						<input type="text" ng-model="admin_add_ctrl.studentModel.employmentAddress" class="form-control" name="employmentAddress" placeholder="Enter Student's Employment Address">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="control-label col-md-3" for="jobPosition">Job Position:</label>
+					<div class="col-md-9">
+						<input type="text" ng-model="admin_add_ctrl.studentModel.jobPosition" class="form-control" name="jobPosition" placeholder="Enter Student's Job Position">
 					</div>
 				</div>	
 				<div class="form-group row">
@@ -303,7 +395,7 @@
 			<div ng-if="admin_add_ctrl.googleSync">
 				<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
 				<!-- next step in the google sync processs -->
-				<button ng-if="admin_add_ctrl.turnOnSyncButton" class="btn" ng-click="admin_add_ctrl.letsSyncWitGoogle">SYNC</button>
+				<button ng-if="admin_add_ctrl.turnOnSyncButton" class="btn" ng-click="admin_add_ctrl.letsSyncWitGoogle()">SYNC</button>
 			</div>
 <!-- 			this button should have the functionaility to load a modal with google auth, and send signal to server 
 			for data to be organized in a way to be synced with google -->

@@ -90,6 +90,9 @@
 				email              : '',
 				tuition            : '',
 				payRate		       : '',
+				placeOfEmployment  : '',
+				employmentAddress  : '',
+				jobPosition        : '',
 				tuitionPaid        : 'noneSelected',
 				graduate           : 'noneSelected',
 				notGraduatingReason: 'noneSelected',
@@ -101,24 +104,34 @@
 				noPassReason       : 'noneSelected',
 				program: [
 					{
-						programName    : 'noneSelected',
-						programRotation: ''
+						programName     : 'noneSelected',
+						programRotation : '',
+						programStartDate: '',
+						programEndDate  : ''
 					},
 					{
-						programName    : 'noneSelected',
-						programRotation: ''
+						programName     : 'noneSelected',
+						programRotation : '',
+						programStartDate: '',
+						programEndDate  : ''
 					},
 					{
-						programName    : 'noneSelected',
-						programRotation: ''
+						programName     : 'noneSelected',
+						programRotation : '',
+						programStartDate: '',
+						programEndDate  : ''
 					},
 					{
-						programName    : 'noneSelected',
-						programRotation: ''
+						programName     : 'noneSelected',
+						programRotation : '',
+						programStartDate: '',
+						programEndDate  : ''
 					},
 					{
-						programName    : 'noneSelected',
-						programRotation: ''
+						programName     : 'noneSelected',
+						programRotation : '',
+						programStartDate: '',
+						programEndDate  : ''
 					}
 				]
 			};	
@@ -333,7 +346,15 @@
 						return false;
 					}
 					if (isNaN(dataTobeChecked.program[i]['programRotation'])){
-						toastFactory.errorToast("make sure you enter a valid program rotation number")
+						toastFactory.errorToast("make sure you enter a valid program rotation number");
+						return false;
+					}
+					if (!dataTobeChecked.program[i]['programStartDate']){
+						toastFactory.errorToast('make sure you enter a start date for the program');
+						return false;
+					}
+					if (!dataTobeChecked.program[i]['programEndDate']) {
+						toastFactory.errorToast('make sure you enter an end date for the program');
 						return false;
 					}
 				}
@@ -365,8 +386,16 @@
 					toastFactory.errorToast("please enter a valid pay rate");
 					return false;
 				}
-				if (dataTobeChecked.jobPlaced === 'true' && !(dataTobeChecked.jobDescription)){
-					toastFactory.errorToast("please check the job description field");
+				if (dataTobeChecked.jobPlaced === 'true' && !(dataTobeChecked.placeOfEmployment)){
+					toastFactory.errorToast("please check the place of employment field");
+					return false;
+				}
+				if (dataTobeChecked.jobPlaced === 'true' && !(dataTobeChecked.employmentAddress)){
+					toastFactory.errorToast("please check the employment address field");
+					return false;
+				}
+				if (dataTobeChecked.jobPlaced === 'true' && !(dataTobeChecked.jobPosition)){
+					toastFactory.errorToast("please check the job jobPosition field");
 					return false;
 				}
 				if (dataTobeChecked.jobPlaced === '' && !(dataTobeChecked.noJobReason)){
@@ -416,20 +445,30 @@
 				address       : admin_add_ctrl.studentModel.address,
 				email         : admin_add_ctrl.studentModel.email,
 				program: [{
-					programName    : admin_add_ctrl.studentModel.program[0]['programName'],
-					programRotation: admin_add_ctrl.studentModel.program[0]['programRotation']
+					programName     : admin_add_ctrl.studentModel.program[0]['programName'],
+					programRotation : admin_add_ctrl.studentModel.program[0]['programRotation'],
+					programStartDate: admin_add_ctrl.studentModel.program[0]['programStartDate'],
+					programEndDate  : admin_add_ctrl.studentModel.program[0]['programEndDate']
 				}, {
-					programName    : admin_add_ctrl.studentModel.program[1]['programName'],
-					programRotation: admin_add_ctrl.studentModel.program[1]['programRotation']
+					programName     : admin_add_ctrl.studentModel.program[1]['programName'],
+					programRotation : admin_add_ctrl.studentModel.program[1]['programRotation'],
+					programStartDate: admin_add_ctrl.studentModel.program[1]['programStartDate'],
+					programEndDate  : admin_add_ctrl.studentModel.program[1]['programEndDate']
 				}, {
-					programName    : admin_add_ctrl.studentModel.program[2]['programName'],
-					programRotation: admin_add_ctrl.studentModel.program[2]['programRotation']
+					programName     : admin_add_ctrl.studentModel.program[2]['programName'],
+					programRotation : admin_add_ctrl.studentModel.program[2]['programRotation'],
+					programStartDate: admin_add_ctrl.studentModel.program[2]['programStartDate'],
+					programEndDate  : admin_add_ctrl.studentModel.program[2]['programEndDate']
 				}, {
-					programName    : admin_add_ctrl.studentModel.program[3]['programName'],
-					programRotation: admin_add_ctrl.studentModel.program[3]['programRotation']
+					programName     : admin_add_ctrl.studentModel.program[3]['programName'],
+					programRotation : admin_add_ctrl.studentModel.program[3]['programRotation'],
+					programStartDate: admin_add_ctrl.studentModel.program[3]['programStartDate'],
+					programEndDate  : admin_add_ctrl.studentModel.program[3]['programEndDate']
 				}, {
-					programName    : admin_add_ctrl.studentModel.program[4]['programName'],
-					programRotation: admin_add_ctrl.studentModel.program[4]['programRotation']
+					programName     : admin_add_ctrl.studentModel.program[4]['programName'],
+					programRotation : admin_add_ctrl.studentModel.program[4]['programRotation'],
+					programStartDate: admin_add_ctrl.studentModel.program[4]['programStartDate'],
+					programEndDate  : admin_add_ctrl.studentModel.program[4]['programEndDate']
 				}],
 				graduate           : admin_add_ctrl.studentModel.graduate,
 				notGraduatingReason: admin_add_ctrl.studentModel.notGraduatingReason,
@@ -469,23 +508,36 @@
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service
 //strings and Numbers				
-				admin_add_ctrl.studentModel.enrollmentDate                = '';
-				admin_add_ctrl.studentModel.studentID                     = '';
-				admin_add_ctrl.studentModel.firstName                     = '';
-				admin_add_ctrl.studentModel.lastName                      = '';
-				admin_add_ctrl.studentModel.phoneNumber                   = '';
-				admin_add_ctrl.studentModel.ssn                           = '';
-				admin_add_ctrl.studentModel.address                       = '';
-				admin_add_ctrl.studentModel.email                         = '';
-				admin_add_ctrl.studentModel.tuition 					  = '';
-				admin_add_ctrl.studentModel.payRate                       = '';
-				admin_add_ctrl.studentModel.jobDescription                = '';
-				admin_add_ctrl.studentModel.noJobReason                   = '';
-				admin_add_ctrl.studentModel.program[0]['programRotation'] = '';
-				admin_add_ctrl.studentModel.program[1]['programRotation'] = '';
-				admin_add_ctrl.studentModel.program[2]['programRotation'] = '';
-				admin_add_ctrl.studentModel.program[3]['programRotation'] = '';
-				admin_add_ctrl.studentModel.program[4]['programRotation'] = '';
+				admin_add_ctrl.studentModel.enrollmentDate                 = '';
+				admin_add_ctrl.studentModel.studentID                      = '';
+				admin_add_ctrl.studentModel.firstName                      = '';
+				admin_add_ctrl.studentModel.lastName                       = '';
+				admin_add_ctrl.studentModel.phoneNumber                    = '';
+				admin_add_ctrl.studentModel.ssn                            = '';
+				admin_add_ctrl.studentModel.address                        = '';
+				admin_add_ctrl.studentModel.email                          = '';
+				admin_add_ctrl.studentModel.tuition                        = '';
+				admin_add_ctrl.studentModel.payRate                        = '';
+				admin_add_ctrl.studentModel.placeOfEmployment              = '';
+				admin_add_ctrl.studentModel.employmentAddress              = '';
+				admin_add_ctrl.studentModel.jobPosition                    = '';
+				admin_add_ctrl.studentModel.noJobReason                    = '';
+				admin_add_ctrl.studentModel.program[0]['programRotation']  = '';
+				admin_add_ctrl.studentModel.program[1]['programRotation']  = '';
+				admin_add_ctrl.studentModel.program[2]['programRotation']  = '';
+				admin_add_ctrl.studentModel.program[3]['programRotation']  = '';
+				admin_add_ctrl.studentModel.program[4]['programRotation']  = '';
+				admin_add_ctrl.studentModel.program[0]['programStartDate'] = '';
+				admin_add_ctrl.studentModel.program[1]['programStartDate'] = '';
+				admin_add_ctrl.studentModel.program[2]['programStartDate'] = '';
+				admin_add_ctrl.studentModel.program[3]['programStartDate'] = '';
+				admin_add_ctrl.studentModel.program[4]['programStartDate'] = '';
+				admin_add_ctrl.studentModel.program[0]['programEndDate']   = '';
+				admin_add_ctrl.studentModel.program[1]['programEndDate']   = '';
+				admin_add_ctrl.studentModel.program[2]['programEndDate']   = '';
+				admin_add_ctrl.studentModel.program[3]['programEndDate']   = '';
+				admin_add_ctrl.studentModel.program[4]['programEndDate']   = '';
+
 				
 				//option value
 				admin_add_ctrl.studentModel.marketingSurvey               = 'noneSelected';
@@ -516,14 +568,51 @@
 				}
 			};	
 
+			admin_add_ctrl.googlePostData = function() {
+				var postData;
+				postData = {
+					annualReport: {
+						lastName         : admin_add_ctrl.lastName,
+						firstName        : admin_add_ctrl.firstName,
+						phoneNumber      : admin_add_ctrl.phoneNumber,
+						email            : admin_add_ctrl.email,
+						address          : admin_add_ctrl.address,
+						course           : courseEval(),
+						startDate        : starteDateEval(),
+						completionDate   : completionDateEval(),
+						graduate         : admin_add_ctrl.graduate,
+						passedExam       : admin_add_ctrl.passedExam,
+						employed         : admin_add_ctrl.jobPlaced,
+						placeOfEmployment: admin_add_ctrl.placeOfEmployment,
+						employmentAddress: admin_add_ctrl.employmentAddress,
+						postion          : admin_add_ctrl.jobPosition,
+						startingWage     : admin_add_ctrl.payRate,
+						Hours            : admin_add_ctrl.weeklyWorkHours,
+						description      : 'job information was given by Kevin Ren via website/google sync'
+
+					},
+					STRF: {
+						studentID: admin_add_ctrl.studentID
+					}
+				};	//also could be manipulated in the backend
+				function courseEval() {}
+				function startDateEval() {}
+				function completionDateEval() {}
+				function filter(data) {}	
+				//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
+				postData = filter(postData);
+				return postData;
+			};
+
 			admin_add_ctrl.letsSyncWitGoogle = function() {
-				var postData = {};	//also could be manipulated in the backend
-				makeRequest('/admin/GoogleSync', callbackFunc);
+				var postData = admin_add_ctrl.googlePostData();
+				makeRequest('/admin/GoogleSync', postData, callbackFunc);
 				function callbackFunc(err, spreadsheet) {
 					if (err) toastFactory.errorToast(err);
-					//Do stuff with response in spreadsheet?
+					//if no err, it will call back with spreadsheet
+					//Do stuff with response in spreadsheet
 				}
-				function makeRequest(URL, callback) {
+				function makeRequest(URL, data, callback) {
 					var params,
 						auth,
 						accessToken,
@@ -541,15 +630,16 @@
 							'Authorization': 'Bearer ' + accessToken 
 						}
 					}
-					ajaxService.post(URL, postData, configObj)
-						.then(function(successResponse) {
-							console.log(successResponse);
-							return callback(null, successResponse);
-						}, 
-							function(failureResponse) {
-								console.log(failureResponse);
-								return callback(failureResponse.data);
-						});
+					console.log('TESTING ACCESS TOKEN: ', accessToken);
+					// ajaxService.post(URL, postData, configObj)
+					// 	.then(function(successResponse) {
+					// 		console.log(successResponse);
+					// 		return callback(null, successResponse);
+					// 	}, 
+					// 		function(failureResponse) {
+					// 			console.log(failureResponse);
+					// 			return callback(failureResponse.data);
+					// 	});
 				}
 			};		
 
