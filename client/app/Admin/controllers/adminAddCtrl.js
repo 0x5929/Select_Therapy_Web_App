@@ -572,32 +572,47 @@
 				var postData;
 				postData = {
 					annualReport: {
-						lastName         : admin_add_ctrl.lastName,
-						firstName        : admin_add_ctrl.firstName,
-						phoneNumber      : admin_add_ctrl.phoneNumber,
-						email            : admin_add_ctrl.email,
-						address          : admin_add_ctrl.address,
+						lastName         : admin_add_ctrl.studentModel.lastName,
+						firstName        : admin_add_ctrl.studentModel.firstName,
+						phoneNumber      : admin_add_ctrl.studentModel.phoneNumber,
+						email            : admin_add_ctrl.studentModel.email,
+						address          : admin_add_ctrl.studentModel.address,
 						course           : courseEval(),
 						startDate        : starteDateEval(),
 						completionDate   : completionDateEval(),
-						graduate         : admin_add_ctrl.graduate,
-						passedExam       : admin_add_ctrl.passedExam,
-						employed         : admin_add_ctrl.jobPlaced,
-						placeOfEmployment: admin_add_ctrl.placeOfEmployment,
-						employmentAddress: admin_add_ctrl.employmentAddress,
-						postion          : admin_add_ctrl.jobPosition,
-						startingWage     : admin_add_ctrl.payRate,
-						Hours            : admin_add_ctrl.weeklyWorkHours,
+						graduate         : admin_add_ctrl.studentModel.graduate,
+						passedExam       : admin_add_ctrl.studentModel.passedExam,
+						employed         : admin_add_ctrl.studentModel.jobPlaced,
+						placeOfEmployment: admin_add_ctrl.studentModel.placeOfEmployment,
+						employmentAddress: admin_add_ctrl.studentModel.employmentAddress,
+						postion          : admin_add_ctrl.studentModel.jobPosition,
+						startingWage     : admin_add_ctrl.studentModel.payRate,
+						Hours            : admin_add_ctrl.studentModel.weeklyWorkHours,
 						description      : 'job information was given by Kevin Ren via website/google sync'
 
 					},
 					STRF: {
-						studentID: admin_add_ctrl.studentID
+						studentID: admin_add_ctrl.studentModel.studentID,
+						lastName: admin_add_ctrl.studentModel.lastName,
+						firstName: admin_add_ctrl.studentModel.firstName,
+						email: admin_add_ctrl.studentModel.email,
+						localOrMailingAddress: admin_add_ctrl.studentModel.address,
+						addressAtTheTimeOfEnrollment: 'same as mailing address',
+						homeAddress: 'same as mailing address',
+						dateEnrollment: admin_add_ctrl.studentModel.enrollmentDate,
+						course: courseEval(),
+						courseCost: '$' + admin_add_ctrl.studentModel.tuition,	//would string + number = string?
+						amountOfSTRF: '$0.00',
+						quarterInWhichSTRFAssessmentWasRemitted: quarterEval(),
+						thirParty: '',	//always left blank, need to be maually inputted
+						totalInstitutionalCharged: postData.STRF.courseCost,
+						totalInstitutionalPaid: postData.STRF.courseCost	//would this work?
 					}
 				};	//also could be manipulated in the backend
 				function courseEval() {}
 				function startDateEval() {}
 				function completionDateEval() {}
+				function quarterEval() {}
 				function filter(data) {}	
 				//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
 				postData = filter(postData);
