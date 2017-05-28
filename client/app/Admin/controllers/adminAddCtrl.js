@@ -577,9 +577,9 @@
 						phoneNumber      : admin_add_ctrl.studentModel.phoneNumber,
 						email            : admin_add_ctrl.studentModel.email,
 						address          : admin_add_ctrl.studentModel.address,
-						course           : courseEval(),
-						startDate        : starteDateEval(),
-						completionDate   : completionDateEval(),
+						course           : courseEval(admin_add_ctrl.studentModel.program),
+						startDate        : starteDateEval(admin_add_ctrl.studentModel.program),
+						completionDate   : completionDateEval(admin_add_ctrl.studentModel.program),
 						graduate         : admin_add_ctrl.studentModel.graduate,
 						passedExam       : admin_add_ctrl.studentModel.passedExam,
 						employed         : admin_add_ctrl.studentModel.jobPlaced,
@@ -592,26 +592,32 @@
 
 					},
 					STRF: {
-						studentID: admin_add_ctrl.studentModel.studentID,
-						lastName: admin_add_ctrl.studentModel.lastName,
-						firstName: admin_add_ctrl.studentModel.firstName,
-						email: admin_add_ctrl.studentModel.email,
-						localOrMailingAddress: admin_add_ctrl.studentModel.address,
-						addressAtTheTimeOfEnrollment: 'same as mailing address',
-						homeAddress: 'same as mailing address',
-						dateEnrollment: admin_add_ctrl.studentModel.enrollmentDate,
-						course: courseEval(),
-						courseCost: '$' + admin_add_ctrl.studentModel.tuition,	//would string + number = string?
-						amountOfSTRF: '$0.00',
+						studentID                              : admin_add_ctrl.studentModel.studentID,
+						lastName                               : admin_add_ctrl.studentModel.lastName,
+						firstName                              : admin_add_ctrl.studentModel.firstName,
+						email                                  : admin_add_ctrl.studentModel.email,
+						localOrMailingAddress                  : admin_add_ctrl.studentModel.address,
+						addressAtTheTimeOfEnrollment           : 'same as mailing address',
+						homeAddress                            : 'same as mailing address',
+						dateEnrollment                         : admin_add_ctrl.studentModel.enrollmentDate,
+						course                                 : courseEval(),
+						courseCost                             : '$' + admin_add_ctrl.studentModel.tuition,	//would string + number = string?
+						amountOfSTRF                           : '$0.00',
 						quarterInWhichSTRFAssessmentWasRemitted: quarterEval(),
-						thirParty: '',	//always left blank, need to be maually inputted
-						totalInstitutionalCharged: postData.STRF.courseCost,
-						totalInstitutionalPaid: postData.STRF.courseCost	//would this work?
+						thirParty                              : '',	//always left blank, need to be maually inputted
+						totalInstitutionalCharged              : postData.STRF.courseCost,
+						totalInstitutionalPaid                 : postData.STRF.courseCost	//would this work?
 					}
 				};	//also could be manipulated in the backend
-				function courseEval() {}
-				function startDateEval() {}
-				function completionDateEval() {}
+				function courseEval(programArr) {
+
+				}
+				function startDateEval(programArr) {
+
+				}
+				function completionDateEval(programArr) {
+
+				}
 				function quarterEval() {}
 				function filter(data) {}	
 				//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
@@ -620,7 +626,7 @@
 			};
 
 			admin_add_ctrl.letsSyncWitGoogle = function() {
-				var postData = admin_add_ctrl.googlePostData();
+				var postData = admin_add_ctrl.googlePostData();	//the data needs to be further manipulated for each program to be inputted in each google sheet
 				makeRequest('/admin/GoogleSync', postData, callbackFunc);
 				function callbackFunc(err, spreadsheet) {
 					if (err) toastFactory.errorToast(err);
