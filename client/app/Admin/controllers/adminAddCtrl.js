@@ -600,28 +600,114 @@
 						addressAtTheTimeOfEnrollment           : 'same as mailing address',
 						homeAddress                            : 'same as mailing address',
 						dateEnrollment                         : admin_add_ctrl.studentModel.enrollmentDate,
-						course                                 : courseEval(),
-						courseCost                             : '$' + admin_add_ctrl.studentModel.tuition,	//would string + number = string?
+						course                                 : courseEval(admin_add_ctrl.studentModel.program),
+						courseCost                             : '$' + admin_add_ctrl.studentModel.tuition,	//string + number = string
 						amountOfSTRF                           : '$0.00',
-						quarterInWhichSTRFAssessmentWasRemitted: quarterEval(),
+						quarterInWhichSTRFAssessmentWasRemitted: quarterEval(admin_add_ctrl.studentModel.enrollmentDate),
 						thirParty                              : '',	//always left blank, need to be maually inputted
 						totalInstitutionalCharged              : postData.STRF.courseCost,
 						totalInstitutionalPaid                 : postData.STRF.courseCost	//would this work?
 					}
 				};	//also could be manipulated in the backend
+
 				function courseEval(programArr) {
-
+					var courseNames = [];
+					for (var i = 0; i < programArr.length; i++){	//iterating through each program
+						if (programArr[i]['programName'] === 'CNA')
+							courseNames.push('Nurse Assistant');
+						if else (programArr[i]['programName'] === 'HHA')
+							courseNames.push('Home Health Aide');
+						if else (programArr[i]['programName'] === 'SG')
+							courseNames.push('Security Guard');
+						if else (programArr[i]['programName'] === 'ESOL')
+							courseNames.push('ESOL')
+						//could potentially add more such as caregiver, RNA, etc..
+					}
+					return courseNames;	//the total number of items in the arr determines how many spreadsheets needs to be inputed aka one for each program
 				}
+
 				function startDateEval(programArr) {
-
+					var startDates = [];
+					startDates = programArr.map(function(eachProgram) {
+						var newItem = {
+							programName: eachProgram.programName,
+							startDate: eachProgram.programStartDate
+						};
+						return newItem;
+					});
+					return startDates;
 				}
+
 				function completionDateEval(programArr) {
-
+					var endDates = [];
+					startDates = programArr.map(function(eachProgram) {
+						var newItem = {
+							programName: eachProgram.programName,
+							endDate: eachProgram.programEndDate
+						};
+						return newItem;
+					});
+					return endDates;
 				}
-				function quarterEval() {}
-				function filter(data) {}	
-				//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
+
+				function quarterEval(enrollmentDate) {
+					var quarter;
+					var month = enrollmentDate.slice(5, 7);
+					switch (month){
+						case '01': 
+							quarter = 'first';
+							break;
+						case '02':
+							quarter = 'first';
+							break;
+						case '03':
+							quarter = 'first';
+							break;
+						case '04':
+							quarter = 'second';
+							break;
+						case '05':
+							quarter = 'second';
+							break;
+						case '06':
+							quarter = 'second';
+							break;
+						case '07':
+							quarter = 'third';
+							break;
+						case '08':
+							quarter = 'third';
+							break;
+						case '09':
+							quarter = 'third';
+							break;
+						case '10':
+							quarter = 'fourth';
+							break;
+						case '11':
+							quarter = 'fourth';
+							break;
+						case '12'
+							quarter = 'fourth';
+							break; 
+					}
+					return quarter;
+				}
+
+				function filter(data) {	//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
+					for (var eachSheet in data) {
+						for (eachProperty in data[eachSheet]){
+							if (data[eachSheet][eachProperty] === 'noneSelected' || data[eachSheet][eachProperty] === false)
+								data[eachSheet][eachProperty] = '';
+						}
+					}
+					console.log(data);
+					return data;
+				}	
+
+				
 				postData = filter(postData);
+
 				return postData;
 			};
 
