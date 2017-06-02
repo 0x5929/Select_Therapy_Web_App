@@ -578,7 +578,7 @@
 						email            : admin_add_ctrl.studentModel.email,
 						address          : admin_add_ctrl.studentModel.address,
 						course           : courseEval(admin_add_ctrl.studentModel.program),
-						startDate        : starteDateEval(admin_add_ctrl.studentModel.program),
+						startDate        : startDateEval(admin_add_ctrl.studentModel.program),
 						completionDate   : completionDateEval(admin_add_ctrl.studentModel.program),
 						graduate         : admin_add_ctrl.studentModel.graduate,
 						passedExam       : admin_add_ctrl.studentModel.passedExam,
@@ -599,14 +599,14 @@
 						localOrMailingAddress                  : admin_add_ctrl.studentModel.address,
 						addressAtTheTimeOfEnrollment           : 'same as mailing address',
 						homeAddress                            : 'same as mailing address',
-						dateEnrollment                         : admin_add_ctrl.studentModel.enrollmentDate,
+						dateEnrollment                         : new Date(admin_add_ctrl.studentModel.enrollmentDate).toISOString().slice(0,10),
 						course                                 : courseEval(admin_add_ctrl.studentModel.program),
 						courseCost                             : '$' + admin_add_ctrl.studentModel.tuition,	//string + number = string
 						amountOfSTRF                           : '$0.00',
 						quarterInWhichSTRFAssessmentWasRemitted: quarterEval(admin_add_ctrl.studentModel.enrollmentDate),
 						thirParty                              : '',	//always left blank, need to be maually inputted
-						totalInstitutionalCharged              : postData.STRF.courseCost,
-						totalInstitutionalPaid                 : postData.STRF.courseCost	//would this work?
+						totalInstitutionalCharged              : '$' + admin_add_ctrl.studentModel.tuition,
+						totalInstitutionalPaid                 : '$' + admin_add_ctrl.studentModel.tuition	//would this work?
 					}
 				};	//also could be manipulated in the backend
 
@@ -615,11 +615,11 @@
 					for (var i = 0; i < programArr.length; i++){	//iterating through each program
 						if (programArr[i]['programName'] === 'CNA')
 							courseNames.push('Nurse Assistant');
-						if else (programArr[i]['programName'] === 'HHA')
+						else if (programArr[i]['programName'] === 'HHA')
 							courseNames.push('Home Health Aide');
-						if else (programArr[i]['programName'] === 'SG')
+						else if (programArr[i]['programName'] === 'SG')
 							courseNames.push('Security Guard');
-						if else (programArr[i]['programName'] === 'ESOL')
+						else if (programArr[i]['programName'] === 'ESOL')
 							courseNames.push('ESOL')
 						//could potentially add more such as caregiver, RNA, etc..
 					}
@@ -640,7 +640,7 @@
 
 				function completionDateEval(programArr) {
 					var endDates = [];
-					startDates = programArr.map(function(eachProgram) {
+					endDates = programArr.map(function(eachProgram) {
 						var newItem = {
 							programName: eachProgram.programName,
 							endDate: eachProgram.programEndDate
@@ -687,7 +687,7 @@
 						case '11':
 							quarter = 'fourth';
 							break;
-						case '12'
+						case '12':
 							quarter = 'fourth';
 							break; 
 					}
@@ -696,7 +696,7 @@
 
 				function filter(data) {	//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
 					for (var eachSheet in data) {
-						for (eachProperty in data[eachSheet]){
+						for (var eachProperty in data[eachSheet]){
 							if (data[eachSheet][eachProperty] === 'noneSelected' || data[eachSheet][eachProperty] === false)
 								data[eachSheet][eachProperty] = '';
 						}
