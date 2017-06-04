@@ -3,7 +3,7 @@
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
 	function adminRouterHandler (fs, express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
-								signInSheetService, contactListService, adminFolderDocGenerate) {
+								signInSheetService, contactListService, adminFolderDocGenerate, googleSheetService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -17,6 +17,7 @@
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
 		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
+		adminRoute.post('/GoogleSync', adminGoogleSyncHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
@@ -334,4 +335,28 @@ REST: DELETE
 
 		return adminRoute;
 	}
+
+
+/**********************************************************
+ADMIN GOOGLE SYNC POST HANDLER
+REST: POST
+***********************************************************/
+
+	function adminGoogleSyncHandler(req, res, next) {
+		var SheetHelper = googleSheetService.sheetHelper;
+		var auth = req.get('Authorization');
+		console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
+		//check for auth
+		if (!auth)	return next('error: Authorization required');
+		var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
+		var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
+		//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
+		//need to do a query search to the student, and look for its google obj, for its properties for id
+		//then pass in all the nesscessary things into the helper.sync function 
+		// helper.sync(spreadsheet.id, spreadsheet.sheetId, function(err, successResposne) {	//callback function
+		// 	if (err) return next(err);
+		// 	console.log('WELL DONE, successResposne: ', successResposne);
+		// });
+	}
+
 }());

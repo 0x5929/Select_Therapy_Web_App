@@ -14,6 +14,8 @@ var fs                       	  = require('fs'),
 	helmet                        = require('helmet'),	//security
 	csrf                          = require('csurf'),	//security
 	officeGenerator               = require('officegen'),
+	google						  = require('googleapis'),
+	googleAuth					  = require('google-auth-library'),
 	//middleware
 	bodyParser                    = require('body-parser'),
 	cookieParser                  = require('cookie-parser'),
@@ -30,7 +32,8 @@ var fs                       	  = require('fs'),
 	configNM                      = require(path.join(__dirname, 'config/nodemail.js')),
 	configOG                      = require(path.join(__dirname, 'config/officegen.js'))(officeGenerator),
 	//fetching services
-	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in eccessary configs
+	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in neccessary configs
+	googleSheetService 			  = require(path.join(__dirname, 'services/googleSheet.js'))(google, googleAuth),	//pass in neccessary google stuff
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
 	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
@@ -72,7 +75,7 @@ app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up t
 //routes, passing in all the necessary module objects and also the office generator config for the construction of document obj in routes
 require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, 
 													csrfTokenMiddleware, officeGenDocxServiceConstruct, configOG, 
-													signInSheetGenerateService, contactListGenerateService, adminFolderGenService);
+													signInSheetGenerateService, contactListGenerateService, adminFolderGenService, googleSheetService);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

@@ -713,7 +713,7 @@
 
 			admin_add_ctrl.letsSyncWitGoogle = function() {
 				var postData = admin_add_ctrl.googlePostData();	//the data needs to be further manipulated for each program to be inputted in each google sheet
-				makeRequest('/admin/GoogleSync', postData, callbackFunc);
+				makeRequest('/admin/GoogleSync/', postData, callbackFunc);
 				function callbackFunc(err, spreadsheet) {
 					if (err) toastFactory.errorToast(err);
 					//if no err, it will call back with spreadsheet
@@ -738,15 +738,15 @@
 						}
 					}
 					console.log('TESTING ACCESS TOKEN: ', accessToken);
-					// ajaxService.post(URL, postData, configObj)
-					// 	.then(function(successResponse) {
-					// 		console.log(successResponse);
-					// 		return callback(null, successResponse);
-					// 	}, 
-					// 		function(failureResponse) {
-					// 			console.log(failureResponse);
-					// 			return callback(failureResponse.data);
-					// 	});
+					ajaxService.post(URL, postData, configObj)
+						.then(function(successResponse) {
+							console.log(successResponse);
+							return callback(null, successResponse);
+						}, 
+							function(failureResponse) {
+								console.log(failureResponse);
+								return callback(failureResponse.data);
+						});
 				}
 			};		
 
