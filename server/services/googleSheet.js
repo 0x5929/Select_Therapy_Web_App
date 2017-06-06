@@ -36,7 +36,7 @@
 		};
 
 
-		function syncDataHandler(spreadsheetID, sheetID, callback) {	//all params are passed in from routes after db query
+		function syncDataHandler(spreadsheetID, sheetID, data, callback) {	//all params are passed in from routes after db query
 																		//could technically also pass in the post data from routes for access here
 			//google sheets api
 			//following is spreadsheet.value.batchupdate

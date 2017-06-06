@@ -345,6 +345,7 @@ REST: POST
 	function adminGoogleSyncHandler(req, res, next) {
 		var SheetHelper = googleSheetService.sheetHelper;
 		var auth = req.get('Authorization');
+		var data = req.body;
 		console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
 		//check for auth
 		if (!auth)	return next('error: Authorization required');
@@ -353,7 +354,7 @@ REST: POST
 		//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
 		//need to do a query search to the student, and look for its google obj, for its properties for id
 		//then pass in all the nesscessary things into the helper.sync function 
-		// helper.sync(spreadsheet.id, spreadsheet.sheetId, function(err, successResposne) {	//callback function
+		// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
 		// 	if (err) return next(err);
 		// 	console.log('WELL DONE, successResposne: ', successResposne);
 		// });
