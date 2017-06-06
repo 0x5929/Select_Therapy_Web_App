@@ -7,6 +7,7 @@
 	function routeHandler(express, app, fs, path, bodyParser, validator, nodemailerService, passport, 
 	csrfTokenMiddleware, officeGenDocxConstruct, OGconfig, signInSheetService, contactListService, adminFolderGenService, googleSheetService) {	//exposing this file to server, all necessary objs passed in
 		//fetching all routers with its configueration from their seperate file modules
+		console.log('GOOGLE SHEET SERVICE: ', googleSheetService);
 		var adminRouter = require(path.join(__dirname, 'adminRouter/adminRouter.js'))(fs, express, app, path, bodyParser, 
 											officeGenDocxConstruct, OGconfig, signInSheetService, contactListService, adminFolderGenService, googleSheetService);
 		var contactUsMessageRouter = require(path.join(__dirname, 'sendMessage/sendMessage.js'))(express, app, bodyParser, nodemailerService);

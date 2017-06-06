@@ -196,7 +196,7 @@ REST: GET
 
 			}	
 
-	}
+		}
 
 /**********************************************************
 ADMIN ADD HANDLER + PARSE MIDDLEWARE
@@ -333,8 +333,7 @@ REST: DELETE
 
 		}
 
-		return adminRoute;
-	}
+
 
 
 /**********************************************************
@@ -342,22 +341,36 @@ ADMIN GOOGLE SYNC POST HANDLER
 REST: POST
 ***********************************************************/
 
-	function adminGoogleSyncHandler(req, res, next) {
-		var SheetHelper = googleSheetService.sheetHelper;
-		var auth = req.get('Authorization');
-		var data = req.body;
-		console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
-		//check for auth
-		if (!auth)	return next('error: Authorization required');
-		var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
-		var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
-		//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
-		//need to do a query search to the student, and look for its google obj, for its properties for id
-		//then pass in all the nesscessary things into the helper.sync function 
-		// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
-		// 	if (err) return next(err);
-		// 	console.log('WELL DONE, successResposne: ', successResposne);
-		// });
-	}
+		function adminGoogleSyncHandler(req, res, next) {
+			console.log('GOOGLE SHEET SERVICE: ', googleSheetService);
+			var SheetHelper = googleSheetService.sheetHelper;
+			var auth = req.get('Authorization');
+			var data = req.body;
+			console.log('TESTING DATA: ', data);
+			console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
+			//check for auth
+			if (!auth)	return next('error: Authorization required');
+			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
+			STIDbStudentCollection.findOne({'name': data.annualReport.firstName + ' ' + data.annualReport.lastName}, function(err, user) {	//could have the name property in another key like query from client side
+				if (err)	return next(err);
+				//access its google data
+				// need to implement logic: 
+				//first user must be saved, and this will retrieve its google data property, which will be properly saved in the first time
+				// then retrieving its google data, we can access its row number, and input all current data into sheets with sheet helper
+				//ALL THIS COULD BE COMBINED INTO ONE FUNCTIONALITY! SAVE USER AND SYNC TO GOOGLE, EVERYTIME CLIENT SAVES/MODIFYS A USER
+				// ONE FUNCTIONALITY?
+			});
+			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
+			//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
+			//need to do a query search to the student, and look for its google obj, for its properties for id
+			//then pass in all the nesscessary things into the helper.sync function 
+			// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
+			// 	if (err) return next(err);
+			// 	console.log('WELL DONE, successResposne: ', successResposne);
+			// });
+		}
 
+		return adminRoute;
+
+	}
 }());
