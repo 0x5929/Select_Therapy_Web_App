@@ -38,7 +38,7 @@ var fs                       	  = require('fs'),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
 	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
 	adminFolderGenService    	  = require(path.join(__dirname, 'services/adminFolderDocGen.js'));
-
+console.log('GOOGLE SHEET SERVICE: ', googleSheetService);
 //configuration
 
 configDB.databaseConnectionConfig();	//database configuration
