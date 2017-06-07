@@ -15,7 +15,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);
+		adminRoute.post('/add', adminAddPostParseMiddleware, googleSyncMiddleware, adminAddPostHandler);
 		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
 		adminRoute.post('/GoogleSync', adminGoogleSyncHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -226,6 +226,7 @@ REST: ADD
 			next();
 		}
 
+
 		function adminAddPostHandler(req, res, next) {
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, function(err, user) {
 				if (err) return next(err);
@@ -281,12 +282,31 @@ REST: ADD
 					//save the new student
 					newStudent.save(function(err) {
 						if (err) return next(err);
-						else return res.status(200).send('newStudent added').end();
+						else return res.status(200).send('newStudent added').end();	//could call next() for google sync
 					});
 				}
 			})
 		}
 
+		function googleSyncMiddleware(req, res, next) {
+			//getting the sheethelper service
+			var SheetHelper = googleSheetService.sheetHelper;
+			var auth = req.get('Authorization');	//getting authorization
+			var data = req.body;
+			console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
+			//check for auth
+			if (!auth)	return next('error: Authorization required');
+			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
+			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
+			//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
+			//need to do a query search to the student, and look for its google obj, for its properties for id
+			//then pass in all the nesscessary things into the helper.sync function 
+			// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
+			// 	if (err) return next(err);
+			// 	console.log('WELL DONE, successResposne: ', successResposne);
+			// });
+
+		}
 
 
 

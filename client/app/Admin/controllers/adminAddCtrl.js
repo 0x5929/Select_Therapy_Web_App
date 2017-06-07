@@ -433,7 +433,24 @@
 
 
 			admin_add_ctrl.submit = function() {
-				
+				//NEED TO ALSO MAKE SURE GOOGLE IS PROPERLY AUTHORIZED TO DO ACTIONS
+				var postData;
+
+					// params = {
+					// 	client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
+					// };
+
+					// gapi.auth2.init(params);	//initialize google auth
+					// auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
+					// //check if user is signed in
+					// if (!auth.isSignedIn.get())	return callback('you need to sign in wit google', null);
+					// accessToken = auth.currentUser.get().getAuthResponse().access_token;	//grabbing access token
+					// configObj = {
+					// 	headers: {
+					// 		'Authorization': 'Bearer ' + accessToken 
+					// 	}
+					// }
+					// console.log('TESTING ACCESS TOKEN: ', accessToken);				
 				postData      = {
 				enrollmentDate: new Date(admin_add_ctrl.studentModel.enrollmentDate).toISOString().slice(0,10),	//need to add for the rest
 				studentID     : admin_add_ctrl.studentModel.studentID,
@@ -482,8 +499,10 @@
 				passedExam         : admin_add_ctrl.studentModel.passedExam,
 				numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
 				noPassReason       : admin_add_ctrl.studentModel.noPassReason,
-				marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey
+				marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey,
+				googlePostData	   : admin_add_ctrl.googlePostData();
 			};
+
 			//below is to ensure only proper data gets passed into ajax service
 				postData.program = postData.program
 					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
@@ -492,15 +511,48 @@
 				if (admin_add_ctrl.noErrorCheck(postData)){	//calling error check to ensure proper data going into server
 					admin_add_ctrl.dataFilter(postData);
 					console.log('testing before data is sent to server: ', postData);
-					ajaxService.post('/admin/add/', postData)
-					.then(function(successResponse) {
-						toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
-						admin_add_ctrl.refresh();
-						console.log('success: ', successResponse);
-					}, 
-					function(failureResposne) {
-						console.log('error: ', failureResposne);
-					});
+					makeRequest('/admin/add/', postData, callback);
+
+					function callback(err, successResponse) {
+						if (err) {
+							console.log('HELLO WORLD ERROR: ', err);
+							return toastFactory.errorToast(err);
+						}
+						console.log('successResponse: ', successResponse);
+						return admin_add_ctrl.refresh();							
+						
+					}
+
+					function makeRequest(URL, data, callback) {
+						var params,
+							auth,
+							accessToken,
+							configObj;
+						params = {
+							client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
+						};
+						gapi.auth2.init(params);	//initialize google auth
+						auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
+						//check if user is signed in
+						if (!auth.isSignedIn.get())	return callback('you need to sign in wit google', null);
+						accessToken = auth.currentUser.get().getAuthResponse().access_token;	//grabbing access token
+						configObj = {
+							headers: {
+								'Authorization': 'Bearer ' + accessToken 
+							}
+						}						
+					}
+
+
+					ajaxService.post('/admin/add/', data, configObj)
+						.then(function(successResponse) {
+							toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
+							// admin_add_ctrl.refresh();
+							callback(null, successResponse);
+						}, 
+						function(failureResposne) {
+							callback(failureResponse.data);
+						});
 				} 
 				
 			};
@@ -711,44 +763,44 @@
 				return postData;
 			};
 
-			admin_add_ctrl.letsSyncWitGoogle = function() {
-				var postData = admin_add_ctrl.googlePostData();	//the data needs to be further manipulated for each program to be inputted in each google sheet
-				makeRequest('/admin/GoogleSync/', postData, callbackFunc);
-				function callbackFunc(err, spreadsheet) {
-					if (err) toastFactory.errorToast(err);
-					//if no err, it will call back with spreadsheet
-					//Do stuff with response in spreadsheet
-				}
-				function makeRequest(URL, data, callback) {
-					var params,
-						auth,
-						accessToken,
-						configObj;
-					params = {
-						client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
-					};
-					gapi.auth2.init(params);	//initialize google auth
-					auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
-					//check if user is signed in
-					if (!auth.isSignedIn.get())	return callback('you need to sign in wit google', null);
-					accessToken = auth.currentUser.get().getAuthResponse().access_token;	//grabbing access token
-					configObj = {
-						headers: {
-							'Authorization': 'Bearer ' + accessToken 
-						}
-					}
-					console.log('TESTING ACCESS TOKEN: ', accessToken);
-					ajaxService.post(URL, postData, configObj)
-						.then(function(successResponse) {
-							console.log(successResponse);
-							return callback(null, successResponse);
-						}, 
-							function(failureResponse) {
-								console.log(failureResponse);
-								return callback(failureResponse.data);
-						});
-				}
-			};		
+			// admin_add_ctrl.letsSyncWitGoogle = function() {
+			// 	var postData = admin_add_ctrl.googlePostData();	//the data needs to be further manipulated for each program to be inputted in each google sheet
+			// 	makeRequest('/admin/GoogleSync/', postData, callbackFunc);
+			// 	function callbackFunc(err, spreadsheet) {
+			// 		if (err) toastFactory.errorToast(err);
+			// 		//if no err, it will call back with spreadsheet
+			// 		//Do stuff with response in spreadsheet
+			// 	}
+			// 	function makeRequest(URL, data, callback) {
+			// 		var params,
+			// 			auth,
+			// 			accessToken,
+			// 			configObj;
+			// 		params = {
+			// 			client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
+			// 		};
+			// 		gapi.auth2.init(params);	//initialize google auth
+			// 		auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
+			// 		//check if user is signed in
+			// 		if (!auth.isSignedIn.get())	return callback('you need to sign in wit google', null);
+			// 		accessToken = auth.currentUser.get().getAuthResponse().access_token;	//grabbing access token
+			// 		configObj = {
+			// 			headers: {
+			// 				'Authorization': 'Bearer ' + accessToken 
+			// 			}
+			// 		}
+			// 		console.log('TESTING ACCESS TOKEN: ', accessToken);
+			// 		ajaxService.post(URL, postData, configObj)
+			// 			.then(function(successResponse) {
+			// 				console.log(successResponse);
+			// 				return callback(null, successResponse);
+			// 			}, 
+			// 				function(failureResponse) {
+			// 					console.log(failureResponse);
+			// 					return callback(failureResponse.data);
+			// 			});
+			// 	}
+			// };		
 
 		}
 }());
