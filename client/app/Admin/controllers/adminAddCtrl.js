@@ -500,16 +500,16 @@
 				numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
 				noPassReason       : admin_add_ctrl.studentModel.noPassReason,
 				marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey,
-				googlePostData	   : admin_add_ctrl.googlePostData();
+				googlePostData	   : admin_add_ctrl.googlePostData()
 			};
 
 			//below is to ensure only proper data gets passed into ajax service
-				postData.program = postData.program
-					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
-					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
-				});
 				if (admin_add_ctrl.noErrorCheck(postData)){	//calling error check to ensure proper data going into server
 					admin_add_ctrl.dataFilter(postData);
+					postData.program = postData.program
+						.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+						return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
+					});
 					console.log('testing before data is sent to server: ', postData);
 					makeRequest('/admin/add/', postData, callback);
 
