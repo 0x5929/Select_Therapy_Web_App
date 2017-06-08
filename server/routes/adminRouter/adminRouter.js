@@ -15,7 +15,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.post('/add', adminAddPostParseMiddleware, googleSyncMiddleware, adminAddPostHandler);
+		adminRoute.post('/add', adminAddPostParseMiddleware, assignRowNumberMiddleware, adminAddPostHandler, googleSyncMiddleware);	//order can be switched
 		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
 		adminRoute.post('/GoogleSync', adminGoogleSyncHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -226,6 +226,14 @@ REST: ADD
 			next();
 		}
 
+		function assignRowNumberMiddleware(req, res, next) {
+			//check if new user
+			//db call to find user
+				//if new user assign new row number
+				//get current row number
+				//new row number = current row number + 1;
+
+		}
 
 		function adminAddPostHandler(req, res, next) {
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, function(err, user) {
@@ -239,7 +247,7 @@ REST: ADD
 						if (userKey === 'name')	//updating the name property
 							user[userKey] = req.body.firstName + ' ' + req.body.lastName;
 					}
-					user.save(function(err) {
+					user.save(function(err) {	//need to call next stating its modifying, and update all fields in google
 						if (err)	return next(err);
 						else return res.status(200).send('STUDENT UPDATED').end();
 					});
@@ -248,6 +256,7 @@ REST: ADD
 
 				}
 				if (!user) {	//if no user, then save all the creditials from client side
+								//need to call next stating its new student, and therefore use append value in sheets api
 					var newStudent             = new STIDbStudentCollection();
 					newStudent.enrollmentDate  = req.body.enrollmentDate;
 					newStudent.studentID       = req.body.studentID;

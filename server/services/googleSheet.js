@@ -23,6 +23,7 @@
 
 		//adding prototype for sheetHelper
 		service.sheetHelper.prototype.syncData    = syncDataHandler;
+		servcice.sheetHelper.prototype.appendValue= appendValueHandler;
 		service.sheetHelper.prototype.createSheet = createSheetHandler;
 
 		//handers: 
@@ -92,6 +93,13 @@
 
 		function createSheetHandler() {	//TODO: fill in the handler for create sheet for the new year
 
+		}
+
+		function appendValueHandler() {
+			this.service.value.append(request, callback);
+			function callback(err, response) {
+				
+			}
 		}
 
 		//buildRowData & createHeader functionalities
