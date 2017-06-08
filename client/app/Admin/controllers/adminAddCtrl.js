@@ -11,7 +11,7 @@
 			
 			var admin_add_ctrl               = this;
 			var postData                     = null;
-			
+
 			admin_add_ctrl.programInputCount = 0;
 			admin_add_ctrl.googleSync        = false;
 			admin_add_ctrl.turnOnSyncButton  = false;
@@ -137,6 +137,7 @@
 			};	
 
 
+
 // IF ADMIN IS MODIFYING STUDENT INFO: 
 //add a modifying function that will populate all data from search to add
 
@@ -145,7 +146,12 @@
 			//if so we need to fill in all the ng models with studentvalue service
 
 			if ($stateParams.func && $stateParams.func === 'modify') {
-				console.log(studentValue);
+				var programObj 					 = {	//initalized to be pushed into the program arr
+					programName     : 'noneselected',
+					programRotation : '',
+					programStartDate: '',
+					programEndDate  : ''
+				};
 				for (var studentModelKey in admin_add_ctrl.studentModel){
 					for (var studentValueKey in studentValue){
 						if (studentModelKey === studentValueKey)
@@ -155,6 +161,12 @@
 				//add in an original name key for modifying purposes
 				admin_add_ctrl.studentModel.originalName = admin_add_ctrl.studentModel.firstName + ' ' + admin_add_ctrl.studentModel.lastName;
 				console.log(admin_add_ctrl.studentModel);
+				//need to implement a logic to count how many programs obj in program arr
+				//5 - the above number needs to be pushed into the program arr so it can properly reflect the program ng model
+				for (var currentProgramNum = admin_add_ctrl.studentModel.program.length; 
+					5 - currentProgramNum > 0; currentProgramNum++){
+					admin_add_ctrl.studentModel.program.push(programObj);
+				}
 			}
 
 
@@ -428,7 +440,7 @@
 						typeof dataToBeFiltered[key] === 'undefined')
 						dataToBeFiltered[key] = '';
 				}
-				console.log('testing after data is filtered: ', typeof(dataToBeFiltered.payRate));
+				console.log('testing after data is filtered: ', dataToBeFiltered);
 			};
 
 
@@ -450,66 +462,70 @@
 					// 		'Authorization': 'Bearer ' + accessToken 
 					// 	}
 					// }
-					// console.log('TESTING ACCESS TOKEN: ', accessToken);				
+					// console.log('TESTING ACCESS TOKEN: ', accessToken);		
+
+			console.log('DOES THIS GET RUN?', admin_add_ctrl.studentModel);		
 				postData      = {
-				enrollmentDate: new Date(admin_add_ctrl.studentModel.enrollmentDate).toISOString().slice(0,10),	//need to add for the rest
-				studentID     : admin_add_ctrl.studentModel.studentID,
-				firstName     : admin_add_ctrl.studentModel.firstName,
-				lastName      : admin_add_ctrl.studentModel.lastName,
-				// name       : admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
-				phoneNumber   : admin_add_ctrl.studentModel.phoneNumber,
-				ssn           : admin_add_ctrl.studentModel.ssn,
-				address       : admin_add_ctrl.studentModel.address,
-				email         : admin_add_ctrl.studentModel.email,
-				program: [{
-					programName     : admin_add_ctrl.studentModel.program[0]['programName'],
-					programRotation : admin_add_ctrl.studentModel.program[0]['programRotation'],
-					programStartDate: admin_add_ctrl.studentModel.program[0]['programStartDate'],
-					programEndDate  : admin_add_ctrl.studentModel.program[0]['programEndDate']
-				}, {
-					programName     : admin_add_ctrl.studentModel.program[1]['programName'],
-					programRotation : admin_add_ctrl.studentModel.program[1]['programRotation'],
-					programStartDate: admin_add_ctrl.studentModel.program[1]['programStartDate'],
-					programEndDate  : admin_add_ctrl.studentModel.program[1]['programEndDate']
-				}, {
-					programName     : admin_add_ctrl.studentModel.program[2]['programName'],
-					programRotation : admin_add_ctrl.studentModel.program[2]['programRotation'],
-					programStartDate: admin_add_ctrl.studentModel.program[2]['programStartDate'],
-					programEndDate  : admin_add_ctrl.studentModel.program[2]['programEndDate']
-				}, {
-					programName     : admin_add_ctrl.studentModel.program[3]['programName'],
-					programRotation : admin_add_ctrl.studentModel.program[3]['programRotation'],
-					programStartDate: admin_add_ctrl.studentModel.program[3]['programStartDate'],
-					programEndDate  : admin_add_ctrl.studentModel.program[3]['programEndDate']
-				}, {
-					programName     : admin_add_ctrl.studentModel.program[4]['programName'],
-					programRotation : admin_add_ctrl.studentModel.program[4]['programRotation'],
-					programStartDate: admin_add_ctrl.studentModel.program[4]['programStartDate'],
-					programEndDate  : admin_add_ctrl.studentModel.program[4]['programEndDate']
-				}],
-				graduate           : admin_add_ctrl.studentModel.graduate,
-				notGraduatingReason: admin_add_ctrl.studentModel.notGraduatingReason,
-				tuition            : admin_add_ctrl.studentModel.tuition,
-				tuitionPaid        : admin_add_ctrl.studentModel.tuitionPaid,
-				jobPlaced          : admin_add_ctrl.studentModel.jobPlaced,
-				weeklyWorkHours    : admin_add_ctrl.studentModel.weeklyWorkHours,
-				payRate            : admin_add_ctrl.studentModel.payRate,
-				jobDescription     : admin_add_ctrl.studentModel.jobDescription,
-				noJobReason        : admin_add_ctrl.studentModel.noJobReason,
-				passedExam         : admin_add_ctrl.studentModel.passedExam,
-				numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
-				noPassReason       : admin_add_ctrl.studentModel.noPassReason,
-				marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey,
-				googlePostData	   : admin_add_ctrl.googlePostData()
+					enrollmentDate: new Date(admin_add_ctrl.studentModel.enrollmentDate).toISOString().slice(0,10),	//need to add for the rest
+					studentID     : admin_add_ctrl.studentModel.studentID,
+					firstName     : admin_add_ctrl.studentModel.firstName,
+					lastName      : admin_add_ctrl.studentModel.lastName,
+					// name       : admin_add_ctrl.firstName + ' ' + admin_add_ctrl.lastName,
+					phoneNumber   : admin_add_ctrl.studentModel.phoneNumber,
+					ssn           : admin_add_ctrl.studentModel.ssn,
+					address       : admin_add_ctrl.studentModel.address,
+					email         : admin_add_ctrl.studentModel.email,
+					program: [{
+						programName     : admin_add_ctrl.studentModel.program[0]['programName'],
+						programRotation : admin_add_ctrl.studentModel.program[0]['programRotation'],
+						programStartDate: admin_add_ctrl.studentModel.program[0]['programStartDate'],
+						programEndDate  : admin_add_ctrl.studentModel.program[0]['programEndDate']
+					}, {
+						programName     : admin_add_ctrl.studentModel.program[1]['programName'],
+						programRotation : admin_add_ctrl.studentModel.program[1]['programRotation'],
+						programStartDate: admin_add_ctrl.studentModel.program[1]['programStartDate'],
+						programEndDate  : admin_add_ctrl.studentModel.program[1]['programEndDate']
+					}, {
+						programName     : admin_add_ctrl.studentModel.program[2]['programName'],
+						programRotation : admin_add_ctrl.studentModel.program[2]['programRotation'],
+						programStartDate: admin_add_ctrl.studentModel.program[2]['programStartDate'],
+						programEndDate  : admin_add_ctrl.studentModel.program[2]['programEndDate']
+					}, {
+						programName     : admin_add_ctrl.studentModel.program[3]['programName'],
+						programRotation : admin_add_ctrl.studentModel.program[3]['programRotation'],
+						programStartDate: admin_add_ctrl.studentModel.program[3]['programStartDate'],
+						programEndDate  : admin_add_ctrl.studentModel.program[3]['programEndDate']
+					}, {
+						programName     : admin_add_ctrl.studentModel.program[4]['programName'],
+						programRotation : admin_add_ctrl.studentModel.program[4]['programRotation'],
+						programStartDate: admin_add_ctrl.studentModel.program[4]['programStartDate'],
+						programEndDate  : admin_add_ctrl.studentModel.program[4]['programEndDate']
+					}],
+					graduate           : admin_add_ctrl.studentModel.graduate,
+					notGraduatingReason: admin_add_ctrl.studentModel.notGraduatingReason,
+					tuition            : admin_add_ctrl.studentModel.tuition,
+					tuitionPaid        : admin_add_ctrl.studentModel.tuitionPaid,
+					jobPlaced          : admin_add_ctrl.studentModel.jobPlaced,
+					weeklyWorkHours    : admin_add_ctrl.studentModel.weeklyWorkHours,
+					payRate            : admin_add_ctrl.studentModel.payRate,
+					jobDescription     : admin_add_ctrl.studentModel.jobDescription,
+					noJobReason        : admin_add_ctrl.studentModel.noJobReason,
+					passedExam         : admin_add_ctrl.studentModel.passedExam,
+					numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
+					noPassReason       : admin_add_ctrl.studentModel.noPassReason,
+					marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey,
+					googlePostData	   : admin_add_ctrl.googlePostData()
 			};
 
+			console.log('DOES THIS GET RUN?', postData);
 			//below is to ensure only proper data gets passed into ajax service
+				postData.program = postData.program
+					.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+					return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
+				});
 				if (admin_add_ctrl.noErrorCheck(postData)){	//calling error check to ensure proper data going into server
 					admin_add_ctrl.dataFilter(postData);
-					postData.program = postData.program
-						.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
-						return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
-					});
+
 					console.log('testing before data is sent to server: ', postData);
 					makeRequest('/admin/add/', postData, callback);
 
@@ -540,19 +556,18 @@
 							headers: {
 								'Authorization': 'Bearer ' + accessToken 
 							}
-						}						
+						}
+						ajaxService.post('/admin/add/', data, configObj)
+							.then(function(successResponse) {
+								toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
+								// admin_add_ctrl.refresh();
+								callback(null, successResponse);
+							}, 
+							function(failureResposne) {
+								callback(failureResponse.data);
+						});						
 					}
 
-
-					ajaxService.post('/admin/add/', data, configObj)
-						.then(function(successResponse) {
-							toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
-							// admin_add_ctrl.refresh();
-							callback(null, successResponse);
-						}, 
-						function(failureResposne) {
-							callback(failureResponse.data);
-						});
 				} 
 				
 			};
