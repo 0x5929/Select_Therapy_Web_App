@@ -203,6 +203,18 @@ ADMIN ADD HANDLER + PARSE MIDDLEWARE
 REST: ADD
 ***********************************************************/
 
+/*
+	THE LOGIC AS FOLLOWS: 
+		1. GOOGLE AUTH FIRST
+		2. DATA SENT BACK TO SERVER
+		3. SYNC WITH GOOGLE SHEET: APPEND
+		4. GRAB RESPOND BODY: ROW NUMBER
+		5. SAVE ROW NUMBER AND ALL OTHER KEYS TO DB
+		6. ONCE MODIFYING, GRAB ROW NUMBER, AND SYNC GOOGLE: UPDATE
+		7. ONCE NEW YEAR, SYNC GOOGLE: CREATE NEW SHEET FOR THE YEAR
+*/
+
+
 		function adminAddPostParseMiddleware(req, res, next) {
 			var requestBody           = req.body;
 			//parse all neccessary fields to be correctly input into db
