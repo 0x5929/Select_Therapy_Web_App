@@ -82,7 +82,7 @@
 
 			this.service.batchUpdate(request, function(err, response) {
 				if (err) {
-					console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 40: ', err);
+					console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 85: ', err);
 					return callback(err);
 				}
 				return callback(null, response);
@@ -96,9 +96,14 @@
 		}
 
 		function appendValueHandler() {
-			this.service.value.append(request, callback);
-			function callback(err, response) {
-				
+			this.service.value.append(request, function(err, response) {
+				if (err){
+					console.log('HELLO WORLD ERR AT GOOGLESHEETS 101: ', err);
+					return callback(err);
+				}
+				return callback(null, response);
+			});
+
 			}
 		}
 
