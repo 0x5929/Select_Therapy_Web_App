@@ -98,11 +98,11 @@
 		function appendValueHandler(spreadsheetID, data, callback) {
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'OVERWRITE';	//it doesnt really matter with append, it will add new row and append data
-			var range            = "'test'!A1:Z50000";	//give a huge range, so it will always append to the given table inside since there is only one
+			var range            = "A1:Z50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
 
 			var request = {
-				spreadsheetID   : spreadsheetID,
+				spreadsheetId   : spreadsheetID,
 				range           : range,	//TODO: update placeholder value
 				valueInputOption: valueInputOption,
 				insertDataOption: insertDataOption,
@@ -113,8 +113,8 @@
 				}
 				// auth: authClient	//is this necessary?
 			};	
-
-			this.service.value.append(request, function(err, response) {
+			console.log('HELLO WORLD TESTING: ', this.service);
+			this.service.spreadsheets.values.append(request, function(err, response) {
 				if (err){
 					console.log('HELLO WORLD ERR AT GOOGLESHEETS 101: ', err);
 					return callback(err);
@@ -128,13 +128,15 @@
 		//buildRowData & createHeader functionalities
 		function appendValues(data) {
 			var values = [];	//declaration and initialization of returned value 
+			var row = [];
 			for (var spreadSheetkey in data) {	
 				if (spreadSheetkey === 'annualReport'){
 					for (var annualReportKey in data[spreadSheetkey]){
-						values.push(data[key][annualReportKey]);
+						row.push(data[spreadSheetkey][annualReportKey]);
 					}	
 				}
 			}
+			values.push(row);
 			return values;	//values need to be in array for  //returned value
 		}
 		function buildRowData() {}

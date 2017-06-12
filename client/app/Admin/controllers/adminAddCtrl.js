@@ -545,7 +545,7 @@
 							accessToken,
 							configObj;
 						params = {
-							client_id: '462917637772-mctgo2js0fr7q07atbbcl0kci400f4rc.apps.googleusercontent.com'
+							client_id: '1080610187210-b2d58di99vr262qj9g17vm0jgnncb6bp.apps.googleusercontent.com'
 						};
 						gapi.auth2.init(params);	//initialize google auth
 						auth = gapi.auth2.getAuthInstance();	//returns googleUser Obj
