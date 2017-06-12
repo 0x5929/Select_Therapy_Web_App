@@ -23,7 +23,7 @@
 
 		//adding prototype for sheetHelper
 		service.sheetHelper.prototype.syncData    = syncDataHandler;
-		servcice.sheetHelper.prototype.appendValue= appendValueHandler;
+		service.sheetHelper.prototype.appendValue= appendValueHandler;
 		service.sheetHelper.prototype.createSheet = createSheetHandler;
 
 		//handers: 
@@ -95,7 +95,25 @@
 
 		}
 
-		function appendValueHandler() {
+		function appendValueHandler(spreadsheetID, data, callback) {
+			var valueInputOption = 'USER_ENTERED';
+			var insertDataOption = 'OVERWRITE';	//it doesnt really matter with append, it will add new row and append data
+			var range            = "'test'!A1:Z50000";	//give a huge range, so it will always append to the given table inside since there is only one
+			var majorDimension   = 'ROWS';
+
+			var request = {
+				spreadsheetID   : spreadsheetID,
+				range           : range,	//TODO: update placeholder value
+				valueInputOption: valueInputOption,
+				insertDataOption: insertDataOption,
+				resource        : {
+					range         : range,
+					majorDimension: majorDimension,
+					values        : appendValues(data)
+				}
+				// auth: authClient	//is this necessary?
+			};	
+
 			this.service.value.append(request, function(err, response) {
 				if (err){
 					console.log('HELLO WORLD ERR AT GOOGLESHEETS 101: ', err);
@@ -104,11 +122,21 @@
 				return callback(null, response);
 			});
 
-			}
 		}
+		
 
 		//buildRowData & createHeader functionalities
-
+		function appendValues(data) {
+			var values = [];	//declaration and initialization of returned value 
+			for (var spreadSheetkey in data) {	
+				if (spreadSheetkey === 'annualReport'){
+					for (var annualReportKey in data[spreadSheetkey]){
+						values.push(data[key][annualReportKey]);
+					}	
+				}
+			}
+			return values;	//values need to be in array for  //returned value
+		}
 		function buildRowData() {}
 		function createHeader() {}
 

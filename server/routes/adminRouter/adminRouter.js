@@ -248,6 +248,13 @@ REST: ADD
 		}
 
 		function adminAddPostHandler(req, res, next) {
+			var sheetHelper = googleSheetService.sheetHelper;
+			var auth        = req.get('Authorization');
+			var googleData  = req.body.googlePostData;
+			var sheetID     = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+			if (!auth)	return next('error: Authorization required');
+			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
+
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, function(err, user) {
 				if (err) return next(err);
 				if (user) {
@@ -269,6 +276,17 @@ REST: ADD
 				}
 				if (!user) {	//if no user, then save all the creditials from client side
 								//need to call next stating its new student, and therefore use append value in sheets api
+
+					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
+					helper.appendValue(sheetID, googleData, function(err, successResposne) {
+						if (err) return next(err);
+						console.log(successResposne);
+						//do something with succcess response ie grab row number
+					});
+
+
+
+
 					var newStudent             = new STIDbStudentCollection();
 					newStudent.enrollmentDate  = req.body.enrollmentDate;
 					newStudent.studentID       = req.body.studentID;
