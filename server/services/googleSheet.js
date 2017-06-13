@@ -127,16 +127,39 @@
 		
 		function dataOrganizerHandler(data) {
 			//first: grab all the course in course arr
-			for (var spreadSheetkey in data) {
-				if (spreadSheetkey === 'annualReport') {
-					for (var annualReportKey in data[spreadSheetkey]){
-						if (annualReportKey === 'course'){
-							data[spreadSheetkey][annualReportKey] = data[spreadSheetkey][annualReportKey][0];	//setting data to CNA atm
-							//NEED TO FIGURE OUT A BETTER WAY TO HAVE ALL THE SHEETS TO BE ORGANIZED BY ITS PROGRAM NAME 
-						}
+			// for (var spreadSheetkey in data) {
+			// 	if (spreadSheetkey === 'annualReport') {
+			// 		for (var annualReportKey in data[spreadSheetkey]){
+			// 			if (annualReportKey === 'course'){
+			// 				data[spreadSheetkey][annualReportKey] = data[spreadSheetkey][annualReportKey][0];	//setting data to CNA atm
+			// 				//NEED TO FIGURE OUT A BETTER WAY TO HAVE ALL THE SHEETS TO BE ORGANIZED BY ITS PROGRAM NAME 
+			// 			}
+			// 		}
+			// 	}
+			// }
+			var returnedData = {};
+			var performanceReport = data.annualReport;
+			var STRF = data.STRF;
+			if (data.annualReport && data.annualReport.course){
+				for (var i = 0; i < data.annualReport.course.length; i++){
+					if (data.annualReport.course[i] === 'Nurse Assistant'){
+						performanceReport.course           = 'Nurse Assistant';
+						performanceReport.spreadSheetTitle = 'Nurse Assistant';		//this can be switched to spreadsheet ID
+						STRF.course                        = 'Nurse Assistant';
+						STRF.spreadSheetTitle              = 'Nurse Assistant';
+					}else if (data.annualReport.course[i] === 'Home Health Aide'){
+
+					}else if (data.annualReport.course[i] === 'Security Guard'){
+
+					}else if (data.annualReport.course[i] === 'ESOL'){
+
 					}
 				}
 			}
+			returnedData.performanceReport = performanceReport;
+			returnedData.STRF = STRF; 	//this can be improved to have the returned data indicate which spreadsheet
+										//possibly by using a switch statement
+			return returnedData;
 		}
 
 		//buildRowData & createHeader functionalities
