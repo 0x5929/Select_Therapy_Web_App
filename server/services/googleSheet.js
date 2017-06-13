@@ -22,9 +22,10 @@
 
 
 		//adding prototype for sheetHelper
-		service.sheetHelper.prototype.syncData    = syncDataHandler;
-		service.sheetHelper.prototype.appendValue= appendValueHandler;
-		service.sheetHelper.prototype.createSheet = createSheetHandler;
+		service.sheetHelper.prototype.syncData      = syncDataHandler;
+		service.sheetHelper.prototype.appendValue   = appendValueHandler;
+		service.sheetHelper.prototype.createSheet   = createSheetHandler;
+		service.sheethelper.prototype.dataOrganizer = dataOrganizerHandler;
 
 		//handers: 
 		function sheetHelperHandler(accessToken) {
@@ -124,6 +125,19 @@
 
 		}
 		
+		function dataOrganizerHandler(data) {
+			//first: grab all the course in course arr
+			for (var spreadSheetkey in data) {
+				if (spreadSheetkey === 'annualReport') {
+					for (var annualReportKey in data[spreadSheetkey]){
+						if (annualReportKey === 'course'){
+							data[spreadSheetkey][annualReportKey] = data[spreadSheetkey][annualReportKey][0];	//setting data to CNA atm
+							//NEED TO FIGURE OUT A BETTER WAY TO HAVE ALL THE SHEETS TO BE ORGANIZED BY ITS PROGRAM NAME 
+						}
+					}
+				}
+			}
+		}
 
 		//buildRowData & createHeader functionalities
 		function appendValues(data) {
