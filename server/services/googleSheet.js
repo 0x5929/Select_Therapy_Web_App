@@ -110,7 +110,7 @@
 				resource        : {
 					range         : range,
 					majorDimension: majorDimension,
-					values        : appendValues(data)
+					values        : appendValues(data, spreadsheetID)
 				}
 				// auth: authClient	//is this necessary?
 			};	
@@ -124,6 +124,14 @@
 			});
 
 		}
+
+
+		/**
+		* ORGANIZES THE DATA PASSED IN FROM CLIENT SIDE, ESPEICALLY THE COURSE TITLE, AND ADDED IN A SPREADSHEETID
+		* maybe this whole functin needs to be a route middleware, so it can properly pass in course spreadsheetID
+		* @PARAMS data passed in from client side
+		* @RETURN data in array form with course properly organized, and spreadID as well
+		*/
 		
 		function dataOrganizerHandler(data) {
 			//first: grab all the course in course arr
@@ -137,15 +145,16 @@
 			// 		}
 			// 	}
 			// }
-			var returnedData = {};
+			var returnedData = [];
 			var performanceReport = data.annualReport;
 			var STRF = data.STRF;
 			if (data.annualReport && data.annualReport.course){
 				for (var i = 0; i < data.annualReport.course.length; i++){
 					if (data.annualReport.course[i] === 'Nurse Assistant'){
 						performanceReport.course           = 'Nurse Assistant';
-						performanceReport.spreadSheetTitle = 'Nurse Assistant';		//this can be switched to spreadsheet ID
+						performanceReport.spreadsheetID    = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';		//this can be switched to spreadsheet ID
 						STRF.course                        = 'Nurse Assistant';
+						STRF.spreadsheetID                 = '';
 						STRF.spreadSheetTitle              = 'Nurse Assistant';
 					}else if (data.annualReport.course[i] === 'Home Health Aide'){
 
@@ -156,23 +165,32 @@
 					}
 				}
 			}
-			returnedData.performanceReport = performanceReport;
-			returnedData.STRF = STRF; 	//this can be improved to have the returned data indicate which spreadsheet
+			returnedData.push(performanceReport);
+			returnedData.push(STRF); 	//this can be improved to have the returned data indicate which spreadsheet
 										//possibly by using a switch statement
 			return returnedData;
 		}
 
 		//buildRowData & createHeader functionalities
-		function appendValues(data) {
+		function appendValues(data, spreadsheetID) {
 			var values = [];	//declaration and initialization of returned value 
 			var row = [];
-			for (var spreadSheetkey in data) {	
-				if (spreadSheetkey === 'annualReport'){
-					for (var annualReportKey in data[spreadSheetkey]){
-						row.push(data[spreadSheetkey][annualReportKey]);
-					}	
+			// for (var spreadSheetkey in data) {	
+			// 	if (spreadSheetkey === 'annualReport'){
+			// 		for (var annualReportKey in data[spreadSheetkey]){
+			// 			row.push(data[spreadSheetkey][annualReportKey]);
+			// 		}	
+			// 	}
+			// }
+			for (var spreadsheetIndex = 0; spreadsheetIndex < data.length; spreadsheetIndex++){
+				if (data[spreadsheetIndex][spreadsheetID] === spreadsheetID){
+					for (var propertyKey in data[spreadsheetIndex]){
+						if (data[spreadsheetIndex][propertyKey] === 'spreadsheetID')	continue;
+						row.push(data[spreadsheetIndex][propertyKey]);
+					}
 				}
 			}
+
 			values.push(row);
 			return values;	//values need to be in array for  //returned value
 		}
