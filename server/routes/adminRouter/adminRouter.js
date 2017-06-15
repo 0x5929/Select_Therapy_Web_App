@@ -15,7 +15,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.post('/add', adminAddPostParseMiddleware, adminAddPostHandler);	//order can be switched
+		adminRoute.post('/add', adminAddPostParseMiddleware, googleDataOrganizerMiddleware, adminAddPostHandler);	//order can be switched
 		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
 		adminRoute.post('/GoogleSync', adminGoogleSyncHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
@@ -238,13 +238,31 @@ REST: ADD
 			next();
 		}
 
-		function assignRowNumberMiddleware(req, res, next) {
-			//check if new user
-			//db call to find user
-				//if new user assign new row number
-				//get current row number
-				//new row number = current row number + 1;
 
+		function googleDataOrganizerMiddleware(req, res, next) {
+			var returnedData = [];
+			var googleData = req.body.googlePostData;
+			//clean up google data
+			//get spreadSheet data
+			var performanceReport = googleData.annualReport;
+			var STRF = googleData.STRF;
+			var course = performanceReport.course;	//[] form
+			for (var index = 0; index < course.length; index++){
+				if (course[index] === 'Nurse Assistant'){
+					performanceReport.course           = 'Nurse Assistant';
+					performanceReport.spreadsheetID    = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';		//this can be switched to spreadsheet ID
+					STRF.course                        = 'Nurse Assistant';
+					STRF.spreadsheetID                 = '';
+				}else if (course[index] === 'Home Health Aide'){
+
+				}else if (course[index] === 'Security Guard'){
+
+				}else if (course[index] === 'ESOL'){
+
+				}				
+			}
+			//calling next
+			next();
 		}
 
 		function adminAddPostHandler(req, res, next) {
