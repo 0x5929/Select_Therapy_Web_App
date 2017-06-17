@@ -249,10 +249,13 @@ REST: ADD
 			var course = performanceReport.course;	//[] form
 			for (var index = 0; index < course.length; index++){
 				if (course[index] === 'Nurse Assistant'){
-					performanceReport.course           = 'Nurse Assistant';
-					performanceReport.spreadsheetID    = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';		//this can be switched to spreadsheet ID
-					STRF.course                        = 'Nurse Assistant';
-					STRF.spreadsheetID                 = '';
+					var CNAPerformanceReport           = performanceReport;
+					var CNASTRF                        = STRF;
+					CNAPerformanceReport.course        = 'Nurse Assistant';
+					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';	
+					CNASTRF.course                     = 'Nurse Assistant';
+					CNASTRF.spreadsheetID                 = '';
+					returnedData.push(CNAPerformanceReport);	//also need to push STRF after testing goes through
 				}else if (course[index] === 'Home Health Aide'){
 
 				}else if (course[index] === 'Security Guard'){
@@ -262,14 +265,16 @@ REST: ADD
 				}				
 			}
 			//calling next
+			req.adminPost = {};
+			req.adminPost.googleData = returnedData;
 			next();
 		}
 
 		function adminAddPostHandler(req, res, next) {
 			var SheetHelper = googleSheetService.sheetHelper;
 			var auth        = req.get('Authorization');
-			var googleData  = req.body.googlePostData;
-			var sheetID     = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+			var googleData  = req.adminPost.googleData;
+			// var sheetID     = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
 			if (!auth)	return next('error: Authorization required');
 			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
 
@@ -296,7 +301,7 @@ REST: ADD
 								//need to call next stating its new student, and therefore use append value in sheets api
 
 					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
-					helper.appendValue(sheetID, googleData, function(err, successResposne) {
+					helper.appendValue(/*sheetID, */googleData, function(err, successResposne) {	//google data is in [] form, and in its item obj, it has spreadsheetid
 						if (err) return next(err);
 						console.log(successResposne);
 						//do something with succcess response ie grab row number

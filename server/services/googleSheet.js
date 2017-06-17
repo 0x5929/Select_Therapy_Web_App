@@ -25,7 +25,7 @@
 		service.sheetHelper.prototype.syncData      = syncDataHandler;
 		service.sheetHelper.prototype.appendValue   = appendValueHandler;
 		service.sheetHelper.prototype.createSheet   = createSheetHandler;
-		service.sheethelper.prototype.dataOrganizer = dataOrganizerHandler;
+		// service.sheethelper.prototype.dataOrganizer = dataOrganizerHandler;
 
 		//handers: 
 		function sheetHelperHandler(accessToken) {
@@ -96,11 +96,13 @@
 
 		}
 
-		function appendValueHandler(spreadsheetID, data, callback) {
+		function appendValueHandler(data, callback) {
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'OVERWRITE';	//it doesnt really matter with append, it will add new row and append data
 			var range            = "A1:Z50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
+			var spreadsheetID    = data[0]['spreadsheetID'];
+			var postData         = data[0];
 
 			var request = {
 				spreadsheetId   : spreadsheetID,
@@ -110,7 +112,7 @@
 				resource        : {
 					range         : range,
 					majorDimension: majorDimension,
-					values        : appendValues(data, spreadsheetID)
+					values        : appendValues(postData, spreadsheetID)
 				}
 				// auth: authClient	//is this necessary?
 			};	
@@ -182,13 +184,17 @@
 			// 		}	
 			// 	}
 			// }
-			for (var spreadsheetIndex = 0; spreadsheetIndex < data.length; spreadsheetIndex++){
-				if (data[spreadsheetIndex][spreadsheetID] === spreadsheetID){
-					for (var propertyKey in data[spreadsheetIndex]){
-						if (data[spreadsheetIndex][propertyKey] === 'spreadsheetID')	continue;
-						row.push(data[spreadsheetIndex][propertyKey]);
-					}
-				}
+			// for (var spreadsheetIndex = 0; spreadsheetIndex < data.length; spreadsheetIndex++){
+			// 	if (data[spreadsheetIndex]['spreadsheetID'] === spreadsheetID){
+			// 		for (var propertyKey in data[spreadsheetIndex]){
+			// 			if (data[spreadsheetIndex][propertyKey] === 'spreadsheetID')	continue;
+			// 			row.push(data[spreadsheetIndex][propertyKey]);
+			// 		}
+			// 	}
+			// }
+			for (var key in data) {
+				if (key === 'spreadsheetID')	continue;
+				row.push(data[key]);
 			}
 
 			values.push(row);
