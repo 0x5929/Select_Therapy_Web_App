@@ -679,14 +679,17 @@
 
 				function courseEval(programArr) {
 					var courseNames = [];
-					for (var i = 0; i < programArr.length; i++){	//iterating through each program
-						if (programArr[i]['programName'] === 'CNA')
+					var programs = programArr.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+						return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
+					});
+					for (var i = 0; i < programs.length; i++){	//iterating through each program
+						if (programs[i]['programName'] === 'CNA')
 							courseNames.push('Nurse Assistant');
-						else if (programArr[i]['programName'] === 'HHA')
+						else if (programs[i]['programName'] === 'HHA')
 							courseNames.push('Home Health Aide');
-						else if (programArr[i]['programName'] === 'SG')
+						else if (programs[i]['programName'] === 'SG')
 							courseNames.push('Security Guard');
-						else if (programArr[i]['programName'] === 'ESOL')
+						else if (programs[i]['programName'] === 'ESOL')
 							courseNames.push('ESOL')
 						//could potentially add more such as caregiver, RNA, etc..
 					}
@@ -694,27 +697,75 @@
 				}
 
 				function startDateEval(programArr) {
-					var startDates = [];
-					startDates = programArr.map(function(eachProgram) {
-						var newItem = {
-							programName: eachProgram.programName,
-							startDate: eachProgram.programStartDate
-						};
-						return newItem;
+					// var startDates = [];
+					var startDates = {};
+					var programs = programArr.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+						return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 					});
+
+					programs.forEach(function(eachProgram) {
+						if (eachProgram.programName === 'CNA'){
+							startDates.CNA = {};
+							startDates.CNA.startDate = eachProgram.programStartDate;
+						}else if (eachProgram.programName === 'HHA'){
+							startDates.HHA = {};
+							startDates.HHA.startDate = eachProgram.programStartDate;
+						}else if (eachProgram.programName === 'SG'){
+							startDates.SG = {};
+							startDates.SG.startDate = eachProgram.programStartDate;
+						}else if (eachProgram.programName === 'ESOL') {
+							startDates.ESOL = {};
+							startDates.ESOL.startDate = eachProgram.programStartDate;
+						}else if(eachProgram.programName === 'caregiver'){
+							startDates.caregiver = {};
+							startDates.caregiver.endDate = eachProgram.programStartDate;
+						}
+					});
+
+					// startDates = programs.map(function(eachProgram) {
+					// 	var newItem = {
+					// 		programName: eachProgram.programName,
+					// 		startDate: eachProgram.programStartDate
+					// 	};
+					// 	return newItem;
+					// });
 					return startDates;
 				}
 
 				function completionDateEval(programArr) {
-					var endDates = [];
-					endDates = programArr.map(function(eachProgram) {
-						var newItem = {
-							programName: eachProgram.programName,
-							endDate: eachProgram.programEndDate
-						};
-						return newItem;
+					var endDates = {};
+					// var endDates = [];
+					var programs = programArr.filter(function(eachProgram) {	//filters each program input so only the submitted values are submitted to the db
+						return eachProgram.programName !== 'noneSelected' && eachProgram.programRotation;
 					});
-					return endDates;
+
+					programs.forEach(function(eachProgram) {
+						if (eachProgram.programName === 'CNA'){
+							endDates.CNA = {};
+							endDates.CNA.endDate = eachProgram.programEndDate;
+						}else if (eachProgram.programName === 'HHA'){
+							endDates.HHA = {};
+							endDates.HHA.endDate = eachProgram.programEndDate;
+						}else if (eachProgram.programName === 'SG'){
+							endDates.SG = {};
+							endDates.SG.endDate = eachProgram.programEndDate;
+						}else if (eachProgram.programName === 'ESOL') {
+							endDates.ESOL = {};
+							endDates.ESOL.endDate = eachProgram.programEndDate;
+						}else if(eachProgram.programName === 'caregiver'){
+							endDates.caregiver = {};
+							endDates.caregiver.endDate = eachProgram.programEndDate;
+						}
+					});
+
+					// endDates = programs.map(function(eachProgram) {
+					// 	var newItem = {
+					// 		programName: eachProgram.programName,
+					// 		endDate: eachProgram.programEndDate
+					// 	};
+					// 	return newItem;
+					// });
+					return endDates;	//WHY DONT WE CHANGE THE FORMAT TO OBJECTS, EASIER DATA MANIPULATION
 				}
 
 				function quarterEval(enrollmentDate) {

@@ -252,7 +252,9 @@ REST: ADD
 					var CNAPerformanceReport           = performanceReport;
 					var CNASTRF                        = STRF;
 					CNAPerformanceReport.course        = 'Nurse Assistant';
-					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';	
+					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					CNAPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
+					CNAPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
 					CNASTRF.course                     = 'Nurse Assistant';
 					CNASTRF.spreadsheetID                 = '';
 					returnedData.push(CNAPerformanceReport);	//also need to push STRF after testing goes through
@@ -304,6 +306,20 @@ REST: ADD
 					helper.appendValue(/*sheetID, */googleData, function(err, successResposne) {	//google data is in [] form, and in its item obj, it has spreadsheetid
 						if (err) return next(err);
 						console.log(successResposne);
+						var updatedRange = successResposne.updatedRange;
+						var resultRange, resultRow;
+						//need to look for the first number value after ! sign
+						for (var i = 0; i < updatedRange.length; i++){
+							if (updatedRange[i] != '!')	continue;
+							else {
+								resultRange = updatedRange.slice(i + 1);	//slices the string after ! mark
+							}
+						}
+						for (var j = 0; j < resultRange.length; j++) {
+							if (typeof resultRange[j] != 'number')	continue;
+							else resultRow = resultRange[j];
+						}
+						console.log('HELLLL WORLD, RESULT ROW, STILL NEED TO TEST IF ITS THE ROW INDEX DOE: ', resultRow);
 						//do something with succcess response ie grab row number
 					});
 

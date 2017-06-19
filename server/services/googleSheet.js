@@ -198,6 +198,7 @@
 			}
 
 			values.push(row);
+			console.log(values);
 			return values;	//values need to be in array for  //returned value
 		}
 		function buildRowData() {}
