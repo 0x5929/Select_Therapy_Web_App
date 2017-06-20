@@ -822,7 +822,7 @@
 					console.log(data);
 					return data;
 				}	
-
+				//NEED TO FILTER THROUGH EMPTY ONES AND PUT N/A INSTEAD, FOR GOOGLE SHEETS API TO FUNCTION PROPERLY
 				
 				postData = filter(postData);
 

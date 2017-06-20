@@ -98,8 +98,8 @@
 
 		function appendValueHandler(data, callback) {
 			var valueInputOption = 'USER_ENTERED';
-			var insertDataOption = 'OVERWRITE';	//it doesnt really matter with append, it will add new row and append data
-			var range            = "A1:Z50000";	//give a huge range, so it will always append to the given table inside since there is only one
+			var insertDataOption = 'INSERT_ROWS';	//it doesnt really matter with append, it will add new row and append data
+			var range            = "Sheet1!A1:Q50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
 			var spreadsheetID    = data[0]['spreadsheetID'];
 			var postData         = data[0];

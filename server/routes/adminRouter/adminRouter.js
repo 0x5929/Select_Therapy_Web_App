@@ -306,7 +306,7 @@ REST: ADD
 					helper.appendValue(/*sheetID, */googleData, function(err, successResposne) {	//google data is in [] form, and in its item obj, it has spreadsheetid
 						if (err) return next(err);
 						console.log(successResposne);
-						var updatedRange = successResposne.updatedRange;
+						var updatedRange = successResposne.updates.updatedRange;
 						var resultRange, resultRow;
 						//need to look for the first number value after ! sign
 						for (var i = 0; i < updatedRange.length; i++){
