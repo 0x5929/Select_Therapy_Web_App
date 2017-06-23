@@ -815,8 +815,8 @@
 				function filter(data) {	//takes care of graudate, passedexam, employed, and all other boolean/noneselected fields to change it to ''
 					for (var eachSheet in data) {
 						for (var eachProperty in data[eachSheet]){
-							if (data[eachSheet][eachProperty] === 'noneSelected' || data[eachSheet][eachProperty] === false)
-								data[eachSheet][eachProperty] = '';
+							if (data[eachSheet][eachProperty] === 'noneSelected' || data[eachSheet][eachProperty] === false || data[eachSheet][eachProperty] === '')
+								data[eachSheet][eachProperty] = 'N/A';
 						}
 					}
 					console.log(data);

@@ -38,50 +38,32 @@
 		};
 
 
-		function syncDataHandler(spreadsheetID, sheetID, data, callback) {	//all params are passed in from routes after db query
+		function syncDataHandler(spreadsheetID, range, data, callback) {	//all params are passed in from routes after db query
 																		//could technically also pass in the post data from routes for access here
-			//google sheets api
-			//following is spreadsheet.value.batchupdate
-			//we need spreadsheet.batchupdate
-			// var request = {
-			// 	spreadsheetID: '',	//update placeholder value
-			// 	resource: {
-			// 		//how the input data should be interpreted
-			// 		valueInputOption: '',//update placeholder value
-			// 		data: []	// update placeholder value
-			// 		//could add more desired properties to request body
-			// 	},
-			// 	//auth: taken care of in the this.service
-			// };
-			var requests = [];
-			//resize the sheet, if necessary	WE SHOULD NEVER HAVE TO RESIZE THE SHEETS BECAUSE WHEN WE CREATE IT, EACH TIME IT WILL HAVE PLENTY OF ROOM FOR ALL ROWS, AND COLUMNS WILL ALWAYS STAY THE SAME
-			// var updateSheetProperties = {
-			// 	updateSheetProperties: {
-			// 		properties: {
-			// 			sheetId: sheetID,
-			// 			gridProperties: {
-			// 				rowCount: NaN, 
-			// 				columnCount: NaN
-			// 			}
-			// 		},
-			// 		fields: 'gridProperties(rowCount,columnCount)'
-			// 	}
-			// };
+			var valueInputOption = 'USER_ENTERED';	
+			var range            = range;	//give a huge range, so it will always append to the given table inside since there is only one
+			var majorDimension   = 'ROWS';
 
-			//set cell values: 
-			var updateCell = {
-				updateCells: {
-					start: {
-						sheetId    : sheetID,
-						rowIndex   : NaN,	//making sure that this row index correspond with user db google row value
-						columnIndex: 0
-					},
-					rows: buildRowData(),
-					fields: '*'	//for all fields, even the empty one will have an '' value
+			var request = {
+				spreadsheetId: spreadsheetID,
+				resource: {
+					valueInputOption: valueInputOption,
+					data            : [
+						{
+							range         : range,
+							majorDimension: majorDimension,
+							values        : [
+								[
+									//this is the row of data
+								]
+							]
+						}
+					]
 				}
-			};
 
-			this.service.batchUpdate(request, function(err, response) {
+			};
+			 
+			this.service.spreadsheets.value.batchUpdate(request, function(err, response) {
 				if (err) {
 					console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 85: ', err);
 					return callback(err);
