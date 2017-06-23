@@ -280,7 +280,9 @@ REST: ADD
 			if (!auth)	return next('error: Authorization required');
 			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
 
-			STIDbStudentCollection.findOne({'name': req.body.originalName}, function(err, user) {
+			STIDbStudentCollection.findOne({'name': req.body.originalName}, databaseQueryHandler);
+
+			function databaseQueryHandler(err, user) {
 				if (err) return next(err);
 				if (user) {
 					for (var userKey in user){	//update user
@@ -291,72 +293,67 @@ REST: ADD
 						if (userKey === 'name')	//updating the name property
 							user[userKey] = req.body.firstName + ' ' + req.body.lastName;
 					}
-					user.save(function(err) {	//need to call next stating its modifying, and update all fields in google
-						if (err)	return next(err);
-						else return res.status(200).send('STUDENT UPDATED').end();
-					});
-					console.log('HELLO WORLD ERR AT 278');
-					console.log('HELLO WORLD ERR AT 280');
-
+					user.save(userUpdatedHandler);
 				}
-				if (!user) {	//if no user, then save all the creditials from client side
-								//need to call next stating its new student, and therefore use append value in sheets api
-
+				if (!user) {	
 					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
-					helper.appendValue(/*sheetID, */googleData, function(err, successResposne) {	//google data is in [] form, and in its item obj, it has spreadsheetid
-						if (err) return next(err);
-						console.log(successResposne);
-						var updatedRange = successResposne.updates.updatedRange;
-						//using updated range is all we need
-						//need to place all the db saves in this call back
-	// 					var newStudent             = new STIDbStudentCollection();
-	// 					newStudent.enrollmentDate  = req.body.enrollmentDate;
-	// 					newStudent.studentID       = req.body.studentID;
-	// 					newStudent.firstName       = req.body.firstName;
-	// 					newStudent.lastName        = req.body.lastName;
-	// 					newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
-	// 					newStudent.phoneNumber     = req.body.phoneNumber;
-	// 					newStudent.ssn             = req.body.ssn;
-	// 					newStudent.address         = req.body.address;
-	// 					newStudent.email           = req.body.email;
-	// 					newStudent.program         = req.body.program;
-	// 					newStudent.tuition         = req.body.tuition;
-	// 					newStudent.graduate        = req.body.graduate;
-	// 					newStudent.tuitionPaid     = req.body.tuitionPaid;
-	// 					newStudent.marketingSurvey = req.body.marketingSurvey;		
-	// //depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
-	// //and depending on those conditions we save the necessary data into db	
-	// 					if (req.body.graduate){	//graduate condition
-	// 						newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
-	// 						newStudent.jobPlaced  = req.body.jobPlaced;	//saving necesasry properties
-	// 						if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
-	// 						else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
-	// 						if (req.body.jobPlaced){
-	// 							newStudent.weeklyWorkHours   = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
-	// 							newStudent.payRate           = req.body.payRate;
-	// 							newStudent.placeOfEmployment = req.body.placeOfEmployment;
-	// 							newStudent.employmentAddress = req.body.employmentAddress;
-	// 							newStudent.jobPosition       = req.body.jobPosition;
-	// 						}else	newStudent.noJobReason = req.body.noJobReason;	
-	// 					}
-	// 					else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
-	// 					//save the new student
-	// 					newStudent.save(function(err) {
-	// 						if (err) return next(err);
-	// 						else return res.status(200).send('newStudent added').end();	//could call next() for google sync
-	// 					});
-
-					
-
-
-					});
-
-
-
-
+					helper.appendValue(googleData,	googleAppendValueHandler);
 
 				}
-			})
+			}
+
+			function userUpdatedHandler (err) {
+				if (err)	return next(err);
+				else return res.status(200).send('STUDENT UPDATED').end();
+			}
+
+			function newUserSavedHandler (err) {
+				if (err) return next(err);
+				else return res.status(200).send('newStudent added').end();	
+			}
+
+			function googleAppendValueHandler (err, successResposne) {
+				if (err) return next(err);
+				console.log(successResposne);
+				var updatedRange = successResposne.updates.updatedRange;
+				//using updated range is all we need
+				//need to place all the db saves in this call back
+				//we also need to save the appropriate spreadsheetid, and range to db
+				var newStudent             = new STIDbStudentCollection();
+				newStudent.enrollmentDate  = req.body.enrollmentDate;
+				newStudent.studentID       = req.body.studentID;
+				newStudent.firstName       = req.body.firstName;
+				newStudent.lastName        = req.body.lastName;
+				newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
+				newStudent.phoneNumber     = req.body.phoneNumber;
+				newStudent.ssn             = req.body.ssn;
+				newStudent.address         = req.body.address;
+				newStudent.email           = req.body.email;
+				newStudent.program         = req.body.program;
+				newStudent.tuition         = req.body.tuition;
+				newStudent.graduate        = req.body.graduate;
+				newStudent.tuitionPaid     = req.body.tuitionPaid;
+				newStudent.marketingSurvey = req.body.marketingSurvey;		
+	//depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
+	//and depending on those conditions we save the necessary data into db	
+				if (req.body.graduate){	//graduate condition
+					newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
+					newStudent.jobPlaced  = req.body.jobPlaced;	//saving necesasry properties
+					if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
+					else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
+					if (req.body.jobPlaced){
+						newStudent.weeklyWorkHours   = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
+						newStudent.payRate           = req.body.payRate;
+						newStudent.placeOfEmployment = req.body.placeOfEmployment;
+						newStudent.employmentAddress = req.body.employmentAddress;
+						newStudent.jobPosition       = req.body.jobPosition;
+					}else	newStudent.noJobReason = req.body.noJobReason;	
+				}
+				else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
+				//save the new student
+				newStudent.save(newUserSavedHandler);
+
+			}
 		}
 
 		function googleSyncMiddleware(req, res, next) {
