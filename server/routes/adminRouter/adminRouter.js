@@ -250,7 +250,8 @@ REST: ADD
 		}
 
 
-		function googleDataOrganizerMiddleware(req, res, next) {
+		function googleDataOrganizerMiddleware(req, res, next) {	// ALL DATA FROM CLIENT NEEDS TO BE FORMATTED IN HERE TO BE SYNCED WITH GOOGLE
+																	//COULD BE PLACED IN GOOGLE'S SERVICE
 			var returnedData = [];
 			var googleData = req.body.googlePostData;
 			//clean up google data
@@ -310,6 +311,8 @@ REST: ADD
 			//calling next
 			req.adminPost = {};
 			req.adminPost.googleData = returnedData;
+			//adding google data [] for db onto request body
+			req.body.google = [];
 			next();
 		}
 
@@ -340,65 +343,76 @@ REST: ADD
 				if (!user) {	
 					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
 					//this needs to depend on how many sheets needs to be appended
-					helper.appendValue(googleData,	googleAppendValueHandler);
+					helper.appendValue(googleData,	googleAppendValueHandler, dbCheckHandler);
 					//using for loop instead of forEach for performance boost
-					for (var i = 0; i < googleData.length; i++) {
-						//need to figure out a way for all append to be done, then call db, maybe with another callback
+					// for (var i = 0; i < googleData.length; i++) {
+					// 	//need to figure out a way for all append to be done, then call db, maybe with another callback
+					// 	helper.appendValue(googleData[i],	googleAppendValueHandler);
+					// }
+				}
+
+				function userUpdatedHandler (err) {
+					if (err)	return next(err);
+					else return res.status(200).send('STUDENT UPDATED').end();
+				}
+
+				function dbCheckHandler(dataLength, index) {
+					if (index === (dataLength - 1)){
+						//initiate db call
+			// 			var newStudent           	   = new STIDbStudentCollection();
+			// 				newStudent.enrollmentDate  = req.body.enrollmentDate;
+			// 				newStudent.studentID       = req.body.studentID;
+			// 				newStudent.firstName       = req.body.firstName;
+			// 				newStudent.lastName        = req.body.lastName;
+			// 				newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
+			// 				newStudent.phoneNumber     = req.body.phoneNumber;
+			// 				newStudent.ssn             = req.body.ssn;
+			// 				newStudent.address         = req.body.address;
+			// 				newStudent.email           = req.body.email;
+			// 				newStudent.program         = req.body.program;
+			// 				newStudent.tuition         = req.body.tuition;
+			// 				newStudent.graduate        = req.body.graduate;
+			// 				newStudent.tuitionPaid     = req.body.tuitionPaid;
+			// 				newStudent.marketingSurvey = req.body.marketingSurvey;		
+			// //depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
+			// //and depending on those conditions we save the necessary data into db	
+			// 			if (req.body.graduate){	//graduate condition
+			// 				newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
+			// 				newStudent.jobPlaced  = req.body.jobPlaced;	//saving necesasry properties
+			// 				if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
+			// 				else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
+			// 				if (req.body.jobPlaced){
+			// 					newStudent.weeklyWorkHours   = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
+			// 					newStudent.payRate           = req.body.payRate;
+			// 					newStudent.placeOfEmployment = req.body.placeOfEmployment;
+			// 					newStudent.employmentAddress = req.body.employmentAddress;
+			// 					newStudent.jobPosition       = req.body.jobPosition;
+			// 				}else	newStudent.noJobReason = req.body.noJobReason;	
+			// 			}
+			// 			else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
+			// 			//save the new student
+			// 			newStudent.save(newUserSavedHandler);
+						
+			// 			function newUserSavedHandler (err) {
+			// 				if (err) return next(err);
+			// 				else return res.status(200).send('newStudent added').end();	
+			// 			}
 					}
 				}
-			}
 
-			function userUpdatedHandler (err) {
-				if (err)	return next(err);
-				else return res.status(200).send('STUDENT UPDATED').end();
-			}
+				function googleAppendValueHandler (err, successResponse, googleDataforDB) {
+					if (err) return next(err);
+					console.log(successResponse);
+					var updatedRange = successResponse.updates.updatedRange;
+					googleDataforDB.range = updatedRange;
+					//adding google data in request body
+					req.body.google.push(googleDataforDB);
+					//using updated range is all we need
+					//need to place all the db saves in this call back
+					//we also need to save the appropriate spreadsheetid, and range to db
 
-			function newUserSavedHandler (err) {
-				if (err) return next(err);
-				else return res.status(200).send('newStudent added').end();	
-			}
 
-			function googleAppendValueHandler (err, successResposne) {
-				if (err) return next(err);
-				console.log(successResposne);
-				var updatedRange = successResposne.updates.updatedRange;
-				//using updated range is all we need
-				//need to place all the db saves in this call back
-				//we also need to save the appropriate spreadsheetid, and range to db
-				var newStudent           	   = new STIDbStudentCollection();
-					newStudent.enrollmentDate  = req.body.enrollmentDate;
-					newStudent.studentID       = req.body.studentID;
-					newStudent.firstName       = req.body.firstName;
-					newStudent.lastName        = req.body.lastName;
-					newStudent.name            = req.body.firstName + ' ' + req.body.lastName;
-					newStudent.phoneNumber     = req.body.phoneNumber;
-					newStudent.ssn             = req.body.ssn;
-					newStudent.address         = req.body.address;
-					newStudent.email           = req.body.email;
-					newStudent.program         = req.body.program;
-					newStudent.tuition         = req.body.tuition;
-					newStudent.graduate        = req.body.graduate;
-					newStudent.tuitionPaid     = req.body.tuitionPaid;
-					newStudent.marketingSurvey = req.body.marketingSurvey;		
-	//depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
-	//and depending on those conditions we save the necessary data into db	
-				if (req.body.graduate){	//graduate condition
-					newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
-					newStudent.jobPlaced  = req.body.jobPlaced;	//saving necesasry properties
-					if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
-					else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
-					if (req.body.jobPlaced){
-						newStudent.weeklyWorkHours   = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
-						newStudent.payRate           = req.body.payRate;
-						newStudent.placeOfEmployment = req.body.placeOfEmployment;
-						newStudent.employmentAddress = req.body.employmentAddress;
-						newStudent.jobPosition       = req.body.jobPosition;
-					}else	newStudent.noJobReason = req.body.noJobReason;	
 				}
-				else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
-				//save the new student
-				newStudent.save(newUserSavedHandler);
-
 			}
 		}
 

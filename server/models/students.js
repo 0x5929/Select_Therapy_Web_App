@@ -20,40 +20,11 @@
 		tuitionPaid        : {type: Boolean, required: true},
 		graduate           : {type: Boolean, required: true},
 		marketingSurvey    : {type: String, required: true},
-		googleData   	   : {
-								CNAperformance : {
-									spreadsheetId: String,
-									range        : String
-								},
-								CNASTRF        : {
-									spreadsheetId: String,
-									range        : String
-								},
-								HHAperformance : {
-									spreadsheetId: String,
-									range        : String
-								},
-								HHASTRF        : {
-									spreadsheetId: String,
-									range        : String
-								},
-								SGperformance  : {
-									spreadsheetId: String,
-									range        : String
-								},
-								SGSTRF         : {
-									spreadsheetId: String,
-									range        : String
-								},
-								ESOLperformance: {
-									spreadsheetId: String,
-									range        : String
-								},
-								ESOLSTRF       : {
-									spreadsheetId: String,
-									range        : String
-								}
-							},
+		googleData   	   : [{
+			title        : String,
+			spreadsheetID: String,
+			range        : String
+		}],
 		//dependent fields, which depends on certain boolean value from above required fields
 		notGraduatingReason: String,
 		jobPlaced          : Boolean,

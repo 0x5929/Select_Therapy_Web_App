@@ -77,34 +77,47 @@
 
 		}
 
-		function appendValueHandler(data, callback) {
+		function appendValueHandler(data, callbackForGoogleService, callbackForDBCheck) {
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'INSERT_ROWS';	//it doesnt really matter with append, it will add new row and append data
 			var range            = "Sheet1!A1:Q50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
-			var spreadsheetID    = data[0]['spreadsheetID'];
-			var postData         = data[0];
+			var spreadsheetID, postData, request, dbData;
 
-			var request = {
-				spreadsheetId   : spreadsheetID,
-				range           : range,	//TODO: update placeholder value
-				valueInputOption: valueInputOption,
-				insertDataOption: insertDataOption,
-				resource        : {
-					range         : range,
-					majorDimension: majorDimension,
-					values        : appendValues(postData, spreadsheetID)
-				}
-				// auth: authClient	//is this necessary?
-			};	
-			console.log('HELLO WORLD TESTING: ', this.service);
-			this.service.spreadsheets.values.append(request, function(err, response) {
+	
+			//lets go through data and append all sheets:
+				//using for loop for performance boost
+			for (var i = 0; i < data.length; i++){
+				spreadsheetID    = data[i]['spreadsheetID'];
+				postData         = data[i];
+				request = {
+					spreadsheetId   : spreadsheetID,
+					range           : range,	
+					valueInputOption: valueInputOption,
+					insertDataOption: insertDataOption,
+					resource        : {
+						range         : range,
+						majorDimension: majorDimension,
+						values        : appendValues(postData)
+					}
+				};
+
+				dbData = {
+					title: data[i]['title'];
+					spreadsheetID: spreadsheetID
+				};
+				this.service.spreadsheets.values.append(request, googleAppendHandler);
+			}
+
+			function googleAppendHandler(err, response) {
 				if (err){
-					console.log('HELLO WORLD ERR AT GOOGLESHEETS 101: ', err);
-					return callback(err);
-				}
-				return callback(null, response);
-			});
+					console.log('HELLO WORLD ERR AT GOOGLESHEETS 110: ', err);
+					return callbackForGoogleService(err);
+				}else {
+					callbackForGoogleService(null, response, dbData);
+					return callbackForDBCheck(data.length, i);	
+				}			
+			}
 
 		}
 
@@ -155,7 +168,7 @@
 		}
 
 		//buildRowData & createHeader functionalities
-		function appendValues(data, spreadsheetID) {
+		function appendValues(data) {
 			var values = [];	//declaration and initialization of returned value 
 			var row = [];
 			// for (var spreadSheetkey in data) {	
