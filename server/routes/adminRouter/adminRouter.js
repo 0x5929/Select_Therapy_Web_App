@@ -36,33 +36,44 @@ REST: GET
 			if (searchParameter && searchInput){	//if searching by student info
 				if (searchParameter === 'Name') {
 					searchInput = searchInput.toLowerCase();
-					STIDbStudentCollection.findOne({'name': searchInput}, function(err, user) {
-						if (err) return next(err);
-						if (user) return res.status(200).send(user).end();
-						if (!user) return res.status(400).send('nope no user here').end();
-					});
+					STIDbStudentCollection.findOne({'name': searchInput}, findNameHandler);
 				}else if (searchParameter === 'email') {
-						STIDbStudentCollection.findOne({'email': searchInput}, function(err, user) {
-						if (err) return next(err);
-						if (user) return res.status(200).send(user).end();
-						if (!user) return res.status(400).send('nope no user here').end();
-					});
+						STIDbStudentCollection.findOne({'email': searchInput}, findEmailHandler);
 				}else if (searchParameter === 'Phone number'){
-						STIDbStudentCollection.find({'phoneNumber': searchInput}, function(err, users) {
-						if (err) return next(err);
-						if (users) return res.status(200).send(users).end();
-						if (!user) return res.status(400).send('nope no user here').end();
-					});
+						STIDbStudentCollection.find({'phoneNumber': searchInput}, findPhoneNumberHandler);
 				}				
 			}else if (searchProgram && searchRotation){	//if searching by program info
 				STIDbStudentCollection.find()
 					.elemMatch('program', {'programName': searchProgram, 'programRotation': searchRotation})
-						.exec(function(err, results) {
-							if (err) return next(err);
-							if (results) return res.status(200).send(results).end();
-							console.log('testing @ adminRouter, for searching by program rotations: ', results);
-						});				
+						.exec(findByProgramHandler);				
 			}else return res.status(400).send('invalid entry').end();	//last condition for err handle
+
+			//callback handlers
+			function findNameHandler(err, user) {
+				if (err) return next(err);
+				if (user) return res.status(200).send(user).end();
+				if (!user) return res.status(400).send('nope no user here').end();
+			}
+
+			function findEmailHandler(err, user) {
+				if (err) return next(err);
+				if (user) return res.status(200).send(user).end();
+				if (!user) return res.status(400).send('nope no user here').end();
+			}
+
+			function findPhoneNumberHandler(err, user) {
+				if (err) return next(err);
+				if (users) return res.status(200).send(users).end();
+				if (!user) return res.status(400).send('nope no user here').end();
+			}
+
+			function findByProgramHandler(err, results) {
+				if (err) return next(err);
+				if (results) return res.status(200).send(results).end();
+				if (!results)	return res.status(400).send('oops, something went wrong here in server/db').end();
+
+			}
+
 		}
 
 
@@ -247,23 +258,53 @@ REST: ADD
 			var performanceReport = googleData.annualReport;
 			var STRF = googleData.STRF;
 			var course = performanceReport.course;	//[] form
-			for (var index = 0; index < course.length; index++){
+			for (var index = 0; index < course.length; index++){	//DO I NEED THE TITLE?
 				if (course[index] === 'Nurse Assistant'){
+					//initialize sheet data
 					var CNAPerformanceReport           = performanceReport;
 					var CNASTRF                        = STRF;
+					//set appropriate fields
+					CNAPerformanceReport.title         = 'CNAPerformance';
 					CNAPerformanceReport.course        = 'Nurse Assistant';
 					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
 					CNAPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
 					CNAPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
+					CNASTRF.title 					   = 'CNASTRF';
 					CNASTRF.course                     = 'Nurse Assistant';
-					CNASTRF.spreadsheetID                 = '';
-					returnedData.push(CNAPerformanceReport);	//also need to push STRF after testing goes through
+					CNASTRF.spreadsheetID              = '';
+					//push data to returned
+					returnedData.push(CNAPerformanceReport);
+					returnedData.push(CNASTRF);
 				}else if (course[index] === 'Home Health Aide'){
-
+					var HHAPerformanceReport           = performanceReport;
+					var HHASTRF                        = STRF;
+					HHAPerformanceReport.course        = 'Home Health Aide';
+					HHAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					HHAPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
+					HHAPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
+					HHASTRF.course                     = 'Home Health Aide';
+					HHASTRF.spreadsheetID                 = '';
+					//for performance, need to also reconstruct array
 				}else if (course[index] === 'Security Guard'){
-
+					var SGPerformanceReport           = performanceReport;
+					var SGSTRF                        = STRF;
+					SGPerformanceReport.course        = 'Security Guard';
+					SGPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					SGPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
+					SGPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
+					SGSTRF.course                     = 'Security Guard';
+					SGSTRF.spreadsheetID              = '';
+					//for performance, need to also reconstruct array 
 				}else if (course[index] === 'ESOL'){
-
+					var ESOLPerformanceReport           = performanceReport;
+					var ESOLSTRF                        = STRF;
+					ESOLPerformanceReport.course        = 'ESOL';
+					ESOLperformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					ESOLperformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
+					ESOLperformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
+					ESOLSTRF.course                     = 'ESOL';
+					ESOLSTRF.spreadsheetID              = '';
+					//for performance, need to also reconstruct array
 				}				
 			}
 			//calling next
@@ -282,6 +323,7 @@ REST: ADD
 
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, databaseQueryHandler);
 
+			//callback handlers
 			function databaseQueryHandler(err, user) {
 				if (err) return next(err);
 				if (user) {
@@ -297,8 +339,12 @@ REST: ADD
 				}
 				if (!user) {	
 					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
+					//this needs to depend on how many sheets needs to be appended
 					helper.appendValue(googleData,	googleAppendValueHandler);
-
+					//using for loop instead of forEach for performance boost
+					for (var i = 0; i < googleData.length; i++) {
+						//need to figure out a way for all append to be done, then call db, maybe with another callback
+					}
 				}
 			}
 

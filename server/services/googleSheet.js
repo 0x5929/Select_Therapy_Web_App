@@ -38,8 +38,7 @@
 		};
 
 
-		function syncDataHandler(spreadsheetID, range, data, callback) {	//all params are passed in from routes after db query
-																		//could technically also pass in the post data from routes for access here
+		function syncDataHandler(spreadsheetID, range, data, callback) {
 			var valueInputOption = 'USER_ENTERED';	
 			var range            = range;	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
@@ -176,6 +175,7 @@
 			// }
 			for (var key in data) {
 				if (key === 'spreadsheetID')	continue;
+				if (key === 'title')	continue;
 				row.push(data[key]);
 			}
 
