@@ -103,7 +103,8 @@
 				};
 
 				dbData = {
-					title: data[i]['title'];
+					title: data[i]['title']，
+					
 					spreadsheetID: spreadsheetID
 				};
 				this.service.spreadsheets.values.append(request, googleAppendHandler);
