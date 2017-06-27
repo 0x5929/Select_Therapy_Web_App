@@ -357,6 +357,9 @@ REST: ADD
 				}
 
 				function dbCheckHandler(dataLength, index) {
+					console.log('HELLLLLOOOOO WORLDDDD');
+					console.log('DATALENGTH: ', dataLength);
+					console.log('INDEX: ', index);
 					if (index === (dataLength - 1)){
 						//initiate db call
 						var newStudent           	   = new STIDbStudentCollection();
