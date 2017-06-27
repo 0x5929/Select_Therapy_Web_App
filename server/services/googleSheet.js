@@ -21,6 +21,8 @@
 		};
 
 
+		//ALSO NEED TO CREATE A CURRENT YEAR SHEETS FOR ALL SHEETS
+
 		//adding prototype for sheetHelper
 		service.sheetHelper.prototype.syncData      = syncDataHandler;
 		service.sheetHelper.prototype.appendValue   = appendValueHandler;
@@ -80,7 +82,7 @@
 		function appendValueHandler(data, callbackForGoogleService, callbackForDBCheck) {
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'INSERT_ROWS';	//it doesnt really matter with append, it will add new row and append data
-			var range            = "Sheet1!A1:Q50000";	//give a huge range, so it will always append to the given table inside since there is only one
+			// var range            = "Sheet1!A1:Q50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
 			var spreadsheetID, postData, request, dbData;
 
@@ -92,19 +94,18 @@
 				postData         = data[i];
 				request = {
 					spreadsheetId   : spreadsheetID,
-					range           : range,	
+					range           : getRange(postData) + "!A1:Z500000",	
 					valueInputOption: valueInputOption,
 					insertDataOption: insertDataOption,
 					resource        : {
-						range         : range,
+						range         : getRange(postData) + "!A1:Z500000",
 						majorDimension: majorDimension,
 						values        : appendValues(postData)
 					}
 				};
 
 				dbData = {
-					title: data[i]['title']，
-					
+					title: data[i]['title'],
 					spreadsheetID: spreadsheetID
 				};
 				this.service.spreadsheets.values.append(request, googleAppendHandler);
@@ -118,6 +119,20 @@
 					callbackForGoogleService(null, response, dbData);
 					return callbackForDBCheck(data.length, i);	
 				}			
+			}
+
+			function getRange(data) {
+				//passing in data, and get range according to title
+				switch (data.title){
+					case 'CNAPerformance' : return "Sheet1"; //get current year for cna performance
+					case 'CNASTRF'        : return "Sheet2"; //get current year for cna strf
+					// case 'HHAPerformance' :
+					// case 'HHASTRF'        :
+					// case 'SGPerformance'  :
+					// case 'SGSTRF'         :
+					// case 'ESOLPerformance':
+					// case 'ESOLSTRF'       :
+				}  
 			}
 
 		}
