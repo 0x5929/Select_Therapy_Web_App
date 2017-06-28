@@ -401,7 +401,9 @@ REST: ADD
 							if (err) return next(err);
 							else return res.status(200).send('newStudent added').end();	
 						}
-					}
+					}else {
+						console.log('HELLO WORLD DOES THIS RUN');
+						return;}
 				}
 
 				function googleAppendValueHandler (err, successResponse, googleDataforDB) {
@@ -410,6 +412,7 @@ REST: ADD
 					var updatedRange = successResponse.updates.updatedRange;
 					googleDataforDB.range = updatedRange;
 					//adding google data in request body
+					console.log('HELLO WORLD GOOGLE DB STUFF: ', googleDataforDB);
 					return req.body.google.push(googleDataforDB);
 					//using updated range is all we need
 					//need to place all the db saves in this call back

@@ -4,7 +4,7 @@
 
 	module.exports = googleSheetService;
 
-	function googleSheetService(googleapi, googleAuth) {
+	function googleSheetService(googleapi, googleAuth, async) {
 		var service = {
 			sheetHelper: sheetHelperHandler	//constructor with google api sheets obj by using this.service
 											//all newly constructed obj from sheethelper will have its own individual google sheet with its own auth token
@@ -80,18 +80,21 @@
 		}
 
 		function appendValueHandler(data, callbackForGoogleService, callbackForDBCheck) {
+			var sheetHelperServiceAppend = this;
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'INSERT_ROWS';	//it doesnt really matter with append, it will add new row and append data
 			// var range            = "Sheet1!A1:Q50000";	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
-			var spreadsheetID, postData, request, dbData;
+			// var spreadsheetID, postData, request, dbData, dbCheck;
 
 	
-			//lets go through data and append all sheets:
-				//using for loop for performance boost
-			for (var i = 0; i < data.length; i++){
-				spreadsheetID    = data[i]['spreadsheetID'];
-				postData         = data[i];
+
+			async.forEachOfSeries(data, iteratee, asyncCallback);
+
+			function iteratee(value, index, callback) {
+				var spreadsheetID, postData, request, dbData, dbCheck;
+				spreadsheetID    = value['spreadsheetID'];
+				postData         = value;
 				request = {
 					spreadsheetId   : spreadsheetID,
 					range           : getRange(postData) + "!A1:Z500000",	
@@ -105,21 +108,72 @@
 				};
 
 				dbData = {
-					title: data[i]['title'],
+					title: value['title'],
 					spreadsheetID: spreadsheetID
 				};
-				this.service.spreadsheets.values.append(request, googleAppendHandler);
-			}
+				dbCheck = {
+					dataLength: data.length,
+					index: index
+				}
 
-			function googleAppendHandler(err, response) {
-				if (err){
-					console.log('HELLO WORLD ERR AT GOOGLESHEETS 110: ', err);
-					return callbackForGoogleService(err);
-				}else {
-					callbackForGoogleService(null, response, dbData);
-					return callbackForDBCheck(data.length, i);	
+				sheetHelperServiceAppend.service.spreadsheets.values.append(request, googleAppendHandler);	
+				
+				function googleAppendHandler(err, response) {
+					if (err){
+						console.log('HELLO WORLD ERR AT GOOGLESHEETS 111: ', err);
+						return callbackForGoogleService(err);
+					}else {
+						callbackForGoogleService(null, response, dbData);
+						console.log('HELLO WORLD DOES THIS RUN in google sheets');
+						return callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
+					}			
 				}			
 			}
+
+			function asyncCallback(err) {
+				if (err)	console.log(err);
+			}
+
+
+
+
+			//lets go through data and append all sheets:
+				//using for loop for performance boost
+			// for (var i = 0; i < data.length; i++){
+			// 	spreadsheetID    = data[i]['spreadsheetID'];
+			// 	postData         = data[i];
+			// 	request = {
+			// 		spreadsheetId   : spreadsheetID,
+			// 		range           : getRange(postData) + "!A1:Z500000",	
+			// 		valueInputOption: valueInputOption,
+			// 		insertDataOption: insertDataOption,
+			// 		resource        : {
+			// 			range         : getRange(postData) + "!A1:Z500000",
+			// 			majorDimension: majorDimension,
+			// 			values        : appendValues(postData)
+			// 		}
+			// 	};
+
+			// 	dbData = {
+			// 		title: data[i]['title'],
+			// 		spreadsheetID: spreadsheetID
+			// 	};
+			// 	dbCheck = {
+			// 		dataLength: data.length,
+			// 		index: i
+			// 	}
+			// 	this.service.spreadsheets.values.append(request, googleAppendHandler);
+			// }
+
+			// function googleAppendHandler(err, response) {
+			// 	if (err){
+			// 		console.log('HELLO WORLD ERR AT GOOGLESHEETS 110: ', err);
+			// 		return callbackForGoogleService(err);
+			// 	}else {
+			// 		callbackForGoogleService(null, response, dbData);
+			// 		return callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
+			// 	}			
+			// }
 
 			function getRange(data) {
 				//passing in data, and get range according to title

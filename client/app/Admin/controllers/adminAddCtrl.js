@@ -829,6 +829,40 @@
 				return postData;
 			};
 
+			admin_add_ctrl.enterDummyData = function() {
+				admin_add_ctrl.studentModel.firstName                      = 'Kevin';
+				admin_add_ctrl.studentModel.lastName                       = lastnameGen();	//could be randomized
+				admin_add_ctrl.studentModel.studentID                      = '50-0628-KR';
+				admin_add_ctrl.studentModel.enrollmentDate                 = '2017/06/28';
+				admin_add_ctrl.studentModel.phoneNumber                    = '1234567890';
+				admin_add_ctrl.studentModel.ssn                            = '123456789';
+				admin_add_ctrl.studentModel.address                        = '501 S. Marguerita Ave, Alhambra CA 91803';
+				admin_add_ctrl.studentModel.email                          = 'kevin@kevin.com';
+				admin_add_ctrl.studentModel.tuition                        = 2386;
+				admin_add_ctrl.studentModel.tuitionPaid                    = "true";
+				admin_add_ctrl.studentModel.graduate                       = "";
+				admin_add_ctrl.studentModel.marketingSurvey                = "Chinese_In_LA";
+				admin_add_ctrl.studentModel.program[0]['programName']      = "CNA";
+				admin_add_ctrl.studentModel.program[0]['programRotation']  = "50";
+				admin_add_ctrl.studentModel.program[0]['programStartDate'] = "06/22/2017";
+				admin_add_ctrl.studentModel.program[0]['programEndDate']   = "08/19/2017";
+				admin_add_ctrl.studentModel.notGraduatingReason            = 'Still_in_program';
+				admin_add_ctrl.ngSelectOption.graduateFalse 			   = true;
+				admin_add_ctrl.ngSelectOption.stillInProgram			   = true;
+
+				function lastnameGen() {	//from stackoverflow/questions/1349404/generate-random-string-characters-in-javascript
+				    var text = "test";
+				    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+				    for( var i=0; i < 5; i++ )
+				        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+				    return text;
+				}
+			};
+
+
+						
 			// admin_add_ctrl.letsSyncWitGoogle = function() {
 			// 	var postData = admin_add_ctrl.googlePostData();	//the data needs to be further manipulated for each program to be inputted in each google sheet
 			// 	makeRequest('/admin/GoogleSync/', postData, callbackFunc);

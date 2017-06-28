@@ -33,7 +33,7 @@ var fs                       	  = require('fs'),
 	configOG                      = require(path.join(__dirname, 'config/officegen.js'))(officeGenerator),
 	//fetching services
 	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in neccessary configs
-	googleSheetService 			  = require(path.join(__dirname, 'services/googleSheet.js'))(google, googleAuth),	//pass in neccessary google stuff
+	googleSheetService 			  = require(path.join(__dirname, 'services/googleSheet.js'))(google, googleAuth, async),	//pass in neccessary google stuff
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
 	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
