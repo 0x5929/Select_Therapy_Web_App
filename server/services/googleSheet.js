@@ -116,6 +116,9 @@
 					index: index
 				}
 
+				console.log('DB CHECKER: ', dbCheck);
+				console.log('DB DATA: ', dbData);
+
 				sheetHelperServiceAppend.service.spreadsheets.values.append(request, googleAppendHandler);	
 				
 				function googleAppendHandler(err, response) {
@@ -124,8 +127,8 @@
 						return callbackForGoogleService(err);
 					}else {
 						callbackForGoogleService(null, response, dbData);
-						console.log('HELLO WORLD DOES THIS RUN in google sheets');
-						return callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
+						callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
+						return callback();	//invoking callback for async lib
 					}			
 				}			
 			}

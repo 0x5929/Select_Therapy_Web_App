@@ -401,9 +401,8 @@ REST: ADD
 							if (err) return next(err);
 							else return res.status(200).send('newStudent added').end();	
 						}
-					}else {
-						console.log('HELLO WORLD DOES THIS RUN');
-						return;}
+					}else 	return;
+
 				}
 
 				function googleAppendValueHandler (err, successResponse, googleDataforDB) {
