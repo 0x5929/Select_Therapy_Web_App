@@ -29,6 +29,23 @@
 		service.sheetHelper.prototype.createSheet   = createSheetHandler;
 		// service.sheethelper.prototype.dataOrganizer = dataOrganizerHandler;
 
+		//build row for google data: 
+			//this function below, lets test if the syncdatahandler can access it, it should, 
+			//and if it does, just use the same function as append value
+		function syncValue(data) {
+			var values = [];	//declaration and initialization of returned value 
+			var row = [];
+			for (var key in data) {
+				if (key === 'spreadsheetID')	continue;
+				if (key === 'title')	continue;
+				row.push(data[key]);
+			}
+
+			values.push(row);
+			console.log(values);
+			return values;	//values need to be in array for  //returned value
+		}
+
 		//handers: 
 		function sheetHelperHandler(accessToken) {
 			var authClient   = new googleAuth();
@@ -40,7 +57,21 @@
 		};
 
 
-		function syncDataHandler(spreadsheetID, range, data, callback) {
+		/**
+			The following is the logic for sync data: 
+			@param1 google data from CLIENT [{sheet}] form
+			@param2 database for google data [{sheet}] form
+			@param3 callback for handler in router
+
+			Match the correct google data with the corresponding db for google data
+				matching using title, or spreadsheet id
+			then call batchupdate to update the google sheets with the new google data from client
+			using the information such as range, spreadsheet id in the db for google data info
+
+
+		*/
+
+		function syncDataHandler(data, dbData callback) {
 			var valueInputOption = 'USER_ENTERED';	
 			var range            = range;	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
@@ -53,11 +84,7 @@
 						{
 							range         : range,
 							majorDimension: majorDimension,
-							values        : [
-								[
-									//this is the row of data
-								]
-							]
+							values        : syncValue(data)
 						}
 					]
 				}
@@ -71,7 +98,6 @@
 				}
 				return callback(null, response);
 			});
-
 		
 		}
 
@@ -116,9 +142,6 @@
 					index: index
 				}
 
-				console.log('DB CHECKER: ', dbCheck);
-				console.log('DB DATA: ', dbData);
-
 				sheetHelperServiceAppend.service.spreadsheets.values.append(request, googleAppendHandler);	
 				
 				function googleAppendHandler(err, response) {
@@ -128,7 +151,7 @@
 					}else {
 						callbackForGoogleService(null, response, dbData);
 						callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
-						return callback();	//invoking callback for async lib
+						return callback();	//invoking callback for async lib for the next async call
 					}			
 				}			
 			}
@@ -244,21 +267,6 @@
 		function appendValues(data) {
 			var values = [];	//declaration and initialization of returned value 
 			var row = [];
-			// for (var spreadSheetkey in data) {	
-			// 	if (spreadSheetkey === 'annualReport'){
-			// 		for (var annualReportKey in data[spreadSheetkey]){
-			// 			row.push(data[spreadSheetkey][annualReportKey]);
-			// 		}	
-			// 	}
-			// }
-			// for (var spreadsheetIndex = 0; spreadsheetIndex < data.length; spreadsheetIndex++){
-			// 	if (data[spreadsheetIndex]['spreadsheetID'] === spreadsheetID){
-			// 		for (var propertyKey in data[spreadsheetIndex]){
-			// 			if (data[spreadsheetIndex][propertyKey] === 'spreadsheetID')	continue;
-			// 			row.push(data[spreadsheetIndex][propertyKey]);
-			// 		}
-			// 	}
-			// }
 			for (var key in data) {
 				if (key === 'spreadsheetID')	continue;
 				if (key === 'title')	continue;
@@ -269,6 +277,7 @@
 			console.log(values);
 			return values;	//values need to be in array for  //returned value
 		}
+
 		function buildRowData() {}
 		function createHeader() {}
 

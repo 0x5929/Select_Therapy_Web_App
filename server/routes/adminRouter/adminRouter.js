@@ -249,7 +249,7 @@ REST: ADD
 			next();
 		}
 
-
+		//regardless whether it was new or existing students, there will always be a set of google data
 		function googleDataOrganizerMiddleware(req, res, next) {	// ALL DATA FROM CLIENT NEEDS TO BE FORMATTED IN HERE TO BE SYNCED WITH GOOGLE
 																	//COULD BE PLACED IN GOOGLE'S SERVICE
 			var returnedData = [];
@@ -323,6 +323,8 @@ REST: ADD
 			// var sheetID     = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
 			if (!auth)	return next('error: Authorization required');
 			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
+				//loading google helper
+			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
 
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, databaseQueryHandler);
 
@@ -330,6 +332,8 @@ REST: ADD
 			function databaseQueryHandler(err, user) {
 				if (err) return next(err);
 				if (user) {
+					var DBgoogleData = user.googleData; //[] form
+					helper.syncData(googleData, DBgoogleData, googleSyncDataHandler);
 					for (var userKey in user){	//update user
 						for (var requestKey in req.body){
 							if (userKey === requestKey)
@@ -341,7 +345,6 @@ REST: ADD
 					user.save(userUpdatedHandler);
 				}
 				if (!user) {	
-					var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
 					//this needs to depend on how many sheets needs to be appended
 					helper.appendValue(googleData,	googleAppendValueHandler, dbCheckHandler);
 					//using for loop instead of forEach for performance boost
@@ -357,9 +360,6 @@ REST: ADD
 				}
 
 				function dbCheckHandler(dataLength, index) {
-					console.log('HELLLLLOOOOO WORLDDDD');
-					console.log('DATALENGTH: ', dataLength);
-					console.log('INDEX: ', index);
 					if (index === (dataLength - 1)){
 						//initiate db call
 						var newStudent           	   = new STIDbStudentCollection();
