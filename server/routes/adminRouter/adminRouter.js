@@ -61,10 +61,10 @@ REST: GET
 				if (!user) return res.status(400).send('nope no user here').end();
 			}
 
-			function findPhoneNumberHandler(err, user) {
+			function findPhoneNumberHandler(err, users) {
 				if (err) return next(err);
 				if (users) return res.status(200).send(users).end();
-				if (!user) return res.status(400).send('nope no user here').end();
+				if (!users) return res.status(400).send('nope no user here').end();
 			}
 
 			function findByProgramHandler(err, results) {
@@ -326,6 +326,8 @@ REST: ADD
 				//loading google helper
 			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
 
+			console.log('HELLO WORLD ORIGINAL NAME: ', req.body.originalName);
+
 			STIDbStudentCollection.findOne({'name': req.body.originalName}, databaseQueryHandler);
 
 			//callback handlers
@@ -333,20 +335,11 @@ REST: ADD
 				if (err) return next(err);
 				if (user) {
 					var DBgoogleData = user.googleData; //[] form
-					helper.syncData(googleData, DBgoogleData, googleSyncDataHandler);
-					for (var userKey in user){	//update user
-						for (var requestKey in req.body){
-							if (userKey === requestKey)
-								user[userKey] = req.body[requestKey];
-						}
-						if (userKey === 'name')	//updating the name property
-							user[userKey] = req.body.firstName + ' ' + req.body.lastName;
-					}
-					user.save(userUpdatedHandler);
+					helper.syncData(googleData, DBgoogleData, googleSyncDataHandler, dbUpdateHandler);
 				}
 				if (!user) {	
 					//this needs to depend on how many sheets needs to be appended
-					helper.appendValue(googleData,	googleAppendValueHandler, dbCheckHandler);
+					helper.appendValue(googleData,	googleAppendValueHandler, dbAddHandler);
 					//using for loop instead of forEach for performance boost
 					// for (var i = 0; i < googleData.length; i++) {
 					// 	//need to figure out a way for all append to be done, then call db, maybe with another callback
@@ -354,12 +347,34 @@ REST: ADD
 					// }
 				}
 
-				function userUpdatedHandler (err) {
-					if (err)	return next(err);
-					else return res.status(200).send('STUDENT UPDATED').end();
+				function googleSyncDataHandler(err, successResponse) {
+					if (err) next(err);
+					console.log('YAYY SUCCESS RESPOSNE: ', successResponse);
 				}
 
-				function dbCheckHandler(dataLength, index) {
+				function dbUpdateHandler(dataLengh, index) {
+					if (index === (dataLengh - 1)){
+						for (var userKey in user){	//update user
+							for (var requestKey in req.body){
+								if (userKey === requestKey)
+									user[userKey] = req.body[requestKey];
+							}
+							if (userKey === 'name')	//updating the name property
+								user[userKey] = req.body.firstName + ' ' + req.body.lastName;
+						}
+						user.save(userUpdatedHandler);
+					}
+	
+					function userUpdatedHandler (err) {
+						if (err)	return next(err);
+						else return res.status(200).send('STUDENT UPDATED').end();
+					}
+
+				}
+
+
+
+				function dbAddHandler(dataLength, index) {
 					if (index === (dataLength - 1)){
 						//initiate db call
 						var newStudent           	   = new STIDbStudentCollection();

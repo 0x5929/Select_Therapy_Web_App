@@ -38,6 +38,7 @@
 			for (var key in data) {
 				if (key === 'spreadsheetID')	continue;
 				if (key === 'title')	continue;
+				if (key === 'range')	continue;
 				row.push(data[key]);
 			}
 
@@ -62,6 +63,7 @@
 			@param1 google data from CLIENT [{sheet}] form
 			@param2 database for google data [{sheet}] form
 			@param3 callback for handler in router
+			@param4 callback for database handler in router
 
 			Match the correct google data with the corresponding db for google data
 				matching using title, or spreadsheet id
@@ -71,33 +73,67 @@
 
 		*/
 
-		function syncDataHandler(data, dbData callback) {
+		function syncDataHandler(data, dbData, callbackForGoogleUpdate, callbackForDbUpdate) {
+			var sheetHelperServiceSync = this;
 			var valueInputOption = 'USER_ENTERED';	
-			var range            = range;	//give a huge range, so it will always append to the given table inside since there is only one
+			// var range            = range;	//give a huge range, so it will always append to the given table inside since there is only one
 			var majorDimension   = 'ROWS';
 
-			var request = {
-				spreadsheetId: spreadsheetID,
-				resource: {
-					valueInputOption: valueInputOption,
-					data            : [
-						{
-							range         : range,
-							majorDimension: majorDimension,
-							values        : syncValue(data)
-						}
-					]
+			for (var i = 0; i < dbData.length; i++){	//comparison and setting the range
+				for (var j = 0; j < data.length; j++){
+					if (data[j]['title'] === dbData[i]['title']){
+						data[j]['range'] = dbData[i]['range'];
+					}
+				}
+			}
+
+			async.forEachOfSeries(data, iteratee, asyncCallback);
+
+			function iteratee(value, index, callback) {
+				var spreadsheetID, postData, request;
+				spreadsheetID = value['spreadsheetID'];
+				postData = value;
+				request = {
+					spreadsheetId: spreadsheetID,
+					resource: {
+						valueInputOption: valueInputOption,
+						data            : [
+							{
+								range         : value['range'],
+								majorDimension: majorDimension,
+								values        : syncValue(postData)
+							}
+						]
+					}
+
+				};
+
+				console.log('HELLO WORLD VALUE: ', value);
+
+				sheetHelperServiceSync.service.spreadsheets.values.batchUpdate(request, googleSyncHandler);
+
+				function googleSyncHandler(err, response){
+					if (err) return callbackForGoogleUpdate(err);
+					callbackForGoogleUpdate(null, response);
+					callbackForDbUpdate(data.length, index);
+					return callback();
 				}
 
-			};
+			}
+
+			function asyncCallback(err) {
+				if (err)	
+					console.log('HELLO WORLD ERR AT GOOGLE SYNC DATA ASYNC OPERATION: ', err);
+			}
+
 			 
-			this.service.spreadsheets.value.batchUpdate(request, function(err, response) {
-				if (err) {
-					console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 85: ', err);
-					return callback(err);
-				}
-				return callback(null, response);
-			});
+			// this.service.spreadsheets.value.batchUpdate(request, function(err, response) {
+			// 	if (err) {
+			// 		console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 85: ', err);
+			// 		return callback(err);
+			// 	}
+			// 	return callback(null, response);
+			// });
 		
 		}
 
@@ -105,7 +141,7 @@
 
 		}
 
-		function appendValueHandler(data, callbackForGoogleService, callbackForDBCheck) {
+		function appendValueHandler(data, callbackForGoogleService, callbackForDBAdd) {
 			var sheetHelperServiceAppend = this;
 			var valueInputOption = 'USER_ENTERED';
 			var insertDataOption = 'INSERT_ROWS';	//it doesnt really matter with append, it will add new row and append data
@@ -150,7 +186,7 @@
 						return callbackForGoogleService(err);
 					}else {
 						callbackForGoogleService(null, response, dbData);
-						callbackForDBCheck(dbCheck.dataLength, dbCheck.index);	
+						callbackForDBAdd(dbCheck.dataLength, dbCheck.index);	
 						return callback();	//invoking callback for async lib for the next async call
 					}			
 				}			

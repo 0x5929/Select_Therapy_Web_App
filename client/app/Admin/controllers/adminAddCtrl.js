@@ -159,8 +159,10 @@
 					}
 				}
 				//add in an original name key for modifying purposes
-				admin_add_ctrl.studentModel.originalName = admin_add_ctrl.studentModel.firstName + ' ' + admin_add_ctrl.studentModel.lastName;
-				console.log(admin_add_ctrl.studentModel);
+				admin_add_ctrl.studentModel.originalName = studentValue.firstName + ' ' + studentValue.lastName;
+				console.log('HELLO WORLD DUDE THIS IS ADMIN STUDENT MODEL: ', admin_add_ctrl.studentModel);
+
+				console.log('HELLO WORLD DUDE THIS IS STUDENT value: ', studentValue);
 				//need to implement a logic to count how many programs obj in program arr
 				//5 - the above number needs to be pushed into the program arr so it can properly reflect the program ng model
 				for (var currentProgramNum = admin_add_ctrl.studentModel.program.length; 
@@ -514,6 +516,7 @@
 					numberOfTries      : admin_add_ctrl.studentModel.numberOfTries,
 					noPassReason       : admin_add_ctrl.studentModel.noPassReason,
 					marketingSurvey    : admin_add_ctrl.studentModel.marketingSurvey,
+					originalName       : admin_add_ctrl.studentModel.originalName,
 					googlePostData	   : admin_add_ctrl.googlePostData()
 			};
 
@@ -559,7 +562,7 @@
 						}
 						ajaxService.post('/admin/add/', data, configObj)
 							.then(function(successResponse) {
-								toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);
+								toastFactory.successAdd(postData.firstName + ' ' +  postData.lastName);	//this could be split between modify or add
 								// admin_add_ctrl.refresh();
 								callback(null, successResponse);
 							}, 
