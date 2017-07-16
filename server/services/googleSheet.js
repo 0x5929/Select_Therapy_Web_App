@@ -108,8 +108,6 @@
 
 				};
 
-				console.log('HELLO WORLD VALUE: ', value);
-
 				sheetHelperServiceSync.service.spreadsheets.values.batchUpdate(request, googleSyncHandler);
 
 				function googleSyncHandler(err, response){
@@ -125,15 +123,6 @@
 				if (err)	
 					console.log('HELLO WORLD ERR AT GOOGLE SYNC DATA ASYNC OPERATION: ', err);
 			}
-
-			 
-			// this.service.spreadsheets.value.batchUpdate(request, function(err, response) {
-			// 	if (err) {
-			// 		console.log('HELLO WORLD ERR AT GOOGLESHEETJS LINE 85: ', err);
-			// 		return callback(err);
-			// 	}
-			// 	return callback(null, response);
-			// });
 		
 		}
 
@@ -149,7 +138,7 @@
 			var majorDimension   = 'ROWS';
 			// var spreadsheetID, postData, request, dbData, dbCheck;
 
-	
+			//NEED TO CHECK FOR CURRENT YEAR
 
 			async.forEachOfSeries(data, iteratee, asyncCallback);
 
