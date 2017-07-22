@@ -13,7 +13,6 @@
 			req.check('email', 'Invalid email address!').isEmail();
 			req.check('password', 'Oops, password is not at least 6 charatacters long, please try again!').isLength({min: 6});
 			req.check('password', 'Oops, passwords are not matching, please try again!').equals(req.body.confirmPassword);
-			req.check('pin', 'WARNING! WRONG PIN!!').pinVerification(req.body.signUpAs);
 			errors = req.validationErrors();
 			if (errors) {
 				var errMsg = errors.map(function(err) {

@@ -2,43 +2,36 @@
 	'use strict';
 //Set Up Application
 //fetching all tools
-var fs                       	  = require('fs'),
-	async                         = require('async'),
+var async                         = require('async'),
 	path                          = require('path'),
-	express                       = require('express'),
-	app                           = express(),
+	express                       = require('express'),	
+	app                           = express(),	//needed
 	port                          = process.env.PORT || 8080,
 	mongoose                      = require('mongoose'),	//db
 	passport                      = require('passport'),	//user authentication
-	nodemailer                    = require('nodemailer'),	//email
 	helmet                        = require('helmet'),	//security
 	csrf                          = require('csurf'),	//security
 	officeGenerator               = require('officegen'),
 	google						  = require('googleapis'),
 	googleAuth					  = require('google-auth-library'),
 	//middleware
-	bodyParser                    = require('body-parser'),
+	bodyParser                    = require('body-parser'),	
 	cookieParser                  = require('cookie-parser'),
 	logger                        = require('morgan'),
-	validator                     = require('express-validator'),
+	validator                     = require('express-validator'),	//needed?
 	session                       = require('express-session'),
 	mongoStore                    = require('connect-mongo')(session),
 	errHandling                   = require(path.join(__dirname, 'services/errHandling.js')),
-	csrfTokenMiddleware           = require(path.join(__dirname, 'services/csrfToken.js')),
+	csrfTokenMiddleware           = require(path.join(__dirname, 'services/csrfToken.js')),	
 	
 	//fetching configuration material
 	configDB                      = require(path.join(__dirname, 'config/database.js'))(mongoose, path),
-	configCV                      = require(path.join(__dirname, 'config/customValidator.js')),
-	configNM                      = require(path.join(__dirname, 'config/nodemail.js')),
 	configOG                      = require(path.join(__dirname, 'config/officegen.js'))(officeGenerator),
 	//fetching services
-	nodemailerService             = require(path.join(__dirname, 'services/nodemail.js'))(nodemailer, configNM.smntpConfig),	//pass in neccessary configs
 	googleSheetService 			  = require(path.join(__dirname, 'services/googleSheet.js'))(google, googleAuth, async),	//pass in neccessary google stuff
 	officeGenDocxServiceConstruct = require(path.join(__dirname, 'services/officeGenDocx.js')),
 	signInSheetGenerateService    = require(path.join(__dirname, 'services/signInSheetGen.js')),
-	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js')),
-	adminFolderGenService    	  = require(path.join(__dirname, 'services/adminFolderDocGen.js'));
-console.log('GOOGLE SHEET SERVICE: ', googleSheetService);
+	contactListGenerateService    = require(path.join(__dirname, 'services/contactListGen.js'));
 //configuration
 
 configDB.databaseConnectionConfig();	//database configuration
@@ -52,10 +45,6 @@ app.use(cookieParser('kevinRenIsAweseome', { httpOnly: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
 app.use(helmet());	//security helmet
-app.use(validator({
-	customValidators:{	//these custom pins could be changed.
-		pinVerification: configCV.pinVerificationHandler
-	}}));
 //Setting up for express/passport sessions
 app.use(session({name: 'server-session-cookie-id',
 				 secret: 'kevinRenIsAweseome', 
@@ -73,9 +62,9 @@ app.use(csrf({ cookie: true }));	//security csrf setting through cookie to angul
 app.use('/', express.static(path.join(__dirname, '../client'))); 	//setting up the static file location
 
 //routes, passing in all the necessary module objects and also the office generator config for the construction of document obj in routes
-require(path.join(__dirname, '/routes/routes.js'))(express, app, fs, path, bodyParser, validator, nodemailerService, passport, 
+require(path.join(__dirname, '/routes/routes.js'))(express, app, path, bodyParser, validator, passport, 
 													csrfTokenMiddleware, officeGenDocxServiceConstruct, configOG, 
-													signInSheetGenerateService, contactListGenerateService, adminFolderGenService, googleSheetService);
+													signInSheetGenerateService, contactListGenerateService, googleSheetService);
 
 //error handling
 app.use(csrfTokenMiddleware.invalidCsrfTokenErr);	//invalid csrf token err

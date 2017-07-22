@@ -1,0 +1,44 @@
+<form class="form-horizontal">
+      	<div class="modal-header">
+          	<h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-log-in"></span> New User Registration</h3><br>
+          	<div class="alert alert-danger" ng-if="signUpModalInstanceCtrl.showErrorMessage" ng-repeat="message in signUpModalInstanceCtrl.messages track by $index">
+					{{message}}
+			</div>
+        </div>
+        <div class="modal-body" id="modal-body">
+
+            <div class="form-group">
+              	<label class="control-label col-sm-2" for="email">E-mail:</label>
+              	<div class="col-sm-10">
+                	<input type="email" class="form-control" id="email" name="email" placeholder="Please provide your E-mail"
+                	ng-model="signUpModalInstanceCtrl.email">
+              	</div>
+            </div>
+
+            <div class="form-group">
+              	<label class="control-label col-sm-2" for="password">Password:</label>
+              	<div class="col-sm-10">
+                	<input type="password" class="form-control" id="password" name="password" placeholder="Password should be at least 6 characters"
+                	ng-model="signUpModalInstanceCtrl.password">
+              	</div>
+            </div>
+
+            <div class="form-group">
+              	<label class="control-label col-sm-2" for="password_confirm">Re-enter Password:</label>
+              	<div class="col-sm-10">
+                	<input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Please confirm password"
+                	ng-model="signUpModalInstanceCtrl.confirmPassword">
+              	</div>
+            </div>
+     	</div>
+    <div class="modal-footer">
+        <div class="form-group">
+        <!-- Button -->
+       		<div class="col-sm-offset-2 col-sm-10">
+            	<button class="btn btn-default" ng-click="signUpModalInstanceCtrl.ok()">Register</button>
+            	<button class="btn btn-default" ng-click="signUpModalInstanceCtrl.cancel()">Cancel</button>
+        	</div>
+        </div>
+    </div>
+</form>
+

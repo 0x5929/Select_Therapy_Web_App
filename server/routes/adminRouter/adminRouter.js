@@ -2,8 +2,8 @@
 	'use strict';
 	//this whole route can be encapsulated into smaller files
 	module.exports = adminRouterHandler;
-	function adminRouterHandler (fs, express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
-								signInSheetService, contactListService, adminFolderDocGenerate, googleSheetService) {
+	function adminRouterHandler (express, app, path, bodyParser, officeGenDocxConstruct, configOG, 
+								signInSheetService, contactListService, googleSheetService) {
 
 		var adminRoute = express.Router();	//initialize router
 		var STIDbStudentCollection = require(path.join(__dirname, '../../models/students.js'));	//load database collection
@@ -15,9 +15,7 @@
 		adminRoute.get('/search', adminSearchGetHandler);
 		adminRoute.get('/search/generateSignIn', headerMiddleware, officeGenGetHandlerMiddleware);
 		adminRoute.get('/search/generateContactList', headerMiddleware, officeGenGetHandlerMiddleware);
-		adminRoute.post('/add', adminAddPostParseMiddleware, googleDataOrganizerMiddleware, adminAddPostHandler);	//order can be switched
-		// adminRoute.put('/modify', adminModifyPutHandler);	//could be deleted as well
-		adminRoute.post('/GoogleSync', adminGoogleSyncHandler);
+		adminRoute.post('/add', adminAddPostParseMiddleware, googleDataOrganizerMiddleware, adminAddPostHandler);
 		adminRoute.delete('/delete/:id', adminModifyDeleteHandler);
 		
 		//handler and middleware functions used in routes
@@ -437,56 +435,6 @@ REST: ADD
 			}
 		}
 
-		function googleSyncMiddleware(req, res, next) {
-			//getting the sheethelper service
-			var SheetHelper = googleSheetService.sheetHelper;
-			var auth = req.get('Authorization');	//getting authorization
-			var data = req.body;
-			console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
-			//check for auth
-			if (!auth)	return next('error: Authorization required');
-			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
-			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
-			//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
-			//need to do a query search to the student, and look for its google obj, for its properties for id
-			//then pass in all the nesscessary things into the helper.sync function 
-			// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
-			// 	if (err) return next(err);
-			// 	console.log('WELL DONE, successResposne: ', successResposne);
-			// });
-
-		}
-
-
-
-/********************************************************************************************
-ADMIN MODIFY MODIFY HANDLER
-REST: PUT..........................** NEED TO SEE IF WE NEED TO CHANGE THAT TO PATCH INSTEAD
-*********************************************************************************************/
-//below could be deleted with the new modifying functionaity straight from admin search to admin add
-
-		// function adminModifyPutHandler(req, res, next) {
-		// 	console.log(req.body);
-		// 	var requestBody = req.body;
-		// 	var modifyingKeys = Object.keys(requestBody);
-		// 	STIDbStudentCollection.findOne({'name': requestBody.originalName}, function(err, user) {
-		// 		if (err) return next(err);
-		// 		if (!user) return res.status(500).send("Database or Client side err, cannot find the user's originalName in db").end();
-		// 		if (user) {
-		// 			modifyingKeys.forEach(function(key) {
-		// 				if (key === "originalName") return;	//skipping the original name key
-		// 				user[key] = requestBody[key];	//updating the keys
-		// 				user.save(function(err, updatedUser) {
-		// 					if (err) return next(err);
-		// 				});
-		// 			});
-		// 			return res.send('updatedUser').end();			
-		// 		}
-		// 	});
-		// }
-
-
-
 /**********************************************************
 ADMIN MODIFY DELETE HANDLER
 REST: DELETE
@@ -504,42 +452,8 @@ REST: DELETE
 
 
 
-
-/**********************************************************
-ADMIN GOOGLE SYNC POST HANDLER
-REST: POST
-***********************************************************/
-
-		function adminGoogleSyncHandler(req, res, next) {
-			console.log('GOOGLE SHEET SERVICE: ', googleSheetService);
-			var SheetHelper = googleSheetService.sheetHelper;
-			var auth = req.get('Authorization');
-			var data = req.body;
-			console.log('TESTING DATA: ', data);
-			console.log('HELLO WORLD TESTING AUTHORIZATION: ', auth);
-			//check for auth
-			if (!auth)	return next('error: Authorization required');
-			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
-			STIDbStudentCollection.findOne({'name': data.annualReport.firstName + ' ' + data.annualReport.lastName}, function(err, user) {	//could have the name property in another key like query from client side
-				if (err)	return next(err);
-				//access its google data
-				// need to implement logic: 
-				//first user must be saved, and this will retrieve its google data property, which will be properly saved in the first time
-				// then retrieving its google data, we can access its row number, and input all current data into sheets with sheet helper
-				//ALL THIS COULD BE COMBINED INTO ONE FUNCTIONALITY! SAVE USER AND SYNC TO GOOGLE, EVERYTIME CLIENT SAVES/MODIFYS A USER
-				// ONE FUNCTIONALITY?
-			});
-			var helper = new SheetHelper(accessToken);	//need to create sheethelper and load it in routes
-			//before calling helper.sync, we need to grab the spreadsheet id, and spreadsheet  sheetid from mongodb
-			//need to do a query search to the student, and look for its google obj, for its properties for id
-			//then pass in all the nesscessary things into the helper.sync function 
-			// helper.sync(spreadsheet.id, spreadsheet.sheetId, data, function(err, successResposne) {	//callback function
-			// 	if (err) return next(err);
-			// 	console.log('WELL DONE, successResposne: ', successResposne);
-			// });
-		}
-
 		return adminRoute;
 
 	}
+	
 }());

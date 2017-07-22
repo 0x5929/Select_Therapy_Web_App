@@ -1,25 +1,15 @@
-<!--
-<div class="row">
-	<h3>Search By:</h3>
-	<br>
-	<form ng-controller="adminSearchController as admin_search_ctrl">
-		<input type="text" ng-model="admin_search_ctrl.searchInput">
-		<select ng-model="admin_search_ctrl.searchParameter">
-			<option ng-value="name">Name</option>
-			<option ng-value="email">email</option>
-			<option ng-value="phone_number">Phone number</option>
-		</select>
-		<input type="submit" value="Submit" ng-click="admin_search_ctrl.submit()">
-	</form>
-</div>
--->
+
 <!-- COULD PUT CALENDAR OVER HERE TOO -->
 <!-- OPTIONS SIDE -->
 <div class="container-fluid" id="mainWrapperForAdmin">
 	<div class="row" id="staffStuff">
 		<button class="btn" ui-sref="Admin.Admin_Search">Admin Search</button>
 		<button class="btn" ui-sref="Admin.Admin_Add">Admin Add</button>
-		<button class="btn" ui-sref="Admin.Admin_Recruit">Recruitment</button>
+		<div ng-controller="signOutControl as signOutCtrl">
+			<a style="cursor: pointer; cursor: hand;" ng-click="signOutCtrl.signOut();">
+				Sign Out
+			</a>
+		</div>
 		<br>
 	</div>
 	<hr>
