@@ -6,6 +6,7 @@
 	function signUpHandler(express, validator, passport) {
 		//initialize router
 		var signUpRoute = express.Router();
+
 		//config routes for router
 		signUpRoute.post('/', function(req, res, next) {
 			var errors;

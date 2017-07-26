@@ -5,8 +5,9 @@
 
 		function modalFactoryHandler($rootScope, $uibModal) {
 					var services = {
-						signInModalService: signInModalService,
-						signUpModalService: signUpModalService
+						signInModalService    : signInModalService,
+						signUpModalService    : signUpModalService,
+						addProgramModalService: addProgramModalService
 					};
 
 					function assignCurrentUser(user) {
@@ -40,6 +41,26 @@
 						});
 
 						return modalInstance.result.then(assignCurrentUser);
+					}
+
+					function addProgramModalService() {
+						var modalInstance = $uibModal.open({
+						  animation: true,
+					      ariaLabelledBy: 'modal-title',
+					      ariaDescribedBy: 'modal-body',
+					      templateUrl: 'app/Admin/view/modalView/addProgramModal.html', 
+					      controller: 	'adminAddController',
+					      controllerAs: 'admin_add_ctrl',
+					      size: 'lg'
+
+						});
+
+						return modalInstance.result.then(function(result) {
+
+							console.log('HELLO WORLD RESULTS FROM ADDPROGRAM MODAL, WHAT SHOULD WE DO WIT THIS DATA? ', result);
+							// very likely the results are passed in as a program object
+
+						});
 					}
 
 					return services;

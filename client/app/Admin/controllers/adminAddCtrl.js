@@ -5,9 +5,9 @@
 	'use strict';
 
 	angular.module('myApp.admin')
-		.controller('adminAddController', ['$scope', '$stateParams', '$filter', 'ajaxService', 'toastFactory', 'studentValue', adminAddControllerHandler]);
+		.controller('adminAddController', ['$scope', '$stateParams', '$filter', 'ajaxService', 'toastFactory', 'studentValue', 'modalFactory', adminAddControllerHandler]);
 
-		function adminAddControllerHandler($scope, $stateParams, $filter, ajaxService, toastFactory, studentValue) {	//may want to delete filter, it does nothin
+		function adminAddControllerHandler($scope, $stateParams, $filter, ajaxService, toastFactory, studentValue, modalFactory) {	//may want to delete filter, it does nothin
 			
 			var admin_add_ctrl               = this;
 			var postData                     = null;
@@ -136,7 +136,15 @@
 				]
 			};	
 
+			//Program constructor
 
+			var Program = function(programName, programRotation, programCost, programStartDate, programEndDate) {
+				this.programName = programName;
+				this.programRotation = programRotation;
+				this.programTuition = programCost;
+				this.programStartDate = programStartDate;
+				this.programEndDate = programEndDate;
+			};
 
 // IF ADMIN IS MODIFYING STUDENT INFO: 
 //add a modifying function that will populate all data from search to add
@@ -574,6 +582,17 @@
 				} 
 				
 			};
+
+
+
+			admin_add_ctrl.addProgram = function() {
+				//initiate modal
+				modalFactory.addProgramModalService();
+
+			};
+
+
+
 
 
 			admin_add_ctrl.refresh = function() {	//could encapsulate all the refresh function into its own factory service

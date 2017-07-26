@@ -45,6 +45,7 @@ app.use(cookieParser('kevinRenIsAweseome', { httpOnly: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));	//get information from html forms
 app.use(helmet());	//security helmet
+app.use(validator());
 //Setting up for express/passport sessions
 app.use(session({name: 'server-session-cookie-id',
 				 secret: 'kevinRenIsAweseome', 

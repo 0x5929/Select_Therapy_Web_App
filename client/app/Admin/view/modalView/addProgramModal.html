@@ -1,12 +1,20 @@
-<form class="form-horizontal" ng-controller="signInModalInstanceController as signInModalInstanceCtrl"> <!--good habit of declaring the controller-->
+<form class="form-horizontal" ng-controller="addProgramModalInstanceController as addProgramModalInstanceCtrl"> <!--good habit of declaring the controller-->
     <div class="modal-header">
-        <h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-log-in"></span> User Sign In</h3><br>
-        <div class="alert alert-danger" ng-if="signInModalInstanceCtrl.showErrorMessage">
-              {{signInModalInstanceCtrl.message}}
-        </div>
+        <h3 class="modal-title" id="modal-title"><!-- modal title --></h3><br>
+
+
+        <!-- MODAL HEADER -->
+
+
     </div>
     <div class="modal-body" id="modal-body">
-      <div class="form-group">
+
+
+    <!-- MODAL BODY -->
+
+
+
+<!--       <div class="form-group">
         <label class="control-label col-sm-2" for="email">Email:</label>
         <div class="col-sm-10">
           <input type="email" ng-model="signInModalInstanceCtrl.email" class="form-control" name="email" id="email" placeholder="Enter email">
@@ -17,10 +25,26 @@
         <div class="col-sm-10"> 
           <input type="password" ng-model="signInModalInstanceCtrl.password" class="form-control" name="password" id="pwd" placeholder="Enter password">
         </div>
-      </div>
+      </div> -->
+
+
+
+<!-- 
+
+**********************************************************
+ADDDDDD STUFFFFF 
+**********************************************************
+-->
     </div>
+
     <div class="modal-footer">
-      <div class="form-group"> 
+
+
+
+      <!-- MODAL FOOTER -->
+
+
+      <!-- <div class="form-group"> 
         <div class="col-sm-offset-2 col-sm-10">
           <div class="checkbox">
             <label><input type="checkbox" ng-model="signInModalInstanceCtrl.remember">Remember me</label>
@@ -33,6 +57,9 @@
           ng-click="signInModalInstanceCtrl.ok(signInModalInstanceCtrl.email, signInModalInstanceCtrl.password, signInModalInstanceCtrl.remember)">Submit</button>
           <button type="cancel" class="btn btn-default" ng-click="signInModalInstanceCtrl.cancel()">Cancel</button>
         </div>
-      </div>
+      </div> -->
+
+      <button ng-click="addProgramModalInstanceCtrl.cancel()"></button>
+
     </div>
 </form>

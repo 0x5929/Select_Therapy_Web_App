@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('myApp.admin', ['ngFileSaver', 'services.ajaxService', 'services.toastFactory'])
+	angular.module('myApp.admin', ['ngFileSaver', 'services.ajaxService', 'services.toastFactory', 'services.modalService'])
 		.controller('adminSearchController', ['$scope', '$state', 'FileSaver', 'Blob', 'ajaxService', 'studentValue', adminSearchCtrlHandler]);
 
 	function adminSearchCtrlHandler($scope, $state, FileSaver, Blob, ajaxService, studentValue) {
@@ -81,7 +81,31 @@
 				func: 'modify'
 			};
 			$state.go('Admin.Admin_Add', params);
-		}
+		};
+
+/*
+	User Delete Button
+*/
+
+			admin_search_ctrl.delete = function() {
+				//grab user id
+				var id = admin_modify_ctrl.parentScope.studentDetail._id;
+				//delete request ajax call
+				//confirmation
+				var confirmation = confirm('Are you sure you want to delete this user?');
+				if (confirmation) {
+					//ajax
+					ajaxService.delete('/admin/delete/' + id)
+						.then(function(successResponse) {
+							toastFactory.sucessDelete();	//toast
+							console.log('delete success: ', successResponse);
+					}, 
+						function(failureResponse) {
+							console.log('delete failed: ', failureResponse);
+					});
+				}
+			};
+
 //pass student data to add controller
 
 		admin_search_ctrl.adminFunctions = function(func) {

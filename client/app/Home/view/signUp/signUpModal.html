@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<form class="form-horizontal" ng-controller="signUpModalInstanceController as signUpModalInstanceCtrl">
       	<div class="modal-header">
           	<h3 class="modal-title" id="modal-title"><span class="glyphicon glyphicon-log-in"></span> New User Registration</h3><br>
           	<div class="alert alert-danger" ng-if="signUpModalInstanceCtrl.showErrorMessage" ng-repeat="message in signUpModalInstanceCtrl.messages track by $index">

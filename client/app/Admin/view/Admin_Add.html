@@ -235,6 +235,13 @@
 					</div>
 				</div>
 		</div>		
+<!-- 		NEW PROGRAM INPUT DIV  -->
+	<div>
+		<button ng-click="admin_add_ctrl.addProgram()">ADD PROGRAM</button>
+		<ul ng-repeat="eachProgram in admin_add_ctrl.studentModel.program">
+			<li>{{eachProgram.programName}} {{eachProgram.programRotation}} <!-- could add more views --></li>
+		</ul>
+	</div>
 	<!-- /END OF PROGRAM INPUTS -->
 		<div class="form-group row">
 			<label class="control-label col-md-3" for="tuition">Tuition:</label>
