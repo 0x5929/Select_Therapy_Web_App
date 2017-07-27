@@ -57,9 +57,9 @@
 
 						return modalInstance.result.then(function(result) {
 
-							console.log('HELLO WORLD RESULTS FROM ADDPROGRAM MODAL, WHAT SHOULD WE DO WIT THIS DATA? ', result);
-							// very likely the results are passed in as a program object
-
+							//result will not be passed in this time for this promise, 
+							//so just return the function
+							return;
 						});
 					}
 

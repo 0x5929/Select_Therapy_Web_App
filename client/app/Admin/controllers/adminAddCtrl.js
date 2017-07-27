@@ -597,6 +597,26 @@
 
 			admin_add_ctrl.cancelModal = $scope.$dismiss;
 
+			/*
+				okModal Function: 
+				@params: none atm
+				@return void
+				{
+					using the ngModel for program details, to call program contructor
+					pushing the resultant obj into the program array
+						-> this will refect on the ngRepeat for program details in the admin add viewhtml
+					clearing the ngModels
+					closing the modal -> dont need to pass in anything for the modal promise.
+				}
+			*/
+
+			admin_add_ctrl.okModal = function() {
+
+				//scope.close
+				//and pass in ngmodels
+				$scop.$close();
+			};
+
 
 
 
