@@ -1,4 +1,4 @@
-<form class="form-horizontal" ng-controller="addProgramModalInstanceController as addProgramModalInstanceCtrl"> <!--good habit of declaring the controller-->
+<form class="form-horizontal"> <!--good habit of declaring the controller-->
     <div class="modal-header">
         <h3 class="modal-title" id="modal-title"><!-- modal title --></h3><br>
 
@@ -58,8 +58,8 @@ ADDDDDD STUFFFFF
           <button type="cancel" class="btn btn-default" ng-click="signInModalInstanceCtrl.cancel()">Cancel</button>
         </div>
       </div> -->
-
-      <button ng-click="addProgramModalInstanceCtrl.cancel()"></button>
+<!--       <button ng-click="addProgramModalInstanceCtrl.ok()"></button> -->
+      <button ng-click="admin_add_ctrl.cancelModal()">Cancel</button>
 
     </div>
 </form>

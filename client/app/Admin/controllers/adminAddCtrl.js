@@ -584,12 +584,18 @@
 			};
 
 
+/*******************************************
+			ADD PROGRAM FUNCTIONALITY
+			MODAL SETUP AND FUNCTIONS 
+********************************************/
 
 			admin_add_ctrl.addProgram = function() {
 				//initiate modal
 				modalFactory.addProgramModalService();
 
 			};
+
+			admin_add_ctrl.cancelModal = $scope.$dismiss;
 
 
 

@@ -1,5 +1,10 @@
 (function() {
 	'use strict';
+
+	//NOTE: THIS CONTORLLER IS ACTUALLY NOT NECESSARY, 
+	//IT CAN ACTUALLY SHARE THE SAME CONTROLLER SCOPE WITH ITS PARENT CONTROLLER SCOPE, 
+	//JUST USE THAT SCOPE TO PASS IN DATA, THIS WAY IS MORE COMPLICATED, 
+	//BUT ONCE HOOKED UP CORRECTLY, IT WILL FUCNTION PROPERLY
 	angular.module('myApp.userFunctionalities')
 		.controller('signInModalInstanceController', ['$scope', '$state', 'AuthenticationFactory', 'toastFactory', 'cookieService', signInModalInstanceControllerHandler]);
 
