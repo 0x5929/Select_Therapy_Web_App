@@ -26,6 +26,22 @@
     PROGRAM JOB PLACEMENT: 
     PROGRAM JOB PLACEMENT INFO:
     PROGRAM JOB NO PLACEMENT REASON:  -->
+      <form>
+        <label>Program Name:</label>
+        <select ng-model="admin_add_ctrl.programName">
+          <option value="CNA">Certified Nurse Assistant</option>
+          <option value="HHA">Home Health Aide</option>
+          <option value="RNA">Restorative Nurse Assistant</option>
+          <option value="SG">Security Guard</option>
+          <option value="ESOL">ESOL</option>
+        </select>
+        <label>Program Rotation:</label>
+        <input type="number" ng-model="admin_add_ctrl.programRotation">
+        <label>Program Start Date:</label>
+        <input type="text" ng-model="admin_add_ctrl.programStartDate">  <!-- THESE CAN BE USED WITH MASK INPUT -->
+        <label>Program End Date:</label>
+        <input type="text" ng-model="admin_add_ctrl.programEndDate">
+      </form>
 
 <!--       <div class="form-group">
         <label class="control-label col-sm-2" for="email">Email:</label>
