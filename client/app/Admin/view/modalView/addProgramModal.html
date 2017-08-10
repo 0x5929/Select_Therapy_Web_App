@@ -1,11 +1,15 @@
-<form class="form-horizontal"> <!--good habit of declaring the controller-->
+<form class="form-horizontal"> <!--NO NEED TO DECLARE CONTROLLER, IT DIRECTLY INHERITS FROM ADMIN ADD CTRL-->
     <div class="modal-header">
-        <h3 class="modal-title" id="modal-title"><!-- modal title --></h3><br>
+        <h3 class="modal-title" id="modal-title">
+        Please Enter the Program Details:
+        <!-- modal title --></h3><br>
 
 
         <!-- MODAL HEADER -->
 
-
+      <div class="alert alert-danger" ng-if="admin_add_ctrl.addProgram.showErrorMessage" ng-repeat="message in admin_add_ctrl.addProgram.errMessages track by $index">
+         {{message}}
+       </div>
     </div>
     <div class="modal-body" id="modal-body">
 
@@ -27,34 +31,189 @@
     PROGRAM JOB PLACEMENT INFO:
     PROGRAM JOB NO PLACEMENT REASON:  -->
       <form>
-        <label>Program Name:</label>
-        <select ng-model="admin_add_ctrl.programName">
-          <option value="CNA">Certified Nurse Assistant</option>
-          <option value="HHA">Home Health Aide</option>
-          <option value="RNA">Restorative Nurse Assistant</option>
-          <option value="SG">Security Guard</option>
-          <option value="ESOL">ESOL</option>
-        </select>
-        <label>Program Rotation:</label>
-        <input type="number" ng-model="admin_add_ctrl.programRotation">
-        <label>Program Start Date:</label>
-        <input type="text" ng-model="admin_add_ctrl.programStartDate">  <!-- THESE CAN BE USED WITH MASK INPUT -->
-        <label>Program End Date:</label>
-        <input type="text" ng-model="admin_add_ctrl.programEndDate">
+        <div class="form-group row">
+          <label class="control-label col-md-2">Program Name:</label>
+          <div class="col-md-9">
+            <select class="form-control" ng-model="admin_add_ctrl.addProgram.programName" class="form-control">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="CNA">Certified Nurse Assistant</option>
+              <option value="HHA">Home Health Aide</option>
+              <option value="RNA">Restorative Nurse Assistant</option>
+              <option value="SG">Security Guard</option>
+              <option value="Caregiver">Caregiver</option>
+              <option value="ESOL">ESOL</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Program Rotation:</label>
+          <div class="col-md-9">
+            <input class="form-control" type="number" ng-model="admin_add_ctrl.addProgram.programRotation">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Program Start Date:</label>
+          <div class="col-md-9">
+            <input  type="text" 
+                    class="form-control" 
+                    masked-input
+                    target-mask="99/99/9999"
+                    mask-options='{"placeholder": "mm/dd/yyyy"}' 
+                    name="programStartDate" 
+                    placeholder="Enter Program's Start Date" 
+                    ng-model="admin_add_ctrl.addProgram.programStartDate">
+          </div>
+        </div>
+        <div class="form-group row">
+        <label class="control-label col-md-2">Program End Date:</label>
+          <div class="col-md-9">
+            <input type="text" 
+                    class="form-control" 
+                    masked-input
+                    target-mask="99/99/9999"
+                    mask-options='{"placeholder": "mm/dd/yyyy"}' 
+                    name="programEndDate" 
+                    placeholder="Enter Program's End Date"
+                    ng-model="admin_add_ctrl.addProgram.programEndDate">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Program Tuition:</label>
+          <div class="col-md-9">
+            <input class="form-control" type="number" ng-model="admin_add_ctrl.addProgram.programTuition">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Payment Status:</label>
+          <div class="col-md-9">
+            <select class="form-control" ng-model="admin_add_ctrl.addProgram.tuitionPaid" name="tuitionPaid">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="true">Paid</option>
+              <option value="">Did not finish Payment (Please check the payment spreadsheet)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Graduate Status:</label>
+          <div class="col-md-9">
+              <select class="form-control" ng-model="admin_add_ctrl.addProgram.graduate" name="graduate">
+                <option disabled value="noneSelected"> -- Select an Option -- </option>
+                <option value="">Student</option>
+                <option value="true">Alumni</option>
+              </select>
+          </div>
+        </div>
+        <div class="form-group row">
+        <label class="control-label col-md-2">Reason for Not Graduating:</label>
+          <div class="col-md-9">
+            <select class="form-control" ng-model="admin_add_ctrl.addProgram.notGraduatingReason" name="notGraduatingReason">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="Still_in_program">Still in the program</option>
+              <option value="Dropped_the_program">Dropped</option>
+              <option value="Missing_clinical_hours">Did not finish clinical</option>
+              <option value="Missing_theory_hours">Did not finish theory</option>
+              <option value="Did_not_finish_payment">Did not finish payment</option>
+              <option value="N/A">N/A</option>  <!-- if the student is graduated, then its option N/A -->
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Passed Certification Exam?</label> 
+
+<!--*******************************************
+NOTE: var a = Boolean('anyStringResolvesToTrue') 
+          a = true;
+
+
+****************************************/
+-->
+
+          <div class="col-md-9">
+            <select class="form-control" ng-model="admin_add_ctrl.addProgram.passedExam" name="passedExam">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="true">Yes</option>
+              <option value="">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="numberOfTries">How Many Tries it took?</label>
+          <div class="col-md-9">
+            <select ng-model="admin_add_ctrl.addProgram.numberOfTries" name="numberOfTries" class="form-control">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="1">1st Try</option>
+              <option value="2">2nd Try</option>
+              <option value="3">3rd Try</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+        <label class="control-label col-md-2">Reason for Not Passing:</label>
+          <div class="col-md-9">
+            <select class="form-control" ng-model="admin_add_ctrl.addProgram.noPassReason" name="noPassReason">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="Have_not_taken_exam">Have not taken the exam</option>
+              <option value="There_is_no_certification_exam">There is no certification exam</option>
+              <option value="Failed_theory">Failed Theory</option>
+              <option value="Failed_skills">Failed Skills</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="jobPlaced">Employment Status:</label>
+          <div class="col-md-9">
+            <select ng-model="admin_add_ctrl.addProgram.jobPlaced" name="jobPlaced" class="form-control">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="true">Employed</option>
+              <option value="">Unemployed</option>
+            </select>
+          </div>  
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="payRate">Pay Rate:</label>
+          <div class="col-md-9">
+            <input type="text" ng-model="admin_add_ctrl.addProgram.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate. Please type N/A if student is currently unemployed">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="JobInfo">Employer:</label>
+          <div class="col-md-9">
+            <input type="text" ng-model="admin_add_ctrl.addProgram.placeOfEmployment" class="form-control" name="placeOfEmployment" placeholder="Enter Student's Place of Employment. Please type N/A if student is currently unemployed">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="employerAddress">Employer Address:</label>
+          <div class="col-md-9">
+            <input type="text" ng-model="admin_add_ctrl.addProgram.employerAddress" class="form-control" name="employerAddress" placeholder="Enter the Employer's Address. Please type N/A if student is currently unemployed">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="jobPosition">Job Position:</label>
+          <div class="col-md-9">
+            <input type="text" ng-model="admin_add_ctrl.addProgram.jobPosition" class="form-control" name="jobPosition" placeholder="Enter the student's position. Please type N/A if student is currently unemployed">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2">Fulltime/Parttime Status:</label>
+          <div class="col-md-9">
+            <select ng-model="admin_add_ctrl.addProgram.weeklyWorkHours" name="jobPlaced" class="form-control">
+              <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
+              <option value="FT">Full time</option>
+              <option value="PT">Part time</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>  
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-md-2" for="payRate">Reason for Unemployment:</label>
+          <div class="col-md-9">
+            <input type="text" ng-model="admin_add_ctrl.addProgram.unemploymentReason" class="form-control" name="payRate" placeholder="Enter Student's Reason for unemployment">
+          </div>
+        </div>
       </form>
 
-<!--       <div class="form-group">
-        <label class="control-label col-sm-2" for="email">Email:</label>
-        <div class="col-sm-10">
-          <input type="email" ng-model="signInModalInstanceCtrl.email" class="form-control" name="email" id="email" placeholder="Enter email">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="pwd">Password:</label>
-        <div class="col-sm-10"> 
-          <input type="password" ng-model="signInModalInstanceCtrl.password" class="form-control" name="password" id="pwd" placeholder="Enter password">
-        </div>
-      </div> -->
 
 
 
@@ -67,28 +226,8 @@ ADDDDDD STUFFFFF
     </div>
 
     <div class="modal-footer">
-
-
-
-      <!-- MODAL FOOTER -->
-
-
-      <!-- <div class="form-group"> 
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label><input type="checkbox" ng-model="signInModalInstanceCtrl.remember">Remember me</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-group"> 
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-default" 
-          ng-click="signInModalInstanceCtrl.ok(signInModalInstanceCtrl.email, signInModalInstanceCtrl.password, signInModalInstanceCtrl.remember)">Submit</button>
-          <button type="cancel" class="btn btn-default" ng-click="signInModalInstanceCtrl.cancel()">Cancel</button>
-        </div>
-      </div> -->
-      <button ng-click="admin_add_ctrl.okModal()">Ok</button>
-      <button ng-click="admin_add_ctrl.cancelModal()">Cancel</button>
+      <button class="btn" ng-click="admin_add_ctrl.okModal()">Ok</button>
+      <button class="btn" ng-click="admin_add_ctrl.cancelModal()">Cancel</button>
 
     </div>
 </form>

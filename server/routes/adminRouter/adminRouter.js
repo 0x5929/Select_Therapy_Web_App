@@ -254,70 +254,77 @@ REST: ADD
 			var googleData = req.body.googlePostData;
 			//clean up google data
 			//get spreadSheet data
-			var performanceReport = googleData.annualReport;
-			var STRF = googleData.STRF;
-			var course = performanceReport.course;	//[] form
-			for (var index = 0; index < course.length; index++){	//DO I NEED THE TITLE?
-				if (course[index] === 'Nurse Assistant'){
+			var performanceReport = googleData.annualReport;	//[] form
+			var STRF = googleData.STRF;	// [] form
+			// var course = performanceReport.course;	//[] form
+			for (var index = 0; index < performanceReport.length; index++){	// FOR PERFORMANCE REPORTS
+				if (performanceReport[index]['course'] === 'Nurse Assistant'){
 					//initialize sheet data
-					var CNAPerformanceReport           = performanceReport;
-					var CNASTRF                        = STRF;
+					var CNAPerformanceReport           = performanceReport[index];
 					//set appropriate fields
 					CNAPerformanceReport.title         = 'CNAPerformance';
-					CNAPerformanceReport.course        = 'Nurse Assistant';
-					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
-					CNAPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
-					CNAPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
-					CNASTRF.title 					   = 'CNASTRF';
-					CNASTRF.course                     = 'Nurse Assistant';
-					CNASTRF.spreadsheetID              = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					CNAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';	//need to be changed for production mode	
 					//push data to returned
 					returnedData.push(CNAPerformanceReport);
-					returnedData.push(CNASTRF);
-				}else if (course[index] === 'Home Health Aide'){
-					var HHAPerformanceReport           = performanceReport;
-					var HHASTRF                        = STRF;
-					HHAPerformanceReport.course        = 'Home Health Aide';
-					HHAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
-					HHAPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
-					HHAPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
-					HHASTRF.course                     = 'Home Health Aide';
-					HHASTRF.spreadsheetID                 = '';
-					//for performance, need to also reconstruct array
-				}else if (course[index] === 'Security Guard'){
-					var SGPerformanceReport           = performanceReport;
-					var SGSTRF                        = STRF;
-					SGPerformanceReport.course        = 'Security Guard';
+				}else if (performanceReport[index]['course'] === 'Home Health Aide'){
+					var HHAPerformanceReport           = performanceReport[index];
+					HHAPerformanceReport.title 		   = 'HHAPerformance';
+					HHAPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';	//need to be changed for production mode	
+					//push data into returned array
+					returnedData.push(HHAPerformanceReport);
+				}else if (performanceReport[index]['course'] === 'Security Guard'){
+					var SGPerformanceReport           = performanceReport[index];
+					SGPerformanceReport.title         = 'SGPerformance';
 					SGPerformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
-					SGPerformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
-					SGPerformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
-					SGSTRF.course                     = 'Security Guard';
-					SGSTRF.spreadsheetID              = '';
-					//for performance, need to also reconstruct array 
-				}else if (course[index] === 'ESOL'){
-					var ESOLPerformanceReport           = performanceReport;
-					var ESOLSTRF                        = STRF;
-					ESOLPerformanceReport.course        = 'ESOL';
+					//push data into returned array
+					returnedData.push(SGPerformanceReport);
+				}else if (performanceReport[index]['course'] === 'ESOL'){
+					var ESOLPerformanceReport           = performanceReport[index];
+					ESOLPerformanceReport.title         = 'ESOLPerformance';
 					ESOLperformanceReport.spreadsheetID = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
-					ESOLperformanceReport.startDate     = performanceReport.startDate['CNA']['startDate'];
-					ESOLperformanceReport.completionDate= performanceReport.completionDate['CNA']['endDate'];	
-					ESOLSTRF.course                     = 'ESOL';
-					ESOLSTRF.spreadsheetID              = '';
-					//for performance, need to also reconstruct array
+					//push data into returned array
+					returnedData.push(ESOLPerformanceReport);
+				}				
+			}
+			for (var i = 0; i < STRF.length; i++){	//FOR STRF
+				if (STRF[i]['course'] === 'Nurse Assistant'){
+					//initialize sheet data
+					var CNASTRF                        = STRF[i];
+					//set appropriate fields
+					CNASTRF.title 					   = 'CNASTRF';
+					CNASTRF.spreadsheetID              = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					//push data to returned
+					returnedData.push(CNASTRF);
+				}else if (STRF[i]['course'] === 'Home Health Aide'){
+					var HHASTRF                        = STRF[i];	
+					HHASTRF.title                      = 'HHASTRF';
+					HHASTRF.spreadsheetID              = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					//push data to be returned
+					returnedData.push(HHASTRF);
+				}else if (STRF[i]['course'] === 'Security Guard'){
+					var SGSTRF                        = STRF[i];
+					SGSTRF.title                      = 'SGSTRF';
+					SGSTRF.spreadsheetID              = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					//push data to be returned
+					returnedData.push(SGSTRF);
+				}else if (STRF[i]['course'] === 'ESOL'){
+					var ESOLSTRF                        = STRF[i];
+					ESOLSTRF.title                      = 'ESOLSTRF';
+					ESOLSTRF.spreadsheetID              = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
+					//push data to be returned
+					returnedData.push(ESOLSTRF);
 				}				
 			}
 			//calling next
 			req.adminPost = {};
 			req.adminPost.googleData = returnedData;
-			//adding google data [] for db onto request body
-			req.body.google = [];
 			next();
 		}
 
 		function adminAddPostHandler(req, res, next) {
 			var SheetHelper = googleSheetService.sheetHelper;
 			var auth        = req.get('Authorization');
-			var googleData  = req.adminPost.googleData;
+			var googleData  = req.adminPost.googleData;	//format: [{cnaperformance}, {cnastrf}, {hhaperformance}, {hhastrf}, ...]
 			// var sheetID     = '1b1POFNjX4xlzbtplTZoDwhStOnPajx78Aebmjdvj4wo';
 			if (!auth)	return next('error: Authorization required');
 			var accessToken = auth.split(' ')[1]; 	//grabbing token after bearer
@@ -337,12 +344,9 @@ REST: ADD
 				}
 				if (!user) {	
 					//this needs to depend on how many sheets needs to be appended
+					//adding google data [] for db onto request body
+					req.body.google = [];
 					helper.appendValue(googleData,	googleAppendValueHandler, dbAddHandler);
-					//using for loop instead of forEach for performance boost
-					// for (var i = 0; i < googleData.length; i++) {
-					// 	//need to figure out a way for all append to be done, then call db, maybe with another callback
-					// 	helper.appendValue(googleData[i],	googleAppendValueHandler);
-					// }
 				}
 
 				function googleSyncDataHandler(err, successResponse) {
@@ -371,6 +375,15 @@ REST: ADD
 				}
 
 
+				function googleAppendValueHandler (err, successResponse, googleDataforDB) {
+					if (err) return next(err);
+					console.log(successResponse);
+					var updatedRange = successResponse.updates.updatedRange;
+					googleDataforDB.range = updatedRange;
+					//adding google data in request body
+					console.log('HELLO WORLD GOOGLE DB STUFF: ', googleDataforDB);
+					return req.body.google.push(googleDataforDB);
+				}
 
 				function dbAddHandler(dataLength, index) {
 					if (index === (dataLength - 1)){
@@ -385,28 +398,9 @@ REST: ADD
 							newStudent.ssn             = req.body.ssn;
 							newStudent.address         = req.body.address;
 							newStudent.email           = req.body.email;
-							newStudent.program         = req.body.program;
-							newStudent.tuition         = req.body.tuition;
-							newStudent.graduate        = req.body.graduate;
-							newStudent.tuitionPaid     = req.body.tuitionPaid;
+							newStudent.program         = req.body.program;	//will include everything else such as graduate, exam status, payment status
 							newStudent.marketingSurvey = req.body.marketingSurvey;	
 							newStudent.googleData      = req.body.google;	
-			//depending on whether or not the student graduated, we save the necessary things to the db and check for pass exam and job place condition, 
-			//and depending on those conditions we save the necessary data into db	
-						if (req.body.graduate){	//graduate condition
-							newStudent.passedExam = req.body.passedExam;	//saving necesasry properties
-							newStudent.jobPlaced  = req.body.jobPlaced;	//saving necesasry properties
-							if (req.body.passedExam)	newStudent.numberOfTries = req.body.numberOfTries;	//saving necessary properties depending on pass exam condidtion
-							else	newStudent.noPassReason = req.body.noPassReason;	//saving necessary properties depending on pass exam condidtion
-							if (req.body.jobPlaced){
-								newStudent.weeklyWorkHours   = req.body.weeklyWorkHours;	//depending on whether or not the student is employed, we save the necessary things from front end into the db
-								newStudent.payRate           = req.body.payRate;
-								newStudent.placeOfEmployment = req.body.placeOfEmployment;
-								newStudent.employmentAddress = req.body.employmentAddress;
-								newStudent.jobPosition       = req.body.jobPosition;
-							}else	newStudent.noJobReason = req.body.noJobReason;	
-						}
-						else	newStudent.notGraduatingReason = req.body.notGraduatingReason;	//if graduate condition is not met, we then save the none graduate reason
 						//save the new student
 						newStudent.save(newUserSavedHandler);
 							console.log('HELLO WORLD NEW STUDENT: ', newStudent);
@@ -418,20 +412,6 @@ REST: ADD
 
 				}
 
-				function googleAppendValueHandler (err, successResponse, googleDataforDB) {
-					if (err) return next(err);
-					console.log(successResponse);
-					var updatedRange = successResponse.updates.updatedRange;
-					googleDataforDB.range = updatedRange;
-					//adding google data in request body
-					console.log('HELLO WORLD GOOGLE DB STUFF: ', googleDataforDB);
-					return req.body.google.push(googleDataforDB);
-					//using updated range is all we need
-					//need to place all the db saves in this call back
-					//we also need to save the appropriate spreadsheetid, and range to db
-
-
-				}
 			}
 		}
 

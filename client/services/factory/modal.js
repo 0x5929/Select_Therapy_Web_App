@@ -43,7 +43,7 @@
 						return modalInstance.result.then(assignCurrentUser);
 					}
 
-					function addProgramModalService() {
+					function addProgramModalService($scope) {
 						var modalInstance = $uibModal.open({
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
@@ -51,6 +51,8 @@
 					      templateUrl: 'app/Admin/view/modalView/addProgramModal.html', 
 					      controller: 	'adminAddController',
 					      controllerAs: 'admin_add_ctrl',
+					      bindToController: true,
+					      scope: $scope,
 					      size: 'lg'
 
 						});
