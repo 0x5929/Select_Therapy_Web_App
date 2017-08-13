@@ -43,26 +43,35 @@
 						return modalInstance.result.then(assignCurrentUser);
 					}
 
-					function addProgramModalService($scope) {
+					function addProgramModalService(programArr) {
 						var modalInstance = $uibModal.open({
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
 					      ariaDescribedBy: 'modal-body',
 					      templateUrl: 'app/Admin/view/modalView/addProgramModal.html', 
-					      controller: 	'adminAddController',
-					      controllerAs: 'admin_add_ctrl',
-					      bindToController: true,
-					      scope: $scope,
+					      controller: 	'programAddModalInstanceController',
+					      controllerAs: 'programAddModalInstanceCtrl',
+					      // bindToController: true,
+					      // scope: $scope,
+					      backdrop: true,
+					      resolve: {
+					      	program: function() {
+					      		return programArr;
+					      	}
+					      },
 					      size: 'lg'
 
 						});
 
-						return modalInstance.result.then(function(result) {
-
-							//result will not be passed in this time for this promise, 
-							//so just return the function
-							return;
-						});
+						return modalInstance.result
+									.then(function(successResponse) {
+							//return the addprogramObj to back to the controller promise to handle
+							console.log('MODAL CLOSED');
+									return successResponse;
+								}, function(failureResponse) {
+									console.log('MODAL DISMISSED', failureResponse);
+									return;	//does not return the failure response because rejections does not get routed to the promise that calls this
+								});
 					}
 
 					return services;

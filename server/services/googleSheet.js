@@ -131,6 +131,7 @@
 			// var spreadsheetID, postData, request, dbData, dbCheck;
 
 			//NEED TO CHECK FOR CURRENT YEAR
+			console.log('DOES THIS GET RUN 134');
 
 			async.forEachOfSeries(data, iteratee, asyncCallback);
 
@@ -158,6 +159,7 @@
 					dataLength: data.length,
 					index: index
 				}
+				console.log('DOES THIS GET RUN 162');
 
 				sheetHelperServiceAppend.service.spreadsheets.values.append(request, googleAppendHandler);	
 				
@@ -166,6 +168,7 @@
 						console.log('HELLO WORLD ERR AT GOOGLESHEETS 111: ', err);
 						return callbackForGoogleService(err);
 					}else {
+						console.log('DOES THIS GET RUN 170');
 						callbackForGoogleService(null, response, dbData);
 						callbackForDBAdd(dbCheck.dataLength, dbCheck.index);	
 						return callback();	//invoking callback for async lib for the next async call

@@ -1,4 +1,4 @@
-<form class="form-horizontal"> <!--NO NEED TO DECLARE CONTROLLER, IT DIRECTLY INHERITS FROM ADMIN ADD CTRL-->
+<form class="form-horizontal"> <!--NO NEED TO DECLARE CONTROLLER, IT DIRECTLY INHERITS FROM MODAL DECLARATION IN SERVICE-->
     <div class="modal-header">
         <h3 class="modal-title" id="modal-title">
         Please Enter the Program Details:
@@ -7,7 +7,7 @@
 
         <!-- MODAL HEADER -->
 
-      <div class="alert alert-danger" ng-if="admin_add_ctrl.addProgram.showErrorMessage" ng-repeat="message in admin_add_ctrl.addProgram.errMessages track by $index">
+      <div class="alert alert-danger" ng-if="programAddModalInstanceCtrl.addProgram.showErrorMessage" ng-repeat="message in programAddModalInstanceCtrl.addProgram.errMessages track by $index">
          {{message}}
        </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="form-group row">
           <label class="control-label col-md-2">Program Name:</label>
           <div class="col-md-9">
-            <select class="form-control" ng-model="admin_add_ctrl.addProgram.programName" class="form-control">
+            <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.programName" class="form-control">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="CNA">Certified Nurse Assistant</option>
               <option value="HHA">Home Health Aide</option>
@@ -48,7 +48,7 @@
         <div class="form-group row">
           <label class="control-label col-md-2">Program Rotation:</label>
           <div class="col-md-9">
-            <input class="form-control" type="number" ng-model="admin_add_ctrl.addProgram.programRotation">
+            <input class="form-control" type="number" ng-model="programAddModalInstanceCtrl.addProgram.programRotation">
           </div>
         </div>
         <div class="form-group row">
@@ -61,7 +61,7 @@
                     mask-options='{"placeholder": "mm/dd/yyyy"}' 
                     name="programStartDate" 
                     placeholder="Enter Program's Start Date" 
-                    ng-model="admin_add_ctrl.addProgram.programStartDate">
+                    ng-model="programAddModalInstanceCtrl.addProgram.programStartDate">
           </div>
         </div>
         <div class="form-group row">
@@ -74,19 +74,19 @@
                     mask-options='{"placeholder": "mm/dd/yyyy"}' 
                     name="programEndDate" 
                     placeholder="Enter Program's End Date"
-                    ng-model="admin_add_ctrl.addProgram.programEndDate">
+                    ng-model="programAddModalInstanceCtrl.addProgram.programEndDate">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2">Program Tuition:</label>
           <div class="col-md-9">
-            <input class="form-control" type="number" ng-model="admin_add_ctrl.addProgram.programTuition">
+            <input class="form-control" type="number" ng-model="programAddModalInstanceCtrl.addProgram.programTuition">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2">Payment Status:</label>
           <div class="col-md-9">
-            <select class="form-control" ng-model="admin_add_ctrl.addProgram.tuitionPaid" name="tuitionPaid">
+            <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.tuitionPaid" name="tuitionPaid">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="true">Paid</option>
               <option value="">Did not finish Payment (Please check the payment spreadsheet)</option>
@@ -96,7 +96,7 @@
         <div class="form-group row">
           <label class="control-label col-md-2">Graduate Status:</label>
           <div class="col-md-9">
-              <select class="form-control" ng-model="admin_add_ctrl.addProgram.graduate" name="graduate">
+              <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.graduate" name="graduate">
                 <option disabled value="noneSelected"> -- Select an Option -- </option>
                 <option value="">Student</option>
                 <option value="true">Alumni</option>
@@ -106,7 +106,7 @@
         <div class="form-group row">
         <label class="control-label col-md-2">Reason for Not Graduating:</label>
           <div class="col-md-9">
-            <select class="form-control" ng-model="admin_add_ctrl.addProgram.notGraduatingReason" name="notGraduatingReason">
+            <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.notGraduatingReason" name="notGraduatingReason">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="Still_in_program">Still in the program</option>
               <option value="Dropped_the_program">Dropped</option>
@@ -129,7 +129,7 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
 -->
 
           <div class="col-md-9">
-            <select class="form-control" ng-model="admin_add_ctrl.addProgram.passedExam" name="passedExam">
+            <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.passedExam" name="passedExam">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="true">Yes</option>
               <option value="">No</option>
@@ -139,7 +139,7 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
         <div class="form-group row">
           <label class="control-label col-md-2" for="numberOfTries">How Many Tries it took?</label>
           <div class="col-md-9">
-            <select ng-model="admin_add_ctrl.addProgram.numberOfTries" name="numberOfTries" class="form-control">
+            <select ng-model="programAddModalInstanceCtrl.addProgram.numberOfTries" name="numberOfTries" class="form-control">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="1">1st Try</option>
               <option value="2">2nd Try</option>
@@ -151,7 +151,7 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
         <div class="form-group row">
         <label class="control-label col-md-2">Reason for Not Passing:</label>
           <div class="col-md-9">
-            <select class="form-control" ng-model="admin_add_ctrl.addProgram.noPassReason" name="noPassReason">
+            <select class="form-control" ng-model="programAddModalInstanceCtrl.addProgram.noPassReason" name="noPassReason">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="Have_not_taken_exam">Have not taken the exam</option>
               <option value="There_is_no_certification_exam">There is no certification exam</option>
@@ -164,7 +164,7 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
         <div class="form-group row">
           <label class="control-label col-md-2" for="jobPlaced">Employment Status:</label>
           <div class="col-md-9">
-            <select ng-model="admin_add_ctrl.addProgram.jobPlaced" name="jobPlaced" class="form-control">
+            <select ng-model="programAddModalInstanceCtrl.addProgram.jobPlaced" name="jobPlaced" class="form-control">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="true">Employed</option>
               <option value="">Unemployed</option>
@@ -174,31 +174,31 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
         <div class="form-group row">
           <label class="control-label col-md-2" for="payRate">Pay Rate:</label>
           <div class="col-md-9">
-            <input type="text" ng-model="admin_add_ctrl.addProgram.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate. Please type N/A if student is currently unemployed">
+            <input type="text" ng-model="programAddModalInstanceCtrl.addProgram.payRate" class="form-control" name="payRate" placeholder="Enter Student's Pay Rate. Please type N/A if student is currently unemployed">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2" for="JobInfo">Employer:</label>
           <div class="col-md-9">
-            <input type="text" ng-model="admin_add_ctrl.addProgram.placeOfEmployment" class="form-control" name="placeOfEmployment" placeholder="Enter Student's Place of Employment. Please type N/A if student is currently unemployed">
+            <input type="text" ng-model="programAddModalInstanceCtrl.addProgram.placeOfEmployment" class="form-control" name="placeOfEmployment" placeholder="Enter Student's Place of Employment. Please type N/A if student is currently unemployed">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2" for="employerAddress">Employer Address:</label>
           <div class="col-md-9">
-            <input type="text" ng-model="admin_add_ctrl.addProgram.employerAddress" class="form-control" name="employerAddress" placeholder="Enter the Employer's Address. Please type N/A if student is currently unemployed">
+            <input type="text" ng-model="programAddModalInstanceCtrl.addProgram.employerAddress" class="form-control" name="employerAddress" placeholder="Enter the Employer's Address. Please type N/A if student is currently unemployed">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2" for="jobPosition">Job Position:</label>
           <div class="col-md-9">
-            <input type="text" ng-model="admin_add_ctrl.addProgram.jobPosition" class="form-control" name="jobPosition" placeholder="Enter the student's position. Please type N/A if student is currently unemployed">
+            <input type="text" ng-model="programAddModalInstanceCtrl.addProgram.jobPosition" class="form-control" name="jobPosition" placeholder="Enter the student's position. Please type N/A if student is currently unemployed">
           </div>
         </div>
         <div class="form-group row">
           <label class="control-label col-md-2">Fulltime/Parttime Status:</label>
           <div class="col-md-9">
-            <select ng-model="admin_add_ctrl.addProgram.weeklyWorkHours" name="jobPlaced" class="form-control">
+            <select ng-model="programAddModalInstanceCtrl.addProgram.weeklyWorkHours" name="jobPlaced" class="form-control">
               <option disabled ng-selected="true" value="noneSelected"> -- Select an Option -- </option>
               <option value="FT">Full time</option>
               <option value="PT">Part time</option>
@@ -209,7 +209,7 @@ NOTE: var a = Boolean('anyStringResolvesToTrue')
         <div class="form-group row">
           <label class="control-label col-md-2" for="payRate">Reason for Unemployment:</label>
           <div class="col-md-9">
-            <input type="text" ng-model="admin_add_ctrl.addProgram.unemploymentReason" class="form-control" name="payRate" placeholder="Enter Student's Reason for unemployment">
+            <input type="text" ng-model="programAddModalInstanceCtrl.addProgram.unemploymentReason" class="form-control" name="payRate" placeholder="Enter Student's Reason for unemployment">
           </div>
         </div>
       </form>
@@ -226,8 +226,9 @@ ADDDDDD STUFFFFF
     </div>
 
     <div class="modal-footer">
-      <button class="btn" ng-click="admin_add_ctrl.okModal()">Ok</button>
-      <button class="btn" ng-click="admin_add_ctrl.cancelModal()">Cancel</button>
+      <button class="btn" ng-click="programAddModalInstanceCtrl.dummyData()">Dummy Data</button>
+      <button class="btn" ng-click="programAddModalInstanceCtrl.okModal()">Ok</button>
+      <button class="btn" ng-click="programAddModalInstanceCtrl.cancelModal()">Cancel</button>
 
     </div>
 </form>

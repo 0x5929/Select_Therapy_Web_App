@@ -252,6 +252,7 @@ REST: ADD
 																	//COULD BE PLACED IN GOOGLE'S SERVICE
 			var returnedData = [];
 			var googleData = req.body.googlePostData;
+			console.log(googleData);
 			//clean up google data
 			//get spreadSheet data
 			var performanceReport = googleData.annualReport;	//[] form
@@ -318,6 +319,7 @@ REST: ADD
 			//calling next
 			req.adminPost = {};
 			req.adminPost.googleData = returnedData;
+			console.log(returnedData);
 			next();
 		}
 
@@ -345,6 +347,7 @@ REST: ADD
 				if (!user) {	
 					//this needs to depend on how many sheets needs to be appended
 					//adding google data [] for db onto request body
+					console.log('DOES THIS GET RUN? 348', googleData);
 					req.body.google = [];
 					helper.appendValue(googleData,	googleAppendValueHandler, dbAddHandler);
 				}
