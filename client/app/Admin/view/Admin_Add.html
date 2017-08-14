@@ -85,19 +85,7 @@
 			</div>
 		</div>
 	<!-- /END OF STRING INPUTS -->
-		<div class="form-group row">
-			<label class="control-label col-md-9">Program:</label>
-		</div>
 	
-<!-- 		NEW PROGRAM INPUT DIV  -->
-		<div>
-			<button class="btn" ng-click="admin_add_ctrl.addingProgram()">ADD PROGRAM</button>
-			<ul ng-repeat="eachProgram in admin_add_ctrl.studentModel.program">
-				<li>{{eachProgram.programName}}  <!-- could add more views --></li>
-				<li>{{eachProgram.programRotation}}</li>
-			</ul>
-		</div>
-	<!-- /END OF PROGRAM INPUTS -->
 		<div class="form-group row">
 			<label class="control-label col-md-3" for="marketingSurvey">How did you hear about us?</label>
 			<div class="col-md-9">
@@ -112,20 +100,25 @@
 			</div>
 		</div>
 	<!-- /END OF OPTION INPUTS -->
+<!-- 		NEW PROGRAM INPUT DIV  -->
+		<div class="form-group row">
+			<label class="control-label col-md-9">Program:</label>
+		</div>
+		<div>
+			<button class="btn" ng-click="admin_add_ctrl.addingProgram()">ADD PROGRAM</button>
+			<ul ng-repeat="eachProgram in admin_add_ctrl.studentModel.program">
+				<li>{{eachProgram.programName}}  <!-- could add more views --></li>
+				<li>{{eachProgram.programRotation}}</li>
+			</ul>
+		</div>
+	<!-- /END OF PROGRAM INPUTS -->
 	<hr>
 	<!-- buttons for submit and cancel/clear -->
 		<div class="text-center">
 			<button class="btn" ng-click="admin_add_ctrl.submit()">Submit</button>
 			<button class="btn" ng-click="admin_add_ctrl.cancelBtn()">Cancel</button>
 			<button class="btn" ng-click="admin_add_ctrl.enterDummyData()">DUMMY DATA</button>
-			<button class="btn" ng-click="admin_add_ctrl.googleSync = true">Sync With Google</button>
-			<div ng-if="admin_add_ctrl.googleSync">
-				<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
-				<!-- next step in the google sync processs -->
-				<button ng-if="admin_add_ctrl.turnOnSyncButton" class="btn" ng-click="admin_add_ctrl.letsSyncWitGoogle()">SYNC</button>
-			</div>
-<!-- 			this button should have the functionaility to load a modal with google auth, and send signal to server 
-			for data to be organized in a way to be synced with google -->
+			<google-signin-btn buttonID="admin_add_ctrl.googleSigninBtnID" options="admin_add_ctrl.googleSigninOptions"></google-signin-btn>
 			<br>
 			<br>
 		</div>

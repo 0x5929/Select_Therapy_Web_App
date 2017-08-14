@@ -12,8 +12,7 @@
 			var admin_add_ctrl               = this;
 			var postData                     = null;
 
-			admin_add_ctrl.googleSync        = false;
-			admin_add_ctrl.turnOnSyncButton  = false;
+			admin_add_ctrl.successSync       = false;
 
 
 			admin_add_ctrl.ngSelectOption = {	//initialize ng select option to be initially false
@@ -161,6 +160,19 @@ VIEW BUTTONS AND NECESSARY FUNCTIONS TO FILTER DATA
 				}
 
 				function noErrorCheck(dataTobeChecked) {
+					//check if google is synced successfully 
+					if (!admin_add_ctrl.successSync){
+						toastFactory.errorToast("please click the google button to sync first before submitting student info");
+						return false;
+					}
+					if (!dataTobeChecked.enrollmentDate){
+						toastFactory.errorToast("please check the enrollment date field");
+						return false;
+					}
+					if (!dataTobeChecked.studentID){
+						toastFactory.errorToast("please check the student ID field");
+						return false;
+					}
 					if (!(dataTobeChecked.firstName) || (!isNaN(dataTobeChecked.firstName)) && !(/^\S*$/.test(dataTobeChecked.firstName))){	//regex that there is no space
 						toastFactory.errorToast("please check the student's first name input");
 						return false;
@@ -175,6 +187,14 @@ VIEW BUTTONS AND NECESSARY FUNCTIONS TO FILTER DATA
 					}
 					if (!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(dataTobeChecked.email))) {
 						toastFactory.errorToast("please enter a valid email");
+						return false;
+					}
+					if (!dataTobeChecked.phoneNumber){
+						toastFactory.errorToast("please check the phone number field");
+						return false;
+					}
+					if (!dataTobeChecked.ssn){
+						toastFactory.errorToast("please check the ssn field");
 						return false;
 					}
 					if (dataTobeChecked.marketingSurvey === 'noneSelected'){
@@ -267,13 +287,12 @@ NOTE: got brought out of the cancel btn because submit button needs to access it
 				modalFactory.addProgramModalService(admin_add_ctrl.studentModel.program)
 					.then(function(successResponse) {
 						var addProgramObj = successResponse;
-						if (addProgramObj){	//this check is necesesary because angular ui modal result promise does not pass back rejections
-							admin_add_ctrl.studentModel.program.push(new Program(addProgramObj));
-							console.log('TESTING, THIS IS THE STUDENT MODEL AFTER PROGRAM IS ADDED, ', admin_add_ctrl.studentModel);
-						}else console.log('MODAL WAS DISMISSED, AND PROGRAM WAS NOT ADDED');
+						admin_add_ctrl.studentModel.program.push(new Program(addProgramObj));
+						console.log('TESTING, THIS IS THE STUDENT MODEL AFTER PROGRAM IS ADDED, ', admin_add_ctrl.studentModel);
 
 					}, function(failureResponse) {	//this will never get called
 						console.log('uh oh, there is an error', failureResponse);
+						console.log('MODAL WAS DISMISSED, AND PROGRAM WAS NOT ADDED');
 					});
 
 			};
@@ -291,8 +310,8 @@ NOTE: got brought out of the cancel btn because submit button needs to access it
 			admin_add_ctrl.googleSigninBtnID = 'g-signin2';
 			admin_add_ctrl.googleSigninOptions = {
 				'onsuccess': function(successResponse) {
+					admin_add_ctrl.successSync = true;
 					console.log(successResponse);
-					admin_add_ctrl.turnOnSyncButton = true;
 				}
 			};	
 

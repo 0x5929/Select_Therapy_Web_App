@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 	angular.module('services.modalService', ['services.looksIntegrationByUIB'])
-		.factory('modalFactory', ['$rootScope', '$uibModal', modalFactoryHandler]);
+		.factory('modalFactory', ['$rootScope', '$uibModal', '$q', modalFactoryHandler]);
 
-		function modalFactoryHandler($rootScope, $uibModal) {
+		function modalFactoryHandler($rootScope, $uibModal, $q) {
 					var services = {
 						signInModalService    : signInModalService,
 						signUpModalService    : signUpModalService,
@@ -43,7 +43,8 @@
 						return modalInstance.result.then(assignCurrentUser);
 					}
 
-					function addProgramModalService(programArr) {
+					function addProgramModalService(programArr) {	//added $q deferred, because the calling function needs it to return it as a promise to be chained with the modal promise
+						var deferred =  $q.defer();
 						var modalInstance = $uibModal.open({
 						  animation: true,
 					      ariaLabelledBy: 'modal-title',
@@ -62,16 +63,19 @@
 					      size: 'lg'
 
 						});
-
-						return modalInstance.result
+						modalInstance.result
 									.then(function(successResponse) {
-							//return the addprogramObj to back to the controller promise to handle
-							console.log('MODAL CLOSED');
-									return successResponse;
-								}, function(failureResponse) {
-									console.log('MODAL DISMISSED', failureResponse);
-									return;	//does not return the failure response because rejections does not get routed to the promise that calls this
-								});
+								//return the addprogramObj to back to the controller promise to handle
+								console.log('MODAL CLOSED');
+								// return successResponse;
+								deferred.resolve(successResponse);	//resolves the success response
+							}, function(failureResponse) {
+								console.log('MODAL DISMISSED', failureResponse);
+								// return;	//does not return the failure response because rejections does not get routed to the promise that calls this
+								deferred.reject(failureResponse);	//rejects the failure response 
+							});
+
+						return deferred.promise;	//returning the promise to the calling controller to be handled
 					}
 
 					return services;
